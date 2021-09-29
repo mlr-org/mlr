@@ -316,10 +316,12 @@
 <span class="co">## </span>
 <span class="co">##    A    B </span>
 <span class="co">##  100 5000</span>
+
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">task.over</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## </span>
 <span class="co">##    A    B </span>
 <span class="co">##  800 5000</span>
+
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">task.under</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## </span>
 <span class="co">##   A   B </span>
@@ -339,9 +341,11 @@
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       mmce        ber        auc </span>
 <span class="co">## 0.01960784 0.50000000 0.50000000</span>
+
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod.over</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       mmce        ber        auc </span>
 <span class="co">## 0.04705882 0.41600000 0.69080000</span>
+
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod.under</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##      mmce       ber       auc </span>
 <span class="co">## 0.0372549 0.5090000 0.7265000</span></code></pre></div>
@@ -362,9 +366,11 @@
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       mmce        ber        auc </span>
 <span class="co">## 0.01960784 0.50000000 0.50000000</span>
+
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod.over</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       mmce        ber        auc </span>
 <span class="co">## 0.02941176 0.45600000 0.76880000</span>
+
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod.under</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       mmce        ber        auc </span>
 <span class="co">## 0.03529412 0.31200000 0.79960000</span></code></pre></div>
@@ -384,6 +390,7 @@
 <span class="co">## </span>
 <span class="co">##    A    B </span>
 <span class="co">##  100 5000</span>
+
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">task.smote</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## </span>
 <span class="co">##    A    B </span>
@@ -415,6 +422,7 @@
 <span class="va">r1</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">## mmce.test.mean  ber.test.mean  auc.test.mean </span>
 <span class="co">##     0.01960784     0.50000000     0.50000000</span>
+
 <span class="va">obw.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setPredictType.html">setPredictType</a></span><span class="op">(</span><span class="va">obw.lrn</span>, <span class="st">"prob"</span><span class="op">)</span>
 <span class="va">r2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">obw.lrn</span>, task <span class="op">=</span> <span class="va">task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span>,
   measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
@@ -432,6 +440,7 @@
 <span class="va">r1</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">## mmce.test.mean  ber.test.mean  auc.test.mean </span>
 <span class="co">##     0.03196078     0.49333337     0.58766687</span>
+
 <span class="va">obw.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setPredictType.html">setPredictType</a></span><span class="op">(</span><span class="va">obw.lrn</span>, <span class="st">"prob"</span><span class="op">)</span>
 <span class="va">r2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">obw.lrn</span>, task <span class="op">=</span> <span class="va">task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span>,
   measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>

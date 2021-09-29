@@ -355,6 +355,7 @@
 <span class="co">## 8   8  27.1 16.90299</span>
 <span class="co">## 10 10  18.9 17.25558</span>
 <span class="co">## 12 12  18.9 20.54365</span>
+
 <span class="co">### Result of predict with data passed via newdata argument</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">newdata.pred</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##    response</span>
@@ -369,6 +370,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span><span class="op">(</span><span class="va">task.pred</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] 21.6 33.4 28.7 27.1 18.9 18.9</span>
+
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span><span class="op">(</span><span class="va">task.pred</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] 22.52737 36.06190 24.75354 16.90299 17.25558 20.54365</span></code></pre></div>
 <div id="regression-extracting-standard-errors" class="section level2">
@@ -619,6 +621,7 @@
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span><span class="op">(</span><span class="va">pred1</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] 0.1060606 0.7333333 0.0000000 0.1060606 0.9250000 0.0000000</span>
+
 <span class="co">### But we can change that, too</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities</a></span><span class="op">(</span><span class="va">pred1</span>, cl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"R"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##           M         R</span>

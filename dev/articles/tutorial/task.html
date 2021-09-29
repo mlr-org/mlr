@@ -521,18 +521,23 @@
 <code class="sourceCode R"><span class="co"># Get the ID</span>
 <span class="fu"><a href="../../reference/getTaskId.html">getTaskId</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span>
 <span class="co">## [1] "BreastCancer"</span>
+
 <span class="co"># Get the type of task</span>
 <span class="fu"><a href="../../reference/getTaskType.html">getTaskType</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span>
 <span class="co">## [1] "classif"</span>
+
 <span class="co"># Get the names of the target columns</span>
 <span class="fu"><a href="../../reference/getTaskTargetNames.html">getTaskTargetNames</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span>
 <span class="co">## [1] "Class"</span>
+
 <span class="co"># Get the number of observations</span>
 <span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span>
 <span class="co">## [1] 699</span>
+
 <span class="co"># Get the number of input variables</span>
 <span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span>
 <span class="co">## [1] 9</span>
+
 <span class="co"># Get the class levels in classif.task</span>
 <span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span>
 <span class="co">## [1] "benign"    "malignant"</span></code></pre></div>
@@ -551,10 +556,12 @@
 <span class="co">##  $ Normal.nucleoli: Factor w/ 10 levels "1","2","3","4",..: 1 2 1 7 1 7 1 1 1 1 ...</span>
 <span class="co">##  $ Mitoses        : Factor w/ 9 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 5 1 ...</span>
 <span class="co">##  $ Class          : Factor w/ 2 levels "benign","malignant": 1 1 1 1 1 2 1 1 1 1 ...</span>
+
 <span class="co"># Get the names of the input variables in cluster.task</span>
 <span class="fu"><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames</a></span><span class="op">(</span><span class="va">cluster.task</span><span class="op">)</span>
 <span class="co">##  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear"</span>
 <span class="co">## [11] "carb"</span>
+
 <span class="co"># Get the values of the target variables in surv.task</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">surv.task</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##   time status</span>
@@ -564,6 +571,7 @@
 <span class="co">## 4  210   TRUE</span>
 <span class="co">## 5  883   TRUE</span>
 <span class="co">## 6 1022  FALSE</span>
+
 <span class="co"># Get the cost matrix in costsens.task</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskCosts.html">getTaskCosts</a></span><span class="op">(</span><span class="va">costsens.task</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##      y1        y2         y3</span>
@@ -597,6 +605,7 @@
 <span class="co">## Has weights: FALSE</span>
 <span class="co">## Has blocking: FALSE</span>
 <span class="co">## Has coordinates: FALSE</span>
+
 <span class="co"># Remove selected features</span>
 <span class="fu"><a href="../../reference/dropFeatures.html">dropFeatures</a></span><span class="op">(</span><span class="va">surv.task</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"meal.cal"</span>, <span class="st">"wt.loss"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## Supervised task: lung</span>
@@ -611,6 +620,7 @@
 <span class="co">## Has weights: FALSE</span>
 <span class="co">## Has blocking: FALSE</span>
 <span class="co">## Has coordinates: FALSE</span>
+
 <span class="co"># Standardize numerical features</span>
 <span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/normalizeFeatures.html">normalizeFeatures</a></span><span class="op">(</span><span class="va">cluster.task</span>, method <span class="op">=</span> <span class="st">"range"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span><span class="op">)</span>

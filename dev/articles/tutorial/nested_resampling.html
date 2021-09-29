@@ -355,6 +355,7 @@ Nested Resampling Figure
 <span class="co">## Tune result:</span>
 <span class="co">## Op. pars: C=2; sigma=0.25</span>
 <span class="co">## mmce.test.mean=0.0147059</span>
+
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">extract</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
 <span class="co">## [1] "learner"    "control"    "x"          "y"          "resampling"</span>
 <span class="co">## [6] "threshold"  "opt.path"</span></code></pre></div>
@@ -518,10 +519,12 @@ Nested Resampling Figure
 <span class="co">## FeatSel result:</span>
 <span class="co">## Features (10): crim, zn, nox, rm, dis, rad, tax, ptratio, b, l...</span>
 <span class="co">## mse.test.mean=21.5240684</span>
+
 <span class="co"># Selected features in the first outer resampling iteration</span>
 <span class="va">r</span><span class="op">$</span><span class="va">extract</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">x</span>
 <span class="co">## [1] "zn"      "chas"    "nox"     "rm"      "dis"     "ptratio" "b"      </span>
 <span class="co">## [8] "lstat"</span>
+
 <span class="co"># Resampled performance of the selected feature subset on the first inner training set</span>
 <span class="va">r</span><span class="op">$</span><span class="va">extract</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">y</span>
 <span class="co">## mse.test.mean </span>
@@ -983,6 +986,7 @@ Nested Resampling Figure
 <span class="co">## Tune result:</span>
 <span class="co">## Op. pars: fw.threshold=0</span>
 <span class="co">## mse.test.mean=25.7198156</span>
+
 <span class="va">opt.paths</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">res</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">)</span>
 <span class="va">opt.paths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">opt.paths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">]</span>
 <span class="co">##   fw.threshold mse.test.mean dob eol error.message</span>
@@ -1039,6 +1043,7 @@ Nested Resampling Figure
   resampling <span class="op">=</span> <span class="va">inner</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span>,
   show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">## Loading required package: kknn</span>
+
 <span class="co"># Learners</span>
 <span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">lrn1</span>, <span class="va">lrn2</span><span class="op">)</span>
 
@@ -1126,26 +1131,27 @@ Nested Resampling Figure
 <span class="co">##         task.id         learner.id iter   C sigma mmce.test.mean</span>
 <span class="co">## 1 Sonar-example classif.ksvm.tuned    1 1.0   2.0      0.2285714</span>
 <span class="co">## 2 Sonar-example classif.ksvm.tuned    2 0.5   0.5      0.2714286</span>
+
 <span class="fu"><a href="../../reference/getNestedTuneResultsOptPathDf.html">getNestedTuneResultsOptPathDf</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">results</span><span class="op">[[</span><span class="st">"Sonar-example"</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="st">"classif.ksvm.tuned"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##      C sigma mmce.test.mean dob eol error.message exec.time iter</span>
-<span class="co">## 1  0.5   0.5      0.2285714   1  NA          &lt;NA&gt;     0.033    1</span>
-<span class="co">## 2    1   0.5      0.2285714   2  NA          &lt;NA&gt;     0.034    1</span>
-<span class="co">## 3    2   0.5      0.2285714   3  NA          &lt;NA&gt;     0.045    1</span>
-<span class="co">## 4  0.5     1      0.2285714   4  NA          &lt;NA&gt;     0.032    1</span>
+<span class="co">## 1  0.5   0.5      0.2285714   1  NA          &lt;NA&gt;     0.031    1</span>
+<span class="co">## 2    1   0.5      0.2285714   2  NA          &lt;NA&gt;     0.030    1</span>
+<span class="co">## 3    2   0.5      0.2285714   3  NA          &lt;NA&gt;     0.031    1</span>
+<span class="co">## 4  0.5     1      0.2285714   4  NA          &lt;NA&gt;     0.031    1</span>
 <span class="co">## 5    1     1      0.2285714   5  NA          &lt;NA&gt;     0.030    1</span>
-<span class="co">## 6    2     1      0.2285714   6  NA          &lt;NA&gt;     0.029    1</span>
-<span class="co">## 7  0.5     2      0.2285714   7  NA          &lt;NA&gt;     0.032    1</span>
-<span class="co">## 8    1     2      0.2285714   8  NA          &lt;NA&gt;     0.032    1</span>
-<span class="co">## 9    2     2      0.2285714   9  NA          &lt;NA&gt;     0.032    1</span>
-<span class="co">## 10 0.5   0.5      0.2714286   1  NA          &lt;NA&gt;     0.030    2</span>
+<span class="co">## 6    2     1      0.2285714   6  NA          &lt;NA&gt;     0.031    1</span>
+<span class="co">## 7  0.5     2      0.2285714   7  NA          &lt;NA&gt;     0.043    1</span>
+<span class="co">## 8    1     2      0.2285714   8  NA          &lt;NA&gt;     0.031    1</span>
+<span class="co">## 9    2     2      0.2285714   9  NA          &lt;NA&gt;     0.031    1</span>
+<span class="co">## 10 0.5   0.5      0.2714286   1  NA          &lt;NA&gt;     0.031    2</span>
 <span class="co">## 11   1   0.5      0.2714286   2  NA          &lt;NA&gt;     0.031    2</span>
-<span class="co">## 12   2   0.5      0.2714286   3  NA          &lt;NA&gt;     0.032    2</span>
-<span class="co">## 13 0.5     1      0.2714286   4  NA          &lt;NA&gt;     0.033    2</span>
-<span class="co">## 14   1     1      0.2714286   5  NA          &lt;NA&gt;     0.032    2</span>
-<span class="co">## 15   2     1      0.2714286   6  NA          &lt;NA&gt;     0.045    2</span>
-<span class="co">## 16 0.5     2      0.2714286   7  NA          &lt;NA&gt;     0.030    2</span>
-<span class="co">## 17   1     2      0.2714286   8  NA          &lt;NA&gt;     0.031    2</span>
-<span class="co">## 18   2     2      0.2714286   9  NA          &lt;NA&gt;     0.032    2</span></code></pre></div>
+<span class="co">## 12   2   0.5      0.2714286   3  NA          &lt;NA&gt;     0.043    2</span>
+<span class="co">## 13 0.5     1      0.2714286   4  NA          &lt;NA&gt;     0.031    2</span>
+<span class="co">## 14   1     1      0.2714286   5  NA          &lt;NA&gt;     0.031    2</span>
+<span class="co">## 15   2     1      0.2714286   6  NA          &lt;NA&gt;     0.031    2</span>
+<span class="co">## 16 0.5     2      0.2714286   7  NA          &lt;NA&gt;     0.031    2</span>
+<span class="co">## 17   1     2      0.2714286   8  NA          &lt;NA&gt;     0.032    2</span>
+<span class="co">## 18   2     2      0.2714286   9  NA          &lt;NA&gt;     0.044    2</span></code></pre></div>
 </div>
 <div id="example-2-one-task-two-learners-feature-selection" class="section level2">
 <h2 class="hasAnchor">
@@ -1208,6 +1214,7 @@ Nested Resampling Figure
 <span class="co"># Selected features in the first outer resampling iteration</span>
 <span class="va">feats</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">x</span>
 <span class="co">## [1] "indus"   "rm"      "age"     "dis"     "ptratio" "b"       "lstat"</span>
+
 <span class="co"># Resampled performance of the selected feature subset on the first inner training set</span>
 <span class="va">feats</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">y</span>
 <span class="co">## mse.test.mean </span>
@@ -1230,6 +1237,7 @@ Nested Resampling Figure
 <span class="co">## 4   2          &lt;NA&gt;</span>
 <span class="co">## 5   2          &lt;NA&gt;</span>
 <span class="co">## 6   2          &lt;NA&gt;</span>
+
 <span class="fu"><a href="../../reference/analyzeFeatSelResult.html">analyzeFeatSelResult</a></span><span class="op">(</span><span class="va">feats</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
 <span class="co">## Features         : 7</span>
 <span class="co">## Performance      : mse.test.mean=29.4228023</span>
@@ -1752,6 +1760,7 @@ Nested Resampling Figure
 <span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
 <span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
 <span class="co">## argument to TRUE.</span>
+
 <span class="va">res</span>
 <span class="co">##                 task.id             learner.id mse.test.mean</span>
 <span class="co">## 1 BostonHousing-example             regr.rpart      22.16021</span>

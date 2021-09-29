@@ -315,6 +315,7 @@
 <span class="co">## </span>
 <span class="co">## Aggregated Result: mmce.test.mean=0.3285714</span>
 <span class="co">## </span>
+
 <span class="va">bmr</span>
 <span class="co">##         task.id    learner.id mmce.test.mean</span>
 <span class="co">## 1 Sonar-example   classif.lda      0.3142857</span>
@@ -342,6 +343,7 @@
 <span class="co">## </span>
 <span class="co">## Aggregated Result: mmce.test.mean=0.3714286</span>
 <span class="co">## </span>
+
 <span class="va">bmr</span>
 <span class="co">##         task.id    learner.id mmce.test.mean</span>
 <span class="co">## 1 Sonar-example   classif.lda      0.3285714</span>
@@ -374,6 +376,7 @@
 <span class="co">## $`Sonar-example`$classif.rpart</span>
 <span class="co">##   iter      mmce</span>
 <span class="co">## 1    1 0.3714286</span>
+
 <span class="fu"><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## $`Sonar-example`</span>
 <span class="co">## $`Sonar-example`$classif.lda</span>
@@ -400,6 +403,7 @@
 <span class="co">##         task.id    learner.id iter      mmce</span>
 <span class="co">## 1 Sonar-example   classif.lda    1 0.3285714</span>
 <span class="co">## 2 Sonar-example classif.rpart    1 0.3714286</span>
+
 <span class="fu"><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances</a></span><span class="op">(</span><span class="va">bmr</span>, as.df <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">##         task.id    learner.id mmce.test.mean</span>
 <span class="co">## 1 Sonar-example   classif.lda      0.3285714</span>
@@ -487,8 +491,10 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/getBMRTaskIds.html">getBMRTaskIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## [1] "Sonar-example"</span>
+
 <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## [1] "classif.lda"   "classif.rpart"</span>
+
 <span class="fu"><a href="../../reference/getBMRMeasureIds.html">getBMRMeasureIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## [1] "mmce"</span></code></pre></div>
 </div>
@@ -511,6 +517,7 @@
 <span class="co">## Model for learner.id=classif.rpart; learner.class=classif.rpart</span>
 <span class="co">## Trained on: task.id = Sonar-example; obs = 138; features = 60</span>
 <span class="co">## Hyperparameters: xval=0</span>
+
 <span class="fu"><a href="../../reference/getBMRModels.html">getBMRModels</a></span><span class="op">(</span><span class="va">bmr</span>, drop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">## $classif.lda</span>
 <span class="co">## $classif.lda[[1]]</span>
@@ -524,6 +531,7 @@
 <span class="co">## Model for learner.id=classif.rpart; learner.class=classif.rpart</span>
 <span class="co">## Trained on: task.id = Sonar-example; obs = 138; features = 60</span>
 <span class="co">## Hyperparameters: xval=0</span>
+
 <span class="fu"><a href="../../reference/getBMRModels.html">getBMRModels</a></span><span class="op">(</span><span class="va">bmr</span>, learner.ids <span class="op">=</span> <span class="st">"classif.lda"</span><span class="op">)</span>
 <span class="co">## $`Sonar-example`</span>
 <span class="co">## $`Sonar-example`$classif.lda</span>
@@ -556,6 +564,7 @@
 <span class="co">## Properties: twoclass,multiclass,missings,numerics,factors,ordered,prob,weights,featimp</span>
 <span class="co">## Predict-Type: response</span>
 <span class="co">## Hyperparameters: xval=0</span>
+
 <span class="fu"><a href="../../reference/getBMRMeasures.html">getBMRMeasures</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## [[1]]</span>
 <span class="co">## Name: Mean misclassification error</span>
@@ -579,6 +588,7 @@
 <span class="co">##         task.id    learner.id mmce.test.mean</span>
 <span class="co">## 1 Sonar-example   classif.lda      0.3285714</span>
 <span class="co">## 2 Sonar-example classif.rpart      0.3714286</span>
+
 <span class="co"># Benchmark experiment for the additional learners</span>
 <span class="va">lrns2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.randomForest"</span><span class="op">)</span>, <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.qda"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">bmr2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span><span class="op">(</span><span class="va">lrns2</span>, <span class="va">sonar.task</span>, <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -586,6 +596,7 @@
 <span class="co">##         task.id           learner.id mmce.test.mean</span>
 <span class="co">## 1 Sonar-example classif.randomForest      0.1285714</span>
 <span class="co">## 2 Sonar-example          classif.qda      0.4000000</span>
+
 <span class="co"># Merge the results</span>
 <span class="fu"><a href="../../reference/mergeBenchmarkResults.html">mergeBenchmarkResults</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">bmr</span>, <span class="va">bmr2</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##         task.id           learner.id mmce.test.mean</span>
@@ -603,12 +614,14 @@
 <span class="co">## Resample description: holdout with 0.67 split rate.</span>
 <span class="co">## Predict: test</span>
 <span class="co">## Stratification: FALSE</span>
+
 <span class="co"># Benchmark experiment for the additional random forest</span>
 <span class="va">bmr3</span> <span class="op">=</span> <span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span><span class="op">(</span><span class="va">lrns2</span>, <span class="va">sonar.task</span>, <span class="va">rin</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">bmr3</span>
 <span class="co">##         task.id           learner.id mmce.test.mean</span>
 <span class="co">## 1 Sonar-example classif.randomForest      0.1428571</span>
 <span class="co">## 2 Sonar-example          classif.qda      0.3285714</span>
+
 <span class="co"># Merge the results</span>
 <span class="fu"><a href="../../reference/mergeBenchmarkResults.html">mergeBenchmarkResults</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">bmr</span>, <span class="va">bmr3</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##         task.id           learner.id mmce.test.mean</span>
@@ -722,10 +735,13 @@
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mmce</span><span class="op">$</span><span class="va">name</span>
 <span class="co">## [1] "Mean misclassification error"</span>
+
 <span class="va">mmce</span><span class="op">$</span><span class="va">id</span>
 <span class="co">## [1] "mmce"</span>
+
 <span class="fu"><a href="../../reference/getBMRLearnerIds.html">getBMRLearnerIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## [1] "lda"          "rpart"        "randomForest"</span>
+
 <span class="fu"><a href="../../reference/getBMRLearnerShortNames.html">getBMRLearnerShortNames</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## [1] "lda"   "rpart" "rf"</span></code></pre></div>
 <p>If you prefer the <code>id</code>s like, e.g., mmce and ber set <code>pretty.names = FALSE</code> (as done for the second plot). Of course you can also use the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot2-package.html">ggplot2::ggplot2()</a></code> functionality like the <code><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggplot2::labs()</a></code> function to choose completely different labels.</p>
@@ -740,6 +756,7 @@
 <span class="co">## 4 iris-example        lda    4 0.00000000 0.00000000</span>
 <span class="co">## 5 iris-example        lda    5 0.06666667 0.04166667</span>
 <span class="co">## 6 iris-example        lda    6 0.00000000 0.00000000</span>
+
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">task.id</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Iris"</span>, <span class="st">"Ringnorm"</span>, <span class="st">"Waveform"</span>, <span class="st">"Diabetes"</span>, <span class="st">"Sonar"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">learner.id</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"LDA"</span>, <span class="st">"CART"</span>, <span class="st">"RF"</span><span class="op">)</span>
 
@@ -825,7 +842,8 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lda"</span> <span class="op">=</span> <span class="st">"#F8766D"</span>, <span class="st">"rpart"</span> <span class="op">=</span> <span class="st">"#00BA38"</span>, <span class="st">"randomForest"</span> <span class="op">=</span> <span class="st">"#619CFF"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-28-1.png" width="700"></p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Bonferroni-Dunn test</span>
+<code class="sourceCode R">
+<span class="co"># Bonferroni-Dunn test</span>
 <span class="va">g</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCritDifferencesData.html">generateCritDifferencesData</a></span><span class="op">(</span><span class="va">bmr</span>, p.value <span class="op">=</span> <span class="fl">0.1</span>, test <span class="op">=</span> <span class="st">"bd"</span>, baseline <span class="op">=</span> <span class="st">"randomForest"</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/plotCritDifferences.html">plotCritDifferences</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lda"</span> <span class="op">=</span> <span class="st">"#F8766D"</span>, <span class="st">"rpart"</span> <span class="op">=</span> <span class="st">"#00BA38"</span>, <span class="st">"randomForest"</span> <span class="op">=</span> <span class="st">"#619CFF"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -858,6 +876,7 @@
 <span class="co">## 4 iris-example        lda    4     mmce 0.00000000</span>
 <span class="co">## 5 iris-example        lda    5     mmce 0.06666667</span>
 <span class="co">## 6 iris-example        lda    6     mmce 0.00000000</span>
+
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/qplot.html">qplot</a></span><span class="op">(</span><span class="va">variable</span>, <span class="va">value</span>,
   data <span class="op">=</span> <span class="va">df</span>, colour <span class="op">=</span> <span class="va">learner.id</span>, geom <span class="op">=</span> <span class="st">"boxplot"</span>,
   xlab <span class="op">=</span> <span class="st">"measure"</span>, ylab <span class="op">=</span> <span class="st">"performance"</span><span class="op">)</span> <span class="op">+</span>
@@ -877,6 +896,7 @@
 <span class="co">## 4 Sonar-example    4 0.1904762         0.0000000  0.1904762</span>
 <span class="co">## 5 Sonar-example    5 0.3333333         0.2380952  0.4761905</span>
 <span class="co">## 6 Sonar-example    6 0.2500000         0.1000000  0.2500000</span>
+
 <span class="fu">GGally</span><span class="fu">::</span><span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggpairs.html">ggpairs</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>
 <span class="co">## Registered S3 method overwritten by 'GGally':</span>
 <span class="co">##   method from   </span>

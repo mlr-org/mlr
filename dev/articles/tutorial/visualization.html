@@ -309,6 +309,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>
 <span class="co">## [1] "ThreshVsPerfData"</span>
+
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
 <span class="co">##         fpr       fnr      mmce  threshold</span>
 <span class="co">## 1 1.0000000 0.0000000 0.4615385 0.00000000</span>
@@ -325,6 +326,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fpr</span><span class="op">$</span><span class="va">name</span>
 <span class="co">## [1] "False positive rate"</span>
+
 <span class="va">fpr</span><span class="op">$</span><span class="va">id</span>
 <span class="co">## [1] "fpr"</span></code></pre></div>
 <p>This does not only apply to <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>, but to other plot functions that show performance measures as well, for example <code><a href="../../reference/plotLearningCurve.html">plotLearningCurve()</a></code>. You can use the <code>id</code>s instead of the names by setting <code>pretty.names = FALSE</code>.</p>
@@ -348,8 +350,10 @@
 <span class="co">## 4 0.03030303     fpr   0.3333333</span>
 <span class="co">## 5 0.04040404     fpr   0.3333333</span>
 <span class="co">## 6 0.05050505     fpr   0.3125000</span>
+
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">measure</span><span class="op">)</span>
 <span class="co">## [1] "fpr"  "fnr"  "mmce"</span>
+
 <span class="co"># Rename and reorder factor levels</span>
 <span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">measure</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">measure</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mmce"</span>, <span class="st">"fpr"</span>, <span class="st">"fnr"</span><span class="op">)</span>,
   labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Error rate"</span>, <span class="st">"False positive rate"</span>, <span class="st">"False negative rate"</span><span class="op">)</span><span class="op">)</span>
@@ -396,6 +400,7 @@
 <span class="co">## 4 0.5741233     V11 0.2640000</span>
 <span class="co">## 5 0.6557857     V11 0.3423667</span>
 <span class="co">## 6 0.7387962     V11 0.4207333</span>
+
 <span class="va">plt</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">

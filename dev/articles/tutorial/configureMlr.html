@@ -396,6 +396,7 @@
 <span class="co">## Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newParam without available description object!</span>
 <span class="co">## Did you mean one of these hyperparameters instead: degree scaled kernel</span>
 <span class="co">## You can switch off this check by using configureMlr!</span>
+
 <span class="co"># Turn off parameter checking completely</span>
 <span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span>on.par.without.desc <span class="op">=</span> <span class="st">"quiet"</span><span class="op">)</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, kernel <span class="op">=</span> <span class="st">"vanilladot"</span>, newParam <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
@@ -404,12 +405,14 @@
 <span class="co">## Model for learner.id=classif.ksvm; learner.class=classif.ksvm</span>
 <span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span>
 <span class="co">## Hyperparameters: fit=FALSE,kernel=vanilladot,newParam=3</span>
+
 <span class="co"># Option "quiet" also masks typos</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, kernl <span class="op">=</span> <span class="st">"vanilladot"</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">iris.task</span><span class="op">)</span>
 <span class="co">## Model for learner.id=classif.ksvm; learner.class=classif.ksvm</span>
 <span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span>
 <span class="co">## Hyperparameters: fit=FALSE,kernl=vanilladot</span>
+
 <span class="co"># Alternatively turn off parameter checking, but still see warnings</span>
 <span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span>on.par.without.desc <span class="op">=</span> <span class="st">"warn"</span><span class="op">)</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, kernl <span class="op">=</span> <span class="st">"vanilladot"</span>, newParam <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
@@ -419,6 +422,7 @@
 <span class="co">## Warning in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newParam without available description object!</span>
 <span class="co">## Did you mean one of these hyperparameters instead: degree scaled kernel</span>
 <span class="co">## You can switch off this check by using configureMlr!</span>
+
 <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">iris.task</span><span class="op">)</span>
 <span class="co">## Model for learner.id=classif.ksvm; learner.class=classif.ksvm</span>
 <span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span>
@@ -432,11 +436,13 @@
 <code class="sourceCode R"><span class="co"># This call gives an error caused by the low number of observations in class "virginica"</span>
 <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, task <span class="op">=</span> <span class="va">iris.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">104</span><span class="op">)</span>
 <span class="co">## Error in qda.default(x, grouping, ...): some group is too small for 'qda'</span>
+
 <span class="co"># Get a warning instead of an error</span>
 <span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span>on.learner.error <span class="op">=</span> <span class="st">"warn"</span><span class="op">)</span>
 <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, task <span class="op">=</span> <span class="va">iris.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">104</span><span class="op">)</span>
 <span class="co">## Warning in train("classif.qda", task = iris.task, subset = 1:104): Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : </span>
 <span class="co">##   some group is too small for 'qda'</span>
+
 <span class="va">mod</span>
 <span class="co">## Model for learner.id=classif.qda; learner.class=classif.qda</span>
 <span class="co">## Trained on: task.id = iris-example; obs = 104; features = 4</span>
@@ -446,12 +452,15 @@
 <span class="co">## </span>
 <span class="co">## Training failed: Error in qda.default(x, grouping, ...) : </span>
 <span class="co">##   some group is too small for 'qda'</span>
+
 <span class="co"># mod is an object of class FailureModel</span>
 <span class="fu"><a href="../../reference/isFailureModel.html">isFailureModel</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
 <span class="co">## [1] TRUE</span>
+
 <span class="co"># Retrieve the error message</span>
 <span class="fu"><a href="../../reference/getFailureModelMsg.html">getFailureModelMsg</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
 <span class="co">## [1] "Error in qda.default(x, grouping, ...) : \n  some group is too small for 'qda'\n"</span>
+
 <span class="co"># predict and performance return NA's</span>
 <span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">iris.task</span><span class="op">)</span>
 <span class="va">pred</span>
@@ -467,6 +476,7 @@
 <span class="co">## 5  5 setosa     &lt;NA&gt;</span>
 <span class="co">## 6  6 setosa     &lt;NA&gt;</span>
 <span class="co">## ... (#rows: 150, #cols: 3)</span>
+
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>
 <span class="co">## mmce </span>
 <span class="co">##   NA</span></code></pre></div>

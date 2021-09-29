@@ -290,6 +290,7 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://parallelmap.mlr-org.com">"parallelMap"</a></span><span class="op">)</span>
 <span class="fu"><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html">parallelStartSocket</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">## Starting parallelization in mode=socket with cpus=2.</span>
+
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span><span class="op">)</span>
 <span class="co">## Exporting objects to slaves for mode socket: .mlr.slave.options</span>
@@ -299,6 +300,7 @@
 <span class="co">## </span>
 <span class="co">## Aggregated Result: mmce.test.mean=0.0200000</span>
 <span class="co">## </span>
+
 <span class="fu"><a href="https://parallelmap.mlr-org.com/reference/parallelStop.html">parallelStop</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">## Stopped parallelization. All cleaned up.</span></code></pre></div>
 <p>On Linux or Mac OS X, you may want to use <code>parallelStartMulticore</code> (<code><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html">parallelMap::parallelStart()</a></code>) instead.</p>

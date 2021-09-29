@@ -315,7 +315,8 @@
 <p><img src="classifier_calibration_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>Because of the discretization of the probabilities, sometimes it is advantageous to smooth the calibration plot. Though <code>smooth = FALSE</code> by default, setting this option to <code>TRUE</code> replaces the estimated proportions with a loess smoother.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cal</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>
+<code class="sourceCode R">
+<span class="va">cal</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/plotCalibration.html">plotCalibration</a></span><span class="op">(</span><span class="va">cal</span>, smooth <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">## `geom_smooth()` using formula 'y ~ x'</span></code></pre></div>
 <p><img src="classifier_calibration_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
