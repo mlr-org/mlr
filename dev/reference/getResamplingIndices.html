@@ -389,37 +389,37 @@ If <code>TRUE</code>, returns the inner indices of a nested resampling setting.<
 <span class='va'>r</span> <span class='op'>=</span> <span class='fu'><a href='resample.html'>resample</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>task</span>, <span class='va'>outer</span>, extract <span class='op'>=</span> <span class='va'>getTuneResult</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.rpart for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>             Type len Def   Constr Req Tunable Trafo</span>
 #&gt; <span class='message'>cp       discrete   -   - 0.05,0.1   -    TRUE     -</span>
-#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.05; minsplit=20 : mmce.test.mean=0.0800000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.rpart for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>             Type len Def   Constr Req Tunable Trafo</span>
+#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.05; minsplit=20 : mmce.test.mean=0.0400000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0800000 </span></div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.rpart for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>             Type len Def   Constr Req Tunable Trafo</span>
 #&gt; <span class='message'>cp       discrete   -   - 0.05,0.1   -    TRUE     -</span>
-#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0000000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.05; minsplit=10 : mmce.test.mean=0.0000000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0666667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0600000</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='co'># get tuning indices</span>
+#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.05; minsplit=10 : mmce.test.mean=0.0800000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0400000 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0600000</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='co'># get tuning indices</span>
 <span class='fu'>getResamplingIndices</span><span class='op'>(</span><span class='va'>r</span>, inner <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$train.inds
 #&gt; [[1]]$train.inds[[1]]
-#&gt;  [1]  32  24 129 141  29   4 133 119 134  16  62  31  10 125  50  87 135  37  75
-#&gt; [20] 107 147 115 100 124   5  54 111 143  36 120  67 112  69  65   6  52 148  13
-#&gt; [39] 103  70 146 117  27  46  59  99 121  48  58 102
+#&gt;  [1]  53  70 140   4 130 149 121 102  43 144 134 146 101 125  63 137 141 147  37
+#&gt; [20]  89  80 118 113  95  58  54  71  12   6  56 128  68  96  92  17  86  29  69
+#&gt; [39]  27 104  72  30 112 103 110   7  35  14  32 129
 #&gt; 
 #&gt; 
 #&gt; [[1]]$test.inds
 #&gt; [[1]]$test.inds[[1]]
-#&gt;  [1] 101  26  78  34  95  90  11  53 140   2  39  77  71 126 108  88 144  47  41
-#&gt; [20] 122  25  40  93  42   3
+#&gt;  [1]  67  39   2  18 105 127 116  51 123  50  79  62  55  23  94   5  90   1  40
+#&gt; [20] 106 148  11  42  34  44
 #&gt; 
 #&gt; 
 #&gt; 
 #&gt; [[2]]
 #&gt; [[2]]$train.inds
 #&gt; [[2]]$train.inds[[1]]
-#&gt;  [1]  60  63 109  85  49 131  17  73  35  15   1  33  61 136 145 149  44 113  21
-#&gt; [20]  80  98  30  57 128  14  79 137 116 150  74  84  91 105 130 118  76   9  56
-#&gt; [39]  86  82  97 142   7 138  89  51  22  19 114  68
+#&gt;  [1]  83  82  97 138 109  10  22  16  87  24  31 143  48  13 114  66   3  33 142
+#&gt; [20]  75  15  41 126  20   9  60  26  81 132 122  84 145 136 150  93 139  74 120
+#&gt; [39]  52  78  91  61  38  28  49  21  36  19 115 117
 #&gt; 
 #&gt; 
 #&gt; [[2]]$test.inds
 #&gt; [[2]]$test.inds[[1]]
-#&gt;  [1]  81  92  12  20  38  96  64 139 127 106  72  28  94  45 104  83  55 132 123
-#&gt; [20]  18  66   8  43 110  23
+#&gt;  [1]  76 107 100 131  46 124  64  99  73  77 111 135 108  45  88  98  57  25  85
+#&gt; [20]  65 119   8 133  59  47
 #&gt; 
 #&gt; 
 #&gt; </div></pre>
