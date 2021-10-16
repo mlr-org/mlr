@@ -592,12 +592,12 @@
     <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">.model</span>, more.unwrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
     <span class="va">mod</span><span class="op">$</span><span class="va">variable.importance</span>
 <span class="op">}</span></code></pre></div>
-<p>For the <code><a href="https://rdrr.io/pkg/randomForestSRC/man/rfsrc.html">randomForestSRC::rfsrc()</a></code> from package <code>randomForestSRC</code> function <code><a href="https://rdrr.io/pkg/randomForestSRC/man/vimp.rfsrc.html">randomForestSRC::vimp()</a></code> is called.</p>
+<p>For the <code><a href="https://luminwin.github.io/randomForestSRC//reference/rfsrc.html">randomForestSRC::rfsrc()</a></code> from package <code>randomForestSRC</code> function <code><a href="https://luminwin.github.io/randomForestSRC//reference/vimp.rfsrc.html">randomForestSRC::vimp()</a></code> is called.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">getFeatureImportanceLearner.classif.randomForestSRC</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">.learner</span>, <span class="va">.model</span>, <span class="va">...</span><span class="op">)</span> 
 <span class="op">{</span>
     <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">.model</span>, more.unwrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-    <span class="fu">randomForestSRC</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/randomForestSRC/man/vimp.rfsrc.html">vimp</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">...</span><span class="op">)</span><span class="op">$</span><span class="va">importance</span><span class="op">[</span>, <span class="st">"all"</span><span class="op">]</span>
+    <span class="fu">randomForestSRC</span><span class="fu">::</span><span class="fu"><a href="https://luminwin.github.io/randomForestSRC//reference/vimp.rfsrc.html">vimp</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">...</span><span class="op">)</span><span class="op">$</span><span class="va">importance</span><span class="op">[</span>, <span class="st">"all"</span><span class="op">]</span>
 <span class="op">}</span></code></pre></div>
 </div>
 <div id="creating-a-new-method-for-extracting-out-of-bag-predictions" class="section level1">
