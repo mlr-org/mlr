@@ -494,9 +494,9 @@
 <p>Instead of tuning the PCA threshold (<code>ppc.thresh</code>) we tune the number of principal components (<code>ppc.pcaComp</code>) directly. Moreover, for <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> we try two different ways to estimate the posterior probabilities (parameter <code>predict.method</code>): the usual plug-in estimates and unbiased estimates.</p>
 <p>We perform a grid search and set the resolution to 10. This is for demonstration. You might want to use a finer resolution.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span>
-  <span class="fu">makeIntegerParam</span><span class="op">(</span><span class="st">"ppc.pcaComp"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span><span class="op">(</span><span class="va">sonar.task</span><span class="op">)</span><span class="op">)</span>,
-  <span class="fu">makeDiscreteParam</span><span class="op">(</span><span class="st">"predict.method"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"plug-in"</span>, <span class="st">"debiased"</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeIntegerParam</a></span><span class="op">(</span><span class="st">"ppc.pcaComp"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span><span class="op">(</span><span class="va">sonar.task</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"predict.method"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"plug-in"</span>, <span class="st">"debiased"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span>resolution <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span>, <span class="va">rin</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -653,9 +653,9 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.nnet"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, train <span class="op">=</span> <span class="va">trainfun</span>, predict <span class="op">=</span> <span class="va">predictfun</span>,
-  par.set <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span>
-    <span class="fu">makeLogicalLearnerParam</span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
-    <span class="fu">makeLogicalLearnerParam</span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
+  par.set <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
+    <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
   <span class="op">)</span>,
   par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 
@@ -685,10 +685,10 @@
 <p>Now we do a simple grid search for the <code>decay</code> parameter of <code><a href="https://rdrr.io/pkg/nnet/man/nnet.html">nnet::nnet()</a></code> and the <code>center</code> and <code>scale</code> parameters.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
-<span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span>
-  <span class="fu">makeDiscreteParam</span><span class="op">(</span><span class="st">"decay"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>,
-  <span class="fu">makeLogicalParam</span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
-  <span class="fu">makeLogicalParam</span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
+<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"decay"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeLogicalParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeLogicalParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">bh.task</span>, <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -747,9 +747,9 @@
     <span class="va">learner</span>,
     train <span class="op">=</span> <span class="va">trainfun</span>,
     predict <span class="op">=</span> <span class="va">predictfun</span>,
-    par.set <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span>
-      <span class="fu">makeLogicalLearnerParam</span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
-      <span class="fu">makeLogicalLearnerParam</span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
+    par.set <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
+      <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
     <span class="op">)</span>,
     par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="va">center</span>, scale <span class="op">=</span> <span class="va">scale</span><span class="op">)</span>
   <span class="op">)</span>

@@ -328,7 +328,7 @@ the resampling indices used for the respective method." />
 
     <div class="ref-description">
     <p>After you resampled a tuning or feature selection wrapper (see <a href='makeTuneWrapper.html'>makeTuneWrapper</a>)
-with <code><a href='resample.html'>resample(..., extract = getTuneResult)</a></code> or <code><a href='resample.html'>resample(..., extract = getFeatSelResult)</a></code> this helper returns a <code>list</code> with
+with <code>resample(..., extract = getTuneResult)</code> or <code>resample(..., extract = getFeatSelResult)</code> this helper returns a <code>list</code> with
 the resampling indices used for the respective method.</p>
     </div>
 
@@ -373,56 +373,90 @@ If <code>TRUE</code>, returns the inner indices of a nested resampling setting.<
 <code><a href='tuneThreshold.html'>tuneThreshold</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span>
-<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.rpart"</span><span class='op'>)</span>
-<span class='co'># stupid mini grid</span>
-<span class='va'>ps</span> <span class='op'>=</span> <span class='fu'>makeParamSet</span><span class='op'>(</span>
-  <span class='fu'>makeDiscreteParam</span><span class='op'>(</span><span class='st'>"cp"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.05</span>, <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>,
-  <span class='fu'>makeDiscreteParam</span><span class='op'>(</span><span class='st'>"minsplit"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>)</span>
-<span class='va'>ctrl</span> <span class='op'>=</span> <span class='fu'><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>inner</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"Holdout"</span><span class='op'>)</span>
-<span class='va'>outer</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"CV"</span>, iters <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeTuneWrapper.html'>makeTuneWrapper</a></span><span class='op'>(</span><span class='va'>lrn</span>, resampling <span class='op'>=</span> <span class='va'>inner</span>, par.set <span class='op'>=</span> <span class='va'>ps</span>, control <span class='op'>=</span> <span class='va'>ctrl</span><span class='op'>)</span>
-<span class='co'># nested resampling for evaluation</span>
-<span class='co'># we also extract tuned hyper pars in each iteration and by that the resampling indices</span>
-<span class='va'>r</span> <span class='op'>=</span> <span class='fu'><a href='resample.html'>resample</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>task</span>, <span class='va'>outer</span>, extract <span class='op'>=</span> <span class='va'>getTuneResult</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.rpart for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>             Type len Def   Constr Req Tunable Trafo</span>
-#&gt; <span class='message'>cp       discrete   -   - 0.05,0.1   -    TRUE     -</span>
-#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0400000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.05; minsplit=20 : mmce.test.mean=0.0400000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0800000 </span></div><div class='output co'>#&gt; <span class='message'>[Tune] Started tuning learner classif.rpart for parameter set:</span></div><div class='output co'>#&gt; <span class='message'>             Type len Def   Constr Req Tunable Trafo</span>
-#&gt; <span class='message'>cp       discrete   -   - 0.05,0.1   -    TRUE     -</span>
-#&gt; <span class='message'>minsplit discrete   -   -    10,20   -    TRUE     -</span></div><div class='output co'>#&gt; <span class='message'>With control class: TuneControlGrid</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 1: cp=0.05; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 1: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 2: cp=0.1; minsplit=10</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 2: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 3: cp=0.05; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 3: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune-x] 4: cp=0.1; minsplit=20</span></div><div class='output co'>#&gt; <span class='message'>[Tune-y] 4: mmce.test.mean=0.0800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[Tune] Result: cp=0.05; minsplit=10 : mmce.test.mean=0.0800000</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0400000 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0600000</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='co'># get tuning indices</span>
-<span class='fu'>getResamplingIndices</span><span class='op'>(</span><span class='va'>r</span>, inner <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]$train.inds
-#&gt; [[1]]$train.inds[[1]]
-#&gt;  [1]  53  70 140   4 130 149 121 102  43 144 134 146 101 125  63 137 141 147  37
-#&gt; [20]  89  80 118 113  95  58  54  71  12   6  56 128  68  96  92  17  86  29  69
-#&gt; [39]  27 104  72  30 112 103 110   7  35  14  32 129
-#&gt; 
-#&gt; 
-#&gt; [[1]]$test.inds
-#&gt; [[1]]$test.inds[[1]]
-#&gt;  [1]  67  39   2  18 105 127 116  51 123  50  79  62  55  23  94   5  90   1  40
-#&gt; [20] 106 148  11  42  34  44
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; [[2]]
-#&gt; [[2]]$train.inds
-#&gt; [[2]]$train.inds[[1]]
-#&gt;  [1]  83  82  97 138 109  10  22  16  87  24  31 143  48  13 114  66   3  33 142
-#&gt; [20]  75  15  41 126  20   9  60  26  81 132 122  84 145 136 150  93 139  74 120
-#&gt; [39]  52  78  91  61  38  28  49  21  36  19 115 117
-#&gt; 
-#&gt; 
-#&gt; [[2]]$test.inds
-#&gt; [[2]]$test.inds[[1]]
-#&gt;  [1]  76 107 100 131  46 124  64  99  73  77 111 135 108  45  88  98  57  25  85
-#&gt; [20]  65 119   8 133  59  47
-#&gt; 
-#&gt; 
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.rpart"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># stupid mini grid</span></span>
+<span class='r-in'><span class='va'>ps</span> <span class='op'>=</span> <span class='fu'>makeParamSet</span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'>makeDiscreteParam</span><span class='op'>(</span><span class='st'>"cp"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.05</span>, <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'>makeDiscreteParam</span><span class='op'>(</span><span class='st'>"minsplit"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>ctrl</span> <span class='op'>=</span> <span class='fu'><a href='makeTuneControlGrid.html'>makeTuneControlGrid</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>inner</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"Holdout"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>outer</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"CV"</span>, iters <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeTuneWrapper.html'>makeTuneWrapper</a></span><span class='op'>(</span><span class='va'>lrn</span>, resampling <span class='op'>=</span> <span class='va'>inner</span>, par.set <span class='op'>=</span> <span class='va'>ps</span>, control <span class='op'>=</span> <span class='va'>ctrl</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># nested resampling for evaluation</span></span>
+<span class='r-in'><span class='co'># we also extract tuned hyper pars in each iteration and by that the resampling indices</span></span>
+<span class='r-in'><span class='va'>r</span> <span class='op'>=</span> <span class='fu'><a href='resample.html'>resample</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>task</span>, <span class='va'>outer</span>, extract <span class='op'>=</span> <span class='va'>getTuneResult</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Resampling: cross-validation</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Measures:             mmce      </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune] Started tuning learner classif.rpart for parameter set:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>              Type len Def   Constr Req Tunable Trafo</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> cp       discrete   -   - 0.05,0.1   -    TRUE     -</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> minsplit discrete   -   -    10,20   -    TRUE     -</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> With control class: TuneControlGrid</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Imputation value: 1</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-x] 1: cp=0.05; minsplit=10</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-y] 1: mmce.test.mean=0.0400000; time: 0.0 min</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-x] 2: cp=0.1; minsplit=10</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-x] 3: cp=0.05; minsplit=20</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-x] 4: cp=0.1; minsplit=20</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-y] 4: mmce.test.mean=0.0400000; time: 0.0 min</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune] Result: cp=0.05; minsplit=20 : mmce.test.mean=0.0400000</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Resample] iter 1:    0.0800000 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune] Started tuning learner classif.rpart for parameter set:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>              Type len Def   Constr Req Tunable Trafo</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> cp       discrete   -   - 0.05,0.1   -    TRUE     -</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> minsplit discrete   -   -    10,20   -    TRUE     -</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> With control class: TuneControlGrid</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Imputation value: 1</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-x] 1: cp=0.05; minsplit=10</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-y] 1: mmce.test.mean=0.0800000; time: 0.0 min</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-x] 2: cp=0.1; minsplit=10</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-y] 2: mmce.test.mean=0.0800000; time: 0.0 min</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-x] 3: cp=0.05; minsplit=20</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-y] 3: mmce.test.mean=0.0800000; time: 0.0 min</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-x] 4: cp=0.1; minsplit=20</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune-y] 4: mmce.test.mean=0.0800000; time: 0.0 min</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Tune] Result: cp=0.05; minsplit=10 : mmce.test.mean=0.0800000</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Resample] iter 2:    0.0400000 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Aggregated Result: mmce.test.mean=0.0600000</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='co'># get tuning indices</span></span>
+<span class='r-in'><span class='fu'>getResamplingIndices</span><span class='op'>(</span><span class='va'>r</span>, inner <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]$train.inds</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]$train.inds[[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1]  53  70 140   4 130 149 121 102  43 144 134 146 101 125  63 137 141 147  37</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [20]  89  80 118 113  95  58  54  71  12   6  56 128  68  96  92  17  86  29  69</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [39]  27 104  72  30 112 103 110   7  35  14  32 129</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]$test.inds</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]$test.inds[[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1]  67  39   2  18 105 127 116  51 123  50  79  62  55  23  94   5  90   1  40</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [20] 106 148  11  42  34  44</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]$train.inds</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]$train.inds[[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1]  83  82  97 138 109  10  22  16  87  24  31 143  48  13 114  66   3  33 142</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [20]  75  15  41 126  20   9  60  26  81 132 122  84 145 136 150  93 139  74 120</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [39]  52  78  91  61  38  28  49  21  36  19 115 117</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]$test.inds</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]$test.inds[[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1]  76 107 100 131  46 124  64  99  73  77 111 135 108  45  88  98  57  25  85</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [20]  65 119   8 133  59  47</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

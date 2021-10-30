@@ -347,14 +347,14 @@ discretized into specific values.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 The name of the learner from <code>caret</code>
 (cf. <a href='https://topepo.github.io/caret/available-models.html'>https://topepo.github.io/caret/available-models.html</a>). Note that the
 names in <code>caret</code> often differ from the ones in <code>mlr</code>.</p></td>
     </tr>
     <tr>
       <th>length</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 A length / precision parameter which is used by <code>caret</code> for
 generating the grid of tuning parameters. <code>caret</code> generates either as
 many values per tuning parameter / dimension as defined by <code>length</code>
@@ -367,7 +367,7 @@ Learning task, which might be requested for creating the tuning grid.</p></td>
     </tr>
     <tr>
       <th>discretize</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should the numerical parameters be discretized? Alternatively, they will
 be defined by their lower and upper bounds. The default is <code>TRUE</code>.</p></td>
     </tr>
@@ -375,7 +375,7 @@ be defined by their lower and upper bounds. The default is <code>TRUE</code>.</p
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<code><a href='https://rdrr.io/r/base/list.html'>list(2)</a></code>). A list of parameters:</p><ul>
+    <p>(<code>list(2)</code>). A list of parameters:</p><ul>
 <li><p><code>par.vals</code> contains a list of all constant tuning parameters</p></li>
 <li><p><code>par.set</code> is a <a href='https://paramhelpers.mlr-org.com/reference/makeParamSet.html'>ParamHelpers::ParamSet</a>, containing all the configurable
 tuning parameters</p></li>
@@ -383,36 +383,43 @@ tuning parameters</p></li>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"caret"</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"mlbench"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/topepo/caret/'>caret</a></span><span class='op'>)</span>
-  <span class='va'>classifTask</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span>
-
-  <span class='co'># (1) classification (random forest) with discretized parameters</span>
-  <span class='fu'>getCaretParamSet</span><span class='op'>(</span><span class='st'>"rf"</span>, length <span class='op'>=</span> <span class='fl'>9L</span>, task <span class='op'>=</span> <span class='va'>classifTask</span>, discretize <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
-  <span class='co'># (2) regression (gradient boosting machine) without discretized parameters</span>
-  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mlbench</span><span class='op'>)</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>BostonHousing</span><span class='op'>)</span>
-  <span class='va'>regrTask</span> <span class='op'>=</span> <span class='fu'><a href='makeRegrTask.html'>makeRegrTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>BostonHousing</span>, target <span class='op'>=</span> <span class='st'>"medv"</span><span class='op'>)</span>
-  <span class='fu'>getCaretParamSet</span><span class='op'>(</span><span class='st'>"gbm"</span>, length <span class='op'>=</span> <span class='fl'>9L</span>, task <span class='op'>=</span> <span class='va'>regrTask</span>, discretize <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: caret</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: ggplot2</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘caret’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:mlr’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    train</span></div><div class='output co'>#&gt; note: only 3 unique complexity parameters in default grid. Truncating the grid to 3 .
-#&gt; </div><div class='output co'>#&gt; $par.vals
-#&gt; $par.vals$shrinkage
-#&gt; [1] 0.1
-#&gt; 
-#&gt; $par.vals$n.minobsinnode
-#&gt; [1] 10
-#&gt; 
-#&gt; 
-#&gt; $par.set
-#&gt;                      Type len Def    Constr Req Tunable Trafo
-#&gt; interaction.depth integer   -   -    1 to 9   -    TRUE     -
-#&gt; n.trees           numeric   -   - 50 to 450   -    TRUE     -
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"caret"</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"mlbench"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/topepo/caret/'>caret</a></span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>classifTask</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># (1) classification (random forest) with discretized parameters</span></span>
+<span class='r-in'>  <span class='fu'>getCaretParamSet</span><span class='op'>(</span><span class='st'>"rf"</span>, length <span class='op'>=</span> <span class='fl'>9L</span>, task <span class='op'>=</span> <span class='va'>classifTask</span>, discretize <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># (2) regression (gradient boosting machine) without discretized parameters</span></span>
+<span class='r-in'>  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mlbench</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>BostonHousing</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>regrTask</span> <span class='op'>=</span> <span class='fu'><a href='makeRegrTask.html'>makeRegrTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>BostonHousing</span>, target <span class='op'>=</span> <span class='st'>"medv"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>getCaretParamSet</span><span class='op'>(</span><span class='st'>"gbm"</span>, length <span class='op'>=</span> <span class='fl'>9L</span>, task <span class='op'>=</span> <span class='va'>regrTask</span>, discretize <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required namespace: caret</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: ggplot2</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: lattice</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Attaching package: ‘caret’</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following object is masked from ‘package:mlr’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     train</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> note: only 3 unique complexity parameters in default grid. Truncating the grid to 3 .</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $par.vals</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $par.vals$shrinkage</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $par.vals$n.minobsinnode</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $par.set</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      Type len Def    Constr Req Tunable Trafo</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> interaction.depth integer   -   -    1 to 9   -    TRUE     -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> n.trees           numeric   -   - 50 to 450   -    TRUE     -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

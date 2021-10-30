@@ -351,7 +351,7 @@ before predicting.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -359,7 +359,7 @@ If you pass a string the learner will be created via <a href='makeLearner.html'>
       <th>classes</th>
       <td><p>(named <a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 Named list containing imputation techniques for classes of columns.
-E.g. <code><a href='https://rdrr.io/r/base/list.html'>list(numeric = imputeMedian())</a></code>.</p></td>
+E.g. <code>list(numeric = imputeMedian())</code>.</p></td>
     </tr>
     <tr>
       <th>cols</th>
@@ -372,24 +372,24 @@ in the data column referenced by the list element's name. Overrules imputation s
       <th>dummy.classes</th>
       <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Classes of columns to create dummy columns for.
-Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
+Default is <code>character(0)</code>.</p></td>
     </tr>
     <tr>
       <th>dummy.cols</th>
       <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Column names to create dummy columns (containing binary missing indicator) for.
-Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
+Default is <code>character(0)</code>.</p></td>
     </tr>
     <tr>
       <th>dummy.type</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 How dummy columns are encoded. Either as 0/1 with type &#8220;numeric&#8221;
 or as &#8220;factor&#8221;.
 Default is &#8220;factor&#8221;.</p></td>
     </tr>
     <tr>
       <th>force.dummies</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Force dummy creation even if the respective data column does not
 contain any NAs. Note that (a) most learners will complain about
 constant columns created this way but (b) your feature set might
@@ -398,14 +398,14 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>impute.new.levels</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 If new, unencountered factor level occur during reimputation,
 should these be handled as NAs and then be imputed the same way?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>recode.factor.levels</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Recode factor levels after reimputation, so they match the respective element of
 <code>lvls</code> (in the description object) and therefore match the levels of the
 feature factor in the training data after imputation?.

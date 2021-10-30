@@ -354,7 +354,7 @@ Input data.</p></td>
       <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Name of the column(s) specifying the response.
 Target columns will not be capped.
-Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
+Default is <code>character(0)</code>.</p></td>
     </tr>
     <tr>
       <th>cols</th>
@@ -364,21 +364,21 @@ Default is all numeric columns.</p></td>
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+      <td><p>(<code>numeric(1)</code>)<br />
 Threshold for capping.
 Every entry whose absolute value is equal or larger is converted.
 Default is <code>Inf</code>.</p></td>
     </tr>
     <tr>
       <th>impute</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+      <td><p>(<code>numeric(1)</code>)<br />
 Replacement value for large entries.
 Large negative entries are converted to <code>-impute</code>.
 Default is <code>threshold</code>.</p></td>
     </tr>
     <tr>
       <th>what</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 What kind of entries are affected?
 &#8220;abs&#8221; means <code>abs(x) &gt; threshold</code>,
 &#8220;pos&#8221; means <code>abs(x) &gt; threshold &amp;&amp; x &gt; 0</code>,
@@ -402,158 +402,159 @@ Default is &#8220;abs&#8221;.</p></td>
 <code><a href='summarizeLevels.html'>summarizeLevels</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>capLargeValues</span><span class='op'>(</span><span class='va'>iris</span>, threshold <span class='op'>=</span> <span class='fl'>5</span>, impute <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
-#&gt; 1            5.0         3.5          1.4         0.2     setosa
-#&gt; 2            4.9         3.0          1.4         0.2     setosa
-#&gt; 3            4.7         3.2          1.3         0.2     setosa
-#&gt; 4            4.6         3.1          1.5         0.2     setosa
-#&gt; 5            5.0         3.6          1.4         0.2     setosa
-#&gt; 6            5.0         3.9          1.7         0.4     setosa
-#&gt; 7            4.6         3.4          1.4         0.3     setosa
-#&gt; 8            5.0         3.4          1.5         0.2     setosa
-#&gt; 9            4.4         2.9          1.4         0.2     setosa
-#&gt; 10           4.9         3.1          1.5         0.1     setosa
-#&gt; 11           5.0         3.7          1.5         0.2     setosa
-#&gt; 12           4.8         3.4          1.6         0.2     setosa
-#&gt; 13           4.8         3.0          1.4         0.1     setosa
-#&gt; 14           4.3         3.0          1.1         0.1     setosa
-#&gt; 15           5.0         4.0          1.2         0.2     setosa
-#&gt; 16           5.0         4.4          1.5         0.4     setosa
-#&gt; 17           5.0         3.9          1.3         0.4     setosa
-#&gt; 18           5.0         3.5          1.4         0.3     setosa
-#&gt; 19           5.0         3.8          1.7         0.3     setosa
-#&gt; 20           5.0         3.8          1.5         0.3     setosa
-#&gt; 21           5.0         3.4          1.7         0.2     setosa
-#&gt; 22           5.0         3.7          1.5         0.4     setosa
-#&gt; 23           4.6         3.6          1.0         0.2     setosa
-#&gt; 24           5.0         3.3          1.7         0.5     setosa
-#&gt; 25           4.8         3.4          1.9         0.2     setosa
-#&gt; 26           5.0         3.0          1.6         0.2     setosa
-#&gt; 27           5.0         3.4          1.6         0.4     setosa
-#&gt; 28           5.0         3.5          1.5         0.2     setosa
-#&gt; 29           5.0         3.4          1.4         0.2     setosa
-#&gt; 30           4.7         3.2          1.6         0.2     setosa
-#&gt; 31           4.8         3.1          1.6         0.2     setosa
-#&gt; 32           5.0         3.4          1.5         0.4     setosa
-#&gt; 33           5.0         4.1          1.5         0.1     setosa
-#&gt; 34           5.0         4.2          1.4         0.2     setosa
-#&gt; 35           4.9         3.1          1.5         0.2     setosa
-#&gt; 36           5.0         3.2          1.2         0.2     setosa
-#&gt; 37           5.0         3.5          1.3         0.2     setosa
-#&gt; 38           4.9         3.6          1.4         0.1     setosa
-#&gt; 39           4.4         3.0          1.3         0.2     setosa
-#&gt; 40           5.0         3.4          1.5         0.2     setosa
-#&gt; 41           5.0         3.5          1.3         0.3     setosa
-#&gt; 42           4.5         2.3          1.3         0.3     setosa
-#&gt; 43           4.4         3.2          1.3         0.2     setosa
-#&gt; 44           5.0         3.5          1.6         0.6     setosa
-#&gt; 45           5.0         3.8          1.9         0.4     setosa
-#&gt; 46           4.8         3.0          1.4         0.3     setosa
-#&gt; 47           5.0         3.8          1.6         0.2     setosa
-#&gt; 48           4.6         3.2          1.4         0.2     setosa
-#&gt; 49           5.0         3.7          1.5         0.2     setosa
-#&gt; 50           5.0         3.3          1.4         0.2     setosa
-#&gt; 51           5.0         3.2          4.7         1.4 versicolor
-#&gt; 52           5.0         3.2          4.5         1.5 versicolor
-#&gt; 53           5.0         3.1          4.9         1.5 versicolor
-#&gt; 54           5.0         2.3          4.0         1.3 versicolor
-#&gt; 55           5.0         2.8          4.6         1.5 versicolor
-#&gt; 56           5.0         2.8          4.5         1.3 versicolor
-#&gt; 57           5.0         3.3          4.7         1.6 versicolor
-#&gt; 58           4.9         2.4          3.3         1.0 versicolor
-#&gt; 59           5.0         2.9          4.6         1.3 versicolor
-#&gt; 60           5.0         2.7          3.9         1.4 versicolor
-#&gt; 61           5.0         2.0          3.5         1.0 versicolor
-#&gt; 62           5.0         3.0          4.2         1.5 versicolor
-#&gt; 63           5.0         2.2          4.0         1.0 versicolor
-#&gt; 64           5.0         2.9          4.7         1.4 versicolor
-#&gt; 65           5.0         2.9          3.6         1.3 versicolor
-#&gt; 66           5.0         3.1          4.4         1.4 versicolor
-#&gt; 67           5.0         3.0          4.5         1.5 versicolor
-#&gt; 68           5.0         2.7          4.1         1.0 versicolor
-#&gt; 69           5.0         2.2          4.5         1.5 versicolor
-#&gt; 70           5.0         2.5          3.9         1.1 versicolor
-#&gt; 71           5.0         3.2          4.8         1.8 versicolor
-#&gt; 72           5.0         2.8          4.0         1.3 versicolor
-#&gt; 73           5.0         2.5          4.9         1.5 versicolor
-#&gt; 74           5.0         2.8          4.7         1.2 versicolor
-#&gt; 75           5.0         2.9          4.3         1.3 versicolor
-#&gt; 76           5.0         3.0          4.4         1.4 versicolor
-#&gt; 77           5.0         2.8          4.8         1.4 versicolor
-#&gt; 78           5.0         3.0          5.0         1.7 versicolor
-#&gt; 79           5.0         2.9          4.5         1.5 versicolor
-#&gt; 80           5.0         2.6          3.5         1.0 versicolor
-#&gt; 81           5.0         2.4          3.8         1.1 versicolor
-#&gt; 82           5.0         2.4          3.7         1.0 versicolor
-#&gt; 83           5.0         2.7          3.9         1.2 versicolor
-#&gt; 84           5.0         2.7          5.0         1.6 versicolor
-#&gt; 85           5.0         3.0          4.5         1.5 versicolor
-#&gt; 86           5.0         3.4          4.5         1.6 versicolor
-#&gt; 87           5.0         3.1          4.7         1.5 versicolor
-#&gt; 88           5.0         2.3          4.4         1.3 versicolor
-#&gt; 89           5.0         3.0          4.1         1.3 versicolor
-#&gt; 90           5.0         2.5          4.0         1.3 versicolor
-#&gt; 91           5.0         2.6          4.4         1.2 versicolor
-#&gt; 92           5.0         3.0          4.6         1.4 versicolor
-#&gt; 93           5.0         2.6          4.0         1.2 versicolor
-#&gt; 94           5.0         2.3          3.3         1.0 versicolor
-#&gt; 95           5.0         2.7          4.2         1.3 versicolor
-#&gt; 96           5.0         3.0          4.2         1.2 versicolor
-#&gt; 97           5.0         2.9          4.2         1.3 versicolor
-#&gt; 98           5.0         2.9          4.3         1.3 versicolor
-#&gt; 99           5.0         2.5          3.0         1.1 versicolor
-#&gt; 100          5.0         2.8          4.1         1.3 versicolor
-#&gt; 101          5.0         3.3          5.0         2.5  virginica
-#&gt; 102          5.0         2.7          5.0         1.9  virginica
-#&gt; 103          5.0         3.0          5.0         2.1  virginica
-#&gt; 104          5.0         2.9          5.0         1.8  virginica
-#&gt; 105          5.0         3.0          5.0         2.2  virginica
-#&gt; 106          5.0         3.0          5.0         2.1  virginica
-#&gt; 107          4.9         2.5          4.5         1.7  virginica
-#&gt; 108          5.0         2.9          5.0         1.8  virginica
-#&gt; 109          5.0         2.5          5.0         1.8  virginica
-#&gt; 110          5.0         3.6          5.0         2.5  virginica
-#&gt; 111          5.0         3.2          5.0         2.0  virginica
-#&gt; 112          5.0         2.7          5.0         1.9  virginica
-#&gt; 113          5.0         3.0          5.0         2.1  virginica
-#&gt; 114          5.0         2.5          5.0         2.0  virginica
-#&gt; 115          5.0         2.8          5.0         2.4  virginica
-#&gt; 116          5.0         3.2          5.0         2.3  virginica
-#&gt; 117          5.0         3.0          5.0         1.8  virginica
-#&gt; 118          5.0         3.8          5.0         2.2  virginica
-#&gt; 119          5.0         2.6          5.0         2.3  virginica
-#&gt; 120          5.0         2.2          5.0         1.5  virginica
-#&gt; 121          5.0         3.2          5.0         2.3  virginica
-#&gt; 122          5.0         2.8          4.9         2.0  virginica
-#&gt; 123          5.0         2.8          5.0         2.0  virginica
-#&gt; 124          5.0         2.7          4.9         1.8  virginica
-#&gt; 125          5.0         3.3          5.0         2.1  virginica
-#&gt; 126          5.0         3.2          5.0         1.8  virginica
-#&gt; 127          5.0         2.8          4.8         1.8  virginica
-#&gt; 128          5.0         3.0          4.9         1.8  virginica
-#&gt; 129          5.0         2.8          5.0         2.1  virginica
-#&gt; 130          5.0         3.0          5.0         1.6  virginica
-#&gt; 131          5.0         2.8          5.0         1.9  virginica
-#&gt; 132          5.0         3.8          5.0         2.0  virginica
-#&gt; 133          5.0         2.8          5.0         2.2  virginica
-#&gt; 134          5.0         2.8          5.0         1.5  virginica
-#&gt; 135          5.0         2.6          5.0         1.4  virginica
-#&gt; 136          5.0         3.0          5.0         2.3  virginica
-#&gt; 137          5.0         3.4          5.0         2.4  virginica
-#&gt; 138          5.0         3.1          5.0         1.8  virginica
-#&gt; 139          5.0         3.0          4.8         1.8  virginica
-#&gt; 140          5.0         3.1          5.0         2.1  virginica
-#&gt; 141          5.0         3.1          5.0         2.4  virginica
-#&gt; 142          5.0         3.1          5.0         2.3  virginica
-#&gt; 143          5.0         2.7          5.0         1.9  virginica
-#&gt; 144          5.0         3.2          5.0         2.3  virginica
-#&gt; 145          5.0         3.3          5.0         2.5  virginica
-#&gt; 146          5.0         3.0          5.0         2.3  virginica
-#&gt; 147          5.0         2.5          5.0         1.9  virginica
-#&gt; 148          5.0         3.0          5.0         2.0  virginica
-#&gt; 149          5.0         3.4          5.0         2.3  virginica
-#&gt; 150          5.0         3.0          5.0         1.8  virginica</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>capLargeValues</span><span class='op'>(</span><span class='va'>iris</span>, threshold <span class='op'>=</span> <span class='fl'>5</span>, impute <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1            5.0         3.5          1.4         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2            4.9         3.0          1.4         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3            4.7         3.2          1.3         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4            4.6         3.1          1.5         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5            5.0         3.6          1.4         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6            5.0         3.9          1.7         0.4     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7            4.6         3.4          1.4         0.3     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8            5.0         3.4          1.5         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9            4.4         2.9          1.4         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10           4.9         3.1          1.5         0.1     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11           5.0         3.7          1.5         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12           4.8         3.4          1.6         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13           4.8         3.0          1.4         0.1     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14           4.3         3.0          1.1         0.1     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15           5.0         4.0          1.2         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16           5.0         4.4          1.5         0.4     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17           5.0         3.9          1.3         0.4     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18           5.0         3.5          1.4         0.3     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19           5.0         3.8          1.7         0.3     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20           5.0         3.8          1.5         0.3     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21           5.0         3.4          1.7         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22           5.0         3.7          1.5         0.4     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23           4.6         3.6          1.0         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24           5.0         3.3          1.7         0.5     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25           4.8         3.4          1.9         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26           5.0         3.0          1.6         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27           5.0         3.4          1.6         0.4     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28           5.0         3.5          1.5         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29           5.0         3.4          1.4         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30           4.7         3.2          1.6         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31           4.8         3.1          1.6         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32           5.0         3.4          1.5         0.4     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 33           5.0         4.1          1.5         0.1     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 34           5.0         4.2          1.4         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 35           4.9         3.1          1.5         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 36           5.0         3.2          1.2         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 37           5.0         3.5          1.3         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 38           4.9         3.6          1.4         0.1     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 39           4.4         3.0          1.3         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40           5.0         3.4          1.5         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 41           5.0         3.5          1.3         0.3     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 42           4.5         2.3          1.3         0.3     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 43           4.4         3.2          1.3         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 44           5.0         3.5          1.6         0.6     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 45           5.0         3.8          1.9         0.4     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 46           4.8         3.0          1.4         0.3     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 47           5.0         3.8          1.6         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 48           4.6         3.2          1.4         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 49           5.0         3.7          1.5         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 50           5.0         3.3          1.4         0.2     setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 51           5.0         3.2          4.7         1.4 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 52           5.0         3.2          4.5         1.5 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 53           5.0         3.1          4.9         1.5 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 54           5.0         2.3          4.0         1.3 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 55           5.0         2.8          4.6         1.5 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 56           5.0         2.8          4.5         1.3 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 57           5.0         3.3          4.7         1.6 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 58           4.9         2.4          3.3         1.0 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 59           5.0         2.9          4.6         1.3 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60           5.0         2.7          3.9         1.4 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 61           5.0         2.0          3.5         1.0 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 62           5.0         3.0          4.2         1.5 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 63           5.0         2.2          4.0         1.0 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 64           5.0         2.9          4.7         1.4 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 65           5.0         2.9          3.6         1.3 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 66           5.0         3.1          4.4         1.4 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 67           5.0         3.0          4.5         1.5 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 68           5.0         2.7          4.1         1.0 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 69           5.0         2.2          4.5         1.5 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 70           5.0         2.5          3.9         1.1 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 71           5.0         3.2          4.8         1.8 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 72           5.0         2.8          4.0         1.3 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 73           5.0         2.5          4.9         1.5 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 74           5.0         2.8          4.7         1.2 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 75           5.0         2.9          4.3         1.3 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 76           5.0         3.0          4.4         1.4 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 77           5.0         2.8          4.8         1.4 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 78           5.0         3.0          5.0         1.7 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 79           5.0         2.9          4.5         1.5 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 80           5.0         2.6          3.5         1.0 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 81           5.0         2.4          3.8         1.1 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 82           5.0         2.4          3.7         1.0 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 83           5.0         2.7          3.9         1.2 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 84           5.0         2.7          5.0         1.6 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 85           5.0         3.0          4.5         1.5 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 86           5.0         3.4          4.5         1.6 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 87           5.0         3.1          4.7         1.5 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 88           5.0         2.3          4.4         1.3 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 89           5.0         3.0          4.1         1.3 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 90           5.0         2.5          4.0         1.3 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 91           5.0         2.6          4.4         1.2 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 92           5.0         3.0          4.6         1.4 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 93           5.0         2.6          4.0         1.2 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 94           5.0         2.3          3.3         1.0 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95           5.0         2.7          4.2         1.3 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 96           5.0         3.0          4.2         1.2 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 97           5.0         2.9          4.2         1.3 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 98           5.0         2.9          4.3         1.3 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 99           5.0         2.5          3.0         1.1 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 100          5.0         2.8          4.1         1.3 versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 101          5.0         3.3          5.0         2.5  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 102          5.0         2.7          5.0         1.9  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 103          5.0         3.0          5.0         2.1  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 104          5.0         2.9          5.0         1.8  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 105          5.0         3.0          5.0         2.2  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 106          5.0         3.0          5.0         2.1  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 107          4.9         2.5          4.5         1.7  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 108          5.0         2.9          5.0         1.8  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 109          5.0         2.5          5.0         1.8  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 110          5.0         3.6          5.0         2.5  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 111          5.0         3.2          5.0         2.0  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 112          5.0         2.7          5.0         1.9  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 113          5.0         3.0          5.0         2.1  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 114          5.0         2.5          5.0         2.0  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 115          5.0         2.8          5.0         2.4  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 116          5.0         3.2          5.0         2.3  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 117          5.0         3.0          5.0         1.8  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 118          5.0         3.8          5.0         2.2  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 119          5.0         2.6          5.0         2.3  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 120          5.0         2.2          5.0         1.5  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 121          5.0         3.2          5.0         2.3  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 122          5.0         2.8          4.9         2.0  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 123          5.0         2.8          5.0         2.0  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 124          5.0         2.7          4.9         1.8  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 125          5.0         3.3          5.0         2.1  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 126          5.0         3.2          5.0         1.8  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 127          5.0         2.8          4.8         1.8  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 128          5.0         3.0          4.9         1.8  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 129          5.0         2.8          5.0         2.1  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 130          5.0         3.0          5.0         1.6  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 131          5.0         2.8          5.0         1.9  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 132          5.0         3.8          5.0         2.0  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 133          5.0         2.8          5.0         2.2  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 134          5.0         2.8          5.0         1.5  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 135          5.0         2.6          5.0         1.4  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 136          5.0         3.0          5.0         2.3  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 137          5.0         3.4          5.0         2.4  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 138          5.0         3.1          5.0         1.8  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 139          5.0         3.0          4.8         1.8  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 140          5.0         3.1          5.0         2.1  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 141          5.0         3.1          5.0         2.4  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 142          5.0         3.1          5.0         2.3  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 143          5.0         2.7          5.0         1.9  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 144          5.0         3.2          5.0         2.3  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 145          5.0         3.3          5.0         2.5  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 146          5.0         3.0          5.0         2.3  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 147          5.0         2.5          5.0         1.9  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 148          5.0         3.0          5.0         2.0  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 149          5.0         3.4          5.0         2.3  virginica</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 150          5.0         3.0          5.0         1.8  virginica</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

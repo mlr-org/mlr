@@ -346,7 +346,7 @@ Filter values.</p></td>
     </tr>
     <tr>
       <th>sort</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 Available options are:</p><ul>
 <li><p><code>"dec"</code>-&gt; descending</p></li>
 <li><p><code>"inc"</code> -&gt; increasing</p></li>
@@ -357,19 +357,19 @@ Available options are:</p><ul>
     </tr>
     <tr>
       <th>n.show</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 Number of features (maximal) to show.
 Default is to plot all features.</p></td>
     </tr>
     <tr>
       <th>filter</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)
+      <td><p>(<code>character(1)</code>)
 In case <code>fvalues</code> contains multiple filter methods, which method should be
 plotted?</p></td>
     </tr>
     <tr>
       <th>feat.type.cols</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Whether to color different feature types (e.g. numeric | factor).
 Default is to use no colors (<code>feat.type.cols = FALSE</code>).</p></td>
     </tr>
@@ -399,9 +399,10 @@ Default is to use no colors (<code>feat.type.cols = FALSE</code>).</p></td>
 <code><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>fv</span> <span class='op'>=</span> <span class='fu'><a href='generateFilterValuesData.html'>generateFilterValuesData</a></span><span class='op'>(</span><span class='va'>iris.task</span>, method <span class='op'>=</span> <span class='st'>"variance"</span><span class='op'>)</span>
-<span class='fu'>plotFilterValues</span><span class='op'>(</span><span class='va'>fv</span><span class='op'>)</span>
-</div><div class='img'><img src='plotFilterValues-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>fv</span> <span class='op'>=</span> <span class='fu'><a href='generateFilterValuesData.html'>generateFilterValuesData</a></span><span class='op'>(</span><span class='va'>iris.task</span>, method <span class='op'>=</span> <span class='st'>"variance"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>plotFilterValues</span><span class='op'>(</span><span class='va'>fv</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='plotFilterValues-1.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

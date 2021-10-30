@@ -377,13 +377,13 @@ Input data.</p></td>
       <th>target</th>
       <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Name of the column(s) specifying the response.
-Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
+Default is <code>character(0)</code>.</p></td>
     </tr>
     <tr>
       <th>classes</th>
       <td><p>(named <a href='https://rdrr.io/r/base/list.html'>list</a>)<br />
 Named list containing imputation techniques for classes of columns.
-E.g. <code><a href='https://rdrr.io/r/base/list.html'>list(numeric = imputeMedian())</a></code>.</p></td>
+E.g. <code>list(numeric = imputeMedian())</code>.</p></td>
     </tr>
     <tr>
       <th>cols</th>
@@ -396,24 +396,24 @@ in the data column referenced by the list element's name. Overrules imputation s
       <th>dummy.classes</th>
       <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Classes of columns to create dummy columns for.
-Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
+Default is <code>character(0)</code>.</p></td>
     </tr>
     <tr>
       <th>dummy.cols</th>
       <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
 Column names to create dummy columns (containing binary missing indicator) for.
-Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
+Default is <code>character(0)</code>.</p></td>
     </tr>
     <tr>
       <th>dummy.type</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 How dummy columns are encoded. Either as 0/1 with type &#8220;numeric&#8221;
 or as &#8220;factor&#8221;.
 Default is &#8220;factor&#8221;.</p></td>
     </tr>
     <tr>
       <th>force.dummies</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Force dummy creation even if the respective data column does not
 contain any NAs. Note that (a) most learners will complain about
 constant columns created this way but (b) your feature set might
@@ -422,14 +422,14 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>impute.new.levels</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 If new, unencountered factor level occur during reimputation,
 should these be handled as NAs and then be imputed the same way?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>recode.factor.levels</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Recode factor levels after reimputation, so they match the respective element of
 <code>lvls</code> (in the description object) and therefore match the levels of the
 feature factor in the training data after imputation?.
@@ -453,8 +453,8 @@ Default is <code>TRUE</code>.</p></td>
 including newly created ones during imputation.</p></dd>
 <dt>impute (named <a href='https://rdrr.io/r/base/list.html'>list</a>)</dt><dd><p>Mapping of column names to imputation functions.</p></dd>
 <dt>dummies (named <a href='https://rdrr.io/r/base/list.html'>list</a>)</dt><dd><p>Mapping of column names to imputation functions.</p></dd>
-<dt>impute.new.levels (<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)</dt><dd><p>See argument.</p></dd>
-<dt>recode.factor.levels (<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)</dt><dd><p>See argument.</p></dd>
+<dt>impute.new.levels (<code>logical(1)</code>)</dt><dd><p>See argument.</p></dd>
+<dt>recode.factor.levels (<code>logical(1)</code>)</dt><dd><p>See argument.</p></dd>
 
 </dl>
 
@@ -467,15 +467,17 @@ including newly created ones during imputation.</p></dd>
 <code><a href='reimpute.html'>reimpute</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='cn'>NA</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span>, z <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>
-<span class='va'>imputed</span> <span class='op'>=</span> <span class='fu'>impute</span><span class='op'>(</span><span class='va'>df</span>, target <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>, cols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>99</span>, y <span class='op'>=</span> <span class='fu'><a href='imputations.html'>imputeMode</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>imputed</span><span class='op'>$</span><span class='va'>data</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    x y z
-#&gt; 1  1 a 1
-#&gt; 2  1 a 2
-#&gt; 3 99 b 3</div><div class='input'><span class='fu'><a href='reimpute.html'>reimpute</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='cn'>NA_real_</span><span class='op'>)</span>, <span class='va'>imputed</span><span class='op'>$</span><span class='va'>desc</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    x y  z
-#&gt; 1 99 a NA</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='cn'>NA</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span>, z <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>imputed</span> <span class='op'>=</span> <span class='fu'>impute</span><span class='op'>(</span><span class='va'>df</span>, target <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>, cols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>99</span>, y <span class='op'>=</span> <span class='fu'><a href='imputations.html'>imputeMode</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>imputed</span><span class='op'>$</span><span class='va'>data</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    x y z</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1 a 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  1 a 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 99 b 3</span>
+<span class='r-in'><span class='fu'><a href='reimpute.html'>reimpute</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='cn'>NA_real_</span><span class='op'>)</span>, <span class='va'>imputed</span><span class='op'>$</span><span class='va'>desc</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    x y  z</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 99 a NA</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

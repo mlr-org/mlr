@@ -351,38 +351,38 @@ object, which can be used like any other learner object. Internally uses
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>fw.method</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 Filter method. See <a href='listFilterMethods.html'>listFilterMethods</a>.
 Default is &#8220;randomForestSRC_importance&#8221;.</p></td>
     </tr>
     <tr>
       <th>fw.base.methods</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 Simple Filter methods for ensemble filters. See <a href='listFilterMethods.html'>listFilterMethods</a>. Can
 only be used in combination with ensemble filters. See
 <a href='listFilterEnsembleMethods.html'>listFilterEnsembleMethods</a>.</p></td>
     </tr>
     <tr>
       <th>fw.perc</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+      <td><p>(<code>numeric(1)</code>)<br />
 If set, select <code>fw.perc</code>*100 top scoring features. Mutually exclusive with
 arguments <code>fw.abs</code>, <code>fw.threshold</code> and `fw.fun.</p></td>
     </tr>
     <tr>
       <th>fw.abs</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+      <td><p>(<code>numeric(1)</code>)<br />
 If set, select <code>fw.abs</code> top scoring features.
 Mutually exclusive with arguments <code>fw.perc</code>, <code>fw.threshold</code> and <code>fw.fun</code>.</p></td>
     </tr>
     <tr>
       <th>fw.threshold</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+      <td><p>(<code>numeric(1)</code>)<br />
 If set, select features whose score exceeds <code>fw.threshold</code>. Mutually
 exclusive with arguments <code>fw.perc</code>, <code>fw.abs</code> and <code>fw.fun</code>.</p></td>
     </tr>
@@ -406,7 +406,7 @@ included regardless of their scores</p></td>
     </tr>
     <tr>
       <th>cache</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> | <a href='https://rdrr.io/r/base/logical.html'>logical</a>)<br />
+      <td><p>(<code>character(1)</code> | <a href='https://rdrr.io/r/base/logical.html'>logical</a>)<br />
 Whether to use caching during
 filter value creation. See details.</p></td>
     </tr>
@@ -479,69 +479,95 @@ the same cache at the same time.</p>
 <code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span>
-<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.lda"</span><span class='op'>)</span>
-<span class='va'>inner</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"Holdout"</span><span class='op'>)</span>
-<span class='va'>outer</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"CV"</span>, iters <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'>makeFilterWrapper</span><span class='op'>(</span><span class='va'>lrn</span>, fw.perc <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
-<span class='va'>mod</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>task</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in x[0, , drop = FALSE]: incorrect number of dimensions</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in getFilteredFeatures(mod): object 'mod' not found</span></div><div class='input'><span class='co'># now nested resampling, where we extract the features that the filter method selected</span>
-<span class='va'>r</span> <span class='op'>=</span> <span class='fu'><a href='resample.html'>resample</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>task</span>, <span class='va'>outer</span>, extract <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-<span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0400000</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>$</span><span class='va'>extract</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] "Petal.Length" "Petal.Width" 
-#&gt; 
-#&gt; [[2]]
-#&gt; [1] "Petal.Length" "Petal.Width" 
-#&gt; </div><div class='input'>
-<span class='co'># usage of an ensemble filter</span>
-<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.lda"</span><span class='op'>)</span>
-<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'>makeFilterWrapper</span><span class='op'>(</span><span class='va'>lrn</span>, fw.method <span class='op'>=</span> <span class='st'>"E-Borda"</span>,
-  fw.base.methods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span><span class='op'>)</span>,
-  fw.perc <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
-<span class='va'>r</span> <span class='op'>=</span> <span class='fu'><a href='resample.html'>resample</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>task</span>, <span class='va'>outer</span>, extract <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-<span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0400000</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>$</span><span class='va'>extract</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] "Petal.Length" "Petal.Width" 
-#&gt; 
-#&gt; [[2]]
-#&gt; [1] "Petal.Length" "Petal.Width" 
-#&gt; </div><div class='input'>
-<span class='co'># usage of a custom thresholding function</span>
-<span class='va'>biggest_gap</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>values</span>, <span class='va'>diff</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>gap_size</span> <span class='op'>=</span> <span class='fl'>0</span>
-  <span class='va'>gap_location</span> <span class='op'>=</span> <span class='fl'>0</span>
-
-  <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='op'>(</span><span class='va'>diff</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>values</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-    <span class='va'>gap</span> <span class='op'>=</span> <span class='va'>values</span><span class='op'>[[</span><span class='va'>i</span> <span class='op'>-</span> <span class='va'>diff</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span> <span class='va'>values</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span>
-    <span class='kw'>if</span> <span class='op'>(</span><span class='va'>gap</span> <span class='op'>&gt;</span> <span class='va'>gap_size</span><span class='op'>)</span> <span class='op'>{</span>
-      <span class='va'>gap_size</span> <span class='op'>=</span> <span class='va'>gap</span>
-      <span class='va'>gap_location</span> <span class='op'>=</span> <span class='va'>i</span> <span class='op'>-</span> <span class='fl'>1</span>
-    <span class='op'>}</span>
-  <span class='op'>}</span>
-  <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>gap_location</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.lda"</span><span class='op'>)</span>
-<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'>makeFilterWrapper</span><span class='op'>(</span><span class='va'>lrn</span>, fw.method <span class='op'>=</span> <span class='st'>"randomForestSRC_importance"</span>,
-  fw.fun <span class='op'>=</span> <span class='va'>biggest_gap</span>, fw.fun.args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"diff"</span> <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>r</span> <span class='op'>=</span> <span class='fu'><a href='resample.html'>resample</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>task</span>, <span class='va'>outer</span>, extract <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-<span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0266667 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0400000</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>$</span><span class='va'>extract</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] "Petal.Length" "Petal.Width" 
-#&gt; 
-#&gt; [[2]]
-#&gt; [1] "Petal.Length" "Petal.Width" 
-#&gt; </div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.lda"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>inner</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"Holdout"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>outer</span> <span class='op'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span><span class='op'>(</span><span class='st'>"CV"</span>, iters <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'>makeFilterWrapper</span><span class='op'>(</span><span class='va'>lrn</span>, fw.perc <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mod</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>task</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in x[0, , drop = FALSE]:</span> incorrect number of dimensions</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in getFilteredFeatures(mod):</span> object 'mod' not found</span>
+<span class='r-in'><span class='co'># now nested resampling, where we extract the features that the filter method selected</span></span>
+<span class='r-in'><span class='va'>r</span> <span class='op'>=</span> <span class='fu'><a href='resample.html'>resample</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>task</span>, <span class='va'>outer</span>, extract <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Resampling: cross-validation</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Measures:             mmce      </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Resample] iter 1:    0.0533333 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Resample] iter 2:    0.0266667 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Aggregated Result: mmce.test.mean=0.0400000</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>$</span><span class='va'>extract</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Petal.Length" "Petal.Width" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Petal.Length" "Petal.Width" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># usage of an ensemble filter</span></span>
+<span class='r-in'><span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.lda"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'>makeFilterWrapper</span><span class='op'>(</span><span class='va'>lrn</span>, fw.method <span class='op'>=</span> <span class='st'>"E-Borda"</span>,</span>
+<span class='r-in'>  fw.base.methods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"FSelectorRcpp_gain.ratio"</span>, <span class='st'>"FSelectorRcpp_information.gain"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  fw.perc <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>r</span> <span class='op'>=</span> <span class='fu'><a href='resample.html'>resample</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>task</span>, <span class='va'>outer</span>, extract <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Resampling: cross-validation</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Measures:             mmce      </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Resample] iter 1:    0.0533333 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Resample] iter 2:    0.0266667 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Aggregated Result: mmce.test.mean=0.0400000</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>$</span><span class='va'>extract</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Petal.Length" "Petal.Width" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Petal.Length" "Petal.Width" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># usage of a custom thresholding function</span></span>
+<span class='r-in'><span class='va'>biggest_gap</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>values</span>, <span class='va'>diff</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='va'>gap_size</span> <span class='op'>=</span> <span class='fl'>0</span></span>
+<span class='r-in'>  <span class='va'>gap_location</span> <span class='op'>=</span> <span class='fl'>0</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='op'>(</span><span class='va'>diff</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>values</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>    <span class='va'>gap</span> <span class='op'>=</span> <span class='va'>values</span><span class='op'>[[</span><span class='va'>i</span> <span class='op'>-</span> <span class='va'>diff</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>-</span> <span class='va'>values</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span></span>
+<span class='r-in'>    <span class='kw'>if</span> <span class='op'>(</span><span class='va'>gap</span> <span class='op'>&gt;</span> <span class='va'>gap_size</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>      <span class='va'>gap_size</span> <span class='op'>=</span> <span class='va'>gap</span></span>
+<span class='r-in'>      <span class='va'>gap_location</span> <span class='op'>=</span> <span class='va'>i</span> <span class='op'>-</span> <span class='fl'>1</span></span>
+<span class='r-in'>    <span class='op'>}</span></span>
+<span class='r-in'>  <span class='op'>}</span></span>
+<span class='r-in'>  <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>gap_location</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.lda"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'>makeFilterWrapper</span><span class='op'>(</span><span class='va'>lrn</span>, fw.method <span class='op'>=</span> <span class='st'>"randomForestSRC_importance"</span>,</span>
+<span class='r-in'>  fw.fun <span class='op'>=</span> <span class='va'>biggest_gap</span>, fw.fun.args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"diff"</span> <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>r</span> <span class='op'>=</span> <span class='fu'><a href='resample.html'>resample</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>task</span>, <span class='va'>outer</span>, extract <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Resampling: cross-validation</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Measures:             mmce      </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Resample] iter 1:    0.0266667 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> [Resample] iter 2:    0.0533333 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Aggregated Result: mmce.test.mean=0.0400000</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>$</span><span class='va'>extract</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Petal.Length" "Petal.Width" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Petal.Length" "Petal.Width" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

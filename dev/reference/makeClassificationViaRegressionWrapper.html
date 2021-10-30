@@ -339,13 +339,13 @@ Inspired by WEKA's ClassificationViaRegression (http://weka.sourceforge.net/doc.
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
     <tr>
       <th>predict.type</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 &#8220;response&#8221; (= labels) or &#8220;prob&#8221; (= probabilities and labels by selecting the one with maximal probability).</p></td>
     </tr>
     </table>
@@ -382,11 +382,13 @@ If you pass a string the learner will be created via <a href='makeLearner.html'>
 <code><a href='makeWeightedClassesWrapper.html'>makeWeightedClassesWrapper</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"regr.rpart"</span><span class='op'>)</span>
-<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'>makeClassificationViaRegressionWrapper</span><span class='op'>(</span><span class='va'>lrn</span><span class='op'>)</span>
-<span class='va'>mod</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>sonar.task</span>, subset <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>140</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in x[0, , drop = FALSE]: incorrect number of dimensions</span></div><div class='input'><span class='va'>predictions</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>mod</span>, newdata <span class='op'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span><span class='op'>(</span><span class='va'>sonar.task</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>141</span><span class='op'>:</span><span class='fl'>208</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>60</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = getTaskData(sonar.task)[141:208, 1:60]): object 'mod' not found</span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"regr.rpart"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'>makeClassificationViaRegressionWrapper</span><span class='op'>(</span><span class='va'>lrn</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mod</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>sonar.task</span>, subset <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>140</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in x[0, , drop = FALSE]:</span> incorrect number of dimensions</span>
+<span class='r-in'><span class='va'>predictions</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>mod</span>, newdata <span class='op'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span><span class='op'>(</span><span class='va'>sonar.task</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>141</span><span class='op'>:</span><span class='fl'>208</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>60</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in predict(mod, newdata = getTaskData(sonar.task)[141:208, 1:60]):</span> object 'mod' not found</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -353,14 +353,14 @@ The task.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 The method used to compute the feature importance.
 The only method available is &#8220;permutation.importance&#8221;.
 Default is &#8220;permutation.importance&#8221;.</p></td>
     </tr>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -372,7 +372,7 @@ The default is all of the features contained in the <a href='Task.html'>Task</a>
     </tr>
     <tr>
       <th>interaction</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Whether to compute the importance of the <code>features</code> argument jointly.
 For <code>method = "permutation.importance"</code> this entails permuting the values of
 all <code>features</code> together and then contrasting the performance with that of
@@ -401,7 +401,7 @@ The default is <code>mean</code>.</p></td>
     </tr>
     <tr>
       <th>nmc</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 The number of Monte-Carlo iterations to use in computing the feature importance.
 If <code>nmc == -1</code> and <code>method = "permutation.importance"</code> then all
 permutations of the <code>features</code> are used.
@@ -409,19 +409,19 @@ The default is 50.</p></td>
     </tr>
     <tr>
       <th>replace</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Whether or not to sample the feature values with or without replacement.
 The default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>local</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Whether to compute the per-observation importance.
 The default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>show.info</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Whether progress output (feature name, time elapsed) should be displayed.</p></td>
     </tr>
     </table>
@@ -433,7 +433,7 @@ Whether progress output (feature name, time elapsed) should be displayed.</p></t
 <dt>res</dt><dd><p>(<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>)<br />
 Has columns for each feature or combination of features (colon separated) for which the importance is computed.
 A row coresponds to importance of the feature specified in the column for the target.</p></dd>
-<dt>interaction</dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+<dt>interaction</dt><dd><p>(<code>logical(1)</code>)<br />
 Whether or not the importance of the <code>features</code> was computed jointly rather than individually.</p></dd>
 <dt>measure</dt><dd><p>(<a href='makeMeasure.html'>Measure</a>)</p></dd>
 The measure used to compute performance.
@@ -441,13 +441,13 @@ The measure used to compute performance.
 The function used to compare the performance of predictions.</p></dd>
 <dt>aggregation</dt><dd><p>(<code>function</code>)<br />
 The function which is used to aggregate the contrast between the performance of predictions across Monte-Carlo iterations.</p></dd>
-<dt>replace</dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+<dt>replace</dt><dd><p>(<code>logical(1)</code>)<br />
 Whether or not, when <code>method = "permutation.importance"</code>, the feature values
 are sampled with replacement.</p></dd>
-<dt>nmc</dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+<dt>nmc</dt><dd><p>(<code>integer(1)</code>)<br />
 The number of Monte-Carlo iterations used to compute the feature importance.
 When <code>nmc == -1</code> and <code>method = "permutation.importance"</code> all permutations are used.</p></dd>
-<dt>local</dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+<dt>local</dt><dd><p>(<code>logical(1)</code>)<br />
 Whether observation-specific importance is computed for the <code>features</code>.</p></dd>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -465,12 +465,12 @@ Whether observation-specific importance is computed for the <code>features</code
 <code><a href='plotFilterValues.html'>plotFilterValues</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.rpart"</span>, predict.type <span class='op'>=</span> <span class='st'>"prob"</span><span class='op'>)</span>
-<span class='va'>fit</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>iris.task</span><span class='op'>)</span>
-<span class='va'>imp</span> <span class='op'>=</span> <span class='fu'>generateFeatureImportanceData</span><span class='op'>(</span><span class='va'>iris.task</span>, <span class='st'>"permutation.importance"</span>,
-  <span class='va'>lrn</span>, <span class='st'>"Petal.Width"</span>, nmc <span class='op'>=</span> <span class='fl'>10L</span>, local <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.rpart"</span>, predict.type <span class='op'>=</span> <span class='st'>"prob"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>iris.task</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>imp</span> <span class='op'>=</span> <span class='fu'>generateFeatureImportanceData</span><span class='op'>(</span><span class='va'>iris.task</span>, <span class='st'>"permutation.importance"</span>,</span>
+<span class='r-in'>  <span class='va'>lrn</span>, <span class='st'>"Petal.Width"</span>, nmc <span class='op'>=</span> <span class='fl'>10L</span>, local <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

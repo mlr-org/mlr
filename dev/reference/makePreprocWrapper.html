@@ -345,7 +345,7 @@ If the train or predict function is called on data / a task, the preprocessing i
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -356,7 +356,7 @@ Function to preprocess the data before training.
 <code>target</code> is a string and denotes the target variable in <code>data</code>.
 <code>args</code> is a list of further arguments and parameters to influence the
 preprocessing.
-Must return a <code><a href='https://rdrr.io/r/base/list.html'>list(data, control)</a></code>, where <code>data</code> is the preprocessed
+Must return a <code>list(data, control)</code>, where <code>data</code> is the preprocessed
 data and <code>control</code> stores all information necessary to do the preprocessing
 before predictions.</p></td>
     </tr>

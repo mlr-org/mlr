@@ -351,22 +351,23 @@ character vector specifies the existing class levels which will be joined to the
     <p><a href='Task.html'>Task</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>joinClassLevels</span><span class='op'>(</span><span class='va'>iris.task</span>, new.levels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>foo <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"setosa"</span>, <span class='st'>"virginica"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Supervised task: iris-example
-#&gt; Type: classif
-#&gt; Target: Species
-#&gt; Observations: 150
-#&gt; Features:
-#&gt;    numerics     factors     ordered functionals 
-#&gt;           4           0           0           0 
-#&gt; Missings: FALSE
-#&gt; Has weights: FALSE
-#&gt; Has blocking: FALSE
-#&gt; Has coordinates: FALSE
-#&gt; Classes: 2
-#&gt;        foo versicolor 
-#&gt;        100         50 
-#&gt; Positive class: foo</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>joinClassLevels</span><span class='op'>(</span><span class='va'>iris.task</span>, new.levels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>foo <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"setosa"</span>, <span class='st'>"virginica"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Supervised task: iris-example</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Type: classif</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Target: Species</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Observations: 150</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Features:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    numerics     factors     ordered functionals </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           4           0           0           0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Missings: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has weights: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has blocking: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has coordinates: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Classes: 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        foo versicolor </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        100         50 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Positive class: foo</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

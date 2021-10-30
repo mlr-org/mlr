@@ -388,33 +388,33 @@ The same applies for many multilabel methods, see, e.g., <a href='makeMultilabel
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> | <a href='Task.html'>Task</a>)<br />
-Either <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> task or the type of the task, in the latter case one of:
+      <td><p>(<code>character(1)</code> | <a href='Task.html'>Task</a>)<br />
+Either <code>character(1)</code> task or the type of the task, in the latter case one of:
 &#8220;classif&#8221; &#8220;regr&#8221; &#8220;surv&#8221; &#8220;costsens&#8221; &#8220;cluster&#8221; &#8220;multilabel&#8221;.
 Default is <code>NA</code> matching all types.</p></td>
     </tr>
     <tr>
       <th>properties</th>
       <td><p>(<a href='https://rdrr.io/r/base/character.html'>character</a>)<br />
-Set of required properties to filter for. Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
+Set of required properties to filter for. Default is <code>character(0)</code>.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Construct learners quietly to check their properties, shows no package startup messages.
 Turn off if you suspect errors.
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>warn.missing.packages</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 If some learner cannot be constructed because its package is missing,
 should a warning be shown?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>check.packages</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Check if required packages are installed. Calls <code><a href='https://rdrr.io/r/base/find.package.html'>find.package()</a></code>.
 If <code>create</code> is <code>TRUE</code>, this is done implicitly and the value of this parameter is ignored.
 If <code>create</code> is <code>FALSE</code> and <code>check.packages</code> is <code>TRUE</code> the returned table only
@@ -425,7 +425,7 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>create</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Instantiate objects (or return info table)?
 Packages are loaded if and only if this option is <code>TRUE</code>.
 Default is <code>FALSE</code>.</p></td>
@@ -434,18 +434,18 @@ Default is <code>FALSE</code>.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>([data.frame<code><a href='https://rdrr.io/r/base/Logic.html'>|</a></code>list` of <a href='makeLearner.html'>Learner</a>).
+    <p>([data.frame<code>|</code>list` of <a href='makeLearner.html'>Learner</a>).
 Either a descriptive data.frame that allows access to all properties of the learners
 or a list of created learner objects (named by ids of listed learners).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='fu'>listLearners</span><span class='op'>(</span><span class='st'>"classif"</span>, properties <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"multiclass"</span>, <span class='st'>"prob"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>data</span> <span class='op'>=</span> <span class='va'>iris</span>
-<span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>data</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span>
-<span class='fu'>listLearners</span><span class='op'>(</span><span class='va'>task</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='fu'>listLearners</span><span class='op'>(</span><span class='st'>"classif"</span>, properties <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"multiclass"</span>, <span class='st'>"prob"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>data</span> <span class='op'>=</span> <span class='va'>iris</span></span>
+<span class='r-in'><span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>data</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>listLearners</span><span class='op'>(</span><span class='va'>task</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

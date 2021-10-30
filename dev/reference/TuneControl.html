@@ -334,7 +334,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>same.resampling.instance</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is <code>TRUE</code>.</p></td>
     </tr>
@@ -360,7 +360,7 @@ Named list of initial parameter values.</p></td>
     </tr>
     <tr>
       <th>tune.threshold</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should the threshold be tuned for the measure at hand, after each hyperparameter evaluation,
 via <a href='tuneThreshold.html'>tuneThreshold</a>?
 Only works for classification if the predict type is &#8220;prob&#8221;.
@@ -374,12 +374,12 @@ Default is none.</p></td>
     </tr>
     <tr>
       <th>log.fun</th>
-      <td><p>(<code>function</code> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>function</code> | <code>character(1)</code>)<br />
 Function used for logging. If set to &#8220;default&#8221; (the default), the evaluated design points, the resulting
 performances, and the runtime will be reported.
-If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> small increase
+If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code>character(1)</code> small increase
 in run time.
-Otherwise <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
+Otherwise <code>character(1)</code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
 <code>par.set</code>, <code>control</code>, <code>opt.path</code>, <code>dob</code>, <code>x</code>, <code>y</code>, <code>remove.nas</code>,
 <code>stage</code> and <code>prev.stage</code> is expected.
 The default displays the performance measures, the time needed for evaluating,

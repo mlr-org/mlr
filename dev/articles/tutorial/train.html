@@ -321,7 +321,7 @@
 <p>In the following example we cluster the <code>Ruspini</code> (<code><a href="https://rdrr.io/pkg/cluster/man/ruspini.html">cluster::ruspini()</a></code>) data set (which has four groups and two features) by <span class="math inline">\(K\)</span>-means with <span class="math inline">\(K = 4\)</span> and extract the output of the underlying <code><a href="https://rdrr.io/r/stats/kmeans.html">stats::kmeans()</a></code> function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ruspini</span>, package <span class="op">=</span> <span class="st">"cluster"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, <span class="va">ruspini</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/mboost/man/plot.html">plot</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, <span class="va">ruspini</span><span class="op">)</span></code></pre></div>
 <p><img src="train_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Generate the task</span>

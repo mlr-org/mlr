@@ -335,8 +335,8 @@
     <p>Resample Result:</p>
 <p>A resample result is created by resample and
 contains the following object members:</p><dl>
-<dt>task.id (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>):</dt><dd><p>Name of the Task.</p></dd>
-<dt>learner.id (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>):</dt><dd><p>Name of the Learner.</p></dd>
+<dt>task.id (<code>character(1)</code>):</dt><dd><p>Name of the Task.</p></dd>
+<dt>learner.id (<code>character(1)</code>):</dt><dd><p>Name of the Learner.</p></dd>
 <dt>measures.test (<a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>):</dt><dd><p>Gives you access to performance measurements
 on the individual test sets. Rows correspond to sets in resampling iterations,
 columns to performance measures.</p></dd>
@@ -360,7 +360,7 @@ The error dumps are only saved when option <code>on.error.dump</code> is <code>T
 <dt>pred (<a href='ResamplePrediction.html'>ResamplePrediction</a>):</dt><dd><p>Container for all predictions during resampling.</p></dd>
 <dt>models [list of <a href='makeWrappedModel.html'>WrappedModel</a>):</dt><dd><p>List of fitted models or <code>NULL</code>.</p></dd>
 <dt>extract (<a href='https://rdrr.io/r/base/list.html'>list</a>):</dt><dd><p>List of extracted parts from fitted models or <code>NULL</code>.</p></dd>
-<dt>runtime (<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>):</dt><dd><p>Time in seconds it took to execute the resampling.</p></dd>
+<dt>runtime (<code>numeric(1)</code>):</dt><dd><p>Time in seconds it took to execute the resampling.</p></dd>
 
 </dl><p>The print method of this object gives a short overview, including
 task and learner ids, aggregated measures and runtime for the resampling.</p>

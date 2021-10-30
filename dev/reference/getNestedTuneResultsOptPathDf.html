@@ -329,7 +329,7 @@ An additional column iter indicates to what resampling iteration the row belongs
 
     <div class="ref-description">
     <p>After you resampled a tuning wrapper (see <a href='makeTuneWrapper.html'>makeTuneWrapper</a>)
-with <code><a href='resample.html'>resample(..., extract = getTuneResult)</a></code> this helper returns a <code>data.frame</code> with
+with <code>resample(..., extract = getTuneResult)</code> this helper returns a <code>data.frame</code> with
 with all <code>opt.path</code>s combined by <code>rbind</code>.
 An additional column <code>iter</code> indicates to what resampling iteration the row belongs.</p>
     </div>
@@ -346,7 +346,7 @@ The result of resampling of a tuning wrapper.</p></td>
     </tr>
     <tr>
       <th>trafo</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should the units of the hyperparameter path be converted to the
 transformed scale? This is only necessary when trafo was used to create
 the <code>opt.path</code>s. Note that <code>opt.path</code>s are always stored on the
@@ -379,8 +379,9 @@ Default is <code>FALSE</code>.</p></td>
 <code><a href='tuneThreshold.html'>tuneThreshold</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># see example of makeTuneWrapper</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># see example of makeTuneWrapper</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

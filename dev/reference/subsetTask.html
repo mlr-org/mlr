@@ -377,23 +377,24 @@ Default is to use all features.</p></td>
 <code><a href='getTaskType.html'>getTaskType</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span>
-<span class='fu'>subsetTask</span><span class='op'>(</span><span class='va'>task</span>, subset <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Supervised task: iris
-#&gt; Type: classif
-#&gt; Target: Species
-#&gt; Observations: 100
-#&gt; Features:
-#&gt;    numerics     factors     ordered functionals 
-#&gt;           4           0           0           0 
-#&gt; Missings: FALSE
-#&gt; Has weights: FALSE
-#&gt; Has blocking: FALSE
-#&gt; Has coordinates: FALSE
-#&gt; Classes: 3
-#&gt;     setosa versicolor  virginica 
-#&gt;         50         50          0 
-#&gt; Positive class: NA</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>subsetTask</span><span class='op'>(</span><span class='va'>task</span>, subset <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Supervised task: iris</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Type: classif</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Target: Species</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Observations: 100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Features:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    numerics     factors     ordered functionals </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           4           0           0           0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Missings: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has weights: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has blocking: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has coordinates: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Classes: 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     setosa versicolor  virginica </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         50         50          0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Positive class: NA</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

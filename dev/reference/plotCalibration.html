@@ -347,19 +347,19 @@ Result of <a href='generateCalibrationData.html'>generateCalibrationData</a>.</p
     </tr>
     <tr>
       <th>smooth</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Whether to use a loess smoother.
 Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>reference</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Whether to plot a reference line showing perfect calibration.
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>rag</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Whether to include a rag plot which shows a rug plot on the top which pertains to
 positive cases and on the bottom which pertains to negative cases.
 Default is <code>TRUE</code>.</p></td>
@@ -392,22 +392,22 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
 <code><a href='generateCalibrationData.html'>generateCalibrationData</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>lrns</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.rpart"</span>, predict.type <span class='op'>=</span> <span class='st'>"prob"</span><span class='op'>)</span>,
-  <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.nnet"</span>, predict.type <span class='op'>=</span> <span class='st'>"prob"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>fit</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>lrns</span>, <span class='va'>train</span>, task <span class='op'>=</span> <span class='va'>iris.task</span><span class='op'>)</span>
-<span class='va'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>fit</span>, <span class='va'>predict</span>, task <span class='op'>=</span> <span class='va'>iris.task</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>pred</span><span class='op'>)</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"rpart"</span>, <span class='st'>"nnet"</span><span class='op'>)</span>
-<span class='va'>out</span> <span class='op'>=</span> <span class='fu'><a href='generateCalibrationData.html'>generateCalibrationData</a></span><span class='op'>(</span><span class='va'>pred</span>, groups <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-<span class='fu'>plotCalibration</span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span>
-
-<span class='va'>fit</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>lrns</span>, <span class='va'>train</span>, task <span class='op'>=</span> <span class='va'>sonar.task</span><span class='op'>)</span>
-<span class='va'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>fit</span>, <span class='va'>predict</span>, task <span class='op'>=</span> <span class='va'>sonar.task</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>pred</span><span class='op'>)</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"rpart"</span>, <span class='st'>"lda"</span><span class='op'>)</span>
-<span class='va'>out</span> <span class='op'>=</span> <span class='fu'><a href='generateCalibrationData.html'>generateCalibrationData</a></span><span class='op'>(</span><span class='va'>pred</span><span class='op'>)</span>
-<span class='fu'>plotCalibration</span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='va'>lrns</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.rpart"</span>, predict.type <span class='op'>=</span> <span class='st'>"prob"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.nnet"</span>, predict.type <span class='op'>=</span> <span class='st'>"prob"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>lrns</span>, <span class='va'>train</span>, task <span class='op'>=</span> <span class='va'>iris.task</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>fit</span>, <span class='va'>predict</span>, task <span class='op'>=</span> <span class='va'>iris.task</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>pred</span><span class='op'>)</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"rpart"</span>, <span class='st'>"nnet"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>out</span> <span class='op'>=</span> <span class='fu'><a href='generateCalibrationData.html'>generateCalibrationData</a></span><span class='op'>(</span><span class='va'>pred</span>, groups <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>plotCalibration</span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>lrns</span>, <span class='va'>train</span>, task <span class='op'>=</span> <span class='va'>sonar.task</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>fit</span>, <span class='va'>predict</span>, task <span class='op'>=</span> <span class='va'>sonar.task</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>pred</span><span class='op'>)</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"rpart"</span>, <span class='st'>"lda"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>out</span> <span class='op'>=</span> <span class='fu'><a href='generateCalibrationData.html'>generateCalibrationData</a></span><span class='op'>(</span><span class='va'>pred</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>plotCalibration</span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

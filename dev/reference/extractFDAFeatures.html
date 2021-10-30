@@ -355,9 +355,9 @@ Must contain functional features as matrix columns.</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 Task target column. Only neccessary for data.frames
-Default is <code><a href='https://rdrr.io/r/base/character.html'>character(0)</a></code>.</p></td>
+Default is <code>character(0)</code>.</p></td>
     </tr>
     <tr>
       <th>feat.methods</th>
@@ -401,42 +401,44 @@ parameters for reextraction.</p></li>
 <code><a href='makeExtractFDAFeatsWrapper.html'>makeExtractFDAFeatsWrapper</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>24</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>fdf</span> <span class='op'>=</span> <span class='fu'><a href='makeFunctionalData.html'>makeFunctionalData</a></span><span class='op'>(</span><span class='va'>df</span>, fd.features <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x1 <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, x2 <span class='op'>=</span> <span class='fl'>5</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>)</span>, exclude.cols <span class='op'>=</span> <span class='st'>"y"</span><span class='op'>)</span>
-<span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>fdf</span>, target <span class='op'>=</span> <span class='st'>"y"</span><span class='op'>)</span>
-<span class='va'>extracted</span> <span class='op'>=</span> <span class='fu'>extractFDAFeatures</span><span class='op'>(</span><span class='va'>task</span>,
-  feat.methods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"x1"</span> <span class='op'>=</span> <span class='fu'><a href='extractFDAFourier.html'>extractFDAFourier</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"x2"</span> <span class='op'>=</span> <span class='fu'><a href='extractFDAWavelets.html'>extractFDAWavelets</a></span><span class='op'>(</span>filter <span class='op'>=</span> <span class='st'>"haar"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>extracted</span><span class='op'>$</span><span class='va'>task</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Supervised task: fdf
-#&gt; Type: classif
-#&gt; Target: y
-#&gt; Observations: 3
-#&gt; Features:
-#&gt;    numerics     factors     ordered functionals 
-#&gt;           8           0           0           0 
-#&gt; Missings: FALSE
-#&gt; Has weights: FALSE
-#&gt; Has blocking: FALSE
-#&gt; Has coordinates: FALSE
-#&gt; Classes: 2
-#&gt; a b 
-#&gt; 2 1 
-#&gt; Positive class: a</div><div class='input'><span class='fu'><a href='reextractFDAFeatures.html'>reextractFDAFeatures</a></span><span class='op'>(</span><span class='va'>task</span>, <span class='va'>extracted</span><span class='op'>$</span><span class='va'>desc</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Supervised task: fdf
-#&gt; Type: classif
-#&gt; Target: y
-#&gt; Observations: 3
-#&gt; Features:
-#&gt;    numerics     factors     ordered functionals 
-#&gt;           8           0           0           0 
-#&gt; Missings: FALSE
-#&gt; Has weights: FALSE
-#&gt; Has blocking: FALSE
-#&gt; Has coordinates: FALSE
-#&gt; Classes: 2
-#&gt; a b 
-#&gt; 2 1 
-#&gt; Positive class: a</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>df</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>24</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>fdf</span> <span class='op'>=</span> <span class='fu'><a href='makeFunctionalData.html'>makeFunctionalData</a></span><span class='op'>(</span><span class='va'>df</span>, fd.features <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x1 <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, x2 <span class='op'>=</span> <span class='fl'>5</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>)</span>, exclude.cols <span class='op'>=</span> <span class='st'>"y"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>fdf</span>, target <span class='op'>=</span> <span class='st'>"y"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>extracted</span> <span class='op'>=</span> <span class='fu'>extractFDAFeatures</span><span class='op'>(</span><span class='va'>task</span>,</span>
+<span class='r-in'>  feat.methods <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"x1"</span> <span class='op'>=</span> <span class='fu'><a href='extractFDAFourier.html'>extractFDAFourier</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"x2"</span> <span class='op'>=</span> <span class='fu'><a href='extractFDAWavelets.html'>extractFDAWavelets</a></span><span class='op'>(</span>filter <span class='op'>=</span> <span class='st'>"haar"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>extracted</span><span class='op'>$</span><span class='va'>task</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Supervised task: fdf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Type: classif</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Target: y</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Observations: 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Features:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    numerics     factors     ordered functionals </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           8           0           0           0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Missings: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has weights: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has blocking: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has coordinates: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Classes: 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> a b </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Positive class: a</span>
+<span class='r-in'><span class='fu'><a href='reextractFDAFeatures.html'>reextractFDAFeatures</a></span><span class='op'>(</span><span class='va'>task</span>, <span class='va'>extracted</span><span class='op'>$</span><span class='va'>desc</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Supervised task: fdf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Type: classif</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Target: y</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Observations: 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Features:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    numerics     factors     ordered functionals </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           8           0           0           0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Missings: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has weights: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has blocking: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has coordinates: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Classes: 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> a b </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Positive class: a</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

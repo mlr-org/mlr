@@ -340,7 +340,7 @@ The task.</p></td>
     </tr>
     <tr>
       <th>recode.target</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 Should target classes be recoded? Supported are binary and multilabel classification and survival.
 Possible values for binary classification are &#8220;01&#8221;, &#8220;-1+1&#8221; and &#8220;drop.levels&#8221;.
 In the two latter cases the target vector is converted into a numeric vector.
@@ -375,34 +375,35 @@ of logical columns for multilabel.</p>
 <code><a href='subsetTask.html'>subsetTask</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span>
-<span class='fu'>getTaskTargets</span><span class='op'>(</span><span class='va'>task</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   [1] setosa     setosa     setosa     setosa     setosa     setosa    
-#&gt;   [7] setosa     setosa     setosa     setosa     setosa     setosa    
-#&gt;  [13] setosa     setosa     setosa     setosa     setosa     setosa    
-#&gt;  [19] setosa     setosa     setosa     setosa     setosa     setosa    
-#&gt;  [25] setosa     setosa     setosa     setosa     setosa     setosa    
-#&gt;  [31] setosa     setosa     setosa     setosa     setosa     setosa    
-#&gt;  [37] setosa     setosa     setosa     setosa     setosa     setosa    
-#&gt;  [43] setosa     setosa     setosa     setosa     setosa     setosa    
-#&gt;  [49] setosa     setosa     versicolor versicolor versicolor versicolor
-#&gt;  [55] versicolor versicolor versicolor versicolor versicolor versicolor
-#&gt;  [61] versicolor versicolor versicolor versicolor versicolor versicolor
-#&gt;  [67] versicolor versicolor versicolor versicolor versicolor versicolor
-#&gt;  [73] versicolor versicolor versicolor versicolor versicolor versicolor
-#&gt;  [79] versicolor versicolor versicolor versicolor versicolor versicolor
-#&gt;  [85] versicolor versicolor versicolor versicolor versicolor versicolor
-#&gt;  [91] versicolor versicolor versicolor versicolor versicolor versicolor
-#&gt;  [97] versicolor versicolor versicolor versicolor virginica  virginica 
-#&gt; [103] virginica  virginica  virginica  virginica  virginica  virginica 
-#&gt; [109] virginica  virginica  virginica  virginica  virginica  virginica 
-#&gt; [115] virginica  virginica  virginica  virginica  virginica  virginica 
-#&gt; [121] virginica  virginica  virginica  virginica  virginica  virginica 
-#&gt; [127] virginica  virginica  virginica  virginica  virginica  virginica 
-#&gt; [133] virginica  virginica  virginica  virginica  virginica  virginica 
-#&gt; [139] virginica  virginica  virginica  virginica  virginica  virginica 
-#&gt; [145] virginica  virginica  virginica  virginica  virginica  virginica 
-#&gt; Levels: setosa versicolor virginica</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>getTaskTargets</span><span class='op'>(</span><span class='va'>task</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [1] setosa     setosa     setosa     setosa     setosa     setosa    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   [7] setosa     setosa     setosa     setosa     setosa     setosa    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [13] setosa     setosa     setosa     setosa     setosa     setosa    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [19] setosa     setosa     setosa     setosa     setosa     setosa    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [25] setosa     setosa     setosa     setosa     setosa     setosa    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [31] setosa     setosa     setosa     setosa     setosa     setosa    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [37] setosa     setosa     setosa     setosa     setosa     setosa    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [43] setosa     setosa     setosa     setosa     setosa     setosa    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [49] setosa     setosa     versicolor versicolor versicolor versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [55] versicolor versicolor versicolor versicolor versicolor versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [61] versicolor versicolor versicolor versicolor versicolor versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [67] versicolor versicolor versicolor versicolor versicolor versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [73] versicolor versicolor versicolor versicolor versicolor versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [79] versicolor versicolor versicolor versicolor versicolor versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [85] versicolor versicolor versicolor versicolor versicolor versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [91] versicolor versicolor versicolor versicolor versicolor versicolor</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [97] versicolor versicolor versicolor versicolor virginica  virginica </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [103] virginica  virginica  virginica  virginica  virginica  virginica </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [109] virginica  virginica  virginica  virginica  virginica  virginica </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [115] virginica  virginica  virginica  virginica  virginica  virginica </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [121] virginica  virginica  virginica  virginica  virginica  virginica </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [127] virginica  virginica  virginica  virginica  virginica  virginica </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [133] virginica  virginica  virginica  virginica  virginica  virginica </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [139] virginica  virginica  virginica  virginica  virginica  virginica </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [145] virginica  virginica  virginica  virginica  virginica  virginica </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Levels: setosa versicolor virginica</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

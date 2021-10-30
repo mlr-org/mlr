@@ -379,7 +379,7 @@ Use <a href='getTaskData.html'>getTaskData</a> in order to access it.</p></dd>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>id</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 Id string for object.
 Default is the name of the R variable passed to <code>data</code>.</p></td>
     </tr>
@@ -390,7 +390,7 @@ A data frame containing the features and target variable(s).</p></td>
     </tr>
     <tr>
       <th>target</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character(2)</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character(n.classes)</a></code>)<br />
+      <td><p>(<code>character(1)</code> | <code>character(2)</code> | <code>character(n.classes)</code>)<br />
 Name(s) of the target variable(s).
 For survival analysis these are the names of the survival time and event columns,
 so it has length 2. For multilabel classification it contains the names of the logical
@@ -426,13 +426,13 @@ Default is <code>NULL</code> which means no blocking.</p></td>
     </tr>
     <tr>
       <th>positive</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 Positive class for binary classification (otherwise ignored and set to NA).
 Default is the first factor level of the target attribute.</p></td>
     </tr>
     <tr>
       <th>fixup.data</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 Should some basic cleaning up of data be performed?
 Currently this means removing empty factor levels for the columns.
 Possible choices are:
@@ -443,7 +443,7 @@ Default is &#8220;warn&#8221;.</p></td>
     </tr>
     <tr>
       <th>check.data</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should sanity of data be checked initially at task creation?
 You should have good reasons to turn this off (one might be speed).
 Default is <code>TRUE</code>.</p></td>
@@ -465,29 +465,31 @@ Provided <a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a> needs t
     <div class='dont-index'><p><a href='makeClassifTask.html'>ClassifTask</a> <a href='makeClusterTask.html'>ClusterTask</a> <a href='makeCostSensTask.html'>CostSensTask</a> <a href='makeMultilabelTask.html'>MultilabelTask</a> <a href='makeRegrTask.html'>RegrTask</a> <a href='makeSurvTask.html'>SurvTask</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"mlbench"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mlbench</span><span class='op'>)</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>BostonHousing</span><span class='op'>)</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>Ionosphere</span><span class='op'>)</span>
-
-  <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span>
-  <span class='fu'><a href='makeRegrTask.html'>makeRegrTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>BostonHousing</span>, target <span class='op'>=</span> <span class='st'>"medv"</span><span class='op'>)</span>
-  <span class='co'># an example of a classification task with more than those standard arguments:</span>
-  <span class='va'>blocking</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>51</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>300</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-  <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"myIonosphere"</span>, data <span class='op'>=</span> <span class='va'>Ionosphere</span>, target <span class='op'>=</span> <span class='st'>"Class"</span>,
-    positive <span class='op'>=</span> <span class='st'>"good"</span>, blocking <span class='op'>=</span> <span class='va'>blocking</span><span class='op'>)</span>
-  <span class='fu'><a href='makeClusterTask.html'>makeClusterTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>5L</span><span class='op'>]</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: mlbench</span></div><div class='output co'>#&gt; Unsupervised task: iris[, -5L]
-#&gt; Type: cluster
-#&gt; Observations: 150
-#&gt; Features:
-#&gt;    numerics     factors     ordered functionals 
-#&gt;           4           0           0           0 
-#&gt; Missings: FALSE
-#&gt; Has weights: FALSE
-#&gt; Has blocking: FALSE
-#&gt; Has coordinates: FALSE</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"mlbench"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>mlbench</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>BostonHousing</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>Ionosphere</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span>, target <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='makeRegrTask.html'>makeRegrTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>BostonHousing</span>, target <span class='op'>=</span> <span class='st'>"medv"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='co'># an example of a classification task with more than those standard arguments:</span></span>
+<span class='r-in'>  <span class='va'>blocking</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>51</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>300</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"myIonosphere"</span>, data <span class='op'>=</span> <span class='va'>Ionosphere</span>, target <span class='op'>=</span> <span class='st'>"Class"</span>,</span>
+<span class='r-in'>    positive <span class='op'>=</span> <span class='st'>"good"</span>, blocking <span class='op'>=</span> <span class='va'>blocking</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='makeClusterTask.html'>makeClusterTask</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>5L</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required namespace: mlbench</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Unsupervised task: iris[, -5L]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Type: cluster</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Observations: 150</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Features:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    numerics     factors     ordered functionals </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           4           0           0           0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Missings: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has weights: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has blocking: FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Has coordinates: FALSE</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

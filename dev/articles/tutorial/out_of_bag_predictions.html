@@ -285,7 +285,7 @@
     
     
 <p>Some learners like random forest use bagging. Bagging means that the learner consists of an ensemble of several base learners and each base learner is trained with a different random subsample or bootstrap sample from all observations. A prediction made for an observation in the original data set using only base learners not trained on this particular observation is called out-of-bag (OOB) prediction. These predictions are not prone to overfitting, as each prediction is only made by learners that did not use the observation for training.</p>
-<p>To get a list of learners that provide OOB predictions, you can call <code><a href="../../reference/listLearners.html">listLearners(obj = NA, properties = "oobpreds")</a></code>.</p>
+<p>To get a list of learners that provide OOB predictions, you can call <code>listLearners(obj = NA, properties = "oobpreds")</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="cn">NA</span>, properties <span class="op">=</span> <span class="st">"oobpreds"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span>
 <span class="co">## Warning in listLearners.character(obj = NA_character_, properties, quiet, : The following learners could not be constructed, probably because their packages are not installed:</span>

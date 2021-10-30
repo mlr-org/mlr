@@ -384,12 +384,12 @@ Created by calculateROCMeasures.</p></td>
     </tr>
     <tr>
       <th>abbreviations</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 If <code>TRUE</code> a short paragraph with explanations of the used measures is printed additionally.</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 Number of digits the measures are rounded to.</p></td>
     </tr>
     <tr>
@@ -427,31 +427,32 @@ the 2 times 2 confusion matrix of absolute frequencies and <code>measures</code>
 <code><a href='setMeasurePars.html'>setMeasurePars</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.rpart"</span>, predict.type <span class='op'>=</span> <span class='st'>"prob"</span><span class='op'>)</span>
-<span class='va'>fit</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>sonar.task</span><span class='op'>)</span>
-<span class='va'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit</span>, task <span class='op'>=</span> <span class='va'>sonar.task</span><span class='op'>)</span>
-<span class='fu'>calculateROCMeasures</span><span class='op'>(</span><span class='va'>pred</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     predicted
-#&gt; true M        R                             
-#&gt;    M 95       16        tpr: 0.86 fnr: 0.14 
-#&gt;    R 10       87        fpr: 0.1  tnr: 0.9  
-#&gt;      ppv: 0.9 for: 0.16 lrp: 8.3  acc: 0.88 
-#&gt;      fdr: 0.1 npv: 0.84 lrm: 0.16 dor: 51.66
-#&gt; 
-#&gt; 
-#&gt; Abbreviations:
-#&gt; tpr - True positive rate (Sensitivity, Recall)
-#&gt; fpr - False positive rate (Fall-out)
-#&gt; fnr - False negative rate (Miss rate)
-#&gt; tnr - True negative rate (Specificity)
-#&gt; ppv - Positive predictive value (Precision)
-#&gt; for - False omission rate
-#&gt; lrp - Positive likelihood ratio (LR+)
-#&gt; fdr - False discovery rate
-#&gt; npv - Negative predictive value
-#&gt; acc - Accuracy
-#&gt; lrm - Negative likelihood ratio (LR-)
-#&gt; dor - Diagnostic odds ratio</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>lrn</span> <span class='op'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span><span class='op'>(</span><span class='st'>"classif.rpart"</span>, predict.type <span class='op'>=</span> <span class='st'>"prob"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>=</span> <span class='fu'><a href='train.html'>train</a></span><span class='op'>(</span><span class='va'>lrn</span>, <span class='va'>sonar.task</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>pred</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>fit</span>, task <span class='op'>=</span> <span class='va'>sonar.task</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>calculateROCMeasures</span><span class='op'>(</span><span class='va'>pred</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     predicted</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> true M        R                             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    M 95       16        tpr: 0.86 fnr: 0.14 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    R 10       87        fpr: 0.1  tnr: 0.9  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      ppv: 0.9 for: 0.16 lrp: 8.3  acc: 0.88 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      fdr: 0.1 npv: 0.84 lrm: 0.16 dor: 51.66</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Abbreviations:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> tpr - True positive rate (Sensitivity, Recall)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> fpr - False positive rate (Fall-out)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> fnr - False negative rate (Miss rate)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> tnr - True negative rate (Specificity)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ppv - Positive predictive value (Precision)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> for - False omission rate</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lrp - Positive likelihood ratio (LR+)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> fdr - False discovery rate</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> npv - Negative predictive value</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> acc - Accuracy</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lrm - Negative likelihood ratio (LR-)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dor - Diagnostic odds ratio</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

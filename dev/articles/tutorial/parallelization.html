@@ -284,7 +284,7 @@
 
     
     
-<p><strong>R</strong> by default does not make use of parallelization. With the integration of <code><a href="https://parallelmap.mlr-org.com/reference/parallelMap.html">parallelMap()</a></code> into <code>mlr</code>, it becomes easy to activate the parallel computing capabilities already supported by <code>mlr</code>. <code><a href="https://parallelmap.mlr-org.com/reference/parallelMap.html">parallelMap()</a></code> works with all major parallelization backends: local multicore execution using <code>parallel()</code>, socket and MPI clusters using <code>snow()</code>, makeshift SSH-clusters using <code>BatchJobs()</code> and high performance computing clusters (managed by a scheduler like SLURM, Torque/PBS, SGE or LSF) also using <code>BatchJobs()</code>.</p>
+<p><strong>R</strong> by default does not make use of parallelization. With the integration of <code><a href="https://parallelmap.mlr-org.com/reference/parallelMap.html">parallelMap()</a></code> into <code>mlr</code>, it becomes easy to activate the parallel computing capabilities already supported by <code>mlr</code>. <code><a href="https://parallelmap.mlr-org.com/reference/parallelMap.html">parallelMap()</a></code> works with all major parallelization backends: local multicore execution using <code><a href="https://rdrr.io/pkg/lattice/man/splom.html">parallel()</a></code>, socket and MPI clusters using <code>snow()</code>, makeshift SSH-clusters using <code>BatchJobs()</code> and high performance computing clusters (managed by a scheduler like SLURM, Torque/PBS, SGE or LSF) also using <code>BatchJobs()</code>.</p>
 <p>All you have to do is select a backend by calling one of the <code>parallelStart*</code> (<code><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html">parallelMap::parallelStart()</a></code>) functions. The first loop <code>mlr</code> encounters which is marked as parallel executable will be automatically parallelized. It is good practice to call <code>parallelStop</code> (<code><a href="https://parallelmap.mlr-org.com/reference/parallelStop.html">parallelMap::parallelStop()</a></code>) at the end of your script.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://parallelmap.mlr-org.com">"parallelMap"</a></span><span class="op">)</span>
@@ -319,7 +319,7 @@
 <p>If you have implemented a <a href="create_learner.html" target="_blank">custom learner yourself</a>, locally, you currently need to export this to the slave. So if you see an error after calling, e.g., a parallelized version of <code><a href="../../reference/resample.html">resample()</a></code> like this:</p>
 <pre><code>no applicable method for 'trainLearner' applied to an object of class &lt;my_new_learner&gt;</code></pre>
 <p>simply add the following line somewhere after calling <code><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html">parallelMap::parallelStart()</a></code>.</p>
-<pre><code><a href="https://parallelmap.mlr-org.com/reference/parallelExport.html">parallelExport("trainLearner.&lt;my_new_learner&gt;", "predictLearner.&lt;my_new_learner&gt;")</a></code></pre>
+<pre><code>parallelExport("trainLearner.&lt;my_new_learner&gt;", "predictLearner.&lt;my_new_learner&gt;")</code></pre>
 </div>
 <div id="the-end" class="section level1">
 <h1 class="hasAnchor">

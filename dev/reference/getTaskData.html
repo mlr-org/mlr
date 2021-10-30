@@ -364,7 +364,7 @@ Default is to use all features.</p></td>
     </tr>
     <tr>
       <th>target.extra</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should target vector be returned separately?
 If not, a single data.frame including the target columns is returned, otherwise a list
 with the input data.frame and an extra vector or data.frame for the targets.
@@ -372,7 +372,7 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>recode.target</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 Should target classes be recoded? Supported are binary and multilabel classification and survival.
 Possible values for binary classification are &#8220;01&#8221;, &#8220;-1+1&#8221; and &#8220;drop.levels&#8221;.
 In the two latter cases the target vector is converted into a numeric vector.
@@ -386,7 +386,7 @@ Default for both binary classification and survival is &#8220;no&#8221; (do noth
     </tr>
     <tr>
       <th>functionals.as</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 How to represents functional features?
 Option &#8220;matrix&#8221;: Keep them as matrix columns in the data.frame.
 Option &#8220;dfcols&#8221;: Convert them to individual numeric data.frame columns.
@@ -414,41 +414,44 @@ Default is &#8220;dfcols&#8221;.</p></td>
 <code><a href='subsetTask.html'>subsetTask</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'>"mlbench"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>BreastCancer</span><span class='op'>)</span>
-
-<span class='va'>df</span> <span class='op'>=</span> <span class='va'>BreastCancer</span>
-<span class='va'>df</span><span class='op'>$</span><span class='va'>Id</span> <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"BreastCancer"</span>, data <span class='op'>=</span> <span class='va'>df</span>, target <span class='op'>=</span> <span class='st'>"Class"</span>, positive <span class='op'>=</span> <span class='st'>"malignant"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>getTaskData</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                                                                  
-#&gt; 1 function (task, subset = NULL, features, target.extra = FALSE, 
-#&gt; 2     recode.target = "no", functionals.as = "dfcols")           
-#&gt; 3 {                                                              
-#&gt; 4     checkTask(task, "Task")                                    
-#&gt; 5     checkTaskSubset(subset, size = task$task.desc$size)        
-#&gt; 6     assertLogical(target.extra)                                </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>getTaskData</span><span class='op'>(</span><span class='va'>task</span>, features <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Cell.size"</span>, <span class='st'>"Cell.shape"</span><span class='op'>)</span>, recode.target <span class='op'>=</span> <span class='st'>"-1+1"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   Cell.size Cell.shape Class
-#&gt; 1         1          1    -1
-#&gt; 2         4          4    -1
-#&gt; 3         1          1    -1
-#&gt; 4         8          8    -1
-#&gt; 5         1          1    -1
-#&gt; 6        10         10     1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>getTaskData</span><span class='op'>(</span><span class='va'>task</span>, subset <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>, recode.target <span class='op'>=</span> <span class='st'>"01"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   Cl.thickness Cell.size Cell.shape Marg.adhesion Epith.c.size Bare.nuclei
-#&gt; 1            5         1          1             1            2           1
-#&gt; 2            5         4          4             5            7          10
-#&gt; 3            3         1          1             1            2           2
-#&gt; 4            6         8          8             1            3           4
-#&gt; 5            4         1          1             3            2           1
-#&gt; 6            8        10         10             8            7          10
-#&gt;   Bl.cromatin Normal.nucleoli Mitoses Class
-#&gt; 1           3               1       1     0
-#&gt; 2           3               2       1     0
-#&gt; 3           3               1       1     0
-#&gt; 4           3               7       1     0
-#&gt; 5           3               1       1     0
-#&gt; 6           9               7       1     1</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'>"mlbench"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>BreastCancer</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'>=</span> <span class='va'>BreastCancer</span></span>
+<span class='r-in'><span class='va'>df</span><span class='op'>$</span><span class='va'>Id</span> <span class='op'>=</span> <span class='cn'>NULL</span></span>
+<span class='r-in'><span class='va'>task</span> <span class='op'>=</span> <span class='fu'><a href='makeClassifTask.html'>makeClassifTask</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"BreastCancer"</span>, data <span class='op'>=</span> <span class='va'>df</span>, target <span class='op'>=</span> <span class='st'>"Class"</span>, positive <span class='op'>=</span> <span class='st'>"malignant"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>getTaskData</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 function (task, subset = NULL, features, target.extra = FALSE, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     recode.target = "no", functionals.as = "dfcols")           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 {                                                              </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4     checkTask(task, "Task")                                    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5     checkTaskSubset(subset, size = task$task.desc$size)        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6     assertLogical(target.extra)                                </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>getTaskData</span><span class='op'>(</span><span class='va'>task</span>, features <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Cell.size"</span>, <span class='st'>"Cell.shape"</span><span class='op'>)</span>, recode.target <span class='op'>=</span> <span class='st'>"-1+1"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Cell.size Cell.shape Class</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         1          1    -1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2         4          4    -1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3         1          1    -1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4         8          8    -1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5         1          1    -1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6        10         10     1</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>getTaskData</span><span class='op'>(</span><span class='va'>task</span>, subset <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>, recode.target <span class='op'>=</span> <span class='st'>"01"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Cl.thickness Cell.size Cell.shape Marg.adhesion Epith.c.size Bare.nuclei</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1            5         1          1             1            2           1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2            5         4          4             5            7          10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3            3         1          1             1            2           2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4            6         8          8             1            3           4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5            4         1          1             3            2           1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6            8        10         10             8            7          10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Bl.cromatin Normal.nucleoli Mitoses Class</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1           3               1       1     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2           3               2       1     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3           3               1       1     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4           3               7       1     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5           3               1       1     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6           9               7       1     1</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

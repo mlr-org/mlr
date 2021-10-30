@@ -456,24 +456,24 @@ repeatedly generated until the setting is satisfied.</p></dd>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>same.resampling.instance</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>maxit</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 Maximal number of iterations. Note, that this is usually not equal to the number
 of function evaluations.</p></td>
     </tr>
     <tr>
       <th>max.features</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 Maximal number of features.</p></td>
     </tr>
     <tr>
       <th>tune.threshold</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should the threshold be tuned for the measure at hand, after each feature set evaluation,
 via <a href='tuneThreshold.html'>tuneThreshold</a>?
 Only works for classification if the predict type is &#8220;prob&#8221;.
@@ -487,12 +487,12 @@ Default is none.</p></td>
     </tr>
     <tr>
       <th>log.fun</th>
-      <td><p>(<code>function</code> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>function</code> | <code>character(1)</code>)<br />
 Function used for logging. If set to &#8220;default&#8221; (the default), the evaluated design points, the resulting
 performances, and the runtime will be reported.
-If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> small increase
+If set to &#8220;memory&#8221; the memory usage for each evaluation will also be displayed, with <code>character(1)</code> small increase
 in run time.
-Otherwise <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
+Otherwise <code>character(1)</code> function with arguments <code>learner</code>, <code>resampling</code>, <code>measures</code>,
 <code>par.set</code>, <code>control</code>, <code>opt.path</code>, <code>dob</code>, <code>x</code>, <code>y</code>, <code>remove.nas</code>,
 <code>stage</code> and <code>prev.stage</code> is expected.
 The default displays the performance measures, the time needed for evaluating,
@@ -517,55 +517,55 @@ in the same order as your measures.</p></td>
     </tr>
     <tr>
       <th>comma</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Parameter of the GA feature selection, indicating whether to use a (<code>mu</code>, <code>lambda</code>)
 or (<code>mu</code> + <code>lambda</code>) GA. The default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>mu</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 Parameter of the GA feature selection. Size of the parent population.</p></td>
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 Parameter of the GA feature selection. Size of the children population (should be smaller
 or equal to <code>mu</code>).</p></td>
     </tr>
     <tr>
       <th>crossover.rate</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+      <td><p>(<code>numeric(1)</code>)<br />
 Parameter of the GA feature selection. Probability of choosing a bit from the first parent
 within the crossover mutation.</p></td>
     </tr>
     <tr>
       <th>mutation.rate</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+      <td><p>(<code>numeric(1)</code>)<br />
 Parameter of the GA feature selection. Probability of flipping a feature bit, i.e. switch
 between selecting / deselecting a feature.</p></td>
     </tr>
     <tr>
       <th>prob</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+      <td><p>(<code>numeric(1)</code>)<br />
 Parameter of the random feature selection. Probability of choosing a feature.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 Parameter of the sequential feature selection. A character representing the method. Possible
 values are <code>sfs</code> (forward search), <code>sbs</code> (backward search), <code>sffs</code>
 (floating forward search) and <code>sfbs</code> (floating backward search).</p></td>
     </tr>
     <tr>
       <th>alpha</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+      <td><p>(<code>numeric(1)</code>)<br />
 Parameter of the sequential feature selection.
 Minimal required value of improvement difference for a forward / adding step.
 Default is 0.01.</p></td>
     </tr>
     <tr>
       <th>beta</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+      <td><p>(<code>numeric(1)</code>)<br />
 Parameter of the sequential feature selection.
 Minimal required value of improvement difference for a backward / removing step.
 Negative values imply that you allow a slight decrease for the removal of a feature.

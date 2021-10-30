@@ -368,7 +368,7 @@ and the cross-validation performance.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>learner</th>
-      <td><p>(<a href='makeLearner.html'>Learner</a> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<a href='makeLearner.html'>Learner</a> | <code>character(1)</code>)<br />
 The learner.
 If you pass a string the learner will be created via <a href='makeLearner.html'>makeLearner</a>.</p></td>
     </tr>
@@ -391,7 +391,7 @@ Default is the default measure for the task, see here <a href='getDefaultMeasure
     </tr>
     <tr>
       <th>cv</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 Do cross-validation and display in plot title?
 Number of folds. 0 means no CV.
 Default is 10.</p></td>
@@ -403,19 +403,19 @@ Parameters for <code>learner</code>.</p></td>
     </tr>
     <tr>
       <th>gridsize</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 Grid resolution per axis for background predictions.
 Default is 500 for 1D and 100 for 2D.</p></td>
     </tr>
     <tr>
       <th>pointsize</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/numeric.html'>numeric(1)</a></code>)<br />
+      <td><p>(<code>numeric(1)</code>)<br />
 Pointsize for ggplot2 <a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>ggplot2::geom_point</a> for data points.
 Default is 2.</p></td>
     </tr>
     <tr>
       <th>prob.alpha</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 For classification: Set alpha value of background to probability for
 predicted class? Allows visualization of &#8220;confidence&#8221; for prediction.
 If not, only a constant color is displayed in the background for the predicted label.
@@ -423,45 +423,45 @@ Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>se.band</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 For regression in 1D: Show band for standard error estimation?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>err.mark</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>):
+      <td><p>(<code>character(1)</code>):
 For classification: Either mark error of the model on the training data (&#8220;train&#8221;) or
 during cross-validation (&#8220;cv&#8221;) or not at all with &#8220;none&#8221;.
 Default is &#8220;train&#8221;.</p></td>
     </tr>
     <tr>
       <th>bg.cols</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(3)</a></code>)<br />
+      <td><p>(<code>character(3)</code>)<br />
 Background colors for classification and regression.
 Sorted from low, medium to high.
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>err.col</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 For classification: Color of misclassified data points.
 Default is &#8220;white&#8221;</p></td>
     </tr>
     <tr>
       <th>err.size</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 For classification: Size of misclassified data points.
 Default is <code>pointsize</code>.</p></td>
     </tr>
     <tr>
       <th>greyscale</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should the plot be greyscale completely?
 Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>pretty.names</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Whether to use the short name of the learner instead of its ID in labels. Defaults to <code>TRUE</code>.</p></td>
     </tr>
     </table>
