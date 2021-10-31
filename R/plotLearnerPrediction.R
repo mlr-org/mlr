@@ -201,7 +201,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       # print error points
       p = p + geom_point(data = subset(data, data$.err),
         mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show.legend = FALSE)
-      p = p + guides(alpha = FALSE)
+      p = p + guides(alpha = "none")
     }
   } else if (td$type == "cluster") {
     if (taskdim == 2L) {
@@ -235,7 +235,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
         size = pointsize, colour = "black", shape = 1)
       # plot point, with circle and interior color for y
       p = p + scale_colour_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
-      p = p + guides(colour = FALSE)
+      p = p + guides(colour = "none")
     }
   }
 
