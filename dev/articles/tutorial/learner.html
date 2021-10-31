@@ -469,9 +469,6 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># List everything in mlr</span>
 <span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## Warning in listLearners.character(): The following learners could not be constructed, probably because their packages are not installed:</span>
-<span class="co">## classif.rrlda</span>
-<span class="co">## Check ?learners to see which packages you need or install mlr with all suggestions.</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##                 class      package</span>
 <span class="co">## 1         classif.ada    ada,rpart</span>
@@ -483,9 +480,6 @@
 
 <span class="co"># List classifiers that can output probabilities</span>
 <span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"classif"</span>, properties <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
-<span class="co">## Warning in listLearners.character("classif", properties = "prob"): The following learners could not be constructed, probably because their packages are not installed:</span>
-<span class="co">## classif.rrlda</span>
-<span class="co">## Check ?learners to see which packages you need or install mlr with all suggestions.</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##                 class      package</span>
 <span class="co">## 1         classif.ada    ada,rpart</span>
@@ -497,9 +491,6 @@
 
 <span class="co"># List classifiers that can be applied to iris (i.e., multiclass) and output probabilities</span>
 <span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="va">iris.task</span>, properties <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
-<span class="co">## Warning in listLearners.character(td$type, union(props, properties), quiet, : The following learners could not be constructed, probably because their packages are not installed:</span>
-<span class="co">## classif.rrlda</span>
-<span class="co">## Check ?learners to see which packages you need or install mlr with all suggestions.</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##                class      package</span>
 <span class="co">## 1 classif.adaboostm1        RWeka</span>
@@ -511,9 +502,6 @@
 
 <span class="co"># The calls above return character vectors, but you can also create learner objects</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"cluster"</span>, create <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>
-<span class="co">## Warning in listLearners.character("cluster", create = TRUE): The following learners could not be constructed, probably because their packages are not installed:</span>
-<span class="co">## classif.rrlda</span>
-<span class="co">## Check ?learners to see which packages you need or install mlr with all suggestions.</span>
 <span class="co">## [[1]]</span>
 <span class="co">## Learner cluster.cmeans from package e1071,clue</span>
 <span class="co">## Type: cluster</span>

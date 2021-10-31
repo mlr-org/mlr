@@ -287,9 +287,9 @@
 <p>This page lists the learning methods already integrated in <code>mlr</code>.</p>
 <p>Columns <strong>Num.</strong>, <strong>Fac.</strong>, <strong>Ord.</strong>, <strong>NAs</strong>, and <strong>Weights</strong> indicate if a method can cope with numerical, factor, and ordered factor predictors, if it can deal with missing values in a meaningful way (other than simply removing observations with missing values) and if observation weights are supported.</p>
 <p>Column <strong>Props</strong> shows further properties of the learning methods specific to the type of learning task. See also <code><a href="../../reference/RLearner.html">RLearner()</a></code> for details.</p>
-<div id="classification-84" class="section level1">
+<div id="classification-83" class="section level1">
 <h1 class="hasAnchor">
-<a href="#classification-84" class="anchor"></a>Classification (84)</h1>
+<a href="#classification-83" class="anchor"></a>Classification (83)</h1>
 <p>For classification the following additional learner properties are relevant and shown in column <strong>Props</strong>:</p>
 <ul>
 <li>
@@ -1298,18 +1298,6 @@
 </tr>
 <tr class="odd">
 <td align="left">
-<strong>classif.rrlda</strong> <br><em>rrlda</em> <br><br>Robust Regularized Linear Discriminant Analysis</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/rrlda/">rrlda</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="left">twoclass<br>multiclass</td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left">
 <strong>classif.saeDNN</strong> <br><em>sae.dnn</em> <br><br>Deep neural network with weights initialized by Stacked AutoEncoder</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/deepnet/">deepnet</a></td>
 <td align="center">X</td>
@@ -1321,7 +1309,7 @@
 <td align="left">
 <code>output</code> set to <code>"softmax"</code> by default.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.sda</strong> <br><em>sda</em> <br><br>Shrinkage Discriminant Analysis</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/sda/">sda</a></td>
@@ -1333,7 +1321,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.sparseLDA</strong> <br><em>sparseLDA</em> <br><br>Sparse Discriminant Analysis</td>
 <td align="left">
@@ -1347,7 +1335,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left">Arguments <code>Q</code> and <code>stop</code> are not yet provided as they depend on the task.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.svm</strong> <br><em>svm</em> <br><br>Support Vector Machines (libsvm)</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/e1071/">e1071</a></td>
@@ -1359,7 +1347,7 @@
 <td align="left">prob<br>twoclass<br>multiclass<br>class.weights</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.xgboost</strong> <br><em>xgboost</em> <br><br>eXtreme Gradient Boosting</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/xgboost/">xgboost</a></td>
