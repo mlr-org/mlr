@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,7 +45,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
@@ -69,7 +71,8 @@
       <a href="../../articles/tutorial/predict.html">Predict</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/preproc.html">Preprocessing</a>
     </li>
     <li>
@@ -82,7 +85,8 @@
       <a href="../../articles/tutorial/benchmark_experiments.html">Benchmarking</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/parallelization.html">Parallelization</a>
     </li>
     <li>
@@ -92,7 +96,8 @@
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/usecase_regression.html">Use case - Regression</a>
     </li>
   </ul>
@@ -111,7 +116,8 @@
       <a href="../../articles/tutorial/wrapper.html">Wrapped Learners</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/impute.html">Imputation</a>
     </li>
     <li>
@@ -148,7 +154,8 @@
       <a href="../../articles/tutorial/out_of_bag_predictions.html">Out-of-Bag Predictions</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/multilabel.html">Multilabel Classification</a>
     </li>
     <li>
@@ -203,27 +210,30 @@
       <a href="../../articles/tutorial/filter_methods.html">Integrated Filter Methods</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/mlr-outreach">Talks, Videos and Workshops</a>
+      <a href="https://github.com/mlr-org/mlr-outreach" class="external-link">Talks, Videos and Workshops</a>
     </li>
     <li class="divider">
-    <li>
-      <a href="https://mlrmbo.mlr-org.com">mlrMBO</a>
+    </li>
+<li>
+      <a href="https://mlrmbo.mlr-org.com" class="external-link">mlrMBO</a>
     </li>
     <li>
-      <a href="https://https://mlrcpo.mlr-org.com">mlrCPO</a>
+      <a href="https://https://mlrcpo.mlr-org.com" class="external-link">mlrCPO</a>
     </li>
     <li>
-      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html" class="external-link">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/">OpenML</a>
+      <a href="http://openml.github.io/openml-r/" class="external-link">OpenML</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../news/index.html">Changelog</a>
     </li>
   </ul>
@@ -232,25 +242,25 @@
   <a href="../../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr/">
+  <a href="https://github.com/mlr-org/mlr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link">
     <span class="fa fa-comments"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://stackoverflow.com/questions/tagged/mlr">
+  <a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link">
     <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.com/">
+  <a href="https://mlr-org.com/" class="external-link">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -277,7 +287,7 @@
       <h1 data-toc-skip>Integrating Another Learner</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/create_learner.Rmd"><code>vignettes/tutorial/create_learner.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/HEAD/vignettes/tutorial/create_learner.Rmd" class="external-link"><code>vignettes/tutorial/create_learner.Rmd</code></a></small>
       <div class="hidden name"><code>create_learner.Rmd</code></div>
 
     </div>
@@ -291,24 +301,24 @@
 <li>Finally, a prediction function that returns predicted values given new data is required (which enables invoking prediction by calling <code>mlr</code>’s <code><a href="../../reference/predict.WrappedModel.html">predict.WrappedModel()</a></code> function).</li>
 </ul>
 <p>Technically, integrating a learning method means introducing a new S3 <code>class</code> and implementing the corresponding methods for the generic functions <code><a href="../../reference/RLearner.html">RLearner()</a></code>, <code><a href="../../reference/trainLearner.html">trainLearner()</a></code>, and <code><a href="../../reference/predictLearner.html">predictLearner()</a></code>. Therefore we start with a quick overview of the involved classes and constructor functions.</p>
-<div id="classes-constructors-and-naming-schemes" class="section level1">
-<h1 class="hasAnchor">
-<a href="#classes-constructors-and-naming-schemes" class="anchor"></a>Classes, constructors, and naming schemes</h1>
+<div class="section level1">
+<h1 id="classes-constructors-and-naming-schemes">Classes, constructors, and naming schemes<a class="anchor" aria-label="anchor" href="#classes-constructors-and-naming-schemes"></a>
+</h1>
 <p>As you already know <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> generates an object of class Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span>cl <span class="op">=</span> <span class="st">"classif.lda"</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span>cl <span class="op">=</span> <span class="st">"classif.lda"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] "classif.lda"     "RLearnerClassif" "RLearner"        "Learner"</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span>cl <span class="op">=</span> <span class="st">"regr.lm"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span>cl <span class="op">=</span> <span class="st">"regr.lm"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] "regr.lm"      "RLearnerRegr" "RLearner"     "Learner"</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span>cl <span class="op">=</span> <span class="st">"surv.coxph"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span>cl <span class="op">=</span> <span class="st">"surv.coxph"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] "surv.coxph"   "RLearnerSurv" "RLearner"     "Learner"</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span>cl <span class="op">=</span> <span class="st">"cluster.kmeans"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span>cl <span class="op">=</span> <span class="st">"cluster.kmeans"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] "cluster.kmeans"  "RLearnerCluster" "RLearner"        "Learner"</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span>cl <span class="op">=</span> <span class="st">"multilabel.rFerns"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span>cl <span class="op">=</span> <span class="st">"multilabel.rFerns"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] "multilabel.rFerns"  "RLearnerMultilabel" "RLearner"          </span>
 <span class="co">## [4] "Learner"</span></code></pre></div>
 <p>The first element of each class attribute vector is the name of the learner class passed to the <code>cl</code> argument of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>. Obviously, this adheres to the naming conventions</p>
@@ -329,24 +339,24 @@
 <p>In the following we show how to integrate learners for the five types of learning tasks mentioned above. Defining a completely new type of learner that has special properties and does not fit into one of the existing schemes is of course possible, but much more advanced and not covered here.</p>
 <p>We use a classification example to explain some general principles (so even if you are interested in integrating a learner for another type of learning task you might want to read the following section). Examples for other types of learning tasks are shown later on.</p>
 </div>
-<div id="classification" class="section level1">
-<h1 class="hasAnchor">
-<a href="#classification" class="anchor"></a>Classification</h1>
-<p>We show how the Linear Discriminant Analysis (<code><a href="https://rdrr.io/pkg/MASS/man/lda.html">MASS::lda()</a></code>) from package <code>MASS</code> has been integrated into the classification learner <code>classif.lda</code> in <code>mlr</code> as an example.</p>
-<div id="definition-of-the-learner" class="section level2">
-<h2 class="hasAnchor">
-<a href="#definition-of-the-learner" class="anchor"></a>Definition of the learner</h2>
+<div class="section level1">
+<h1 id="classification">Classification<a class="anchor" aria-label="anchor" href="#classification"></a>
+</h1>
+<p>We show how the Linear Discriminant Analysis (<code><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">MASS::lda()</a></code>) from package <code>MASS</code> has been integrated into the classification learner <code>classif.lda</code> in <code>mlr</code> as an example.</p>
+<div class="section level2">
+<h2 id="definition-of-the-learner">Definition of the learner<a class="anchor" aria-label="anchor" href="#definition-of-the-learner"></a>
+</h2>
 <p>The minimal information required to define a learner is the <code>mlr</code> name of the learner, its package, the parameter set, and the set of properties of your learner. In addition, you may provide a human-readable name, a short name and a note with information relevant to users of the learner.</p>
 <p>First, name your learner. According to the naming conventions above the name starts with <code>classif.</code> and we choose <code>classif.lda</code>.</p>
-<p>Second, we need to define the parameters of the learner. These are any options that can be set when running it to change how it learns, how input is interpreted, how and what output is generated, and so on. <code>mlr</code> provides a number of functions to define parameters, a complete list can be found in the documentation of <code>LearnerParam</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html">ParamHelpers::LearnerParam()</a></code>) of the <code>ParamHelpers</code> package.</p>
-<p>In our example, we have discrete and numeric parameters, so we use <code>makeDiscreteLearnerParam</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html">ParamHelpers::LearnerParam()</a></code>) and <code>makeNumericLearnerParam</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html">ParamHelpers::LearnerParam()</a></code>) to incorporate the complete description of the parameters. We include all possible values for discrete parameters and lower and upper bounds for numeric parameters. Strictly speaking it is not necessary to provide bounds for all parameters and if this information is not available they can be estimated, but providing accurate and specific information here makes it possible to tune the learner much better (see the section on <a href="tune.html" target="_blank">tuning</a>).</p>
+<p>Second, we need to define the parameters of the learner. These are any options that can be set when running it to change how it learns, how input is interpreted, how and what output is generated, and so on. <code>mlr</code> provides a number of functions to define parameters, a complete list can be found in the documentation of <code>LearnerParam</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">ParamHelpers::LearnerParam()</a></code>) of the <code>ParamHelpers</code> package.</p>
+<p>In our example, we have discrete and numeric parameters, so we use <code>makeDiscreteLearnerParam</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">ParamHelpers::LearnerParam()</a></code>) and <code>makeNumericLearnerParam</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">ParamHelpers::LearnerParam()</a></code>) to incorporate the complete description of the parameters. We include all possible values for discrete parameters and lower and upper bounds for numeric parameters. Strictly speaking it is not necessary to provide bounds for all parameters and if this information is not available they can be estimated, but providing accurate and specific information here makes it possible to tune the learner much better (see the section on <a href="tune.html" target="_blank">tuning</a>).</p>
 <p>Next, we add information on the properties of the learner (see also the section on <a href="learner.html" target="_blank">learners</a>). Which types of features are supported (numerics, factors)? Are case weights supported? Are class weights supported? Can the method deal with missing values in the features and deal with NA’s in a meaningful way (not <code>na.omit</code>)? Are one-class, two-class, multi-class problems supported? Can the learner predict posterior probabilities?</p>
 <p>If the learner supports class weights the name of the relevant learner parameter can be specified via argument <code>class.weights.param</code>.</p>
 <p>Sometimes parameters allow certain values that don’t “fit” the formal parameter types. Often, these are also the default values. For example: A numeric parameter that accepts values as <code>NA</code>, <code>NULL</code>, <code>"auto"</code>, and so on. For these there is the option <code>special.vals</code>, which allows to list these extra values as feasible. An example is the <code>missing</code> argument in <code>xgboost</code>. It accepts numeric values (that’s why it’s set as a numeric parameter) and <code>NULL</code> but the default is <code>NA</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">makeNumericLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"missing"</span>, default <span class="op">=</span> <span class="cn">NA</span>, tunable <span class="op">=</span> <span class="cn">FALSE</span>, when <span class="op">=</span> <span class="st">"both"</span>,
-  special.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA_real_</span>, <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>If a parameter depends on another one, the <code>requires</code> attribute is added as an argument. Dependent parameters with a <code>requires</code> field must use <code><a href="https://rdrr.io/r/base/substitute.html">quote()</a></code> and not <code><a href="https://rdrr.io/r/base/expression.html">expression()</a></code> to define it.</p>
+  special.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA_real_</span>, <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>If a parameter depends on another one, the <code>requires</code> attribute is added as an argument. Dependent parameters with a <code>requires</code> field must use <code><a href="https://rdrr.io/r/base/substitute.html" class="external-link">quote()</a></code> and not <code><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression()</a></code> to define it.</p>
 <p>Below is the complete code for the definition of the LDA learner. It has one discrete parameter, <code>method</code>, and two continuous ones, <code>nu</code> and <code>tol</code>. It supports classification problems with two or more classes and can deal with numeric and factor explanatory variables. It can predict posterior probabilities.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">makeRLearner.classif.lda</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
@@ -355,25 +365,25 @@
     package <span class="op">=</span> <span class="st">"MASS"</span>,
     par.set <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span>
       <span class="fu">makeDiscreteLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"method"</span>, default <span class="op">=</span> <span class="st">"moment"</span>,
-        values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"moment"</span>, <span class="st">"mle"</span>, <span class="st">"mve"</span>, <span class="st">"t"</span><span class="op">)</span><span class="op">)</span>,
+        values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"moment"</span>, <span class="st">"mle"</span>, <span class="st">"mve"</span>, <span class="st">"t"</span><span class="op">)</span><span class="op">)</span>,
       <span class="fu">makeNumericLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"nu"</span>, lower <span class="op">=</span> <span class="fl">2</span>,
-        requires <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="va">method</span> <span class="op">==</span> <span class="st">"t"</span><span class="op">)</span><span class="op">)</span>,
+        requires <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">quote</a></span><span class="op">(</span><span class="va">method</span> <span class="op">==</span> <span class="st">"t"</span><span class="op">)</span><span class="op">)</span>,
       <span class="fu">makeNumericLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"tol"</span>, default <span class="op">=</span> <span class="fl">1e-4</span>, lower <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,
       <span class="fu">makeDiscreteLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"predict.method"</span>,
-        values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"plug-in"</span>, <span class="st">"predictive"</span>, <span class="st">"debiased"</span><span class="op">)</span>,
+        values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plug-in"</span>, <span class="st">"predictive"</span>, <span class="st">"debiased"</span><span class="op">)</span>,
         default <span class="op">=</span> <span class="st">"plug-in"</span>, when <span class="op">=</span> <span class="st">"predict"</span><span class="op">)</span>,
       <span class="fu">makeLogicalLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"CV"</span>, default <span class="op">=</span> <span class="cn">FALSE</span>, tunable <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
     <span class="op">)</span>,
-    properties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"twoclass"</span>, <span class="st">"multiclass"</span>, <span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"prob"</span><span class="op">)</span>,
+    properties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"twoclass"</span>, <span class="st">"multiclass"</span>, <span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"prob"</span><span class="op">)</span>,
     name <span class="op">=</span> <span class="st">"Linear Discriminant Analysis"</span>,
     short.name <span class="op">=</span> <span class="st">"lda"</span>,
     note <span class="op">=</span> <span class="st">"Learner param 'predict.method' maps to 'method' in predict.lda."</span>
   <span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="creating-the-training-function-of-the-learner" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-the-training-function-of-the-learner" class="anchor"></a>Creating the training function of the learner</h2>
+<div class="section level2">
+<h2 id="creating-the-training-function-of-the-learner">Creating the training function of the learner<a class="anchor" aria-label="anchor" href="#creating-the-training-function-of-the-learner"></a>
+</h2>
 <p>Once the learner has been defined, we need to tell <code>mlr</code> how to call it to train a model. The name of the function has to start with <code>trainLearner.</code>, followed by the <code>mlr</code> name of the learner as defined above (<code>classif.lda</code> here). The prototype of the function looks as follows.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">function</span><span class="op">(</span><span class="va">.learner</span>, <span class="va">.task</span>, <span class="va">.subset</span>, <span class="va">.weights</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span> <span class="op">}</span></code></pre></div>
@@ -383,12 +393,12 @@
 <code class="sourceCode R"><span class="va">trainLearner.classif.lda</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">.learner</span>, <span class="va">.task</span>, <span class="va">.subset</span>, <span class="va">.weights</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span> 
 <span class="op">{</span>
     <span class="va">f</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskFormula.html">getTaskFormula</a></span><span class="op">(</span><span class="va">.task</span><span class="op">)</span>
-    <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lda.html">lda</a></span><span class="op">(</span><span class="va">f</span>, data <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">.task</span>, <span class="va">.subset</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
+    <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">lda</a></span><span class="op">(</span><span class="va">f</span>, data <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">.task</span>, <span class="va">.subset</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="creating-the-prediction-method" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-the-prediction-method" class="anchor"></a>Creating the prediction method</h2>
+<div class="section level2">
+<h2 id="creating-the-prediction-method">Creating the prediction method<a class="anchor" aria-label="anchor" href="#creating-the-prediction-method"></a>
+</h2>
 <p>Finally, the prediction function needs to be defined. The name of this function starts with <code>predictLearner.</code>, followed again by the <code>mlr</code> name of the learner. The prototype of the function is as follows.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">function</span><span class="op">(</span><span class="va">.learner</span>, <span class="va">.model</span>, <span class="va">.newdata</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span> <span class="op">}</span></code></pre></div>
@@ -399,22 +409,22 @@
 <code class="sourceCode R"><span class="va">predictLearner.classif.lda</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">.learner</span>, <span class="va">.model</span>, <span class="va">.newdata</span>, <span class="va">predict.method</span> <span class="op">=</span> <span class="st">"plug-in"</span>, 
     <span class="va">...</span><span class="op">)</span> 
 <span class="op">{</span>
-    <span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">.model</span><span class="op">$</span><span class="va">learner.model</span>, newdata <span class="op">=</span> <span class="va">.newdata</span>, method <span class="op">=</span> <span class="va">predict.method</span>, 
+    <span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">.model</span><span class="op">$</span><span class="va">learner.model</span>, newdata <span class="op">=</span> <span class="va">.newdata</span>, method <span class="op">=</span> <span class="va">predict.method</span>, 
         <span class="va">...</span><span class="op">)</span>
     <span class="kw">if</span> <span class="op">(</span><span class="va">.learner</span><span class="op">$</span><span class="va">predict.type</span> <span class="op">==</span> <span class="st">"response"</span><span class="op">)</span> <span class="op">{</span>
-        <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">p</span><span class="op">$</span><span class="va">class</span><span class="op">)</span>
+        <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">p</span><span class="op">$</span><span class="va">class</span><span class="op">)</span>
     <span class="op">}</span>
     <span class="kw">else</span> <span class="op">{</span>
-        <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">p</span><span class="op">$</span><span class="va">posterior</span><span class="op">)</span>
+        <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">p</span><span class="op">$</span><span class="va">posterior</span><span class="op">)</span>
     <span class="op">}</span>
 <span class="op">}</span></code></pre></div>
 </div>
 </div>
-<div id="regression" class="section level1">
-<h1 class="hasAnchor">
-<a href="#regression" class="anchor"></a>Regression</h1>
+<div class="section level1">
+<h1 id="regression">Regression<a class="anchor" aria-label="anchor" href="#regression"></a>
+</h1>
 <p>The main difference for regression is that the type of predictions are different (numeric instead of labels or probabilities) and that not all of the properties are relevant. In particular, whether one-, two-, or multi-class problems and posterior probabilities are supported is not applicable.</p>
-<p>Apart from this, everything explained above applies. Below is the definition for the <code><a href="https://rdrr.io/pkg/earth/man/earth.html">earth::earth()</a></code> learner.</p>
+<p>Apart from this, everything explained above applies. Below is the definition for the <code><a href="https://rdrr.io/pkg/earth/man/earth.html" class="external-link">earth::earth()</a></code> learner.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">makeRLearner.regr.earth</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../../reference/RLearner.html">makeRLearnerRegr</a></span><span class="op">(</span>
@@ -433,10 +443,10 @@
       <span class="fu">makeIntegerLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"fast.k"</span>, default <span class="op">=</span> <span class="fl">20L</span>, lower <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span>,
       <span class="fu">makeNumericLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"fast.beta"</span>, default <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
       <span class="fu">makeDiscreteLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"pmethod"</span>, default <span class="op">=</span> <span class="st">"backward"</span>,
-        values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"backward"</span>, <span class="st">"none"</span>, <span class="st">"exhaustive"</span>, <span class="st">"forward"</span>, <span class="st">"seqrep"</span>, <span class="st">"cv"</span><span class="op">)</span><span class="op">)</span>,
+        values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"backward"</span>, <span class="st">"none"</span>, <span class="st">"exhaustive"</span>, <span class="st">"forward"</span>, <span class="st">"seqrep"</span>, <span class="st">"cv"</span><span class="op">)</span><span class="op">)</span>,
       <span class="fu">makeIntegerLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"nprune"</span><span class="op">)</span>
     <span class="op">)</span>,
-    properties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"numerics"</span>, <span class="st">"factors"</span><span class="op">)</span>,
+    properties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"numerics"</span>, <span class="st">"factors"</span><span class="op">)</span>,
     name <span class="op">=</span> <span class="st">"Multivariate Adaptive Regression Splines"</span>,
     short.name <span class="op">=</span> <span class="st">"earth"</span>,
     note <span class="op">=</span> <span class="st">""</span>
@@ -446,21 +456,21 @@
 <code class="sourceCode R"><span class="va">trainLearner.regr.earth</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">.learner</span>, <span class="va">.task</span>, <span class="va">.subset</span>, <span class="va">.weights</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span> 
 <span class="op">{</span>
     <span class="va">f</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskFormula.html">getTaskFormula</a></span><span class="op">(</span><span class="va">.task</span><span class="op">)</span>
-    <span class="fu">earth</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/earth/man/earth.html">earth</a></span><span class="op">(</span><span class="va">f</span>, data <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">.task</span>, <span class="va">.subset</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
+    <span class="fu">earth</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/earth/man/earth.html" class="external-link">earth</a></span><span class="op">(</span><span class="va">f</span>, data <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">.task</span>, <span class="va">.subset</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predictLearner.regr.earth</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">.learner</span>, <span class="va">.model</span>, <span class="va">.newdata</span>, <span class="va">...</span><span class="op">)</span> 
 <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">.model</span><span class="op">$</span><span class="va">learner.model</span>, newdata <span class="op">=</span> <span class="va">.newdata</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1L</span><span class="op">]</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">.model</span><span class="op">$</span><span class="va">learner.model</span>, newdata <span class="op">=</span> <span class="va">.newdata</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1L</span><span class="op">]</span>
 <span class="op">}</span></code></pre></div>
 <p>Again most of the data is passed straight through to/from the train/predict functions of the learner.</p>
 </div>
-<div id="survival-analysis" class="section level1">
-<h1 class="hasAnchor">
-<a href="#survival-analysis" class="anchor"></a>Survival analysis</h1>
+<div class="section level1">
+<h1 id="survival-analysis">Survival analysis<a class="anchor" aria-label="anchor" href="#survival-analysis"></a>
+</h1>
 <p>For survival analysis, you have to return so-called linear predictors in order to compute the default measure for this task type, the <a href="measures.html" target="_blank">cindex</a> (for <code>.learner$predict.type</code> == <code>"response"</code>). For <code>.learner$predict.type</code> == <code>"prob"</code>, there is no substantially meaningful measure (yet). You may either ignore this case or return something like predicted survival curves (cf. example below).</p>
 <p>There are three properties that are specific to survival learners: “rcens”, “lcens” and “icens”, defining the type(s) of censoring a learner can handle – right, left and/or interval censored.</p>
-<p>Let’s have a look at how the Cox Proportional Hazard Model (<code><a href="https://rdrr.io/pkg/survival/man/coxph.html">survival::coxph()</a></code>) from package <code>survival</code> has been integrated into the survival learner <code>surv.coxph</code> in <code>mlr</code> as an example:</p>
+<p>Let’s have a look at how the Cox Proportional Hazard Model (<code><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">survival::coxph()</a></code>) from package <code>survival</code> has been integrated into the survival learner <code>surv.coxph</code> in <code>mlr</code> as an example:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">makeRLearner.surv.coxph</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../../reference/RLearner.html">makeRLearnerSurv</a></span><span class="op">(</span>
@@ -468,20 +478,20 @@
     package <span class="op">=</span> <span class="st">"survival"</span>,
     par.set <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span>
       <span class="fu">makeDiscreteLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"ties"</span>, default <span class="op">=</span> <span class="st">"efron"</span>,
-        values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"efron"</span>, <span class="st">"breslow"</span>, <span class="st">"exact"</span><span class="op">)</span><span class="op">)</span>,
+        values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"efron"</span>, <span class="st">"breslow"</span>, <span class="st">"exact"</span><span class="op">)</span><span class="op">)</span>,
       <span class="fu">makeLogicalLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"singular.ok"</span>, default <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
       <span class="fu">makeNumericLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"eps"</span>, default <span class="op">=</span> <span class="fl">1e-09</span>, lower <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,
       <span class="fu">makeNumericLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"toler.chol"</span>,
         default <span class="op">=</span> <span class="va">.Machine</span><span class="op">$</span><span class="va">double.eps</span><span class="op">^</span><span class="fl">0.75</span>, lower <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,
       <span class="fu">makeIntegerLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"iter.max"</span>, default <span class="op">=</span> <span class="fl">20L</span>, lower <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span>,
       <span class="fu">makeNumericLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"toler.inf"</span>,
-        default <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">.Machine</span><span class="op">$</span><span class="va">double.eps</span><span class="op">^</span><span class="fl">0.75</span><span class="op">)</span>, lower <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,
+        default <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">.Machine</span><span class="op">$</span><span class="va">double.eps</span><span class="op">^</span><span class="fl">0.75</span><span class="op">)</span>, lower <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,
       <span class="fu">makeIntegerLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"outer.max"</span>, default <span class="op">=</span> <span class="fl">10L</span>, lower <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span>,
       <span class="fu">makeLogicalLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"model"</span>, default <span class="op">=</span> <span class="cn">FALSE</span>, tunable <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
       <span class="fu">makeLogicalLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"x"</span>, default <span class="op">=</span> <span class="cn">FALSE</span>, tunable <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
       <span class="fu">makeLogicalLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"y"</span>, default <span class="op">=</span> <span class="cn">TRUE</span>, tunable <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
     <span class="op">)</span>,
-    properties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"missings"</span>, <span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"weights"</span>, <span class="st">"prob"</span>, <span class="st">"rcens"</span><span class="op">)</span>,
+    properties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"missings"</span>, <span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"weights"</span>, <span class="st">"prob"</span>, <span class="st">"rcens"</span><span class="op">)</span>,
     name <span class="op">=</span> <span class="st">"Cox Proportional Hazard Model"</span>,
     short.name <span class="op">=</span> <span class="st">"coxph"</span>,
     note <span class="op">=</span> <span class="st">""</span>
@@ -492,26 +502,26 @@
 <span class="op">{</span>
     <span class="va">f</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskFormula.html">getTaskFormula</a></span><span class="op">(</span><span class="va">.task</span><span class="op">)</span>
     <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">.task</span>, subset <span class="op">=</span> <span class="va">.subset</span><span class="op">)</span>
-    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">.weights</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-        <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">f</span>, data <span class="op">=</span> <span class="va">data</span>, <span class="va">...</span><span class="op">)</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">.weights</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+        <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">coxph</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">f</span>, data <span class="op">=</span> <span class="va">data</span>, <span class="va">...</span><span class="op">)</span>
     <span class="op">}</span>
     <span class="kw">else</span> <span class="op">{</span>
-        <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">f</span>, data <span class="op">=</span> <span class="va">data</span>, weights <span class="op">=</span> <span class="va">.weights</span>, 
+        <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">coxph</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">f</span>, data <span class="op">=</span> <span class="va">data</span>, weights <span class="op">=</span> <span class="va">.weights</span>, 
             <span class="va">...</span><span class="op">)</span>
     <span class="op">}</span>
 <span class="op">}</span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predictLearner.surv.coxph</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">.learner</span>, <span class="va">.model</span>, <span class="va">.newdata</span>, <span class="va">...</span><span class="op">)</span> 
 <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">.model</span><span class="op">$</span><span class="va">learner.model</span>, newdata <span class="op">=</span> <span class="va">.newdata</span>, type <span class="op">=</span> <span class="st">"lp"</span>, 
+    <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">.model</span><span class="op">$</span><span class="va">learner.model</span>, newdata <span class="op">=</span> <span class="va">.newdata</span>, type <span class="op">=</span> <span class="st">"lp"</span>, 
         <span class="va">...</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="clustering" class="section level1">
-<h1 class="hasAnchor">
-<a href="#clustering" class="anchor"></a>Clustering</h1>
+<div class="section level1">
+<h1 id="clustering">Clustering<a class="anchor" aria-label="anchor" href="#clustering"></a>
+</h1>
 <p>For clustering, you have to return a numeric vector with the IDs of the clusters that the respective datum has been assigned to. The numbering should start at 1.</p>
-<p>Below is the definition for the <code>FarthestFirst</code> (<code><a href="https://rdrr.io/pkg/RWeka/man/Weka_clusterers.html">RWeka::FarthestFirst()</a></code>) learner from the <code>RWeka</code> package. Weka starts the IDs of the clusters at 0, so we add 1 to the predicted clusters. RWeka has a different way of setting learner parameters; we use the special <code>Weka_control</code> function to do this.</p>
+<p>Below is the definition for the <code>FarthestFirst</code> (<code><a href="https://rdrr.io/pkg/RWeka/man/Weka_clusterers.html" class="external-link">RWeka::FarthestFirst()</a></code>) learner from the <code>RWeka</code> package. Weka starts the IDs of the clusters at 0, so we add 1 to the predicted clusters. RWeka has a different way of setting learner parameters; we use the special <code>Weka_control</code> function to do this.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">makeRLearner.cluster.FarthestFirst</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../../reference/RLearner.html">makeRLearnerCluster</a></span><span class="op">(</span>
@@ -523,7 +533,7 @@
       <span class="fu">makeLogicalLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"output-debug-info"</span>, default <span class="op">=</span> <span class="cn">FALSE</span>,
         tunable <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
     <span class="op">)</span>,
-    properties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"numerics"</span><span class="op">)</span>,
+    properties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"numerics"</span><span class="op">)</span>,
     name <span class="op">=</span> <span class="st">"FarthestFirst Clustering Algorithm"</span>,
     short.name <span class="op">=</span> <span class="st">"farthestfirst"</span>
   <span class="op">)</span>
@@ -531,23 +541,23 @@
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">trainLearner.cluster.FarthestFirst</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">.learner</span>, <span class="va">.task</span>, <span class="va">.subset</span>, <span class="va">.weights</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span> 
 <span class="op">{</span>
-    <span class="va">ctrl</span> <span class="op">=</span> <span class="fu">RWeka</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RWeka/man/Weka_control.html">Weka_control</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
-    <span class="fu">RWeka</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RWeka/man/Weka_clusterers.html">FarthestFirst</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">.task</span>, <span class="va">.subset</span><span class="op">)</span>, control <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span>
+    <span class="va">ctrl</span> <span class="op">=</span> <span class="fu">RWeka</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RWeka/man/Weka_control.html" class="external-link">Weka_control</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
+    <span class="fu">RWeka</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RWeka/man/Weka_clusterers.html" class="external-link">FarthestFirst</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">.task</span>, <span class="va">.subset</span><span class="op">)</span>, control <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predictLearner.cluster.FarthestFirst</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">.learner</span>, <span class="va">.model</span>, <span class="va">.newdata</span>, <span class="va">...</span><span class="op">)</span> 
 <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">.model</span><span class="op">$</span><span class="va">learner.model</span>, <span class="va">.newdata</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">.model</span><span class="op">$</span><span class="va">learner.model</span>, <span class="va">.newdata</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
         <span class="fl">1L</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="multilabel-classification" class="section level1">
-<h1 class="hasAnchor">
-<a href="#multilabel-classification" class="anchor"></a>Multilabel classification</h1>
+<div class="section level1">
+<h1 id="multilabel-classification">Multilabel classification<a class="anchor" aria-label="anchor" href="#multilabel-classification"></a>
+</h1>
 <p>As stated in the <a href="multilabel.html" target="_blank">multilabel</a> section, multilabel classification methods can be divided into problem transformation methods and algorithm adaptation methods.</p>
 <p>At this moment the only problem transformation method implemented in <code>mlr</code> is the binary relevance method (<code><a href="../../reference/makeMultilabelBinaryRelevanceWrapper.html">makeMultilabelBinaryRelevanceWrapper()</a></code>). Integrating more of these methods requires good knowledge of the architecture of the <code>mlr</code> package.</p>
 <p>The integration of an algorithm adaptation multilabel classification learner is easier and works very similar to the normal multiclass-classification. In contrast to the multiclass case, not all of the learner properties are relevant. In particular, whether one-, two-, or multi-class problems are supported is not applicable. Furthermore the prediction function output must be a matrix with each prediction of a label in one column and the names of the labels as column names. If <code>.learner$predict.type</code> is <code>"response"</code> the predictions must be logical. If <code>.learner$predict.type</code> is <code>"prob"</code> and this type of prediction is supported by the learner, the matrix must consist of predicted probabilities.</p>
-<p>Below is the definition of the <code><a href="https://rdrr.io/pkg/rFerns/man/rFerns.html">rFerns::rFerns()</a></code> learner from the <code>rFerns</code> package, which does not support probability predictions.</p>
+<p>Below is the definition of the <code><a href="https://rdrr.io/pkg/rFerns/man/rFerns.html" class="external-link">rFerns::rFerns()</a></code> learner from the <code>rFerns</code> package, which does not support probability predictions.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">makeRLearner.multilabel.rFerns</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../../reference/RLearner.html">makeRLearnerMultilabel</a></span><span class="op">(</span>
@@ -557,7 +567,7 @@
       <span class="fu">makeIntegerLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"depth"</span>, default <span class="op">=</span> <span class="fl">5L</span><span class="op">)</span>,
       <span class="fu">makeIntegerLearnerParam</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"ferns"</span>, default <span class="op">=</span> <span class="fl">1000L</span><span class="op">)</span>
     <span class="op">)</span>,
-    properties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"ordered"</span><span class="op">)</span>,
+    properties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"ordered"</span><span class="op">)</span>,
     name <span class="op">=</span> <span class="st">"Random ferns"</span>,
     short.name <span class="op">=</span> <span class="st">"rFerns"</span>,
     note <span class="op">=</span> <span class="st">""</span>
@@ -567,22 +577,22 @@
 <code class="sourceCode R"><span class="va">trainLearner.multilabel.rFerns</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">.learner</span>, <span class="va">.task</span>, <span class="va">.subset</span>, <span class="va">.weights</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span> 
 <span class="op">{</span>
     <span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">.task</span>, <span class="va">.subset</span>, target.extra <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-    <span class="fu">rFerns</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rFerns/man/rFerns.html">rFerns</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">d</span><span class="op">$</span><span class="va">data</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">target</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
+    <span class="fu">rFerns</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rFerns/man/rFerns.html" class="external-link">rFerns</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">d</span><span class="op">$</span><span class="va">data</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">target</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predictLearner.multilabel.rFerns</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">.learner</span>, <span class="va">.model</span>, <span class="va">.newdata</span>, <span class="va">...</span><span class="op">)</span> 
 <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">.model</span><span class="op">$</span><span class="va">learner.model</span>, <span class="va">.newdata</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">.model</span><span class="op">$</span><span class="va">learner.model</span>, <span class="va">.newdata</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="creating-a-new-method-for-extracting-feature-importance-values" class="section level1">
-<h1 class="hasAnchor">
-<a href="#creating-a-new-method-for-extracting-feature-importance-values" class="anchor"></a>Creating a new method for extracting feature importance values</h1>
+<div class="section level1">
+<h1 id="creating-a-new-method-for-extracting-feature-importance-values">Creating a new method for extracting feature importance values<a class="anchor" aria-label="anchor" href="#creating-a-new-method-for-extracting-feature-importance-values"></a>
+</h1>
 <p>Some learners, for example decision trees and random forests, can calculate feature importance values, which can be extracted from a fitted model (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) using function <code><a href="../../reference/getFeatureImportance.html">getFeatureImportance()</a></code>.</p>
 <p>If your newly integrated learner supports this you need to</p>
 <ul>
 <li>add <code>"featimp"</code> to the learner properties and</li>
-<li>implement a new S3 method for function <code><a href="../../reference/getFeatureImportanceLearner.regr.randomForestSRC.html">getFeatureImportanceLearner()</a></code> (which later is called internally by <code><a href="../../reference/getFeatureImportance.html">getFeatureImportance()</a></code>) in order to make this work.</li>
+<li>implement a new S3 method for function <code><a href="../../reference/getFeatureImportanceLearner.html">getFeatureImportanceLearner()</a></code> (which later is called internally by <code><a href="../../reference/getFeatureImportance.html">getFeatureImportance()</a></code>) in order to make this work.</li>
 </ul>
 <p>This method takes the <code><a href="../../reference/makeLearner.html">Learner()</a></code> <code>.learner</code>, the WrappedModel (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) <code>.model</code> and potential further arguments and calculates or extracts the feature importance. It must return a named vector of importance values.</p>
 <p>Below are two simple examples. In case of <code>"classif.rpart"</code> the feature importance values can be easily extracted from the fitted model.</p>
@@ -592,17 +602,17 @@
     <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">.model</span>, more.unwrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
     <span class="va">mod</span><span class="op">$</span><span class="va">variable.importance</span>
 <span class="op">}</span></code></pre></div>
-<p>For the <code><a href="https://luminwin.github.io/randomForestSRC//reference/rfsrc.html">randomForestSRC::rfsrc()</a></code> from package <code>randomForestSRC</code> function <code><a href="https://luminwin.github.io/randomForestSRC//reference/vimp.rfsrc.html">randomForestSRC::vimp()</a></code> is called.</p>
+<p>For the <code><a href="https://luminwin.github.io/randomForestSRC//reference/rfsrc.html" class="external-link">randomForestSRC::rfsrc()</a></code> from package <code>randomForestSRC</code> function <code><a href="https://luminwin.github.io/randomForestSRC//reference/vimp.rfsrc.html" class="external-link">randomForestSRC::vimp()</a></code> is called.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">getFeatureImportanceLearner.classif.randomForestSRC</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">.learner</span>, <span class="va">.model</span>, <span class="va">...</span><span class="op">)</span> 
 <span class="op">{</span>
     <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">.model</span>, more.unwrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-    <span class="fu">randomForestSRC</span><span class="fu">::</span><span class="fu"><a href="https://luminwin.github.io/randomForestSRC//reference/vimp.rfsrc.html">vimp</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">...</span><span class="op">)</span><span class="op">$</span><span class="va">importance</span><span class="op">[</span>, <span class="st">"all"</span><span class="op">]</span>
+    <span class="fu">randomForestSRC</span><span class="fu">::</span><span class="fu"><a href="https://luminwin.github.io/randomForestSRC//reference/vimp.rfsrc.html" class="external-link">vimp</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">...</span><span class="op">)</span><span class="op">$</span><span class="va">importance</span><span class="op">[</span>, <span class="st">"all"</span><span class="op">]</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="creating-a-new-method-for-extracting-out-of-bag-predictions" class="section level1">
-<h1 class="hasAnchor">
-<a href="#creating-a-new-method-for-extracting-out-of-bag-predictions" class="anchor"></a>Creating a new method for extracting out-of-bag predictions</h1>
+<div class="section level1">
+<h1 id="creating-a-new-method-for-extracting-out-of-bag-predictions">Creating a new method for extracting out-of-bag predictions<a class="anchor" aria-label="anchor" href="#creating-a-new-method-for-extracting-out-of-bag-predictions"></a>
+</h1>
 <p>Many ensemble learners generate out-of-bag predictions (OOB predictions) automatically. <code>mlr</code> provides the function <code><a href="../../reference/getOOBPreds.html">getOOBPreds()</a></code> to access these predictions in the <code>mlr</code> framework.</p>
 <p>If your newly integrated learner is able to calculate OOB predictions and you want to be able to access them in <code>mlr</code> via <code><a href="../../reference/getOOBPreds.html">getOOBPreds()</a></code> you need to</p>
 <ul>
@@ -615,16 +625,16 @@
 <span class="op">{</span>
     <span class="kw">if</span> <span class="op">(</span><span class="va">.learner</span><span class="op">$</span><span class="va">predict.type</span> <span class="op">==</span> <span class="st">"response"</span><span class="op">)</span> <span class="op">{</span>
         <span class="va">m</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">.model</span>, more.unwrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-        <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="va">m</span><span class="op">$</span><span class="va">predicted</span><span class="op">)</span>
+        <span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="va">m</span><span class="op">$</span><span class="va">predicted</span><span class="op">)</span>
     <span class="op">}</span>
     <span class="kw">else</span> <span class="op">{</span>
         <span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">.model</span>, more.unwrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">votes</span>
     <span class="op">}</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="registering-your-learner" class="section level1">
-<h1 class="hasAnchor">
-<a href="#registering-your-learner" class="anchor"></a>Registering your learner</h1>
+<div class="section level1">
+<h1 id="registering-your-learner">Registering your learner<a class="anchor" aria-label="anchor" href="#registering-your-learner"></a>
+</h1>
 <p>If your interface code to a new learning algorithm exists only locally, i.e., it is not (yet) merged into <code>mlr</code> or does not live in an extra package with a proper namespace you might want to register the new S3 methods to make sure that these are found by, e.g., <code><a href="../../reference/listLearners.html">listLearners()</a></code>. You can do this as follows:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">registerS3method</span>(<span class="st">"makeRLearner"</span>, <span class="st">"&lt;awesome_new_learner_class&gt;"</span>,</span>
 <span id="cb23-2"><a href="#cb23-2"></a>  makeRLearner.<span class="op">&lt;</span>awesome_new_learner_class<span class="op">&gt;</span>)</span>
@@ -640,77 +650,77 @@
 <code class="sourceCode R"><span class="fu">parallelExport</span><span class="op">(</span><span class="st">"trainLearner.&lt;awesome_new_learner_class&gt;"</span>,
   <span class="st">"predictLearner.&lt;awesome_new_learner_class&gt;"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="further-information-for-developers" class="section level1">
-<h1 class="hasAnchor">
-<a href="#further-information-for-developers" class="anchor"></a>Further information for developers</h1>
+<div class="section level1">
+<h1 id="further-information-for-developers">Further information for developers<a class="anchor" aria-label="anchor" href="#further-information-for-developers"></a>
+</h1>
 <p>If you haven’t written a learner interface for private use only, but intend to send a pull request to have it included in the <code>mlr</code> package there are a few things to take care of, most importantly unit testing!</p>
-<p>For general information about contributing to the package, unit testing, version control setup and the like please also read the <a href="https://github.com/mlr-org/mlr/wiki/mlr-Coding-Guidelines">coding guidelines in the mlr Wiki</a>.</p>
+<p>For general information about contributing to the package, unit testing, version control setup and the like please also read the <a href="https://github.com/mlr-org/mlr/wiki/mlr-Coding-Guidelines" class="external-link">coding guidelines in the mlr Wiki</a>.</p>
 <ul>
-<li><p>The R file containing the interface code should adhere to the naming convention <code>RLearner_&lt;type&gt;_&lt;learner_name&gt;.R</code>, e.g., <code>RLearner_classif_lda.R</code>, see for example <a href="https://github.com/mlr-org/mlr/blob/main/R/RLearner_classif_lda.R" class="uri">https://github.com/mlr-org/mlr/blob/main/R/RLearner_classif_lda.R</a> and contain the necessary roxygen <code>@export</code> tags to register the S3 methods in the NAMESPACE.</p></li>
+<li><p>The R file containing the interface code should adhere to the naming convention <code>RLearner_&lt;type&gt;_&lt;learner_name&gt;.R</code>, e.g., <code>RLearner_classif_lda.R</code>, see for example <a href="https://github.com/mlr-org/mlr/blob/main/R/RLearner_classif_lda.R" class="external-link uri">https://github.com/mlr-org/mlr/blob/main/R/RLearner_classif_lda.R</a> and contain the necessary roxygen <code>@export</code> tags to register the S3 methods in the NAMESPACE.</p></li>
 <li><p>The learner interfaces should work out of the box without requiring any parameters to be set, e.g., <code>train("classif.lda", iris.task)</code> should run. Sometimes, this makes it necessary to change or set some additional defaults as explained above and – very important – informing the user about this in the <code>note</code>.</p></li>
 <li><p>The parameter set of the learner should be as complete as possible.</p></li>
 <li><p>Every learner interface must be unit tested.</p></li>
 </ul>
 </div>
-<div id="unit-testing" class="section level1">
-<h1 class="hasAnchor">
-<a href="#unit-testing" class="anchor"></a>Unit testing</h1>
-<p>The tests make sure that we get the same results when the learner is invoked through the <code>mlr</code> interface and when using the original functions. If you are not familiar or want to learn more about unit testing and package <code>testthat</code> have a look at <a href="http://r-pkgs.had.co.nz/tests.html" target="_blank">the Testing chapter in Hadley Wickham’s R packages</a>.</p>
-<p>In <code>mlr</code> all unit tests are in the following directory: <a href="https://github.com/mlr-org/mlr/tree/main/tests/testthat" class="uri">https://github.com/mlr-org/mlr/tree/main/tests/testthat</a>. For each learner interface there is an individual file whose name follows the scheme <code>test_&lt;type&gt;_&lt;learner_name&gt;.R</code>, for example <a href="https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_classif_lda.R" class="uri">https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_classif_lda.R</a>.</p>
-<p>Below is a snippet from the tests of the lda interface <a href="https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_classif_lda.R" class="uri">https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_classif_lda.R</a>.</p>
+<div class="section level1">
+<h1 id="unit-testing">Unit testing<a class="anchor" aria-label="anchor" href="#unit-testing"></a>
+</h1>
+<p>The tests make sure that we get the same results when the learner is invoked through the <code>mlr</code> interface and when using the original functions. If you are not familiar or want to learn more about unit testing and package <code>testthat</code> have a look at <a href="http://r-pkgs.had.co.nz/tests.html" target="_blank" class="external-link">the Testing chapter in Hadley Wickham’s R packages</a>.</p>
+<p>In <code>mlr</code> all unit tests are in the following directory: <a href="https://github.com/mlr-org/mlr/tree/main/tests/testthat" class="external-link uri">https://github.com/mlr-org/mlr/tree/main/tests/testthat</a>. For each learner interface there is an individual file whose name follows the scheme <code>test_&lt;type&gt;_&lt;learner_name&gt;.R</code>, for example <a href="https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_classif_lda.R" class="external-link uri">https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_classif_lda.R</a>.</p>
+<p>Below is a snippet from the tests of the lda interface <a href="https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_classif_lda.R" class="external-link uri">https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_classif_lda.R</a>.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">test_that</span><span class="op">(</span><span class="st">"classif_lda"</span>, <span class="op">{</span>
   <span class="fu">requirePackagesOrSkip</span><span class="op">(</span><span class="st">"MASS"</span>, default.method <span class="op">=</span> <span class="st">"load"</span><span class="op">)</span>
 
-  <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html">getOption</a></span><span class="op">(</span><span class="st">"mlr.debug.seed"</span><span class="op">)</span><span class="op">)</span>
-  <span class="va">m</span> <span class="op">=</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lda.html">lda</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">multiclass.formula</span>, data <span class="op">=</span> <span class="va">multiclass.train</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html">getOption</a></span><span class="op">(</span><span class="st">"mlr.debug.seed"</span><span class="op">)</span><span class="op">)</span>
-  <span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">m</span>, newdata <span class="op">=</span> <span class="va">multiclass.test</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr.debug.seed"</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">m</span> <span class="op">=</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">lda</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">multiclass.formula</span>, data <span class="op">=</span> <span class="va">multiclass.train</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr.debug.seed"</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">m</span>, newdata <span class="op">=</span> <span class="va">multiclass.test</span><span class="op">)</span>
 
   <span class="fu">testSimple</span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">multiclass.df</span>, <span class="va">multiclass.target</span>, <span class="va">multiclass.train.inds</span>, <span class="va">p</span><span class="op">$</span><span class="va">class</span><span class="op">)</span>
   <span class="fu">testProb</span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">multiclass.df</span>, <span class="va">multiclass.target</span>, <span class="va">multiclass.train.inds</span>, <span class="va">p</span><span class="op">$</span><span class="va">posterior</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span></code></pre></div>
-<p>The tests make use of numerous helper objects and helper functions. All of these are defined in the <code>helper_</code> files in <a href="https://github.com/mlr-org/mlr/blob/main/tests/testthat/" class="uri">https://github.com/mlr-org/mlr/blob/main/tests/testthat/</a>.</p>
-<p>In the above code the first line just loads package <code>MASS</code> or skips the test if the package is not available. The objects <code>multiclass.formula</code>, <code>multiclass.train</code>, <code>multiclass.test</code> etc. are defined in <a href="https://github.com/mlr-org/mlr/blob/main/tests/testthat/helper_objects.R" class="uri">https://github.com/mlr-org/mlr/blob/main/tests/testthat/helper_objects.R</a>. We tried to choose fairly self-explanatory names: For example <code>multiclass</code> indicates a multi-class classification problem, <code>multiclass.train</code> contains data for training, <code>multiclass.formula</code> a <code>formula</code> object etc.</p>
-<p>The test fits an lda model on the training set and makes predictions on the test set using the original functions <code><a href="https://rdrr.io/pkg/MASS/man/lda.html">MASS::lda()</a></code> and <code>MASS:predict.lda()</code>. The helper functions <code>testSimple</code> and <code>testProb</code> perform training and prediction on the same data using the <code>mlr</code> interface – <code>testSimple</code> for <code>predict.type = "response</code> and <code>testProbs</code> for <code>predict.type = "prob"</code> – and check if the predicted class labels and probabilities coincide with the outcomes <code>p$class</code> and <code>p$posterior</code>.</p>
-<p>In order to get reproducible results seeding is required for many learners. The <code>"mlr.debug.seed"</code> works as follows: When invoking the tests the option <code>"mlr.debug.seed"</code> is set (see <a href="https://github.com/mlr-org/mlr/blob/main/tests/testthat/helper_zzz.R" class="uri">https://github.com/mlr-org/mlr/blob/main/tests/testthat/helper_zzz.R</a>), and <code>set.seed(getOption("mlr.debug.seed"))</code> is used to specify the seed. Internally, <code>mlr</code>’s <a href="https://github.com/mlr-org/mlr/blob/main/R/train.R#L73">train</a> and <a href="https://github.com/mlr-org/mlr/blob/main/R/predict.R#L100">predict.WrappedModel</a> functions check if the <code>"mlr.debug.seed"</code> option is set and if yes, also specify the seed.</p>
+<p>The tests make use of numerous helper objects and helper functions. All of these are defined in the <code>helper_</code> files in <a href="https://github.com/mlr-org/mlr/blob/main/tests/testthat/" class="external-link uri">https://github.com/mlr-org/mlr/blob/main/tests/testthat/</a>.</p>
+<p>In the above code the first line just loads package <code>MASS</code> or skips the test if the package is not available. The objects <code>multiclass.formula</code>, <code>multiclass.train</code>, <code>multiclass.test</code> etc. are defined in <a href="https://github.com/mlr-org/mlr/blob/main/tests/testthat/helper_objects.R" class="external-link uri">https://github.com/mlr-org/mlr/blob/main/tests/testthat/helper_objects.R</a>. We tried to choose fairly self-explanatory names: For example <code>multiclass</code> indicates a multi-class classification problem, <code>multiclass.train</code> contains data for training, <code>multiclass.formula</code> a <code>formula</code> object etc.</p>
+<p>The test fits an lda model on the training set and makes predictions on the test set using the original functions <code><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">MASS::lda()</a></code> and <code>MASS:predict.lda()</code>. The helper functions <code>testSimple</code> and <code>testProb</code> perform training and prediction on the same data using the <code>mlr</code> interface – <code>testSimple</code> for <code>predict.type = "response</code> and <code>testProbs</code> for <code>predict.type = "prob"</code> – and check if the predicted class labels and probabilities coincide with the outcomes <code>p$class</code> and <code>p$posterior</code>.</p>
+<p>In order to get reproducible results seeding is required for many learners. The <code>"mlr.debug.seed"</code> works as follows: When invoking the tests the option <code>"mlr.debug.seed"</code> is set (see <a href="https://github.com/mlr-org/mlr/blob/main/tests/testthat/helper_zzz.R" class="external-link uri">https://github.com/mlr-org/mlr/blob/main/tests/testthat/helper_zzz.R</a>), and <code>set.seed(getOption("mlr.debug.seed"))</code> is used to specify the seed. Internally, <code>mlr</code>’s <a href="https://github.com/mlr-org/mlr/blob/main/R/train.R#L73" class="external-link">train</a> and <a href="https://github.com/mlr-org/mlr/blob/main/R/predict.R#L100" class="external-link">predict.WrappedModel</a> functions check if the <code>"mlr.debug.seed"</code> option is set and if yes, also specify the seed.</p>
 <p>Note that the option <code>"mlr.debug.seed"</code> is only set for testing, so no seeding happens in normal usage of <code>mlr</code>.</p>
-<p>Let’s look at a second example. Many learners have parameters that are commonly changed or tuned and it is important to make sure that these are passed through correctly. Below is a snippet from <a href="https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_regr_randomForest.R" class="uri">https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_regr_randomForest.R</a>.</p>
+<p>Let’s look at a second example. Many learners have parameters that are commonly changed or tuned and it is important to make sure that these are passed through correctly. Below is a snippet from <a href="https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_regr_randomForest.R" class="external-link uri">https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_regr_randomForest.R</a>.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">test_that</span><span class="op">(</span><span class="st">"regr_randomForest"</span>, <span class="op">{</span>
   <span class="fu">requirePackagesOrSkip</span><span class="op">(</span><span class="st">"randomForest"</span>, default.method <span class="op">=</span> <span class="st">"load"</span><span class="op">)</span>
 
-  <span class="va">parset.list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>,
-    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>ntree <span class="op">=</span> <span class="fl">5</span>, mtry <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
-    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>ntree <span class="op">=</span> <span class="fl">5</span>, mtry <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,
-    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>proximity <span class="op">=</span> <span class="cn">TRUE</span>, oob.prox <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>nPerm <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+  <span class="va">parset.list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ntree <span class="op">=</span> <span class="fl">5</span>, mtry <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ntree <span class="op">=</span> <span class="fl">5</span>, mtry <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>proximity <span class="op">=</span> <span class="cn">TRUE</span>, oob.prox <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>nPerm <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
   <span class="op">)</span>
 
-  <span class="va">old.predicts.list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="va">old.predicts.list</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>
 
-  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">parset.list</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parset.list</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
     <span class="va">parset</span> <span class="op">=</span> <span class="va">parset.list</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>
-    <span class="va">pars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">regr.formula</span>, data <span class="op">=</span> <span class="va">regr.train</span><span class="op">)</span>
-    <span class="va">pars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">pars</span>, <span class="va">parset</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html">getOption</a></span><span class="op">(</span><span class="st">"mlr.debug.seed"</span><span class="op">)</span><span class="op">)</span>
-    <span class="va">m</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="fu">randomForest</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html">randomForest</a></span>, <span class="va">pars</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html">getOption</a></span><span class="op">(</span><span class="st">"mlr.debug.seed"</span><span class="op">)</span><span class="op">)</span>
-    <span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">m</span>, newdata <span class="op">=</span> <span class="va">regr.test</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span>
+    <span class="va">pars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">regr.formula</span>, data <span class="op">=</span> <span class="va">regr.train</span><span class="op">)</span>
+    <span class="va">pars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">pars</span>, <span class="va">parset</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr.debug.seed"</span><span class="op">)</span><span class="op">)</span>
+    <span class="va">m</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="fu">randomForest</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html" class="external-link">randomForest</a></span>, <span class="va">pars</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr.debug.seed"</span><span class="op">)</span><span class="op">)</span>
+    <span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">m</span>, newdata <span class="op">=</span> <span class="va">regr.test</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span>
     <span class="va">old.predicts.list</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">=</span> <span class="va">p</span>
   <span class="op">}</span>
 
   <span class="fu">testSimpleParsets</span><span class="op">(</span><span class="st">"regr.randomForest"</span>, <span class="va">regr.df</span>, <span class="va">regr.target</span>,
     <span class="va">regr.train.inds</span>, <span class="va">old.predicts.list</span>, <span class="va">parset.list</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span></code></pre></div>
-<p>All tested parameter configurations are collected in the <code>parset.list</code>. In order to make sure that the default parameter configuration is tested the first element of the <code>parset.list</code> is an empty <code>list</code> (<code><a href="https://rdrr.io/r/base/list.html">base::list()</a></code>). Then we simply loop over all parameter settings and store the resulting predictions in <code>old.predicts.list</code>. Again the helper function <code>testSimpleParsets</code> does the same using the <code>mlr</code> interface and compares the outcomes.</p>
-<p>Additional to tests for individual learners we also have general tests that loop through all integrated learners and make for example sure that learners have the correct properties (e.g. a learner with property <code>"factors"</code> can cope with <code>factor</code> (<code><a href="https://rdrr.io/r/base/factor.html">base::factor()</a></code>) features, a learner with property <code>"weights"</code> takes observation weights into account properly etc.). For example <a href="https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_learners_all_classif.R" class="uri">https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_learners_all_classif.R</a> runs through all classification learners. Similar tests exist for all types of learning methods like regression, cluster and survival analysis as well as multilabel classification.</p>
+<p>All tested parameter configurations are collected in the <code>parset.list</code>. In order to make sure that the default parameter configuration is tested the first element of the <code>parset.list</code> is an empty <code>list</code> (<code><a href="https://rdrr.io/r/base/list.html" class="external-link">base::list()</a></code>). Then we simply loop over all parameter settings and store the resulting predictions in <code>old.predicts.list</code>. Again the helper function <code>testSimpleParsets</code> does the same using the <code>mlr</code> interface and compares the outcomes.</p>
+<p>Additional to tests for individual learners we also have general tests that loop through all integrated learners and make for example sure that learners have the correct properties (e.g. a learner with property <code>"factors"</code> can cope with <code>factor</code> (<code><a href="https://rdrr.io/r/base/factor.html" class="external-link">base::factor()</a></code>) features, a learner with property <code>"weights"</code> takes observation weights into account properly etc.). For example <a href="https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_learners_all_classif.R" class="external-link uri">https://github.com/mlr-org/mlr/blob/main/tests/testthat/test_learners_all_classif.R</a> runs through all classification learners. Similar tests exist for all types of learning methods like regression, cluster and survival analysis as well as multilabel classification.</p>
 <p>In order to run all tests for, e.g., classification learners on your machine you can invoke the tests from within <strong>R</strong> by</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">test</span><span class="op">(</span><span class="st">"mlr"</span>, filter <span class="op">=</span> <span class="st">"classif"</span><span class="op">)</span></code></pre></div>
-<p>or from the command line using <a href="https://github.com/rdatsci/rt">Michel’s rt tool</a></p>
-<pre><code>rtest --filter=classif</code></pre>
+<p>or from the command line using <a href="https://github.com/rdatsci/rt" class="external-link">Michel’s rt tool</a></p>
+<pre><code><span class="va">rtest</span> <span class="op">-</span><span class="op">-</span><span class="va">filter</span><span class="op">=</span><span class="va">classif</span></code></pre>
 </div>
   </div>
 
@@ -725,11 +735,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
+  <p></p>
+<p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>

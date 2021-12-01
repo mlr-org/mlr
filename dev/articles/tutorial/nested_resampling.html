@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,7 +45,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
@@ -69,7 +71,8 @@
       <a href="../../articles/tutorial/predict.html">Predict</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/preproc.html">Preprocessing</a>
     </li>
     <li>
@@ -82,7 +85,8 @@
       <a href="../../articles/tutorial/benchmark_experiments.html">Benchmarking</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/parallelization.html">Parallelization</a>
     </li>
     <li>
@@ -92,7 +96,8 @@
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/usecase_regression.html">Use case - Regression</a>
     </li>
   </ul>
@@ -111,7 +116,8 @@
       <a href="../../articles/tutorial/wrapper.html">Wrapped Learners</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/impute.html">Imputation</a>
     </li>
     <li>
@@ -148,7 +154,8 @@
       <a href="../../articles/tutorial/out_of_bag_predictions.html">Out-of-Bag Predictions</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/multilabel.html">Multilabel Classification</a>
     </li>
     <li>
@@ -203,27 +210,30 @@
       <a href="../../articles/tutorial/filter_methods.html">Integrated Filter Methods</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/mlr-outreach">Talks, Videos and Workshops</a>
+      <a href="https://github.com/mlr-org/mlr-outreach" class="external-link">Talks, Videos and Workshops</a>
     </li>
     <li class="divider">
-    <li>
-      <a href="https://mlrmbo.mlr-org.com">mlrMBO</a>
+    </li>
+<li>
+      <a href="https://mlrmbo.mlr-org.com" class="external-link">mlrMBO</a>
     </li>
     <li>
-      <a href="https://https://mlrcpo.mlr-org.com">mlrCPO</a>
+      <a href="https://https://mlrcpo.mlr-org.com" class="external-link">mlrCPO</a>
     </li>
     <li>
-      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html" class="external-link">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/">OpenML</a>
+      <a href="http://openml.github.io/openml-r/" class="external-link">OpenML</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../news/index.html">Changelog</a>
     </li>
   </ul>
@@ -232,25 +242,25 @@
   <a href="../../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr/">
+  <a href="https://github.com/mlr-org/mlr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link">
     <span class="fa fa-comments"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://stackoverflow.com/questions/tagged/mlr">
+  <a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link">
     <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.com/">
+  <a href="https://mlr-org.com/" class="external-link">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -277,7 +287,7 @@
       <h1 data-toc-skip>Nested Resampling</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/nested_resampling.Rmd"><code>vignettes/tutorial/nested_resampling.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/HEAD/vignettes/tutorial/nested_resampling.Rmd" class="external-link"><code>vignettes/tutorial/nested_resampling.Rmd</code></a></small>
       <div class="hidden name"><code>nested_resampling.Rmd</code></div>
 
     </div>
@@ -301,17 +311,17 @@ Nested Resampling Figure
 <p>The outer strategy can be a resample description <code>ResampleDesc</code> (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>)) or a resample instance (<code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>)). A common setup is prediction and performance evaluation on a fixed outer test set. This can be achieved by using function <code><a href="../../reference/makeFixedHoldoutInstance.html">makeFixedHoldoutInstance()</a></code> to generate the outer resample instance<code>(</code>makeResampleInstance()`).</p>
 <p>The inner resampling strategy should preferably be a <code>ResampleDesc</code> (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>), as the sizes of the outer training sets might differ. Per default, the inner resample description is instantiated once for every outer training set. This way during tuning/feature selection all parameter or feature sets are compared on the same inner training/test sets to reduce variance. You can also turn this off using the <code>same.resampling.instance</code> argument of <code>makeTuneControl*</code> (<code><a href="../../reference/TuneControl.html">TuneControl()</a></code>) or <code>makeFeatSelControl*</code> (<code><a href="../../reference/FeatSelControl.html">FeatSelControl()</a></code>).</p>
 <p>Nested resampling is computationally expensive. For this reason in the examples shown below we use relatively small search spaces and a low number of resampling iterations. In practice, you normally have to increase both. As this is computationally intensive you might want to have a look at section <a href="parallelization.html" target="_blank">parallelization</a>.</p>
-<div id="tuning" class="section level1">
-<h1 class="hasAnchor">
-<a href="#tuning" class="anchor"></a>Tuning</h1>
-<p>As you might recall from the tutorial page about <a href="tune.html" target="_blank">tuning</a>, you need to define a search space by function <code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">ParamHelpers::makeParamSet()</a></code>, a search strategy by <code>makeTuneControl*</code>(<code><a href="../../reference/TuneControl.html">TuneControl()</a></code>), and a method to evaluate hyperparameter settings (i.e., the inner resampling strategy and a performance measure).</p>
-<p>Below is a classification example. We evaluate the performance of a support vector machine (<code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html">kernlab::ksvm()</a></code>) with tuned cost parameter <code>C</code> and RBF kernel parameter <code>sigma</code>. We use 3-fold cross-validation in the outer and subsampling with 2 iterations in the inner loop. For tuing a grid search is used to find the hyperparameters with lowest error rate (<a href="measures.html" target="_blank">mmce</a> is the default measure for classification). The wrapped Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) is generated by calling <code><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper()</a></code>.</p>
+<div class="section level1">
+<h1 id="tuning">Tuning<a class="anchor" aria-label="anchor" href="#tuning"></a>
+</h1>
+<p>As you might recall from the tutorial page about <a href="tune.html" target="_blank">tuning</a>, you need to define a search space by function <code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::makeParamSet()</a></code>, a search strategy by <code>makeTuneControl*</code>(<code><a href="../../reference/TuneControl.html">TuneControl()</a></code>), and a method to evaluate hyperparameter settings (i.e., the inner resampling strategy and a performance measure).</p>
+<p>Below is a classification example. We evaluate the performance of a support vector machine (<code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html" class="external-link">kernlab::ksvm()</a></code>) with tuned cost parameter <code>C</code> and RBF kernel parameter <code>sigma</code>. We use 3-fold cross-validation in the outer and subsampling with 2 iterations in the inner loop. For tuing a grid search is used to find the hyperparameters with lowest error rate (<a href="measures.html" target="_blank">mmce</a> is the default measure for classification). The wrapped Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) is generated by calling <code><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper()</a></code>.</p>
 <p>Note that in practice the parameter set should be larger. A common recommendation is <code>2^(-12:12)</code> for both <code>C</code> and <code>sigma</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Tuning in inner resampling loop</span>
-<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"C"</span>, values <span class="op">=</span> <span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="op">-</span><span class="fl">2</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, values <span class="op">=</span> <span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="op">-</span><span class="fl">2</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"C"</span>, values <span class="op">=</span> <span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="op">-</span><span class="fl">2</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, values <span class="op">=</span> <span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="op">-</span><span class="fl">2</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">inner</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Subsample"</span>, iters <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
@@ -335,10 +345,10 @@ Nested Resampling Figure
 <span class="co">## 1    1 0.06</span>
 <span class="co">## 2    2 0.04</span>
 <span class="co">## 3    3 0.02</span></code></pre></div>
-<div id="accessing-the-tuning-result" class="section level2">
-<h2 class="hasAnchor">
-<a href="#accessing-the-tuning-result" class="anchor"></a>Accessing the tuning result</h2>
-<p>We have kept the results of the tuning for further evaluations. For example one might want to find out, if the best obtained configurations vary for the different outer splits. As storing entire models may be expensive (but possible by setting <code>models = TRUE</code>) we used the <code>extract</code> option of <code><a href="../../reference/resample.html">resample()</a></code>. Function <code><a href="../../reference/getTuneResult.html">getTuneResult()</a></code> returns, among other things, the optimal hyperparameter values and the optimization path (<code><a href="https://paramhelpers.mlr-org.com/reference/OptPath.html">ParamHelpers::OptPath()</a></code>) for each iteration of the outer resampling loop. Note that the performance values shown when printing <code>r$extract</code> are the aggregated performances resulting from inner resampling on the outer training set for the best hyperparameter configurations (not to be confused with <code>r$measures.test</code> shown above).</p>
+<div class="section level2">
+<h2 id="accessing-the-tuning-result">Accessing the tuning result<a class="anchor" aria-label="anchor" href="#accessing-the-tuning-result"></a>
+</h2>
+<p>We have kept the results of the tuning for further evaluations. For example one might want to find out, if the best obtained configurations vary for the different outer splits. As storing entire models may be expensive (but possible by setting <code>models = TRUE</code>) we used the <code>extract</code> option of <code><a href="../../reference/resample.html">resample()</a></code>. Function <code><a href="../../reference/getTuneResult.html">getTuneResult()</a></code> returns, among other things, the optimal hyperparameter values and the optimization path (<code><a href="https://paramhelpers.mlr-org.com/reference/OptPath.html" class="external-link">ParamHelpers::OptPath()</a></code>) for each iteration of the outer resampling loop. Note that the performance values shown when printing <code>r$extract</code> are the aggregated performances resulting from inner resampling on the outer training set for the best hyperparameter configurations (not to be confused with <code>r$measures.test</code> shown above).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">r</span><span class="op">$</span><span class="va">extract</span>
 <span class="co">## [[1]]</span>
@@ -356,14 +366,14 @@ Nested Resampling Figure
 <span class="co">## Op. pars: C=2; sigma=0.25</span>
 <span class="co">## mmce.test.mean=0.0147059</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">extract</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">extract</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
 <span class="co">## [1] "learner"    "control"    "x"          "y"          "resampling"</span>
 <span class="co">## [6] "threshold"  "opt.path"</span></code></pre></div>
 <p>We can compare the optimal parameter settings obtained in the 3 resampling iterations. As you can see, the optimal configuration usually depends on the data. You may be able to identify a <em>range</em> of parameter settings that achieve good performance though, e.g., the values for <code>C</code> should be at least 1 and the values for <code>sigma</code> should be between 0 and 1.</p>
 <p>With function <code><a href="../../reference/getNestedTuneResultsOptPathDf.html">getNestedTuneResultsOptPathDf()</a></code> you can extract the optimization paths for the 3 outer cross-validation iterations for further inspection and analysis. These are stacked in one <code>data.frame</code> with column <code>iter</code> indicating the resampling iteration.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">opt.paths</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getNestedTuneResultsOptPathDf.html">getNestedTuneResultsOptPathDf</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">opt.paths</span>, <span class="fl">10</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">opt.paths</span>, <span class="fl">10</span><span class="op">)</span>
 
 <span class="co">##       C sigma mmce.test.mean dob eol error.message exec.time iter</span>
 <span class="co">## 1  0.25  0.25     0.10294118   1  NA          &lt;NA&gt;     1.463    1</span>
@@ -378,8 +388,8 @@ Nested Resampling Figure
 <span class="co">## 10    4   0.5     0.10294118  10  NA          &lt;NA&gt;     0.042    1</span></code></pre></div>
 <p>Below we visualize the <code>opt.path</code>s for the 3 outer resampling iterations.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">g</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">opt.paths</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">C</span>, y <span class="op">=</span> <span class="va">sigma</span>, fill <span class="op">=</span> <span class="va">mmce.test.mean</span><span class="op">)</span><span class="op">)</span>
-<span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">iter</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">g</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">opt.paths</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">C</span>, y <span class="op">=</span> <span class="va">sigma</span>, fill <span class="op">=</span> <span class="va">mmce.test.mean</span><span class="op">)</span><span class="op">)</span>
+<span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">iter</span><span class="op">)</span></code></pre></div>
 <p><img src="nested_resampling_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <p>Another useful function is <code><a href="../../reference/getNestedTuneResultsX.html">getNestedTuneResultsX()</a></code>, which extracts the best found hyperparameter settings for each outer resampling iteration.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -468,16 +478,16 @@ Nested Resampling Figure
 <span class="co">## [20]  98  48  38  23 139  86   2 148  15  68 107 136 123 106  65</span></code></pre></div>
 </div>
 </div>
-<div id="feature-selection" class="section level1">
-<h1 class="hasAnchor">
-<a href="#feature-selection" class="anchor"></a>Feature selection</h1>
+<div class="section level1">
+<h1 id="feature-selection">Feature selection<a class="anchor" aria-label="anchor" href="#feature-selection"></a>
+</h1>
 <p>As you might recall from the section about <a href="feature_selection.html" target="_blank">feature selection</a>, <code>mlr</code> supports the filter and the wrapper approach.</p>
-<div id="wrapper-methods" class="section level2">
-<h2 class="hasAnchor">
-<a href="#wrapper-methods" class="anchor"></a>Wrapper methods</h2>
+<div class="section level2">
+<h2 id="wrapper-methods">Wrapper methods<a class="anchor" aria-label="anchor" href="#wrapper-methods"></a>
+</h2>
 <p>Wrapper methods use the performance of a learning algorithm to assess the usefulness of a feature set. In order to select a feature subset a learner is trained repeatedly on different feature subsets and the subset which leads to the best learner performance is chosen.</p>
 <p>For feature selection in the inner resampling loop, you need to choose a search strategy (function <code>makeFeatSelControl*</code> (<code><a href="../../reference/FeatSelControl.html">FeatSelControl()</a></code>)), a performance measure and the inner resampling strategy. Then use function <code><a href="../../reference/makeFeatSelWrapper.html">makeFeatSelWrapper()</a></code> to bind everything together.</p>
-<p>Below we use sequential forward selection with linear regression on the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code> data set (<code><a href="../../reference/bh.task.html">bh.task()</a></code>).</p>
+<p>Below we use sequential forward selection with linear regression on the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html" class="external-link">mlbench::BostonHousing()</a></code> data set (<code><a href="../../reference/bh.task.html">bh.task()</a></code>).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Feature selection in inner resampling loop</span>
 <span class="va">inner</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
@@ -504,9 +514,9 @@ Nested Resampling Figure
 <span class="co">##   iter      mse</span>
 <span class="co">## 1    1 22.28967</span>
 <span class="co">## 2    2 27.46093</span></code></pre></div>
-<div id="accessing-the-selected-features" class="section level3">
-<h3 class="hasAnchor">
-<a href="#accessing-the-selected-features" class="anchor"></a>Accessing the selected features</h3>
+<div class="section level3">
+<h3 id="accessing-the-selected-features">Accessing the selected features<a class="anchor" aria-label="anchor" href="#accessing-the-selected-features"></a>
+</h3>
 <p>The result of the feature selection can be extracted by function <code><a href="../../reference/getFeatSelResult.html">getFeatSelResult()</a></code>. It is also possible to keep whole models (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) by setting <code>models = TRUE</code> when calling <code><a href="../../reference/resample.html">resample()</a></code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">r</span><span class="op">$</span><span class="va">extract</span>
@@ -531,8 +541,8 @@ Nested Resampling Figure
 <span class="co">##      26.89439</span></code></pre></div>
 <p>As for tuning, you can extract the optimization paths. The resulting <code>data.frame</code>s contain, among others, binary columns for all features, indicating if they were included in the linear regression model, and the corresponding performances.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">opt.paths</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">extract</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">opt.paths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">opt.paths</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">extract</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">opt.paths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
 
 <span class="co">##   crim zn indus chas nox rm age dis rad tax ptratio b lstat mse.test.mean</span>
 <span class="co">## 1    0  0     0    0   0  0   0   0   0   0       0 0     0      84.52018</span>
@@ -569,356 +579,356 @@ Nested Resampling Figure
 <span class="co">## Stopped, because no improving feature was found.</span></code></pre></div>
 </div>
 </div>
-<div id="filter-methods-with-tuning" class="section level2">
-<h2 class="hasAnchor">
-<a href="#filter-methods-with-tuning" class="anchor"></a>Filter methods with tuning</h2>
+<div class="section level2">
+<h2 id="filter-methods-with-tuning">Filter methods with tuning<a class="anchor" aria-label="anchor" href="#filter-methods-with-tuning"></a>
+</h2>
 <p>Filter methods assign an importance value to each feature. Based on these values you can select a feature subset by either keeping all features with importance higher than a certain threshold or by keeping a fixed number or percentage of the highest ranking features. Often, neither the theshold nor the number or percentage of features is known in advance and thus tuning is necessary.</p>
 <p>In the example below the threshold value (<code>fw.threshold</code>) is tuned in the inner resampling loop. For this purpose the base Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) <code>"regr.lm"</code> is wrapped two times. First, <code><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper()</a></code> is used to fuse linear regression with a feature filtering preprocessing step. Then a tuning step is added by <code><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper()</a></code>.</p>
-<pre><code>## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<pre><code><span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span>
 
-## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =
-## equal, : Dependent variable is a numeric! It will be converted to factor with
-## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by
-## default! You can choose equal frequency binning discretization by setting equal
-## argument to TRUE.</code></pre>
+<span class="co">## Warning in .information_gain.data.frame(x = x, y = y, type = type, equal =</span>
+<span class="co">## equal, : Dependent variable is a numeric! It will be converted to factor with</span>
+<span class="co">## simple factor(y). We do not discretize dependent variable in FSelectorRcpp by</span>
+<span class="co">## default! You can choose equal frequency binning discretization by setting equal</span>
+<span class="co">## argument to TRUE.</span></code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Tuning of the percentage of selected filters in the inner loop</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="st">"regr.lm"</span>, fw.method <span class="op">=</span> <span class="st">"FSelectorRcpp_information.gain"</span><span class="op">)</span>
-<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span><span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"fw.threshold"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span><span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"fw.threshold"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">inner</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, resampling <span class="op">=</span> <span class="va">inner</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -933,9 +943,9 @@ Nested Resampling Figure
 <span class="co">## Learner: regr.lm.filtered.tuned</span>
 <span class="co">## Aggr perf: mse.test.mean=23.5449481</span>
 <span class="co">## Runtime: 3.85235</span></code></pre></div>
-<div id="accessing-the-selected-features-and-optimal-percentage" class="section level3">
-<h3 class="hasAnchor">
-<a href="#accessing-the-selected-features-and-optimal-percentage" class="anchor"></a>Accessing the selected features and optimal percentage</h3>
+<div class="section level3">
+<h3 id="accessing-the-selected-features-and-optimal-percentage">Accessing the selected features and optimal percentage<a class="anchor" aria-label="anchor" href="#accessing-the-selected-features-and-optimal-percentage"></a>
+</h3>
 <p>In the above example we kept the complete model (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>)s.</p>
 <p>Below are some examples that show how to extract information from the model (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>)s.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -956,7 +966,7 @@ Nested Resampling Figure
 <span class="co">## Hyperparameters:</span></code></pre></div>
 <p>The result of the feature selection can be extracted by function <code><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures()</a></code>. Almost always all 13 features are selected.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">models</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">learner.model</span><span class="op">$</span><span class="va">next.model</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">models</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">learner.model</span><span class="op">$</span><span class="va">next.model</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [[1]]</span>
 <span class="co">##  [1] "crim"    "zn"      "indus"   "chas"    "nox"     "rm"      "age"    </span>
 <span class="co">##  [8] "dis"     "rad"     "tax"     "ptratio" "b"       "lstat"  </span>
@@ -968,9 +978,9 @@ Nested Resampling Figure
 <span class="co">## [[3]]</span>
 <span class="co">##  [1] "crim"    "zn"      "indus"   "chas"    "nox"     "rm"      "age"    </span>
 <span class="co">##  [8] "dis"     "rad"     "tax"     "ptratio" "b"       "lstat"</span></code></pre></div>
-<p>Below the tune results (<code><a href="../../reference/TuneResult.html">TuneResult()</a></code>) and optimization paths (<code><a href="https://paramhelpers.mlr-org.com/reference/OptPath.html">ParamHelpers::OptPath()</a></code>) are accessed.</p>
+<p>Below the tune results (<code><a href="../../reference/TuneResult.html">TuneResult()</a></code>) and optimization paths (<code><a href="https://paramhelpers.mlr-org.com/reference/OptPath.html" class="external-link">ParamHelpers::OptPath()</a></code>) are accessed.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">models</span>, <span class="va">getTuneResult</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">models</span>, <span class="va">getTuneResult</span><span class="op">)</span>
 <span class="va">res</span>
 <span class="co">## [[1]]</span>
 <span class="co">## Tune result:</span>
@@ -987,8 +997,8 @@ Nested Resampling Figure
 <span class="co">## Op. pars: fw.threshold=0</span>
 <span class="co">## mse.test.mean=25.7198156</span>
 
-<span class="va">opt.paths</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">res</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">)</span>
-<span class="va">opt.paths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">opt.paths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">]</span>
+<span class="va">opt.paths</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">res</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">)</span>
+<span class="va">opt.paths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">opt.paths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">]</span>
 <span class="co">##   fw.threshold mse.test.mean dob eol error.message</span>
 <span class="co">## 1            0      24.02562   1  NA          &lt;NA&gt;</span>
 <span class="co">## 2          0.2      67.30442   2  NA          &lt;NA&gt;</span>
@@ -999,9 +1009,9 @@ Nested Resampling Figure
 </div>
 </div>
 </div>
-<div id="benchmark-experiments" class="section level1">
-<h1 class="hasAnchor">
-<a href="#benchmark-experiments" class="anchor"></a>Benchmark experiments</h1>
+<div class="section level1">
+<h1 id="benchmark-experiments">Benchmark experiments<a class="anchor" aria-label="anchor" href="#benchmark-experiments"></a>
+</h1>
 <p>In a benchmark experiment multiple learners are compared on one or several tasks (see also the section about <a href="benchmark_experiments.html" target="_blank">benchmarking</a>. Nested resampling in benchmark experiments is achieved the same way as in resampling:</p>
 <ul>
 <li>First, use <code><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper()</a></code> or <code><a href="../../reference/makeFeatSelWrapper.html">makeFeatSelWrapper()</a></code> to generate wrapped Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>)s with the inner resampling strategies of your choice.</li>
@@ -1016,19 +1026,19 @@ Nested Resampling Figure
 <li>One data set + two regression algorithms + feature selection</li>
 <li>One data set + two regression algorithms + feature filtering + tuning</li>
 </ol>
-<div id="example-1-two-tasks-two-learners-tuning" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-1-two-tasks-two-learners-tuning" class="anchor"></a>Example 1: Two tasks, two learners, tuning</h2>
-<p>Below is a benchmark experiment with two data sets, <code><a href="https://rdrr.io/r/datasets/iris.html">datasets::iris()</a></code> and <code>mlbench::sonar()</code>, and two Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>)s, <code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html">kernlab::ksvm()</a></code> and <code><a href="https://rdrr.io/pkg/kknn/man/kknn.html">kknn::kknn()</a></code>, that are both tuned.</p>
-<p>As inner resampling strategies we use holdout for <code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html">kernlab::ksvm()</a></code> and subsampling with 3 iterations for <code><a href="https://rdrr.io/pkg/kknn/man/kknn.html">kknn::kknn()</a></code>. As outer resampling strategies we take holdout for the <code><a href="https://rdrr.io/r/datasets/iris.html">datasets::iris()</a></code> and bootstrap with 2 iterations for the <code>mlbench::sonar()</code> data (<code><a href="../../reference/sonar.task.html">sonar.task()</a></code>). We consider the accuracy (<a href="measures.html" target="_blank">acc</a>), which is used as tuning criterion, and also calculate the balanced error rate (<a href="measures.html" target="_blank">ber</a>).</p>
+<div class="section level2">
+<h2 id="example-1-two-tasks-two-learners-tuning">Example 1: Two tasks, two learners, tuning<a class="anchor" aria-label="anchor" href="#example-1-two-tasks-two-learners-tuning"></a>
+</h2>
+<p>Below is a benchmark experiment with two data sets, <code><a href="https://rdrr.io/r/datasets/iris.html" class="external-link">datasets::iris()</a></code> and <code>mlbench::sonar()</code>, and two Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>)s, <code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html" class="external-link">kernlab::ksvm()</a></code> and <code><a href="https://rdrr.io/pkg/kknn/man/kknn.html" class="external-link">kknn::kknn()</a></code>, that are both tuned.</p>
+<p>As inner resampling strategies we use holdout for <code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html" class="external-link">kernlab::ksvm()</a></code> and subsampling with 3 iterations for <code><a href="https://rdrr.io/pkg/kknn/man/kknn.html" class="external-link">kknn::kknn()</a></code>. As outer resampling strategies we take holdout for the <code><a href="https://rdrr.io/r/datasets/iris.html" class="external-link">datasets::iris()</a></code> and bootstrap with 2 iterations for the <code>mlbench::sonar()</code> data (<code><a href="../../reference/sonar.task.html">sonar.task()</a></code>). We consider the accuracy (<a href="measures.html" target="_blank">acc</a>), which is used as tuning criterion, and also calculate the balanced error rate (<a href="measures.html" target="_blank">ber</a>).</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># List of learning tasks</span>
-<span class="va">tasks</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">iris.task</span>, <span class="va">sonar.task</span><span class="op">)</span>
+<span class="va">tasks</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">iris.task</span>, <span class="va">sonar.task</span><span class="op">)</span>
 
 <span class="co"># Tune svm in the inner resampling loop</span>
-<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"C"</span>, <span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>,
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, <span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"C"</span>, <span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, <span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">inner</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
 <span class="va">lrn1</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>,
@@ -1036,7 +1046,7 @@ Nested Resampling Figure
   show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># Tune k-nearest neighbor in inner resampling loop</span>
-<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span><span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"k"</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>
+<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span><span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"k"</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">inner</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Subsample"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">lrn2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span><span class="op">(</span><span class="st">"classif.kknn"</span>,
@@ -1045,12 +1055,12 @@ Nested Resampling Figure
 <span class="co">## Loading required package: kknn</span>
 
 <span class="co"># Learners</span>
-<span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">lrn1</span>, <span class="va">lrn2</span><span class="op">)</span>
+<span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">lrn1</span>, <span class="va">lrn2</span><span class="op">)</span>
 
 <span class="co"># Outer resampling loop</span>
-<span class="va">outer</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>, <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Bootstrap"</span>, iters <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="va">outer</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>, <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Bootstrap"</span>, iters <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span><span class="op">(</span><span class="va">lrns</span>, <span class="va">tasks</span>, <span class="va">outer</span>,
-  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">ber</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span>,
+  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">ber</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span>,
   keep.extract <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">res</span>
 <span class="co">##         task.id         learner.id acc.test.mean ber.test.mean</span>
@@ -1122,7 +1132,7 @@ Nested Resampling Figure
 <span class="co">## 4 Sonar-example classif.ksvm.tuned    2 0.5   0.5     0.27142857 NA</span>
 <span class="co">## 5 Sonar-example classif.kknn.tuned    1  NA    NA     0.07142857  5</span>
 <span class="co">## 6 Sonar-example classif.kknn.tuned    2  NA    NA     0.06666667  4</span></code></pre></div>
-<p>It is also possible to extract the tuning results for individual tasks and learners and, as shown in earlier examples, inspect the optimization path (<code><a href="https://paramhelpers.mlr-org.com/reference/OptPath.html">ParamHelpers::OptPath()</a></code>).</p>
+<p>It is also possible to extract the tuning results for individual tasks and learners and, as shown in earlier examples, inspect the optimization path (<code><a href="https://paramhelpers.mlr-org.com/reference/OptPath.html" class="external-link">ParamHelpers::OptPath()</a></code>).</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tune.res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getBMRTuneResults.html">getBMRTuneResults</a></span><span class="op">(</span><span class="va">res</span>,
   task.ids <span class="op">=</span> <span class="st">"Sonar-example"</span>, learner.ids <span class="op">=</span> <span class="st">"classif.ksvm.tuned"</span>,
@@ -1134,28 +1144,28 @@ Nested Resampling Figure
 
 <span class="fu"><a href="../../reference/getNestedTuneResultsOptPathDf.html">getNestedTuneResultsOptPathDf</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">results</span><span class="op">[[</span><span class="st">"Sonar-example"</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="st">"classif.ksvm.tuned"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##      C sigma mmce.test.mean dob eol error.message exec.time iter</span>
-<span class="co">## 1  0.5   0.5      0.2285714   1  NA          &lt;NA&gt;     0.041    1</span>
+<span class="co">## 1  0.5   0.5      0.2285714   1  NA          &lt;NA&gt;     0.031    1</span>
 <span class="co">## 2    1   0.5      0.2285714   2  NA          &lt;NA&gt;     0.030    1</span>
-<span class="co">## 3    2   0.5      0.2285714   3  NA          &lt;NA&gt;     0.030    1</span>
-<span class="co">## 4  0.5     1      0.2285714   4  NA          &lt;NA&gt;     0.032    1</span>
-<span class="co">## 5    1     1      0.2285714   5  NA          &lt;NA&gt;     0.032    1</span>
-<span class="co">## 6    2     1      0.2285714   6  NA          &lt;NA&gt;     0.033    1</span>
-<span class="co">## 7  0.5     2      0.2285714   7  NA          &lt;NA&gt;     0.042    1</span>
-<span class="co">## 8    1     2      0.2285714   8  NA          &lt;NA&gt;     0.030    1</span>
-<span class="co">## 9    2     2      0.2285714   9  NA          &lt;NA&gt;     0.030    1</span>
-<span class="co">## 10 0.5   0.5      0.2714286   1  NA          &lt;NA&gt;     0.032    2</span>
-<span class="co">## 11   1   0.5      0.2714286   2  NA          &lt;NA&gt;     0.035    2</span>
-<span class="co">## 12   2   0.5      0.2714286   3  NA          &lt;NA&gt;     0.045    2</span>
-<span class="co">## 13 0.5     1      0.2714286   4  NA          &lt;NA&gt;     0.036    2</span>
-<span class="co">## 14   1     1      0.2714286   5  NA          &lt;NA&gt;     0.035    2</span>
-<span class="co">## 15   2     1      0.2714286   6  NA          &lt;NA&gt;     0.030    2</span>
-<span class="co">## 16 0.5     2      0.2714286   7  NA          &lt;NA&gt;     0.036    2</span>
-<span class="co">## 17   1     2      0.2714286   8  NA          &lt;NA&gt;     0.031    2</span>
-<span class="co">## 18   2     2      0.2714286   9  NA          &lt;NA&gt;     0.042    2</span></code></pre></div>
+<span class="co">## 3    2   0.5      0.2285714   3  NA          &lt;NA&gt;     0.031    1</span>
+<span class="co">## 4  0.5     1      0.2285714   4  NA          &lt;NA&gt;     0.031    1</span>
+<span class="co">## 5    1     1      0.2285714   5  NA          &lt;NA&gt;     0.030    1</span>
+<span class="co">## 6    2     1      0.2285714   6  NA          &lt;NA&gt;     0.044    1</span>
+<span class="co">## 7  0.5     2      0.2285714   7  NA          &lt;NA&gt;     0.029    1</span>
+<span class="co">## 8    1     2      0.2285714   8  NA          &lt;NA&gt;     0.028    1</span>
+<span class="co">## 9    2     2      0.2285714   9  NA          &lt;NA&gt;     0.028    1</span>
+<span class="co">## 10 0.5   0.5      0.2714286   1  NA          &lt;NA&gt;     0.029    2</span>
+<span class="co">## 11   1   0.5      0.2714286   2  NA          &lt;NA&gt;     0.030    2</span>
+<span class="co">## 12   2   0.5      0.2714286   3  NA          &lt;NA&gt;     0.030    2</span>
+<span class="co">## 13 0.5     1      0.2714286   4  NA          &lt;NA&gt;     0.032    2</span>
+<span class="co">## 14   1     1      0.2714286   5  NA          &lt;NA&gt;     0.030    2</span>
+<span class="co">## 15   2     1      0.2714286   6  NA          &lt;NA&gt;     0.043    2</span>
+<span class="co">## 16 0.5     2      0.2714286   7  NA          &lt;NA&gt;     0.028    2</span>
+<span class="co">## 17   1     2      0.2714286   8  NA          &lt;NA&gt;     0.029    2</span>
+<span class="co">## 18   2     2      0.2714286   9  NA          &lt;NA&gt;     0.028    2</span></code></pre></div>
 </div>
-<div id="example-2-one-task-two-learners-feature-selection" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-2-one-task-two-learners-feature-selection" class="anchor"></a>Example 2: One task, two learners, feature selection</h2>
+<div class="section level2">
+<h2 id="example-2-one-task-two-learners-feature-selection">Example 2: One task, two learners, feature selection<a class="anchor" aria-label="anchor" href="#example-2-one-task-two-learners-feature-selection"></a>
+</h2>
 <p>Let’s see how we can do <a href="feature_selection.html" target="_blank">feature selection</a> in a benchmark experiment:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Feature selection in inner resampling loop</span>
@@ -1164,7 +1174,7 @@ Nested Resampling Figure
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeFeatSelWrapper.html">makeFeatSelWrapper</a></span><span class="op">(</span><span class="st">"regr.lm"</span>, resampling <span class="op">=</span> <span class="va">inner</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># Learners</span>
-<span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"regr.rpart"</span>, <span class="va">lrn</span><span class="op">)</span>
+<span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"regr.rpart"</span>, <span class="va">lrn</span><span class="op">)</span>
 
 <span class="co"># Outer resampling loop</span>
 <span class="va">outer</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Subsample"</span>, iters <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
@@ -1221,8 +1231,8 @@ Nested Resampling Figure
 <span class="co">##       29.4228</span></code></pre></div>
 <p>As for tuning, you can extract the optimization paths. The resulting <code>data.frame</code>s contain, among others, binary columns for all features, indicating if they were included in the linear regression model, and the corresponding performances. <code><a href="../../reference/analyzeFeatSelResult.html">analyzeFeatSelResult()</a></code> gives a clearer overview.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">opt.paths</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">feats</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">opt.paths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">opt.paths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">opt.paths</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">feats</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">opt.paths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">opt.paths</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##   crim zn indus chas nox rm age dis rad tax ptratio b lstat mse.test.mean dob</span>
 <span class="co">## 1    0  0     0    0   0  0   0   0   0   0       0 0     0      80.74823   1</span>
 <span class="co">## 2    1  0     0    0   0  0   0   0   0   0       0 0     0      70.11222   2</span>
@@ -1255,14 +1265,14 @@ Nested Resampling Figure
 <span class="co">## </span>
 <span class="co">## Stopped, because no improving feature was found.</span></code></pre></div>
 </div>
-<div id="example-3-one-task-two-learners-feature-filtering-with-tuning" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-3-one-task-two-learners-feature-filtering-with-tuning" class="anchor"></a>Example 3: One task, two learners, feature filtering with tuning</h2>
+<div class="section level2">
+<h2 id="example-3-one-task-two-learners-feature-filtering-with-tuning">Example 3: One task, two learners, feature filtering with tuning<a class="anchor" aria-label="anchor" href="#example-3-one-task-two-learners-feature-filtering-with-tuning"></a>
+</h2>
 <p>Here is a minimal example for feature filtering with tuning of the feature subset size.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Feature filtering with tuning in the inner resampling loop</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="st">"regr.lm"</span>, fw.method <span class="op">=</span> <span class="st">"FSelectorRcpp_information.gain"</span><span class="op">)</span>
-<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span><span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"fw.abs"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span><span class="op">(</span><span class="va">bh.task</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span><span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"fw.abs"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span><span class="op">(</span><span class="va">bh.task</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">inner</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iter <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span><span class="op">(</span><span class="va">lrn</span>,
@@ -1270,7 +1280,7 @@ Nested Resampling Figure
   show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># Learners</span>
-<span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"regr.rpart"</span>, <span class="va">lrn</span><span class="op">)</span>
+<span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"regr.rpart"</span>, <span class="va">lrn</span><span class="op">)</span>
 
 <span class="co"># Outer resampling loop</span>
 <span class="va">outer</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Subsample"</span>, iter <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
@@ -1790,11 +1800,13 @@ Nested Resampling Figure
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
+  <p></p>
+<p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>

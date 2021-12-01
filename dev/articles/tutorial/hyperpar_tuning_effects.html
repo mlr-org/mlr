@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,7 +45,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
@@ -69,7 +71,8 @@
       <a href="../../articles/tutorial/predict.html">Predict</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/preproc.html">Preprocessing</a>
     </li>
     <li>
@@ -82,7 +85,8 @@
       <a href="../../articles/tutorial/benchmark_experiments.html">Benchmarking</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/parallelization.html">Parallelization</a>
     </li>
     <li>
@@ -92,7 +96,8 @@
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/usecase_regression.html">Use case - Regression</a>
     </li>
   </ul>
@@ -111,7 +116,8 @@
       <a href="../../articles/tutorial/wrapper.html">Wrapped Learners</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/impute.html">Imputation</a>
     </li>
     <li>
@@ -148,7 +154,8 @@
       <a href="../../articles/tutorial/out_of_bag_predictions.html">Out-of-Bag Predictions</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/multilabel.html">Multilabel Classification</a>
     </li>
     <li>
@@ -203,27 +210,30 @@
       <a href="../../articles/tutorial/filter_methods.html">Integrated Filter Methods</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/mlr-outreach">Talks, Videos and Workshops</a>
+      <a href="https://github.com/mlr-org/mlr-outreach" class="external-link">Talks, Videos and Workshops</a>
     </li>
     <li class="divider">
-    <li>
-      <a href="https://mlrmbo.mlr-org.com">mlrMBO</a>
+    </li>
+<li>
+      <a href="https://mlrmbo.mlr-org.com" class="external-link">mlrMBO</a>
     </li>
     <li>
-      <a href="https://https://mlrcpo.mlr-org.com">mlrCPO</a>
+      <a href="https://https://mlrcpo.mlr-org.com" class="external-link">mlrCPO</a>
     </li>
     <li>
-      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html" class="external-link">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/">OpenML</a>
+      <a href="http://openml.github.io/openml-r/" class="external-link">OpenML</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../news/index.html">Changelog</a>
     </li>
   </ul>
@@ -232,25 +242,25 @@
   <a href="../../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr/">
+  <a href="https://github.com/mlr-org/mlr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link">
     <span class="fa fa-comments"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://stackoverflow.com/questions/tagged/mlr">
+  <a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link">
     <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.com/">
+  <a href="https://mlr-org.com/" class="external-link">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -277,7 +287,7 @@
       <h1 data-toc-skip>Evaluating Hyperparameter Tuning</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/hyperpar_tuning_effects.Rmd"><code>vignettes/tutorial/hyperpar_tuning_effects.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/HEAD/vignettes/tutorial/hyperpar_tuning_effects.Rmd" class="external-link"><code>vignettes/tutorial/hyperpar_tuning_effects.Rmd</code></a></small>
       <div class="hidden name"><code>hyperpar_tuning_effects.Rmd</code></div>
 
     </div>
@@ -290,8 +300,8 @@
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ex: create a search space for the C hyperparameter from 0.01 to 0.1</span>
-<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="fl">0.01</span>, upper <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>
+<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="fl">0.01</span>, upper <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <ul>
 <li>the optimization algorithm (aka tuning method):</li>
@@ -312,20 +322,20 @@
 <li>How did the optimization algorithm (prematurely) converge?</li>
 </ul>
 <p><code>mlr</code> provides methods to generate and plot the data in order to evaluate the effect of hyperparameter tuning.</p>
-<div id="generating-hyperparameter-tuning-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#generating-hyperparameter-tuning-data" class="anchor"></a>Generating hyperparameter tuning data</h1>
+<div class="section level1">
+<h1 id="generating-hyperparameter-tuning-data">Generating hyperparameter tuning data<a class="anchor" aria-label="anchor" href="#generating-hyperparameter-tuning-data"></a>
+</h1>
 <p><code>mlr</code> separates the generation of the data from the plotting of the data in case the user wishes to use the data in a custom way downstream.</p>
 <p>The <code><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData()</a></code> method takes the tuning result along with 2 additional arguments: <code>trafo</code> and <code>include.diagnostics</code>. The <code>trafo</code> argument will convert the hyperparameter data to be on the transformed scale in case a transformation was used when creating the parameter (as in the case below). The <code>include.diagnostics</code> argument will tell <code>mlr</code> whether to include the eol and any error messages from the learner.</p>
-<p>Below we perform random search on the <code>C</code> parameter for SVM on the famous Pima Indians (<code><a href="https://rdrr.io/pkg/mlbench/man/PimaIndiansDiabetes.html">mlbench::PimaIndiansDiabetes()</a></code>) dataset. We generate the hyperparameter effect data so that the <code>C</code> parameter is on the transformed scale and we do not include diagnostic data:</p>
+<p>Below we perform random search on the <code>C</code> parameter for SVM on the famous Pima Indians (<code><a href="https://rdrr.io/pkg/mlbench/man/PimaIndiansDiabetes.html" class="external-link">mlbench::PimaIndiansDiabetes()</a></code>) dataset. We generate the hyperparameter effect data so that the <code>C</code> parameter is on the transformed scale and we do not include diagnostic data:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">100L</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, task <span class="op">=</span> <span class="va">pid.task</span>, control <span class="op">=</span> <span class="va">ctrl</span>,
-  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span><span class="op">)</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span><span class="op">)</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span><span class="op">(</span><span class="va">res</span>, trafo <span class="op">=</span> <span class="cn">T</span>, include.diagnostics <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co">## HyperParsEffectData:</span>
@@ -343,13 +353,13 @@
 <span class="co">## 6 6.25359181     0.7239583      0.2760417         6     0.056</span></code></pre></div>
 <p>As a reminder from the <a href="resample.html" target="_blank">resampling</a> tutorial, if we wanted to generate data on the training set as well as the validation set, we only need to make a few minor changes:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">100L</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">2L</span>, predict <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, task <span class="op">=</span> <span class="va">pid.task</span>, control <span class="op">=</span> <span class="va">ctrl</span>,
-  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">train.mean</span><span class="op">)</span>, <span class="va">mmce</span>, <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">mmce</span>,
+  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">train.mean</span><span class="op">)</span>, <span class="va">mmce</span>, <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">mmce</span>,
     <span class="va">train.mean</span><span class="op">)</span><span class="op">)</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span><span class="op">(</span><span class="va">res</span>, trafo <span class="op">=</span> <span class="cn">T</span>, include.diagnostics <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
@@ -375,13 +385,13 @@
 <span class="co">## 6         6     0.088</span></code></pre></div>
 <p>In the example below, we perform grid search on the <code>C</code> parameter for SVM on the Pima Indians dataset using nested cross validation. We generate the hyperparameter effect data so that the <code>C</code> parameter is on the untransformed scale and we do not include diagnostic data. As you can see below, nested cross validation is supported without any extra work by the user, allowing the user to obtain an unbiased estimator for the performance.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, control <span class="op">=</span> <span class="va">ctrl</span>,
-  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span><span class="op">)</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span><span class="op">)</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">pid.task</span>, resampling <span class="op">=</span> <span class="va">cv2</span>, extract <span class="op">=</span> <span class="va">getTuneResult</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
 
@@ -406,13 +416,13 @@
 <span class="co">## 5             1</span>
 <span class="co">## 6             1</span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, control <span class="op">=</span> <span class="va">ctrl</span>,
-  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span><span class="op">)</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span><span class="op">)</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">pid.task</span>, resampling <span class="op">=</span> <span class="va">cv2</span>, extract <span class="op">=</span> <span class="va">getTuneResult</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
 
@@ -438,16 +448,16 @@
 <span class="co">## 6             1</span></code></pre></div>
 <p>After generating the hyperparameter effect data, the next step is to visualize it. <code>mlr</code> has several methods built-in to visualize the data, meant to support the needs of the researcher and the engineer in industry. The next few sections will walk through the visualization support for several use-cases.</p>
 </div>
-<div id="visualizing-the-effect-of-a-single-hyperparameter" class="section level1">
-<h1 class="hasAnchor">
-<a href="#visualizing-the-effect-of-a-single-hyperparameter" class="anchor"></a>Visualizing the effect of a single hyperparameter</h1>
+<div class="section level1">
+<h1 id="visualizing-the-effect-of-a-single-hyperparameter">Visualizing the effect of a single hyperparameter<a class="anchor" aria-label="anchor" href="#visualizing-the-effect-of-a-single-hyperparameter"></a>
+</h1>
 <p>In a situation when the user is tuning a single hyperparameter for a learner, the user may wish to plot the performance of the learner against the values of the hyperparameter.</p>
-<p>In the example below, we tune the number of clusters against the silhouette score on the mtcars dataset. We specify the x-axis with the <code>x</code> argument and the y-axis with the <code>y</code> argument. If the <code>plot.type</code> argument is not specified, <code>mlr</code> will attempt to plot a scatterplot by default. Since <code><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect()</a></code> returns a <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code> object, we can easily customize it to our liking!</p>
+<p>In the example below, we tune the number of clusters against the silhouette score on the mtcars dataset. We specify the x-axis with the <code>x</code> argument and the y-axis with the <code>y</code> argument. If the <code>plot.type</code> argument is not specified, <code>mlr</code> will attempt to plot a scatterplot by default. Since <code><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect()</a></code> returns a <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> object, we can easily customize it to our liking!</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://keii.ue.wroc.pl/clusterSim/">"clusterSim"</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="http://keii.ue.wroc.pl/clusterSim/" class="external-link">"clusterSim"</a></span><span class="op">)</span>
 
-<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"centers"</span>, values <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
+<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"centers"</span>, values <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
@@ -457,14 +467,14 @@
 <span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="st">"centers"</span>, y <span class="op">=</span> <span class="st">"silhouette.test.mean"</span><span class="op">)</span>
 
 <span class="co"># add our own touches to the plot</span>
-<span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Evaluating Number of Cluster Centers on mtcars"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Evaluating Number of Cluster Centers on mtcars"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>In the example below, we tune SVM with the <code>C</code> hyperparameter on the Pima dataset. We will use simulated annealing optimizer, so we are interested in seeing if the optimization algorithm actually improves with iterations. By default, <code>mlr</code> only plots improvements to the global optimum.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGenSA.html">makeTuneControlGenSA</a></span><span class="op">(</span>budget <span class="op">=</span> <span class="fl">100L</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
@@ -473,58 +483,58 @@
 <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
 <span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="st">"iteration"</span>, y <span class="op">=</span> <span class="st">"mmce.test.mean"</span>,
   plot.type <span class="op">=</span> <span class="st">"line"</span><span class="op">)</span>
-<span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Analyzing convergence of simulated annealing"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Analyzing convergence of simulated annealing"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/sa_single-1.png" width="700"></p>
 <p>In the case of a learner crash, <code>mlr</code> will impute the crash with the worst value graphically and indicate the point. In the example below, we give the <code>C</code> parameter negative values, which will result in a learner crash for SVM.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"C"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"C"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, task <span class="op">=</span> <span class="va">pid.task</span>, control <span class="op">=</span> <span class="va">ctrl</span>,
-  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span><span class="op">)</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span><span class="op">)</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
 <span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="st">"C"</span>, y <span class="op">=</span> <span class="st">"acc.test.mean"</span><span class="op">)</span>
-<span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"SVM learner crashes with negative C"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"SVM learner crashes with negative C"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/single_crash-1.png" width="700"></p>
 <p>The example below uses <a href="nested_resampling.html" target="_blank">nested cross validation</a> with an outer loop of 2 runs. <code>mlr</code> indicates each run within the visualization.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, control <span class="op">=</span> <span class="va">ctrl</span>,
-  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span><span class="op">)</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span><span class="op">)</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">pid.task</span>, resampling <span class="op">=</span> <span class="va">cv2</span>, extract <span class="op">=</span> <span class="va">getTuneResult</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="st">"C"</span>, y <span class="op">=</span> <span class="st">"acc.test.mean"</span>, plot.type <span class="op">=</span> <span class="st">"line"</span><span class="op">)</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/single_nested-1.png" width="700"></p>
 </div>
-<div id="visualizing-the-effect-of-2-hyperparameters" class="section level1">
-<h1 class="hasAnchor">
-<a href="#visualizing-the-effect-of-2-hyperparameters" class="anchor"></a>Visualizing the effect of 2 hyperparameters</h1>
+<div class="section level1">
+<h1 id="visualizing-the-effect-of-2-hyperparameters">Visualizing the effect of 2 hyperparameters<a class="anchor" aria-label="anchor" href="#visualizing-the-effect-of-2-hyperparameters"></a>
+</h1>
 <p>In the case of tuning 2 hyperparameters simultaneously, <code>mlr</code> provides the ability to plot a heatmap and contour plot in addition to a scatterplot or line.</p>
 <p>In the example below, we tune the <code>C</code> and <code>sigma</code> parameters for SVM on the Pima dataset. We use interpolation to produce a regular grid for plotting the heatmap. The <code>interpolation</code> argument accepts any regression learner from <code>mlr</code> to perform the interpolation. The <code>z</code> argument will be used to fill the heatmap or color lines, depending on the <code>plot.type</code> used.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">100L</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
-<span class="va">learn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>kernel <span class="op">=</span> <span class="st">"rbfdot"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">learn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>kernel <span class="op">=</span> <span class="st">"rbfdot"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">learn</span>, task <span class="op">=</span> <span class="va">pid.task</span>, control <span class="op">=</span> <span class="va">ctrl</span>, measures <span class="op">=</span> <span class="va">acc</span>,
   resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
 <span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="st">"C"</span>, y <span class="op">=</span> <span class="st">"sigma"</span>, z <span class="op">=</span> <span class="st">"acc.test.mean"</span>,
   plot.type <span class="op">=</span> <span class="st">"heatmap"</span>, interpolate <span class="op">=</span> <span class="st">"regr.earth"</span><span class="op">)</span>
-<span class="va">min_plt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">acc.test.mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">max_plt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">acc.test.mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">med_plt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">min_plt</span>, <span class="va">max_plt</span><span class="op">)</span><span class="op">)</span>
-<span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient2</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">min_plt</span>, <span class="va">max_plt</span>, length.out <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
+<span class="va">min_plt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">acc.test.mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">max_plt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">acc.test.mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">med_plt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">min_plt</span>, <span class="va">max_plt</span><span class="op">)</span><span class="op">)</span>
+<span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradient2</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="va">min_plt</span>, <span class="va">max_plt</span>, length.out <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
   low <span class="op">=</span> <span class="st">"blue"</span>, mid <span class="op">=</span> <span class="st">"white"</span>, high <span class="op">=</span> <span class="st">"red"</span>, midpoint <span class="op">=</span> <span class="va">med_plt</span><span class="op">)</span>
 <span class="co">## Scale for 'fill' is already present. Adding another scale for 'fill', which</span>
 <span class="co">## will replace the existing scale.</span></code></pre></div>
@@ -533,7 +543,7 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="st">"C"</span>, y <span class="op">=</span> <span class="st">"sigma"</span>, z <span class="op">=</span> <span class="st">"acc.test.mean"</span>,
   plot.type <span class="op">=</span> <span class="st">"heatmap"</span>, interpolate <span class="op">=</span> <span class="st">"regr.earth"</span>, show.experiments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient2</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">min_plt</span>, <span class="va">max_plt</span>, length.out <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
+<span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradient2</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="va">min_plt</span>, <span class="va">max_plt</span>, length.out <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
   low <span class="op">=</span> <span class="st">"blue"</span>, mid <span class="op">=</span> <span class="st">"white"</span>, high <span class="op">=</span> <span class="st">"red"</span>, midpoint <span class="op">=</span> <span class="va">med_plt</span><span class="op">)</span>
 <span class="co">## Scale for 'fill' is already present. Adding another scale for 'fill', which</span>
 <span class="co">## will replace the existing scale.</span></code></pre></div>
@@ -545,12 +555,12 @@
 <p><img src="hyperpar_tuning_effects_files/figure-html/two_optima-1.png" width="700"></p>
 <p>In the case where we are tuning 2 hyperparameters and we have a learner crash, <code>mlr</code> will indicate the respective points and impute them with the worst value. In the example below, we tune <code>C</code> and <code>sigma</code>, forcing <code>C</code> to be negative for some instances which will crash SVM. We perform interpolation to get a regular grid in order to plot a heatmap. We can see that the interpolation creates axis parallel lines resulting from the learner crashes.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"C"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"C"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
-<span class="va">learn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>kernel <span class="op">=</span> <span class="st">"rbfdot"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">learn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>kernel <span class="op">=</span> <span class="st">"rbfdot"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">learn</span>, task <span class="op">=</span> <span class="va">pid.task</span>, control <span class="op">=</span> <span class="va">ctrl</span>, measures <span class="op">=</span> <span class="va">acc</span>,
   resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
@@ -559,42 +569,42 @@
 <p><img src="hyperpar_tuning_effects_files/figure-html/two_crash-1.png" width="700"></p>
 <p>A slightly more complicated example is using nested cross validation while simultaneously tuning 2 hyperparameters. In order to plot a heatmap in this case, <code>mlr</code> will aggregate each of the nested runs by a user-specified function. The default function is <code>mean</code>. As expected, we can still take advantage of interpolation.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
-<span class="va">learn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>kernel <span class="op">=</span> <span class="st">"rbfdot"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span><span class="op">(</span><span class="va">learn</span>, control <span class="op">=</span> <span class="va">ctrl</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span><span class="op">)</span>,
+<span class="va">learn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>kernel <span class="op">=</span> <span class="st">"rbfdot"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span><span class="op">(</span><span class="va">learn</span>, control <span class="op">=</span> <span class="va">ctrl</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span><span class="op">)</span>,
   resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">pid.task</span>, resampling <span class="op">=</span> <span class="va">cv2</span>, extract <span class="op">=</span> <span class="va">getTuneResult</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
 <span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="st">"C"</span>, y <span class="op">=</span> <span class="st">"sigma"</span>, z <span class="op">=</span> <span class="st">"acc.test.mean"</span>,
   plot.type <span class="op">=</span> <span class="st">"heatmap"</span>, interpolate <span class="op">=</span> <span class="st">"regr.earth"</span>, show.experiments <span class="op">=</span> <span class="cn">TRUE</span>,
   nested.agg <span class="op">=</span> <span class="va">mean</span><span class="op">)</span>
-<span class="va">min_plt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">acc.test.mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">max_plt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">acc.test.mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">med_plt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">min_plt</span>, <span class="va">max_plt</span><span class="op">)</span><span class="op">)</span>
-<span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient2</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">min_plt</span>, <span class="va">max_plt</span>, length.out <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
+<span class="va">min_plt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">acc.test.mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">max_plt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">acc.test.mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">med_plt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">min_plt</span>, <span class="va">max_plt</span><span class="op">)</span><span class="op">)</span>
+<span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradient2</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="va">min_plt</span>, <span class="va">max_plt</span>, length.out <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
   low <span class="op">=</span> <span class="st">"red"</span>, mid <span class="op">=</span> <span class="st">"white"</span>, high <span class="op">=</span> <span class="st">"blue"</span>, midpoint <span class="op">=</span> <span class="va">med_plt</span><span class="op">)</span>
 <span class="co">## Scale for 'fill' is already present. Adding another scale for 'fill', which</span>
 <span class="co">## will replace the existing scale.</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/two_nested-1.png" width="700"></p>
 </div>
-<div id="visualizing-the-effects-of-more-than-2-hyperparameters" class="section level1">
-<h1 class="hasAnchor">
-<a href="#visualizing-the-effects-of-more-than-2-hyperparameters" class="anchor"></a>Visualizing the effects of more than 2 hyperparameters</h1>
+<div class="section level1">
+<h1 id="visualizing-the-effects-of-more-than-2-hyperparameters">Visualizing the effects of more than 2 hyperparameters<a class="anchor" aria-label="anchor" href="#visualizing-the-effects-of-more-than-2-hyperparameters"></a>
+</h1>
 <p>In order to visualize the result when tuning 3 or more hyperparameters simultaneously we can take advantage of <a href="partial_dependence.html" target="_blank">partial dependence plots</a> to show how the performance depends on a one- or two-dimensional subset of the hyperparameters. Below we tune three hyperparameters <code>C</code>, <code>sigma</code>, and <code>degree</code> of an SVM with Bessel kernel and set the <code>partial.dep</code> flag to <code>TRUE</code> to indicate that we intend to calculate partial dependences.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"degree"</span>, values <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"degree"</span>, values <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">100L</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span>, predict <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span>
-<span class="va">learn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>kernel <span class="op">=</span> <span class="st">"besseldot"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">learn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>kernel <span class="op">=</span> <span class="st">"besseldot"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">learn</span>, task <span class="op">=</span> <span class="va">pid.task</span>, control <span class="op">=</span> <span class="va">ctrl</span>,
-  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">train.mean</span><span class="op">)</span><span class="op">)</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>,
+  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">train.mean</span><span class="op">)</span><span class="op">)</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>,
   par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span><span class="op">(</span><span class="va">res</span>, partial.dep <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>You can generate a plot for a single hyperparameter like <code>C</code> as shown below. The <code>partial.dep.learn</code> can be any regression Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) in <code>mlr</code> and is used to regress the attained performance values on the values of the 3 hyperparameters visited during tuning. The fitted model serves as basis for calculating partial dependences.</p>
@@ -622,11 +632,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
+  <p></p>
+<p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>

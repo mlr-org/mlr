@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,7 +45,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
@@ -69,7 +71,8 @@
       <a href="../../articles/tutorial/predict.html">Predict</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/preproc.html">Preprocessing</a>
     </li>
     <li>
@@ -82,7 +85,8 @@
       <a href="../../articles/tutorial/benchmark_experiments.html">Benchmarking</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/parallelization.html">Parallelization</a>
     </li>
     <li>
@@ -92,7 +96,8 @@
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/usecase_regression.html">Use case - Regression</a>
     </li>
   </ul>
@@ -111,7 +116,8 @@
       <a href="../../articles/tutorial/wrapper.html">Wrapped Learners</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/impute.html">Imputation</a>
     </li>
     <li>
@@ -148,7 +154,8 @@
       <a href="../../articles/tutorial/out_of_bag_predictions.html">Out-of-Bag Predictions</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/multilabel.html">Multilabel Classification</a>
     </li>
     <li>
@@ -203,27 +210,30 @@
       <a href="../../articles/tutorial/filter_methods.html">Integrated Filter Methods</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/mlr-outreach">Talks, Videos and Workshops</a>
+      <a href="https://github.com/mlr-org/mlr-outreach" class="external-link">Talks, Videos and Workshops</a>
     </li>
     <li class="divider">
-    <li>
-      <a href="https://mlrmbo.mlr-org.com">mlrMBO</a>
+    </li>
+<li>
+      <a href="https://mlrmbo.mlr-org.com" class="external-link">mlrMBO</a>
     </li>
     <li>
-      <a href="https://https://mlrcpo.mlr-org.com">mlrCPO</a>
+      <a href="https://https://mlrcpo.mlr-org.com" class="external-link">mlrCPO</a>
     </li>
     <li>
-      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html" class="external-link">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/">OpenML</a>
+      <a href="http://openml.github.io/openml-r/" class="external-link">OpenML</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../news/index.html">Changelog</a>
     </li>
   </ul>
@@ -232,25 +242,25 @@
   <a href="../../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr/">
+  <a href="https://github.com/mlr-org/mlr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link">
     <span class="fa fa-comments"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://stackoverflow.com/questions/tagged/mlr">
+  <a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link">
     <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.com/">
+  <a href="https://mlr-org.com/" class="external-link">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -277,7 +287,7 @@
       <h1 data-toc-skip>Learners</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/learner.Rmd"><code>vignettes/tutorial/learner.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/HEAD/vignettes/tutorial/learner.Rmd" class="external-link"><code>vignettes/tutorial/learner.Rmd</code></a></small>
       <div class="hidden name"><code>learner.Rmd</code></div>
 
     </div>
@@ -285,10 +295,10 @@
     
     
 <p>The following classes provide a unified interface to all popular machine learning methods in <strong>R</strong>: (cost-sensitive) classification, regression, survival analysis, and clustering. Many are already integrated in <code>mlr</code>, others are not, but the package is specifically designed to make extensions simple.</p>
-<p>Section <a href="integrated_learners.html" target="_blank">integrated learners</a> shows the already implemented machine learning methods and their properties. If your favorite method is missing, either <a href="https://github.com/mlr-org/mlr/issues">open an issue</a> or take a look at how to <a href="create_learners.html" target="_blank">integrate a learning method yourself</a>. This basic introduction demonstrates how to use already implemented learners.</p>
-<div id="constructing-a-learner" class="section level1">
-<h1 class="hasAnchor">
-<a href="#constructing-a-learner" class="anchor"></a>Constructing a learner</h1>
+<p>Section <a href="integrated_learners.html" target="_blank">integrated learners</a> shows the already implemented machine learning methods and their properties. If your favorite method is missing, either <a href="https://github.com/mlr-org/mlr/issues" class="external-link">open an issue</a> or take a look at how to <a href="create_learners.html" target="_blank">integrate a learning method yourself</a>. This basic introduction demonstrates how to use already implemented learners.</p>
+<div class="section level1">
+<h1 id="constructing-a-learner">Constructing a learner<a class="anchor" aria-label="anchor" href="#constructing-a-learner"></a>
+</h1>
 <p>A learner in <code>mlr</code> is generated by calling <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>. In the constructor you need to specify which learning method you want to use. Moreover, you can:</p>
 <ul>
 <li>Set hyperparameters.</li>
@@ -300,7 +310,7 @@
 <span class="va">classif.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.randomForest"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, fix.factors.prediction <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># Regression gradient boosting machine, specify hyperparameters via a list</span>
-<span class="va">regr.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.gbm"</span>, par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>n.trees <span class="op">=</span> <span class="fl">500</span>, interaction.depth <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
+<span class="va">regr.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.gbm"</span>, par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n.trees <span class="op">=</span> <span class="fl">500</span>, interaction.depth <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Cox proportional hazards model with custom name</span>
 <span class="va">surv.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"surv.coxph"</span>, id <span class="op">=</span> <span class="st">"cph"</span><span class="op">)</span>
@@ -335,9 +345,9 @@
 <p>All generated learners are objects of class Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>). This class contains the properties of the method, e.g., which types of features it can handle, what kind of output is possible during prediction, and whether multi-class problems, observations weights or missing values are supported.</p>
 <p>As you might have noticed, there is currently no special learner class for cost-sensitive classification. For ordinary misclassification costs you can use standard classification methods. For example-dependent costs there are several ways to generate cost-sensitive learners from ordinary regression and classification learners. This is explained in greater detail in the section about <a href="cost_sensitive_classif.html" target="_blank">cost-sensitive classification</a>.</p>
 </div>
-<div id="accessing-a-learner" class="section level1">
-<h1 class="hasAnchor">
-<a href="#accessing-a-learner" class="anchor"></a>Accessing a learner</h1>
+<div class="section level1">
+<h1 id="accessing-a-learner">Accessing a learner<a class="anchor" aria-label="anchor" href="#accessing-a-learner"></a>
+</h1>
 <p>The Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) object is a <code>list</code> and the following elements contain information regarding the hyperparameters and the type of prediction.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get the configured hyperparameter settings that deviate from the defaults</span>
@@ -369,7 +379,7 @@
 <span class="co"># Get the type of prediction</span>
 <span class="va">regr.lrn</span><span class="op">$</span><span class="va">predict.type</span>
 <span class="co">## [1] "response"</span></code></pre></div>
-<p>Slot <code>$par.set</code> is an object of class <code>ParamSet</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">ParamHelpers::makeParamSet()</a></code>). It contains, among others, the type of hyperparameters (e.g., numeric, logical), potential default values and the range of allowed values.</p>
+<p>Slot <code>$par.set</code> is an object of class <code>ParamSet</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::makeParamSet()</a></code>). It contains, among others, the type of hyperparameters (e.g., numeric, logical), potential default values and the range of allowed values.</p>
 <p>Moreover, <code>mlr</code> provides function <code><a href="../../reference/getHyperPars.html">getHyperPars()</a></code> or its alternative <code><a href="../../reference/getLearnerParVals.html">getLearnerParVals()</a></code> to access the current hyperparameter setting of a Learner, (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) and <code><a href="../../reference/getParamSet.html">getParamSet()</a></code> to get a description of all possible settings. These are particularly useful in case of wrapped Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>)s, for example if a learner is fused with a feature selection strategy, and both, the learner as well the feature selection method, have hyperparameters. For details see the section on <a href="wrapper.html">wrapped learners</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get current hyperparameter settings</span>
@@ -436,9 +446,9 @@
 <span class="fu"><a href="../../reference/getLearnerPackages.html">getLearnerPackages</a></span><span class="op">(</span><span class="va">cluster.lrn</span><span class="op">)</span>
 <span class="co">## [1] "stats" "clue"</span></code></pre></div>
 </div>
-<div id="modifying-a-learner" class="section level1">
-<h1 class="hasAnchor">
-<a href="#modifying-a-learner" class="anchor"></a>Modifying a learner</h1>
+<div class="section level1">
+<h1 id="modifying-a-learner">Modifying a learner<a class="anchor" aria-label="anchor" href="#modifying-a-learner"></a>
+</h1>
 <p>There are also some functions that enable you to change certain aspects of a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) without needing to create a new Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) from scratch. Here are some examples.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Change the ID</span>
@@ -459,17 +469,17 @@
 <span class="va">cluster.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setHyperPars.html">setHyperPars</a></span><span class="op">(</span><span class="va">cluster.lrn</span>, centers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 
 <span class="co"># Go back to default hyperparameter values</span>
-<span class="va">regr.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/removeHyperPars.html">removeHyperPars</a></span><span class="op">(</span><span class="va">regr.lrn</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"n.trees"</span>, <span class="st">"interaction.depth"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">regr.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/removeHyperPars.html">removeHyperPars</a></span><span class="op">(</span><span class="va">regr.lrn</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n.trees"</span>, <span class="st">"interaction.depth"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="listing-learners" class="section level1">
-<h1 class="hasAnchor">
-<a href="#listing-learners" class="anchor"></a>Listing learners</h1>
+<div class="section level1">
+<h1 id="listing-learners">Listing learners<a class="anchor" aria-label="anchor" href="#listing-learners"></a>
+</h1>
 <p>A list of all learners integrated in <code>mlr</code> and their respective properties is shown in the <a href="integrated_learners.html" target="_blank">Appendix</a>.</p>
 <p>If you would like a list of available learners, maybe only with certain properties or suitable for a certain learning <code><a href="../../reference/Task.html">Task()</a></code> use function <code><a href="../../reference/listLearners.html">listLearners()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># List everything in mlr</span>
 <span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##                 class      package</span>
 <span class="co">## 1         classif.ada    ada,rpart</span>
 <span class="co">## 2  classif.adaboostm1        RWeka</span>
@@ -480,7 +490,7 @@
 
 <span class="co"># List classifiers that can output probabilities</span>
 <span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"classif"</span>, properties <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##                 class      package</span>
 <span class="co">## 1         classif.ada    ada,rpart</span>
 <span class="co">## 2  classif.adaboostm1        RWeka</span>
@@ -491,7 +501,7 @@
 
 <span class="co"># List classifiers that can be applied to iris (i.e., multiclass) and output probabilities</span>
 <span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="va">iris.task</span>, properties <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co">##                class      package</span>
 <span class="co">## 1 classif.adaboostm1        RWeka</span>
 <span class="co">## 2   classif.boosting adabag,rpart</span>
@@ -501,7 +511,7 @@
 <span class="co">## 6   classif.cvglmnet       glmnet</span>
 
 <span class="co"># The calls above return character vectors, but you can also create learner objects</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"cluster"</span>, create <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"cluster"</span>, create <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>
 <span class="co">## [[1]]</span>
 <span class="co">## Learner cluster.cmeans from package e1071,clue</span>
 <span class="co">## Type: cluster</span>
@@ -534,11 +544,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
+  <p></p>
+<p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>

@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,7 +45,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
@@ -69,7 +71,8 @@
       <a href="../../articles/tutorial/predict.html">Predict</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/preproc.html">Preprocessing</a>
     </li>
     <li>
@@ -82,7 +85,8 @@
       <a href="../../articles/tutorial/benchmark_experiments.html">Benchmarking</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/parallelization.html">Parallelization</a>
     </li>
     <li>
@@ -92,7 +96,8 @@
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/usecase_regression.html">Use case - Regression</a>
     </li>
   </ul>
@@ -111,7 +116,8 @@
       <a href="../../articles/tutorial/wrapper.html">Wrapped Learners</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/impute.html">Imputation</a>
     </li>
     <li>
@@ -148,7 +154,8 @@
       <a href="../../articles/tutorial/out_of_bag_predictions.html">Out-of-Bag Predictions</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/multilabel.html">Multilabel Classification</a>
     </li>
     <li>
@@ -203,27 +210,30 @@
       <a href="../../articles/tutorial/filter_methods.html">Integrated Filter Methods</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/mlr-outreach">Talks, Videos and Workshops</a>
+      <a href="https://github.com/mlr-org/mlr-outreach" class="external-link">Talks, Videos and Workshops</a>
     </li>
     <li class="divider">
-    <li>
-      <a href="https://mlrmbo.mlr-org.com">mlrMBO</a>
+    </li>
+<li>
+      <a href="https://mlrmbo.mlr-org.com" class="external-link">mlrMBO</a>
     </li>
     <li>
-      <a href="https://https://mlrcpo.mlr-org.com">mlrCPO</a>
+      <a href="https://https://mlrcpo.mlr-org.com" class="external-link">mlrCPO</a>
     </li>
     <li>
-      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html" class="external-link">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/">OpenML</a>
+      <a href="http://openml.github.io/openml-r/" class="external-link">OpenML</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../news/index.html">Changelog</a>
     </li>
   </ul>
@@ -232,25 +242,25 @@
   <a href="../../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr/">
+  <a href="https://github.com/mlr-org/mlr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link">
     <span class="fa fa-comments"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://stackoverflow.com/questions/tagged/mlr">
+  <a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link">
     <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.com/">
+  <a href="https://mlr-org.com/" class="external-link">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -277,7 +287,7 @@
       <h1 data-toc-skip>Feature Selection</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/feature_selection.Rmd"><code>vignettes/tutorial/feature_selection.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/HEAD/vignettes/tutorial/feature_selection.Rmd" class="external-link"><code>vignettes/tutorial/feature_selection.Rmd</code></a></small>
       <div class="hidden name"><code>feature_selection.Rmd</code></div>
 
     </div>
@@ -293,13 +303,13 @@
 <strong>Feature subset selection</strong>: Here, no ranking of features is done. Features are selected by a (random) subset of the data. Then, a model is fit and the performance is checked. This is done for a lot of feature combinations in a CV setting and the best combination is reported. This method is very computational intense as a lot of models are fitted. Also, strictly all these models would need to be tuned before the performance is estimated which would require an additional nested level in a CV setting. After all this, the selected subset of features is again fitted (with optional hyperparameters selected by tuning).</li>
 </ul>
 <p><code>mlr</code> supports both <strong><a href="feature_selection.html#filter-methods" target="_blank">filter methods</a></strong> and <strong><a href="feature_selection.html#wrapper-methods" target="_blank">wrapper methods</a></strong>.</p>
-<div id="filter-methods" class="section level1">
-<h1 class="hasAnchor">
-<a href="#filter-methods" class="anchor"></a>Filter methods</h1>
+<div class="section level1">
+<h1 id="filter-methods">Filter methods<a class="anchor" aria-label="anchor" href="#filter-methods"></a>
+</h1>
 <p>Filter methods assign an importance value to each feature. Based on these values the features can be ranked and a feature subset can be selected. You can see <a href="filter_methods.html#current-methods">here</a> which algorithms are implemented.</p>
-<div id="calculating-the-feature-importance" class="section level2">
-<h2 class="hasAnchor">
-<a href="#calculating-the-feature-importance" class="anchor"></a>Calculating the feature importance</h2>
+<div class="section level2">
+<h2 id="calculating-the-feature-importance">Calculating the feature importance<a class="anchor" aria-label="anchor" href="#calculating-the-feature-importance"></a>
+</h2>
 <p>Different methods for calculating the feature importance are built into <code>mlr</code>’s function <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code>. Currently, classification, regression and survival analysis tasks are supported. A table showing all available methods can be found in article <a href="filter_methods.html" target="_blank">filter methods</a>.</p>
 <p>The most basic approach is to use <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code> directly on a <code><a href="../../reference/Task.html">Task()</a></code> with a character string specifying the filter method.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -315,7 +325,7 @@
 <p><code>fv</code> is a <code><a href="../../reference/generateFilterValuesData.html">FilterValues()</a></code> object and <code>fv$data</code> contains a <code>data.frame</code> that gives the importance values for all features. Optionally, a vector of filter methods can be passed.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fv2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span><span class="op">(</span><span class="va">iris.task</span>,
-  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"FSelectorRcpp_information.gain"</span>, <span class="st">"FSelectorRcpp_relief"</span><span class="op">)</span><span class="op">)</span>
+  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"FSelectorRcpp_information.gain"</span>, <span class="st">"FSelectorRcpp_relief"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">fv2</span><span class="op">$</span><span class="va">data</span>
 <span class="co">##            name    type                         filter     value</span>
 <span class="co">## 1: Sepal.Length numeric FSelectorRcpp_information.gain 0.4521286</span>
@@ -329,14 +339,14 @@
 <p>A bar plot of importance values for the individual features can be obtained using function <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span><span class="op">(</span><span class="va">fv2</span>, filter <span class="op">=</span> <span class="st">"FSelectorRcpp_information.gain"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">ggpubr</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html">theme_pubr</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu">ggpubr</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/theme_pubr.html" class="external-link">theme_pubr</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="feature_selection_files/figure-html/unnamed-chunk-4-1.png" width="960"></p>
 <p>By default <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code> will create facetted subplots if multiple filter methods are passed as input to <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code>.</p>
 <p>According to the <code>"information.gain"</code> measure, <code>Petal.Width</code> and <code>Petal.Length</code> contain the most information about the target variable <code>Species</code>.</p>
 </div>
-<div id="selecting-a-feature-subset" class="section level2">
-<h2 class="hasAnchor">
-<a href="#selecting-a-feature-subset" class="anchor"></a>Selecting a feature subset</h2>
+<div class="section level2">
+<h2 id="selecting-a-feature-subset">Selecting a feature subset<a class="anchor" aria-label="anchor" href="#selecting-a-feature-subset"></a>
+</h2>
 <p>With <code>mlr</code>s function <code><a href="../../reference/filterFeatures.html">filterFeatures()</a></code> you can create a new <code><a href="../../reference/Task.html">Task()</a></code> by leaving out features of lower importance.</p>
 <p>There are several ways to select a feature subset based on feature importance values:</p>
 <ul>
@@ -371,14 +381,14 @@
 <span class="co">##         50         50         50 </span>
 <span class="co">## Positive class: NA</span></code></pre></div>
 </div>
-<div id="fuse-a-learner-with-a-filter-method" class="section level2">
-<h2 class="hasAnchor">
-<a href="#fuse-a-learner-with-a-filter-method" class="anchor"></a>Fuse a learner with a filter method</h2>
+<div class="section level2">
+<h2 id="fuse-a-learner-with-a-filter-method">Fuse a learner with a filter method<a class="anchor" aria-label="anchor" href="#fuse-a-learner-with-a-filter-method"></a>
+</h2>
 <p>Often feature selection based on a filter method is part of the data preprocessing and in a subsequent step a learning method is applied to the filtered data. In a proper experimental setup you might want to automate the selection of the features so that it can be part of the validation method of your choice. A Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) can be fused with a filter method by function <code><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper()</a></code>. The resulting Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) has the additional class attribute <code>FilterWrapper()</code>. This has the advantage that the filter parameters (<code>fw.method</code>, <code>fw.perc.</code> <code>fw.abs</code>) can now be treated as hyperparameters. They can be tuned in a nested CV setting at the same level as the algorithm hyperparameters. You can think of if as “tuning the dataset”.</p>
-<div id="using-fixed-parameters" class="section level3">
-<h3 class="hasAnchor">
-<a href="#using-fixed-parameters" class="anchor"></a>Using fixed parameters</h3>
-<p>In the following example we calculate the 10-fold cross-validated error rate <a href="measures.html" target="_blank">mmce</a> of the k-nearest neighbor classifier (<code>FNN::fnn()</code>) with preceding feature selection on the <code>iris</code> (<code><a href="https://rdrr.io/r/datasets/iris.html">datasets::iris()</a></code>) data set. We use <code>information.gain</code> as importance measure with the aim to subset the dataset to the two features with the highest importance. In each resampling iteration feature selection is carried out on the corresponding training data set before fitting the learner.</p>
+<div class="section level3">
+<h3 id="using-fixed-parameters">Using fixed parameters<a class="anchor" aria-label="anchor" href="#using-fixed-parameters"></a>
+</h3>
+<p>In the following example we calculate the 10-fold cross-validated error rate <a href="measures.html" target="_blank">mmce</a> of the k-nearest neighbor classifier (<code>FNN::fnn()</code>) with preceding feature selection on the <code>iris</code> (<code><a href="https://rdrr.io/r/datasets/iris.html" class="external-link">datasets::iris()</a></code>) data set. We use <code>information.gain</code> as importance measure with the aim to subset the dataset to the two features with the highest importance. In each resampling iteration feature selection is carried out on the corresponding training data set before fitting the learner.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span><span class="op">(</span>
   learner <span class="op">=</span> <span class="st">"classif.fnn"</span>,
@@ -390,28 +400,28 @@
 <span class="co">##     0.05333333</span></code></pre></div>
 <p>You may want to know which features have been used. Luckily, we have called <code><a href="../../reference/resample.html">resample()</a></code> with the argument <code>models = TRUE</code>, which means that <code>r$models</code> contains a <code>list</code> of models (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) fitted in the individual resampling iterations. In order to access the selected feature subsets we can call <code><a href="../../reference/getFilteredFeatures.html">getFilteredFeatures()</a></code> on each model.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sfeats</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">models</span>, <span class="va">getFilteredFeatures</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">sfeats</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">sfeats</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">models</span>, <span class="va">getFilteredFeatures</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">sfeats</span><span class="op">)</span>
 <span class="co">## sfeats</span>
 <span class="co">## Petal.Length  Petal.Width </span>
 <span class="co">##           10           10</span></code></pre></div>
 <p>The result shows that in the ten folds always <code>Petal.Length</code> and <code>Petal.Width</code> have been chosen (remember we wanted to have the best two, i.e. <span class="math inline">\(10 \times 2\)</span>). The selection of features seems to be very stable for this dataset. The features <code>Sepal.Length</code> and <code>Sepal.Width</code> did not make it into a single fold.</p>
 </div>
-<div id="tuning-the-size-of-the-feature-subset" class="section level3">
-<h3 class="hasAnchor">
-<a href="#tuning-the-size-of-the-feature-subset" class="anchor"></a>Tuning the size of the feature subset</h3>
+<div class="section level3">
+<h3 id="tuning-the-size-of-the-feature-subset">Tuning the size of the feature subset<a class="anchor" aria-label="anchor" href="#tuning-the-size-of-the-feature-subset"></a>
+</h3>
 <p>In the above examples the number/percentage of features to select or the threshold value have been arbitrarily chosen. However, it is usually unclear which subset of features will results in the best performance. To answer this question, we can <a href="tune.html" target="_blank">tune</a> the number of features that are taken (after the ranking of the chosen algorithms was applied) as a subset in each fold. Three tunable parameters exist in <code>mlr</code>, documented in <code><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper()</a></code>:</p>
 <ul>
 <li>The percentage of features selected (<code>fw.perc</code>)</li>
 <li>The absolute number of features selected (<code>fw.abs</code>)</li>
 <li>The threshold of the filter method (<code>fw.threshold</code>)</li>
 </ul>
-<p>In the following regression example we consider the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) data set. We use a Support Vector Machine and determine the optimal percentage value for feature selection such that the 3-fold cross-validated mean squared error (<code><a href="../../reference/measures.html">mse()</a></code>) of the learner is minimal. Additionally, we <a href="tune.html" target="_blank">tune</a> the hyperparameters of the algorithm at the same time. As search strategy for tuning a random search with five iterations is used.</p>
+<p>In the following regression example we consider the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html" class="external-link">mlbench::BostonHousing()</a></code>) data set. We use a Support Vector Machine and determine the optimal percentage value for feature selection such that the 3-fold cross-validated mean squared error (<code><a href="../../reference/measures.html">mse()</a></code>) of the learner is minimal. Additionally, we <a href="tune.html" target="_blank">tune</a> the hyperparameters of the algorithm at the same time. As search strategy for tuning a random search with five iterations is used.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span><span class="op">(</span>
   learner <span class="op">=</span> <span class="st">"regr.ksvm"</span>,
   fw.method <span class="op">=</span> <span class="st">"FSelectorRcpp_information.gain"</span>,
-  more.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"FSelectorRcpp_information.gain"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  more.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"FSelectorRcpp_information.gain"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
     equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span>
   <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"fw.perc"</span>, lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
@@ -450,8 +460,8 @@
 <span class="co">## mse.test.mean=24.9021386</span></code></pre></div>
 <p>The performance of all percentage values visited during tuning is:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span>
-<span class="va">df</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">]</span>
+<code class="sourceCode R"><span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span>
+<span class="va">df</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">]</span>
 <span class="co">##     fw.perc         C      sigma mse.test.mean dob eol error.message</span>
 <span class="co">## 1 0.6601122 -3.706174  8.8892278      86.56807   1  NA          &lt;NA&gt;</span>
 <span class="co">## 2 0.7789706 -3.211375 -0.3670747      56.86697   2  NA          &lt;NA&gt;</span>
@@ -477,7 +487,7 @@
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper</a></span><span class="op">(</span>
   learner <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.ksvm"</span>, C <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">C</span>, sigma <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">sigma</span><span class="op">)</span>,
   fw.method <span class="op">=</span> <span class="st">"FSelectorRcpp_information.gain"</span>,
-  more.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"FSelectorRcpp_information.gain"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  more.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"FSelectorRcpp_information.gain"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
     equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>,
   fw.perc <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">fw.perc</span><span class="op">)</span>
 <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">bh.task</span><span class="op">)</span>
@@ -491,9 +501,9 @@
 </div>
 </div>
 </div>
-<div id="wrapper-methods" class="section level1">
-<h1 class="hasAnchor">
-<a href="#wrapper-methods" class="anchor"></a>Wrapper methods</h1>
+<div class="section level1">
+<h1 id="wrapper-methods">Wrapper methods<a class="anchor" aria-label="anchor" href="#wrapper-methods"></a>
+</h1>
 <p>Wrapper methods use the performance of a learning algorithm to assess the usefulness of a feature set. In order to select a feature subset a learner is trained repeatedly on different feature subsets and the subset which leads to the best learner performance is chosen.</p>
 <p>In order to use the wrapper approach we have to decide:</p>
 <ul>
@@ -508,11 +518,11 @@
 <li>Random search <code>makeFeatSelControlRandom</code> (<code>?FeatSelControl()</code>),</li>
 <li>Deterministic forward or backward search <code>makeFeatSelControlSequential</code> (<code>?FeatSelControl()</code>).</li>
 </ul>
-<div id="select-a-feature-subset" class="section level2">
-<h2 class="hasAnchor">
-<a href="#select-a-feature-subset" class="anchor"></a>Select a feature subset</h2>
+<div class="section level2">
+<h2 id="select-a-feature-subset">Select a feature subset<a class="anchor" aria-label="anchor" href="#select-a-feature-subset"></a>
+</h2>
 <p>Feature selection can be conducted with function <code><a href="../../reference/selectFeatures.html">selectFeatures()</a></code>.</p>
-<p>In the following example we perform an exhaustive search on the <code>Wisconsin Prognostic Breast Cancer</code> (<code><a href="https://rdrr.io/pkg/TH.data/man/wpbc.html">TH.data::wpbc()</a></code>) data set. As learning method we use the <code>Cox proportional hazards model</code> (<code><a href="https://rdrr.io/pkg/survival/man/coxph.html">survival::coxph()</a></code>). The performance is assessed by the holdout estimate of the concordance index <a href="measures.html" target="_blank">cindex</a>).</p>
+<p>In the following example we perform an exhaustive search on the <code>Wisconsin Prognostic Breast Cancer</code> (<code><a href="https://rdrr.io/pkg/TH.data/man/wpbc.html" class="external-link">TH.data::wpbc()</a></code>) data set. As learning method we use the <code>Cox proportional hazards model</code> (<code><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">survival::coxph()</a></code>). The performance is assessed by the holdout estimate of the concordance index <a href="measures.html" target="_blank">cindex</a>).</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Specify the search strategy</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/FeatSelControl.html">makeFeatSelControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">20L</span><span class="op">)</span>
@@ -547,7 +557,7 @@
 <span class="va">sfeats</span><span class="op">$</span><span class="va">y</span>
 <span class="co">## cindex.test.mean </span>
 <span class="co">##        0.5953039</span></code></pre></div>
-<p>In a second example we fit a simple linear regression model to the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) data set and use a sequential search to find a feature set that minimizes the mean squared error <a href="measures.html" target="_blank">mse</a>). <code>method = "sfs"</code> indicates that we want to conduct a sequential forward search where features are added to the model until the performance cannot be improved anymore. See the documentation page <code>makeFeatSelControlSequential</code> (<code>?FeatSelControl()</code>) for other available sequential search methods. The search is stopped if the improvement is smaller than <code>alpha = 0.02</code>.</p>
+<p>In a second example we fit a simple linear regression model to the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html" class="external-link">mlbench::BostonHousing()</a></code>) data set and use a sequential search to find a feature set that minimizes the mean squared error <a href="measures.html" target="_blank">mse</a>). <code>method = "sfs"</code> indicates that we want to conduct a sequential forward search where features are added to the model until the performance cannot be improved anymore. See the documentation page <code>makeFeatSelControlSequential</code> (<code>?FeatSelControl()</code>) for other available sequential search methods. The search is stopped if the improvement is smaller than <code>alpha = 0.02</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Specify the search strategy</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/FeatSelControl.html">makeFeatSelControlSequential</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"sfs"</span>, alpha <span class="op">=</span> <span class="fl">0.02</span><span class="op">)</span>
@@ -584,9 +594,9 @@
 <span class="co">## </span>
 <span class="co">## Stopped, because no improving feature was found.</span></code></pre></div>
 </div>
-<div id="fuse-a-learner-with-feature-selection" class="section level2">
-<h2 class="hasAnchor">
-<a href="#fuse-a-learner-with-feature-selection" class="anchor"></a>Fuse a learner with feature selection</h2>
+<div class="section level2">
+<h2 id="fuse-a-learner-with-feature-selection">Fuse a learner with feature selection<a class="anchor" aria-label="anchor" href="#fuse-a-learner-with-feature-selection"></a>
+</h2>
 <p>A Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) can be fused with a feature selection strategy (i.e., a search strategy, a performance measure and a resampling strategy) by function <code><a href="../../reference/makeFeatSelWrapper.html">makeFeatSelWrapper()</a></code>. During training features are selected according to the specified selection scheme. Then, the learner is trained on the selected feature subset.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
@@ -626,7 +636,7 @@
 <span class="co">##         0.606664</span></code></pre></div>
 <p>The selected feature sets in the individual resampling iterations can be extracted as follows:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">models</span>, <span class="va">getFeatSelResult</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">models</span>, <span class="va">getFeatSelResult</span><span class="op">)</span>
 <span class="co">## [[1]]</span>
 <span class="co">## FeatSel result:</span>
 <span class="co">## Features (16): mean_concavity, mean_symmetry, mean_fractaldim,...</span>
@@ -653,13 +663,13 @@
 <span class="co">## cindex.test.mean=0.6896807</span></code></pre></div>
 </div>
 </div>
-<div id="feature-importance-from-trained-models" class="section level1">
-<h1 class="hasAnchor">
-<a href="#feature-importance-from-trained-models" class="anchor"></a>Feature importance from trained models</h1>
+<div class="section level1">
+<h1 id="feature-importance-from-trained-models">Feature importance from trained models<a class="anchor" aria-label="anchor" href="#feature-importance-from-trained-models"></a>
+</h1>
 <p>Some algorithms internally compute a feature importance during training. By using <code><a href="../../reference/getFeatureImportance.html">getFeatureImportance()</a></code> it is possible to extract this part from the trained model.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, target <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, importance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"permutation"</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, target <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span>
+<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, importance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"permutation"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">task</span><span class="op">)</span>
 
 <span class="fu"><a href="../../reference/getFeatureImportance.html">getFeatureImportance</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
@@ -673,13 +683,13 @@
 <span class="co">## Replace: NA</span>
 <span class="co">## Number of Monte-Carlo iterations: NA</span>
 <span class="co">## Local: FALSE</span>
-<span class="co">## # A tibble: 4 × 2</span>
+<span class="co">## <span style="color: #949494;"># A tibble: 4 × 2</span></span>
 <span class="co">##   variable     importance</span>
-<span class="co">##   &lt;chr&gt;             &lt;dbl&gt;</span>
-<span class="co">## 1 Sepal.Length    0.0336 </span>
-<span class="co">## 2 Sepal.Width     0.00627</span>
-<span class="co">## 3 Petal.Length    0.309  </span>
-<span class="co">## 4 Petal.Width     0.294</span></code></pre></div>
+<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">## <span style="color: #BCBCBC;">1</span> Sepal.Length    0.033<span style="text-decoration: underline;">6</span> </span>
+<span class="co">## <span style="color: #BCBCBC;">2</span> Sepal.Width     0.006<span style="text-decoration: underline;">27</span></span>
+<span class="co">## <span style="color: #BCBCBC;">3</span> Petal.Length    0.309  </span>
+<span class="co">## <span style="color: #BCBCBC;">4</span> Petal.Width     0.294</span></code></pre></div>
 </div>
   </div>
 
@@ -694,11 +704,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
+  <p></p>
+<p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>

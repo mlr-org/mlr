@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,7 +45,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
@@ -69,7 +71,8 @@
       <a href="../../articles/tutorial/predict.html">Predict</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/preproc.html">Preprocessing</a>
     </li>
     <li>
@@ -82,7 +85,8 @@
       <a href="../../articles/tutorial/benchmark_experiments.html">Benchmarking</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/parallelization.html">Parallelization</a>
     </li>
     <li>
@@ -92,7 +96,8 @@
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/usecase_regression.html">Use case - Regression</a>
     </li>
   </ul>
@@ -111,7 +116,8 @@
       <a href="../../articles/tutorial/wrapper.html">Wrapped Learners</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/impute.html">Imputation</a>
     </li>
     <li>
@@ -148,7 +154,8 @@
       <a href="../../articles/tutorial/out_of_bag_predictions.html">Out-of-Bag Predictions</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/multilabel.html">Multilabel Classification</a>
     </li>
     <li>
@@ -203,27 +210,30 @@
       <a href="../../articles/tutorial/filter_methods.html">Integrated Filter Methods</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/mlr-outreach">Talks, Videos and Workshops</a>
+      <a href="https://github.com/mlr-org/mlr-outreach" class="external-link">Talks, Videos and Workshops</a>
     </li>
     <li class="divider">
-    <li>
-      <a href="https://mlrmbo.mlr-org.com">mlrMBO</a>
+    </li>
+<li>
+      <a href="https://mlrmbo.mlr-org.com" class="external-link">mlrMBO</a>
     </li>
     <li>
-      <a href="https://https://mlrcpo.mlr-org.com">mlrCPO</a>
+      <a href="https://https://mlrcpo.mlr-org.com" class="external-link">mlrCPO</a>
     </li>
     <li>
-      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html" class="external-link">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/">OpenML</a>
+      <a href="http://openml.github.io/openml-r/" class="external-link">OpenML</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../news/index.html">Changelog</a>
     </li>
   </ul>
@@ -232,25 +242,25 @@
   <a href="../../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr/">
+  <a href="https://github.com/mlr-org/mlr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link">
     <span class="fa fa-comments"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://stackoverflow.com/questions/tagged/mlr">
+  <a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link">
     <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.com/">
+  <a href="https://mlr-org.com/" class="external-link">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -277,7 +287,7 @@
       <h1 data-toc-skip>Evaluating Learner Performance</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/performance.Rmd"><code>vignettes/tutorial/performance.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/HEAD/vignettes/tutorial/performance.Rmd" class="external-link"><code>vignettes/tutorial/performance.Rmd</code></a></small>
       <div class="hidden name"><code>performance.Rmd</code></div>
 
     </div>
@@ -285,16 +295,16 @@
     
     
 <p>The quality of the predictions of a model in <code>mlr</code> can be assessed with respect to a number of different performance measures. In order to calculate the performance measures, call <code><a href="../../reference/performance.html">performance()</a></code> on the object returned by <code>predict</code> (<code><a href="../../reference/predict.WrappedModel.html">predict.WrappedModel()</a></code>) and specify the desired performance measures.</p>
-<div id="available-performance-measures" class="section level1">
-<h1 class="hasAnchor">
-<a href="#available-performance-measures" class="anchor"></a>Available performance measures</h1>
+<div class="section level1">
+<h1 id="available-performance-measures">Available performance measures<a class="anchor" aria-label="anchor" href="#available-performance-measures"></a>
+</h1>
 <p><code>mlr</code> provides a large number of performance measures for all types of learning problems. Typical performance measures for <em>classification</em> are the mean misclassification error (<a href="measures.html" target="_blank">mmce</a>), accuracy (<a href="measures.html" target="_blank">acc</a>) or measures based on <a href="roc_analysis.html" target="_blank">ROC analysis</a>. For <em>regression</em> the mean of squared errors (<a href="measures.html" target="_blank">mse</a>) or mean of absolute errors (<a href="measures.html" target="_blank">mae</a>) are usually considered. For <em>clustering</em> tasks, measures such as the Dunn index (<a href="measures.html" target="_blank">G1 index</a>) are provided, while for <em>survival</em> predictions, the Concordance Index (<a href="measures.html" target="_blank">cindex</a>) is supported, and for <em>cost-sensitive</em> predictions the misclassification penalty (<a href="measures.html" target="_blank">mcp</a>) and others. It is also possible to access the time to train the learner (<a href="measures.html" target="_blank">timetrain</a>), the time to compute the prediction (<a href="measures.html" target="_blank">timepredict</a>) and their sum (<a href="measures.html" target="_blank">timeboth</a>) as performance measures.</p>
 <p>To see which performance measures are implemented, have a look at the table of <a href="measures.html" target="_blank">performance measures</a> and the <code><a href="../../reference/measures.html">measures()</a></code> documentation page.</p>
 <p>If you want to implement an additional measure or include a measure with non-standard misclassification costs, see the section on <a href="create_measure.html" target="_blank">creating custom measures</a>.</p>
 </div>
-<div id="listing-measures" class="section level1">
-<h1 class="hasAnchor">
-<a href="#listing-measures" class="anchor"></a>Listing measures</h1>
+<div class="section level1">
+<h1 id="listing-measures">Listing measures<a class="anchor" aria-label="anchor" href="#listing-measures"></a>
+</h1>
 <p>The properties and requirements of the individual measures are shown in the table of <a href="measures.html" target="_blank">performance measures</a>.</p>
 <p>If you would like a list of available measures with certain properties or suitable for a certain learning <code><a href="../../reference/Task.html">Task()</a></code> use the function <code><a href="../../reference/listMeasures.html">listMeasures()</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -336,15 +346,15 @@
 <span class="co">## Arguments: </span>
 <span class="co">## Note: Defined as: mean((response - truth)^2)</span></code></pre></div>
 </div>
-<div id="calculate-performance-measures" class="section level1">
-<h1 class="hasAnchor">
-<a href="#calculate-performance-measures" class="anchor"></a>Calculate performance measures</h1>
-<p>In the following example we fit a gradient boosting machine (<code><a href="https://rdrr.io/pkg/gbm/man/gbm.html">gbm::gbm()</a></code>) on a subset of the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) data set and calculate the default measure mean squared error (<a href="measures.html" target="_blank">mse</a>) on the remaining observations.</p>
+<div class="section level1">
+<h1 id="calculate-performance-measures">Calculate performance measures<a class="anchor" aria-label="anchor" href="#calculate-performance-measures"></a>
+</h1>
+<p>In the following example we fit a gradient boosting machine (<code><a href="https://rdrr.io/pkg/gbm/man/gbm.html" class="external-link">gbm::gbm()</a></code>) on a subset of the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html" class="external-link">mlbench::BostonHousing()</a></code>) data set and calculate the default measure mean squared error (<a href="measures.html" target="_blank">mse</a>) on the remaining observations.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span><span class="op">(</span><span class="va">bh.task</span><span class="op">)</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.gbm"</span>, n.trees <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>
-<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">bh.task</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">bh.task</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="va">n</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">bh.task</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">bh.task</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="va">n</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>
 <span class="co">##      mse </span>
@@ -357,13 +367,13 @@
 <p>Of course, we can also calculate multiple performance measures at once by simply passing a list of measures which can also include <a href="create_measure.html" target="_blank">your own measure</a>.</p>
 <p>Calculate the mean squared error, median squared error and mean absolute error (<a href="measures.html" target="_blank">mae</a>).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mse</span>, <span class="va">medse</span>, <span class="va">mae</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">mse</span>, <span class="va">medse</span>, <span class="va">mae</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       mse     medse       mae </span>
 <span class="co">## 14.385956  4.209155  2.716451</span></code></pre></div>
 <p>For the other types of learning problems and measures, calculating the performance basically works in the same way.</p>
-<div id="requirements-of-performance-measures" class="section level2">
-<h2 class="hasAnchor">
-<a href="#requirements-of-performance-measures" class="anchor"></a>Requirements of performance measures</h2>
+<div class="section level2">
+<h2 id="requirements-of-performance-measures">Requirements of performance measures<a class="anchor" aria-label="anchor" href="#requirements-of-performance-measures"></a>
+</h2>
 <p>Note that in order to calculate some performance measures it is required that you pass the <code><a href="../../reference/Task.html">Task()</a></code> or the fitted model (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) in addition to the <code><a href="../../reference/Prediction.html">Prediction()</a></code>.</p>
 <p>For example in order to assess the time needed for training (<a href="measures.html" target="_blank">timetrain</a>), the fitted model has to be passed.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -374,7 +384,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"cluster.kmeans"</span>, centers <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">mtcars.task</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">mtcars.task</span><span class="op">)</span>
+<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">mtcars.task</span><span class="op">)</span>
 
 <span class="co"># Calculate the G1 index</span>
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="va">G1</span>, task <span class="op">=</span> <span class="va">mtcars.task</span><span class="op">)</span>
@@ -384,7 +394,7 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
 <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">sonar.task</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">sonar.task</span><span class="op">)</span>
+<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">sonar.task</span><span class="op">)</span>
 
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="va">auc</span><span class="op">)</span>
 <span class="co">##       auc </span>
@@ -392,13 +402,13 @@
 <p>Also bear in mind that many of the performance measures that are available for classification, e.g., the false positive rate (<a href="measures.html" target="_blank">fpr</a>), are only suitable for binary problems.</p>
 </div>
 </div>
-<div id="access-a-performance-measure" class="section level1">
-<h1 class="hasAnchor">
-<a href="#access-a-performance-measure" class="anchor"></a>Access a performance measure</h1>
+<div class="section level1">
+<h1 id="access-a-performance-measure">Access a performance measure<a class="anchor" aria-label="anchor" href="#access-a-performance-measure"></a>
+</h1>
 <p>Performance measures in <code>mlr</code> are objects of class <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>). If you are interested in the properties or requirements of a single measure you can access it directly. See the help page of <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) for information on the individual slots.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Mean misclassification error</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">mmce</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mmce</span><span class="op">)</span>
 <span class="co">## List of 10</span>
 <span class="co">##  $ id        : chr "mmce"</span>
 <span class="co">##  $ minimize  : logi TRUE</span>
@@ -417,38 +427,38 @@
 <span class="co">##   ..- attr(*, "class")= chr "Aggregation"</span>
 <span class="co">##  - attr(*, "class")= chr "Measure"</span></code></pre></div>
 </div>
-<div id="binary-classification" class="section level1">
-<h1 class="hasAnchor">
-<a href="#binary-classification" class="anchor"></a>Binary classification</h1>
+<div class="section level1">
+<h1 id="binary-classification">Binary classification<a class="anchor" aria-label="anchor" href="#binary-classification"></a>
+</h1>
 <p>For binary classification specialized techniques exist to analyze the performance.</p>
-<div id="plot-performance-versus-threshold" class="section level2">
-<h2 class="hasAnchor">
-<a href="#plot-performance-versus-threshold" class="anchor"></a>Plot performance versus threshold</h2>
+<div class="section level2">
+<h2 id="plot-performance-versus-threshold">Plot performance versus threshold<a class="anchor" aria-label="anchor" href="#plot-performance-versus-threshold"></a>
+</h2>
 <p>As you may recall (see the previous section on <a href="predict.html" target="_blank">making predictions</a>) in binary classification we can adjust the threshold used to map probabilities to class labels. Helpful in this regard is are the functions <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code> and <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>, which generate and plot, respectively, the learner performance versus the threshold.</p>
 <p>For more performance plots and automatic threshold tuning see the section on <a href="roc_analysis.html" target="_blank">ROC analysis</a>.</p>
-<p>In the following example we consider the <code><a href="https://rdrr.io/pkg/mlbench/man/Sonar.html">mlbench::Sonar()</a></code> data set and plot the false positive rate (<a href="measures.html" target="_blank">fpr</a>), the false negative rate (<a href="measures.html" target="_blank">fnr</a>) as well as the misclassification rate (<a href="measures.html" target="_blank">mmce</a>) for all possible threshold values.</p>
+<p>In the following example we consider the <code><a href="https://rdrr.io/pkg/mlbench/man/Sonar.html" class="external-link">mlbench::Sonar()</a></code> data set and plot the false positive rate (<a href="measures.html" target="_blank">fpr</a>), the false negative rate (<a href="measures.html" target="_blank">fnr</a>) as well as the misclassification rate (<a href="measures.html" target="_blank">mmce</a>) for all possible threshold values.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
 <span class="va">n</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span><span class="op">(</span><span class="va">sonar.task</span><span class="op">)</span>
-<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">sonar.task</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">sonar.task</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">sonar.task</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">sonar.task</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Performance for the default threshold 0.5</span>
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">fpr</span>, <span class="va">fnr</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">fpr</span>, <span class="va">fnr</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       fpr       fnr      mmce </span>
 <span class="co">## 0.2500000 0.3035714 0.2788462</span>
 <span class="co"># Plot false negative and positive rates as well as the error rate versus the threshold</span>
-<span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">fpr</span>, <span class="va">fnr</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
+<span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">fpr</span>, <span class="va">fnr</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span></code></pre></div>
 <p><img src="performance_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 <p>There is an experimental <code>ggvis</code> plotting function <code>plotThreshVsPerfGGVIS()</code> which performs similarly to <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code> but instead of creating facetted subplots to visualize multiple learners and/or multiple measures, one of them is mapped to an interactive sidebar which selects what to display.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">plotThreshVsPerfGGVIS</span><span class="op">(</span><span class="va">d</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="roc-measures" class="section level2">
-<h2 class="hasAnchor">
-<a href="#roc-measures" class="anchor"></a>ROC measures</h2>
-<p>For binary classification a large number of specialized measures exist, which can be nicely formatted into one matrix, see for example the <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">receiver operating characteristic page on wikipedia</a>.</p>
+<div class="section level2">
+<h2 id="roc-measures">ROC measures<a class="anchor" aria-label="anchor" href="#roc-measures"></a>
+</h2>
+<p>For binary classification a large number of specialized measures exist, which can be nicely formatted into one matrix, see for example the <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic" class="external-link">receiver operating characteristic page on wikipedia</a>.</p>
 <p>We can generate a similiar table with the <code><a href="../../reference/calculateROCMeasures.html">calculateROCMeasures()</a></code> function.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/calculateROCMeasures.html">calculateROCMeasures</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>
@@ -490,11 +500,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
+  <p></p>
+<p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>

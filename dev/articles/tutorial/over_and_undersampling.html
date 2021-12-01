@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,7 +45,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
@@ -69,7 +71,8 @@
       <a href="../../articles/tutorial/predict.html">Predict</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/preproc.html">Preprocessing</a>
     </li>
     <li>
@@ -82,7 +85,8 @@
       <a href="../../articles/tutorial/benchmark_experiments.html">Benchmarking</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/parallelization.html">Parallelization</a>
     </li>
     <li>
@@ -92,7 +96,8 @@
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/usecase_regression.html">Use case - Regression</a>
     </li>
   </ul>
@@ -111,7 +116,8 @@
       <a href="../../articles/tutorial/wrapper.html">Wrapped Learners</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/impute.html">Imputation</a>
     </li>
     <li>
@@ -148,7 +154,8 @@
       <a href="../../articles/tutorial/out_of_bag_predictions.html">Out-of-Bag Predictions</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/multilabel.html">Multilabel Classification</a>
     </li>
     <li>
@@ -203,27 +210,30 @@
       <a href="../../articles/tutorial/filter_methods.html">Integrated Filter Methods</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/mlr-outreach">Talks, Videos and Workshops</a>
+      <a href="https://github.com/mlr-org/mlr-outreach" class="external-link">Talks, Videos and Workshops</a>
     </li>
     <li class="divider">
-    <li>
-      <a href="https://mlrmbo.mlr-org.com">mlrMBO</a>
+    </li>
+<li>
+      <a href="https://mlrmbo.mlr-org.com" class="external-link">mlrMBO</a>
     </li>
     <li>
-      <a href="https://https://mlrcpo.mlr-org.com">mlrCPO</a>
+      <a href="https://https://mlrcpo.mlr-org.com" class="external-link">mlrCPO</a>
     </li>
     <li>
-      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html" class="external-link">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/">OpenML</a>
+      <a href="http://openml.github.io/openml-r/" class="external-link">OpenML</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../news/index.html">Changelog</a>
     </li>
   </ul>
@@ -232,25 +242,25 @@
   <a href="../../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr/">
+  <a href="https://github.com/mlr-org/mlr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link">
     <span class="fa fa-comments"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://stackoverflow.com/questions/tagged/mlr">
+  <a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link">
     <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.com/">
+  <a href="https://mlr-org.com/" class="external-link">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -277,7 +287,7 @@
       <h1 data-toc-skip>Imbalanced Classification Problems</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/over_and_undersampling.Rmd"><code>vignettes/tutorial/over_and_undersampling.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/HEAD/vignettes/tutorial/over_and_undersampling.Rmd" class="external-link"><code>vignettes/tutorial/over_and_undersampling.Rmd</code></a></small>
       <div class="hidden name"><code>over_and_undersampling.Rmd</code></div>
 
     </div>
@@ -286,9 +296,9 @@
     
 <p>In case of <em>binary classification</em> strongly imbalanced classes often lead to unsatisfactory results regarding the prediction of new observations, especially for the small class. In this context <em>imbalanced classes</em> simply means that the number of observations of one class (usu. positive or majority class) by far exceeds the number of observations of the other class (usu. negative or minority class). This setting can be observed fairly often in practice and in various disciplines like credit scoring, fraud detection, medical diagnostics or churn management.</p>
 <p>Most classification methods work best when the number of observations per class are roughly equal. The problem with <em>imbalanced classes</em> is that because of the dominance of the majority class classifiers tend to ignore cases of the minority class as noise and therefore predict the majority class far more often. In order to lay more weight on the cases of the minority class, there are numerous correction methods which tackle the <em>imbalanced classification problem</em>. These methods can generally be divided into <em>cost- and sampling-based approaches</em>. Below all methods supported by <code>mlr</code> are introduced.</p>
-<div id="sampling-based-approaches" class="section level2">
-<h2 class="hasAnchor">
-<a href="#sampling-based-approaches" class="anchor"></a>Sampling-based approaches</h2>
+<div class="section level2">
+<h2 id="sampling-based-approaches">Sampling-based approaches<a class="anchor" aria-label="anchor" href="#sampling-based-approaches"></a>
+</h2>
 <p>The basic idea of <em>sampling methods</em> is to simply adjust the proportion of the classes in order to increase the weight of the minority class observations within the model.</p>
 <p>The <em>sampling-based approaches</em> can be divided further into three different categories:</p>
 <ol style="list-style-type: decimal">
@@ -298,31 +308,31 @@
 </ol>
 <p>All these methods directly access the underlying data and “rearrange” it. In this way the sampling is done as part of the <em>preprocesssing</em> and can therefore be combined with every appropriate classifier.</p>
 <p><code>mlr</code> currently supports the first two approaches.</p>
-<div id="simple-over--and-undersampling" class="section level3">
-<h3 class="hasAnchor">
-<a href="#simple-over--and-undersampling" class="anchor"></a>(Simple) over- and undersampling</h3>
+<div class="section level3">
+<h3 id="simple-over--and-undersampling">(Simple) over- and undersampling<a class="anchor" aria-label="anchor" href="#simple-over--and-undersampling"></a>
+</h3>
 <p>As mentioned above <em>undersampling</em> always refers to the majority class, while <em>oversampling</em> affects the minority class. By the use of <em>undersampling</em>, randomly chosen observations of the majority class are eliminated. Through (simple) <em>oversampling</em> all observations of the minority class are considered at least once when fitting the model. In addition, exact copies of minority class cases are created by random sampling with repetitions.</p>
 <p>First, let’s take a look at the effect for a classification <a href="task.html" target="_blank">task</a>. Based on a simulated <code>ClassifTask</code> (<code><a href="../../reference/Task.html">Task()</a></code>) with imbalanced classes two new tasks (<code>task.over</code>, <code>task.under</code>) are created via <code>mlr</code> functions <code><a href="../../reference/oversample.html">oversample()</a></code> and <code><a href="../../reference/oversample.html">undersample()</a></code>, respectively.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data.imbal.train</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span>,
-  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5000</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">data.imbal.train</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">5000</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data.imbal.train</span>, target <span class="op">=</span> <span class="st">"class"</span><span class="op">)</span>
+<span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data.imbal.train</span>, target <span class="op">=</span> <span class="st">"class"</span><span class="op">)</span>
 <span class="va">task.over</span> <span class="op">=</span> <span class="fu"><a href="../../reference/oversample.html">oversample</a></span><span class="op">(</span><span class="va">task</span>, rate <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>
 <span class="va">task.under</span> <span class="op">=</span> <span class="fu"><a href="../../reference/oversample.html">undersample</a></span><span class="op">(</span><span class="va">task</span>, rate <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">8</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## </span>
 <span class="co">##    A    B </span>
 <span class="co">##  100 5000</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">task.over</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">task.over</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## </span>
 <span class="co">##    A    B </span>
 <span class="co">##  800 5000</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">task.under</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">task.under</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## </span>
 <span class="co">##   A   B </span>
 <span class="co">## 100 625</span></code></pre></div>
@@ -333,27 +343,27 @@
 <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">task</span><span class="op">)</span>
 <span class="va">mod.over</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">task.over</span><span class="op">)</span>
 <span class="va">mod.under</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">task.under</span><span class="op">)</span>
-<span class="va">data.imbal.test</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span>,
-  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">500</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>
+<span class="va">data.imbal.test</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">500</span>, mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       mmce        ber        auc </span>
 <span class="co">## 0.01960784 0.50000000 0.50000000</span>
 
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod.over</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod.over</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       mmce        ber        auc </span>
 <span class="co">## 0.04705882 0.41600000 0.69080000</span>
 
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod.under</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod.under</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##      mmce       ber       auc </span>
 <span class="co">## 0.0372549 0.5090000 0.7265000</span></code></pre></div>
 <p>In this case the <em>performance measure</em> has to be considered very carefully. As the <em>misclassification rate</em> (<a href="measures.html" target="_blank">mmce</a>) evaluates the overall accuracy of the predictions, the <em>balanced error rate</em> (<a href="measures.html" target="_blank">ber</a>) and <em>area under the ROC Curve</em> (<a href="measures.html" target="_blank">auc</a>) might be more suitable here, as the misclassifications within each class are separately taken into account.</p>
 </div>
-<div id="over--and-undersampling-wrappers" class="section level3">
-<h3 class="hasAnchor">
-<a href="#over--and-undersampling-wrappers" class="anchor"></a>Over- and undersampling wrappers</h3>
+<div class="section level3">
+<h3 id="over--and-undersampling-wrappers">Over- and undersampling wrappers<a class="anchor" aria-label="anchor" href="#over--and-undersampling-wrappers"></a>
+</h3>
 <p>Alternatively, <code>mlr</code> also offers the integration of over- and undersampling via a <a href="wrapper.html" target="_blank">wrapper approach</a>. This way over- and undersampling can be applied to already <a href="learner.html" target="_blank">existing learners</a> to extend their functionality.</p>
 <p>The example given above is repeated once again, but this time with extended learners instead of modified tasks (see <code><a href="../../reference/makeUndersampleWrapper.html">makeOversampleWrapper()</a></code> and <code><a href="../../reference/makeUndersampleWrapper.html">makeUndersampleWrapper()</a></code>). Just like before the <em>undersampling rate</em> has to be between 0 and 1, while the <em>oversampling rate</em> has a lower boundary of 1.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -363,35 +373,35 @@
 <span class="va">mod.over</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.over</span>, <span class="va">task</span><span class="op">)</span>
 <span class="va">mod.under</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.under</span>, <span class="va">task</span><span class="op">)</span>
 
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       mmce        ber        auc </span>
 <span class="co">## 0.01960784 0.50000000 0.50000000</span>
 
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod.over</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod.over</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       mmce        ber        auc </span>
 <span class="co">## 0.02941176 0.45600000 0.76880000</span>
 
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod.under</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod.under</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       mmce        ber        auc </span>
 <span class="co">## 0.03529412 0.31200000 0.79960000</span></code></pre></div>
 </div>
-<div id="extensions-to-oversampling" class="section level3">
-<h3 class="hasAnchor">
-<a href="#extensions-to-oversampling" class="anchor"></a>Extensions to oversampling</h3>
+<div class="section level3">
+<h3 id="extensions-to-oversampling">Extensions to oversampling<a class="anchor" aria-label="anchor" href="#extensions-to-oversampling"></a>
+</h3>
 <p>Two extensions to (simple) oversampling are available in <code>mlr</code>.</p>
-<div id="smote-synthetic-minority-oversampling-technique" class="section level4">
-<h4 class="hasAnchor">
-<a href="#smote-synthetic-minority-oversampling-technique" class="anchor"></a>1. SMOTE (Synthetic Minority Oversampling Technique)</h4>
+<div class="section level4">
+<h4 id="smote-synthetic-minority-oversampling-technique">1. SMOTE (Synthetic Minority Oversampling Technique)<a class="anchor" aria-label="anchor" href="#smote-synthetic-minority-oversampling-technique"></a>
+</h4>
 <p>As the duplicating of the minority class observations can lead to overfitting, within <em>SMOTE</em> the “new cases” are constructed in a different way. For each new observation, one randomly chosen minority class observation as well as one of its <em>randomly chosen next neighbours</em> are interpolated, so that finally a new <em>artificial observation</em> of the minority class is created. The <code><a href="../../reference/smote.html">smote()</a></code> function in <code>mlr</code> handles numeric as well as factor features, as the gower distance is used for nearest neighbour calculation. The factor level of the new artificial case is sampled from the given levels of the two input observations.</p>
 <p>Analogous to oversampling, <em>SMOTE preprocessing</em> is possible via modification of the task.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">task.smote</span> <span class="op">=</span> <span class="fu"><a href="../../reference/smote.html">smote</a></span><span class="op">(</span><span class="va">task</span>, rate <span class="op">=</span> <span class="fl">8</span>, nn <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## </span>
 <span class="co">##    A    B </span>
 <span class="co">##  100 5000</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">task.smote</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">task.smote</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## </span>
 <span class="co">##    A    B </span>
 <span class="co">##  800 5000</span></code></pre></div>
@@ -399,14 +409,14 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn.smote</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeSMOTEWrapper.html">makeSMOTEWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, sw.rate <span class="op">=</span> <span class="fl">8</span>, sw.nn <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 <span class="va">mod.smote</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.smote</span>, <span class="va">task</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod.smote</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod.smote</span>, newdata <span class="op">=</span> <span class="va">data.imbal.test</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##       mmce        ber        auc </span>
 <span class="co">## 0.03137255 0.50600000 0.70930000</span></code></pre></div>
 <p>By default the number of nearest neighbours considered within the algorithm is set to 5.</p>
 </div>
-<div id="overbagging" class="section level4">
-<h4 class="hasAnchor">
-<a href="#overbagging" class="anchor"></a>2. Overbagging</h4>
+<div class="section level4">
+<h4 id="overbagging">2. Overbagging<a class="anchor" aria-label="anchor" href="#overbagging"></a>
+</h4>
 <p>Another extension of oversampling consists in the combination of sampling with the <a href="bagging.html" target="_blank">bagging approach</a>. For each iteration of the bagging process, minority class observations are oversampled with a given rate in <code>obw.rate</code>. The majority class cases can either all be taken into account for each iteration (<code>obw.maxcl = "all"</code>) or bootstrapped with replacement to increase variability between training data sets during iterations (<code>obw.maxcl = "boot"</code>).</p>
 <p>The construction of the <strong>Overbagging Wrapper</strong> works similar to <code><a href="../../reference/makeBaggingWrapper.html">makeBaggingWrapper()</a></code>. First an existing <code>mlr</code> learner has to be passed to <code><a href="../../reference/makeOverBaggingWrapper.html">makeOverBaggingWrapper()</a></code>. The number of iterations or fitted models can be set via <code>obw.iters</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -418,14 +428,14 @@
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setPredictType.html">setPredictType</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="st">"prob"</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 <span class="va">r1</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">lrn</span>, task <span class="op">=</span> <span class="va">task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span>,
-  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
+  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="va">r1</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">## mmce.test.mean  ber.test.mean  auc.test.mean </span>
 <span class="co">##     0.01960784     0.50000000     0.50000000</span>
 
 <span class="va">obw.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setPredictType.html">setPredictType</a></span><span class="op">(</span><span class="va">obw.lrn</span>, <span class="st">"prob"</span><span class="op">)</span>
 <span class="va">r2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">obw.lrn</span>, task <span class="op">=</span> <span class="va">task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span>,
-  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
+  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="va">r2</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">## mmce.test.mean  ber.test.mean  auc.test.mean </span>
 <span class="co">##      0.0327451      0.4781435      0.5361176</span></code></pre></div>
@@ -436,14 +446,14 @@
 
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setPredictType.html">setPredictType</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="st">"prob"</span><span class="op">)</span>
 <span class="va">r1</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">lrn</span>, task <span class="op">=</span> <span class="va">task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span>,
-  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
+  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="va">r1</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">## mmce.test.mean  ber.test.mean  auc.test.mean </span>
 <span class="co">##     0.03196078     0.49333337     0.58766687</span>
 
 <span class="va">obw.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setPredictType.html">setPredictType</a></span><span class="op">(</span><span class="va">obw.lrn</span>, <span class="st">"prob"</span><span class="op">)</span>
 <span class="va">r2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">obw.lrn</span>, task <span class="op">=</span> <span class="va">task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span>,
-  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
+  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">mmce</span>, <span class="va">ber</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
 <span class="va">r2</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">## mmce.test.mean  ber.test.mean  auc.test.mean </span>
 <span class="co">##     0.04117647     0.49834049     0.49953403</span></code></pre></div>
@@ -451,22 +461,22 @@
 </div>
 </div>
 </div>
-<div id="tuning-the-probability-threshold" class="section level2">
-<h2 class="hasAnchor">
-<a href="#tuning-the-probability-threshold" class="anchor"></a>Tuning the probability threshold</h2>
+<div class="section level2">
+<h2 id="tuning-the-probability-threshold">Tuning the probability threshold<a class="anchor" aria-label="anchor" href="#tuning-the-probability-threshold"></a>
+</h2>
 <p>In binary classification, the default probability value at which a prediction is either classified as “1” or “0” is 0.50. This means with an estimate of &gt;= 0.50 the observation is put into class “1” while lower values get assigned class “0”. To reach a better performance in binary classification, it can be helpful to also optimize the the probability threshold at which this split is made. This can be especially helpful if the response is unbalanced. To enable this, argument <code>tune.threshold</code> needs to be set to <code>TRUE</code> in the chosen <code>makeTuneControl*</code> function.</p>
-<pre><code>## Resampling: cross-validation
-## Measures:             mmce
-## [Resample] iter 1:    0.0541069
-## [Resample] iter 2:    0.0606654
-## [Resample] iter 3:    0.0475880
-## 
-## Aggregated Result: mmce.test.mean=0.0541201
-## </code></pre>
+<pre><code><span class="co">## Resampling: cross-validation</span>
+<span class="co">## Measures:             mmce</span>
+<span class="co">## [Resample] iter 1:    0.0541069</span>
+<span class="co">## [Resample] iter 2:    0.0606654</span>
+<span class="co">## [Resample] iter 3:    0.0475880</span>
+<span class="co">## </span>
+<span class="co">## Aggregated Result: mmce.test.mean=0.0541201</span>
+<span class="co">## </span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.gbm"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, distribution <span class="op">=</span> <span class="st">"bernoulli"</span><span class="op">)</span>
-<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeIntegerParam</a></span><span class="op">(</span><span class="st">"interaction.depth"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
+<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeIntegerParam</a></span><span class="op">(</span><span class="st">"interaction.depth"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">2</span>, tune.threshold <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneWrapper.html">makeTuneWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span>, resampling <span class="op">=</span> <span class="va">cv2</span><span class="op">)</span>
@@ -509,7 +519,7 @@
 <span class="co">## </span>
 <span class="co">## Aggregated Result: mmce.test.mean=0.0556385</span>
 <span class="co">## </span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">extract</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">extract</span><span class="op">)</span>
 <span class="co">## [[1]]</span>
 <span class="co">## Tune result:</span>
 <span class="co">## Op. pars: interaction.depth=5</span>
@@ -529,13 +539,13 @@
 <span class="co">## mmce.test.mean=0.0577155</span></code></pre></div>
 <p>In the above script the tuning is (of course) nested. What happens is: The tuner evaluates a certain learner configuration via (inner) two-fold CV. On these predictions then the optimal threshold is selected, for this learner config (by calling <code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code> on the <code>ResamplePrediction</code> object, which was generated in the configuration evaluation). For the optimal learner config, at the end of tuning, we also know its selected threshold. The model is then trained on the complete outer training data set with the threshold set from the tuning and the prediction is made on the outer test set.</p>
 </div>
-<div id="cost-based-approaches" class="section level2">
-<h2 class="hasAnchor">
-<a href="#cost-based-approaches" class="anchor"></a>Cost-based approaches</h2>
+<div class="section level2">
+<h2 id="cost-based-approaches">Cost-based approaches<a class="anchor" aria-label="anchor" href="#cost-based-approaches"></a>
+</h2>
 <p>In contrast to sampling, <em>cost-based approaches</em> usually require particular learners, which can deal with different <em>class-dependent costs</em> <a href="cost_sensitive_classif.html" target="_blank">Cost-Sensitive Classification</a>.</p>
-<div id="weighted-classes-wrapper" class="section level3">
-<h3 class="hasAnchor">
-<a href="#weighted-classes-wrapper" class="anchor"></a>Weighted classes wrapper</h3>
+<div class="section level3">
+<h3 id="weighted-classes-wrapper">Weighted classes wrapper<a class="anchor" aria-label="anchor" href="#weighted-classes-wrapper"></a>
+</h3>
 <p>Another approach independent of the underlying classifier is to assign the costs as <em>class weights</em>, so that each observation receives a weight, depending on the class it belongs to. Similar to the sampling-based approaches, the effect of the minority class observations is thereby increased simply by a higher weight of these instances and vice versa for majority class observations.</p>
 <p>In this way every learner which supports weights can be extended through the <a href="wrapper.html" target="_blank">wrapper approach</a>. If the learner does not have a direct parameter for class weights, but supports observation weights, the weights depending on the class are internally set in the wrapper.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -561,11 +571,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
+  <p></p>
+<p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>

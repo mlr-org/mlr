@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,7 +45,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
@@ -69,7 +71,8 @@
       <a href="../../articles/tutorial/predict.html">Predict</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/preproc.html">Preprocessing</a>
     </li>
     <li>
@@ -82,7 +85,8 @@
       <a href="../../articles/tutorial/benchmark_experiments.html">Benchmarking</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/parallelization.html">Parallelization</a>
     </li>
     <li>
@@ -92,7 +96,8 @@
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/usecase_regression.html">Use case - Regression</a>
     </li>
   </ul>
@@ -111,7 +116,8 @@
       <a href="../../articles/tutorial/wrapper.html">Wrapped Learners</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/impute.html">Imputation</a>
     </li>
     <li>
@@ -148,7 +154,8 @@
       <a href="../../articles/tutorial/out_of_bag_predictions.html">Out-of-Bag Predictions</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/multilabel.html">Multilabel Classification</a>
     </li>
     <li>
@@ -203,27 +210,30 @@
       <a href="../../articles/tutorial/filter_methods.html">Integrated Filter Methods</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/mlr-outreach">Talks, Videos and Workshops</a>
+      <a href="https://github.com/mlr-org/mlr-outreach" class="external-link">Talks, Videos and Workshops</a>
     </li>
     <li class="divider">
-    <li>
-      <a href="https://mlrmbo.mlr-org.com">mlrMBO</a>
+    </li>
+<li>
+      <a href="https://mlrmbo.mlr-org.com" class="external-link">mlrMBO</a>
     </li>
     <li>
-      <a href="https://https://mlrcpo.mlr-org.com">mlrCPO</a>
+      <a href="https://https://mlrcpo.mlr-org.com" class="external-link">mlrCPO</a>
     </li>
     <li>
-      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html" class="external-link">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/">OpenML</a>
+      <a href="http://openml.github.io/openml-r/" class="external-link">OpenML</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../news/index.html">Changelog</a>
     </li>
   </ul>
@@ -232,25 +242,25 @@
   <a href="../../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr/">
+  <a href="https://github.com/mlr-org/mlr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link">
     <span class="fa fa-comments"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://stackoverflow.com/questions/tagged/mlr">
+  <a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link">
     <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.com/">
+  <a href="https://mlr-org.com/" class="external-link">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -277,35 +287,35 @@
       <h1 data-toc-skip>Functional Data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/functional_data.Rmd"><code>vignettes/tutorial/functional_data.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/HEAD/vignettes/tutorial/functional_data.Rmd" class="external-link"><code>vignettes/tutorial/functional_data.Rmd</code></a></small>
       <div class="hidden name"><code>functional_data.Rmd</code></div>
 
     </div>
 
     
     
-<p>In (<a href="http://faculty.bscb.cornell.edu/~hooker/ShortCourseHandout.pdf">Hooker, 2017</a>) it is defined, that “Functional data is multivariate data with an ordering on the dimensions”. It means that this type of data consists of curves varying over a continuum, such as time, frequency, or wavelength. Thus, functional data is often present when measurements at various time points are analyzed. The curves of functional data are usually interdependent, which means that the measurement at a point, e.g., <span class="math inline">\(t_{i + 1}\)</span>, depends on measurements at some other points, e.g., <span class="math inline">\({t_1, ..., t_i}; i \in \mathbb{N}\)</span>.</p>
-<p>As the most well-known machine learning techniques generally do not emphasize the interdependence between features, they are often not <em>well suited</em> for such tasks. Application of these techniques can lead to poor performance. Functional data analysis, on the other hand, tries to address this issue either by using algorithms particularly tailored to functional data or by transforming the functional covariates into a continuum (e.g., time, wavelength) nondependent feature space. For a more in-depth introduction to functional data analysis see, e.g. <a href="http://rd.springer.com/article/10.1007/BF02293704">When the data are functions</a> (Ramsay, J.O., 1982).</p>
+<p>In (<a href="http://faculty.bscb.cornell.edu/~hooker/ShortCourseHandout.pdf" class="external-link">Hooker, 2017</a>) it is defined, that “Functional data is multivariate data with an ordering on the dimensions”. It means that this type of data consists of curves varying over a continuum, such as time, frequency, or wavelength. Thus, functional data is often present when measurements at various time points are analyzed. The curves of functional data are usually interdependent, which means that the measurement at a point, e.g., <span class="math inline">\(t_{i + 1}\)</span>, depends on measurements at some other points, e.g., <span class="math inline">\({t_1, ..., t_i}; i \in \mathbb{N}\)</span>.</p>
+<p>As the most well-known machine learning techniques generally do not emphasize the interdependence between features, they are often not <em>well suited</em> for such tasks. Application of these techniques can lead to poor performance. Functional data analysis, on the other hand, tries to address this issue either by using algorithms particularly tailored to functional data or by transforming the functional covariates into a continuum (e.g., time, wavelength) nondependent feature space. For a more in-depth introduction to functional data analysis see, e.g. <a href="http://rd.springer.com/article/10.1007/BF02293704" class="external-link">When the data are functions</a> (Ramsay, J.O., 1982).</p>
 <p>Each observation of a functional covariate in the data is an evaluation of a functional, i.e., it consists of measurements of a scalar value at various time (wavelength or another type of continuum) points. A single observation might then look like this:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load required packages</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/boost-R/FDboost">FDboost</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/boost-R/FDboost" class="external-link">FDboost</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Plot NIR curve for first observarion</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">fuelSubset</span>, package <span class="op">=</span> <span class="st">"FDboost"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">fuelSubset</span>, package <span class="op">=</span> <span class="st">"FDboost"</span><span class="op">)</span>
 
 <span class="co"># NIR_Obs_1 contains the measurements for NIR of the first functional covariate and</span>
 <span class="co"># lambda indicates the wavelength points the data was measured at.</span>
-<span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"NIR_Obs1"</span> <span class="op">=</span> <span class="va">fuelSubset</span><span class="op">$</span><span class="va">NIR</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>,
+<span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"NIR_Obs1"</span> <span class="op">=</span> <span class="va">fuelSubset</span><span class="op">$</span><span class="va">NIR</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>,
                 <span class="st">"lambda"</span> <span class="op">=</span> <span class="va">fuelSubset</span><span class="op">$</span><span class="va">nir.lambda</span><span class="op">)</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">NIR_Obs1</span>, x <span class="op">=</span> <span class="va">lambda</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">NIR_Obs1</span>, x <span class="op">=</span> <span class="va">lambda</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="functional_data_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p><em>Note:</em> this is an example of spectroscopic data. NIR stands for “near infra-red radiation (light)”, UVVIS (you will find this below) – “ultra-violet and visible radiation (light)”, and in spectroscopy it is common to denote wavelengths as “lambda” <span class="math inline">\((\lambda)\)</span>. For the sake of simplicity, you can imagine the wavelengths as adjacent visible and invisible “colors” expressed as numbers.</p>
-<div id="how-to-model-functional-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#how-to-model-functional-data" class="anchor"></a>How to model functional data?</h1>
+<div class="section level1">
+<h1 id="how-to-model-functional-data">How to model functional data?<a class="anchor" aria-label="anchor" href="#how-to-model-functional-data"></a>
+</h1>
 <p>There are two commonly used approaches for analyzing functional data.</p>
 <ul>
 <li>Directly analyze the functional data using a <a href="learner.html">learner</a> that is suitable for functional data on a <a href="task.html">task</a>. Those learners have the prefixes <strong>classif.fda</strong> and <strong>regr.fda</strong>.</li>
@@ -316,14 +326,14 @@
 </ul>
 <p>This is done by <a href="functional_data.html#feature-extraction">extracting</a> non-temporal/non-functional features from the curves. Non-temporal features do not have any interdependence between each other, similarly to features in traditional machine learning. This is explained in more detail <a href="functional_data.html#feature-extraction">below</a>.</p>
 </div>
-<div id="creating-a-task-that-contains-functional-features" class="section level1">
-<h1 class="hasAnchor">
-<a href="#creating-a-task-that-contains-functional-features" class="anchor"></a>Creating a task that contains functional features</h1>
-<p>The first step is to get the data in the right format. <code>mlr</code> expects a <code><a href="https://rdrr.io/r/base/data.frame.html">base::data.frame</a></code> which consists of the functional features and the target variable as input. Functional data in contrast to <strong>numeric</strong> data have to be stored as a matrix column in the data frame. After that, a <a href="task.html">task</a> that contains the data in a well-defined format is created. The <a href="task.html">tasks</a> come in different flavors, such as <code><a href="../../reference/makeClassifTask.html">makeClassifTask()</a></code> and <code><a href="../../reference/makeRegrTask.html">makeRegrTask()</a></code>, which can be used according to the class of the target variable.</p>
+<div class="section level1">
+<h1 id="creating-a-task-that-contains-functional-features">Creating a task that contains functional features<a class="anchor" aria-label="anchor" href="#creating-a-task-that-contains-functional-features"></a>
+</h1>
+<p>The first step is to get the data in the right format. <code>mlr</code> expects a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">base::data.frame</a></code> which consists of the functional features and the target variable as input. Functional data in contrast to <strong>numeric</strong> data have to be stored as a matrix column in the data frame. After that, a <a href="task.html">task</a> that contains the data in a well-defined format is created. The <a href="task.html">tasks</a> come in different flavors, such as <code><a href="../../reference/ClassifTask.html">makeClassifTask()</a></code> and <code><a href="../../reference/RegrTask.html">makeRegrTask()</a></code>, which can be used according to the class of the target variable.</p>
 <p>In the following example, the data is first stored as matrix columns using the helper function <code><a href="../../reference/makeFunctionalData.html">makeFunctionalData()</a></code> for the <a href="&amp;fuelSubset.task">fuelSubset</a> data from package <code>FDboost</code>.</p>
 <p>The data is provided in the following structure:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">fuelSubset</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">fuelSubset</span><span class="op">)</span>
 <span class="co">## List of 7</span>
 <span class="co">##  $ heatan      : num [1:129] 26.8 27.5 23.8 18.2 17.5 ...</span>
 <span class="co">##  $ h2o         : num [1:129] 2.3 3 2 1.85 2.39 ...</span>
@@ -345,8 +355,8 @@
 <p>Our data already contains functional features as matrices in a list. In order to demonstrate how such a matrix can be created from arbitrary numeric columns, we transform the list into a data frame with a set of numeric columns for each matrix. These columns refer to the matrix columns in the list, i.e., <strong>UVVIS.1</strong> is the first column of the UVVIS matrix.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Put all values into a data frame</span>
-<span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">fuelSubset</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"heatan"</span>, <span class="st">"h2o"</span>, <span class="st">"UVVIS"</span>, <span class="st">"NIR"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span>
+<span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">fuelSubset</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"heatan"</span>, <span class="st">"h2o"</span>, <span class="st">"UVVIS"</span>, <span class="st">"NIR"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span>
 <span class="co">## 'data.frame':    129 obs. of  5 variables:</span>
 <span class="co">##  $ heatan : num  26.8 27.5 23.8 18.2 17.5 ...</span>
 <span class="co">##  $ h2o    : num  2.3 3 2 1.85 2.39 ...</span>
@@ -355,14 +365,14 @@
 <span class="co">##  $ UVVIS.3: num  0.0372 -1.5695 -0.9381 -1.0649 -1.4016 ...</span></code></pre></div>
 <p>Before constructing the <a href="task.html">task</a>, the data is again reformatted therefore it contains column matrices. This is done by providing a list <strong>fd.features</strong>, that identifies the functional covariates. All columns not mentioned in the list are kept as-is. In our case, the column indices 3:136 correspond to the columns of the UVVIS matrix. Alternatively, we could also specify the respective column names.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr.mlr-org.com">mlr</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr.mlr-org.com">mlr</a></span><span class="op">)</span>
 <span class="co"># fd.features is a named list, where each name corresponds to the name of the </span>
 <span class="co"># functional feature and the values to the respective column indices or column names.</span>
-<span class="va">fd.features</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"UVVIS"</span> <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">136</span>, <span class="st">"NIR"</span> <span class="op">=</span> <span class="fl">137</span><span class="op">:</span><span class="fl">367</span><span class="op">)</span>
+<span class="va">fd.features</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"UVVIS"</span> <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">136</span>, <span class="st">"NIR"</span> <span class="op">=</span> <span class="fl">137</span><span class="op">:</span><span class="fl">367</span><span class="op">)</span>
 <span class="va">fdf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeFunctionalData.html">makeFunctionalData</a></span><span class="op">(</span><span class="va">df</span>, fd.features <span class="op">=</span> <span class="va">fd.features</span><span class="op">)</span></code></pre></div>
-<p><code><a href="../../reference/makeFunctionalData.html">makeFunctionalData()</a></code> returns a <code><a href="https://rdrr.io/r/base/data.frame.html">base::data.frame</a></code>, where the functional features are contained as matrices.</p>
+<p><code><a href="../../reference/makeFunctionalData.html">makeFunctionalData()</a></code> returns a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">base::data.frame</a></code>, where the functional features are contained as matrices.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">fdf</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">fdf</span><span class="op">)</span>
 <span class="co">## 'data.frame':    129 obs. of  4 variables:</span>
 <span class="co">##  $ heatan: num  26.8 27.5 23.8 18.2 17.5 ...</span>
 <span class="co">##  $ h2o   : num  2.3 3 2 1.85 2.39 ...</span>
@@ -378,7 +388,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create a regression task, classification tasks behave analogously</span>
 <span class="co"># In this case we use column indices</span>
-<span class="va">tsk1</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeRegrTask.html">makeRegrTask</a></span><span class="op">(</span><span class="st">"fuelsubset"</span>, data <span class="op">=</span> <span class="va">fdf</span>, target <span class="op">=</span> <span class="st">"heatan"</span><span class="op">)</span>
+<span class="va">tsk1</span> <span class="op">=</span> <span class="fu"><a href="../../reference/RegrTask.html">makeRegrTask</a></span><span class="op">(</span><span class="st">"fuelsubset"</span>, data <span class="op">=</span> <span class="va">fdf</span>, target <span class="op">=</span> <span class="st">"heatan"</span><span class="op">)</span>
 <span class="va">tsk1</span>
 <span class="co">## Supervised task: fuelsubset</span>
 <span class="co">## Type: regr</span>
@@ -392,9 +402,9 @@
 <span class="co">## Has blocking: FALSE</span>
 <span class="co">## Has coordinates: FALSE</span></code></pre></div>
 </div>
-<div id="constructing-a-learner" class="section level1">
-<h1 class="hasAnchor">
-<a href="#constructing-a-learner" class="anchor"></a>Constructing a learner</h1>
+<div class="section level1">
+<h1 id="constructing-a-learner">Constructing a learner<a class="anchor" aria-label="anchor" href="#constructing-a-learner"></a>
+</h1>
 <p>For functional data, <a href="learner.html">learners</a> are constructed using <code>makeLearner("classif.&lt;R_method_name&gt;")</code> or <code>makeLearner("regr.&lt;R_method_name&gt;")</code> depending on the target variable.</p>
 <p>Applying learners to a <a href="task.html">task</a> works in two ways:</p>
 <p><strong>Either use a <a href="learner.html">learner</a> suitable for functional data:</strong></p>
@@ -442,14 +452,14 @@
 <p>Alternatively, transform the functional data into a non-temporal/non-functional space by <a href="functional_data.html#feature-extraction">extracting</a> features before training. In this case, a standard regression- or classification-<a href="learner.html">learner</a> can be applied.</p>
 <p>This is explained in more detail in the <a href="functional_data.html#feature-extraction">feature extraction</a> section below.</p>
 </div>
-<div id="training-the-learner" class="section level1">
-<h1 class="hasAnchor">
-<a href="#training-the-learner" class="anchor"></a>Training the learner</h1>
+<div class="section level1">
+<h1 id="training-the-learner">Training the learner<a class="anchor" aria-label="anchor" href="#training-the-learner"></a>
+</h1>
 <p>The resulting <a href="learner.html">learner</a> can now be trained on the task created in section <a href="functional_data.html#creating-a-task">Creating a task</a> above.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Train the fdalrn on the constructed task</span>
 <span class="va">m</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">fdalrn</span>, task <span class="op">=</span> <span class="va">tsk1</span><span class="op">)</span>
-<span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">m</span>, <span class="va">tsk1</span><span class="op">)</span>
+<span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">m</span>, <span class="va">tsk1</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">p</span>, <span class="va">rmse</span><span class="op">)</span>
 <span class="co">##     rmse </span>
 <span class="co">## 2.181438</span></code></pre></div>
@@ -466,9 +476,9 @@
 <span class="co">## Trained on: task.id = fuelsubset; obs = 129; features = 3</span>
 <span class="co">## Hyperparameters: xval=0</span></code></pre></div>
 </div>
-<div id="feature-extraction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#feature-extraction" class="anchor"></a>Feature extraction</h1>
+<div class="section level1">
+<h1 id="feature-extraction">Feature extraction<a class="anchor" aria-label="anchor" href="#feature-extraction"></a>
+</h1>
 <p>In contrast to applying a learner that works on a <a href="task.html">task</a> containing functional features, the <a href="task.html">task</a> can be converted to a standard <a href="task.html">task</a>. This works by transforming the functional features into a non-functional domain, e.g., by extracting wavelets.</p>
 <p>The currently supported preprocessing functions are:</p>
 <ul>
@@ -482,7 +492,7 @@
 <code class="sourceCode R"><span class="co"># feat.methods specifies what to extract from which functional</span>
 <span class="co"># In this example, we extract the Fourier transformation from the first functional.</span>
 <span class="co"># From the second functional, fpca scores are extracted.</span>
-<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"UVVIS"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"NIR"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFPCA.html">extractFDAFPCA</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"UVVIS"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"NIR"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFPCA.html">extractFDAFPCA</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Either create a new task from an existing task</span>
 <span class="va">extracted</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFeatures.html">extractFDAFeatures</a></span><span class="op">(</span><span class="va">tsk1</span>, feat.methods <span class="op">=</span> <span class="va">feat.methods</span><span class="op">)</span>
@@ -504,41 +514,41 @@
 <span class="co">## Extraction of features from functional data:</span>
 <span class="co">## Target: heatan</span>
 <span class="co">## Remaining functional Features: 2 after extraction on 2 functional features</span></code></pre></div>
-<div id="wavelets" class="section level2">
-<h2 class="hasAnchor">
-<a href="#wavelets" class="anchor"></a>Wavelets</h2>
-<p>In this example, discrete wavelet feature transformation is applied to the data using the function <code>extractFDAWavelets</code>. Discrete wavelet transform decomposes the functional into several <em>wavelets</em>. This essentially transforms the time signal to a time-scale representation, where every wavelet captures the data at a different resolution. We can specify which additional parameters (i.e., the <code>filter</code> (a type of wavelet) and the <code>boundary</code>) in the pars argument. This function returns a regression task of type <em>regr</em> since the raw data contained temporal structure but the transformed data does not inherit temporal structure anymore. For more information on wavelets consider the documentation of <code><a href="https://rdrr.io/pkg/wavelets/man/dwt.html">wavelets::dwt</a></code>. A more comprehensive guide is, for example, given <a href="https://www.cs.unm.edu/~williams/cs530/arfgtw.pdf">here</a>.</p>
+<div class="section level2">
+<h2 id="wavelets">Wavelets<a class="anchor" aria-label="anchor" href="#wavelets"></a>
+</h2>
+<p>In this example, discrete wavelet feature transformation is applied to the data using the function <code>extractFDAWavelets</code>. Discrete wavelet transform decomposes the functional into several <em>wavelets</em>. This essentially transforms the time signal to a time-scale representation, where every wavelet captures the data at a different resolution. We can specify which additional parameters (i.e., the <code>filter</code> (a type of wavelet) and the <code>boundary</code>) in the pars argument. This function returns a regression task of type <em>regr</em> since the raw data contained temporal structure but the transformed data does not inherit temporal structure anymore. For more information on wavelets consider the documentation of <code><a href="https://rdrr.io/pkg/wavelets/man/dwt.html" class="external-link">wavelets::dwt</a></code>. A more comprehensive guide is, for example, given <a href="https://www.cs.unm.edu/~williams/cs530/arfgtw.pdf" class="external-link">here</a>.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Specify the feature extraction method and generate new task.</span>
 <span class="co"># Here, we use the Haar filter:</span>
-<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"UVVIS"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAWavelets.html">extractFDAWavelets</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="st">"haar"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"UVVIS"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAWavelets.html">extractFDAWavelets</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="st">"haar"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">task.w</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFeatures.html">extractFDAFeatures</a></span><span class="op">(</span><span class="va">tsk1</span>, feat.methods <span class="op">=</span> <span class="va">feat.methods</span><span class="op">)</span>
 
 <span class="co"># Use the Daubechie wavelet with filter length 4.</span>
-<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"NIR"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAWavelets.html">extractFDAWavelets</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="st">"d4"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"NIR"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAWavelets.html">extractFDAWavelets</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="st">"d4"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">task.wd4</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFeatures.html">extractFDAFeatures</a></span><span class="op">(</span><span class="va">tsk1</span>, feat.methods <span class="op">=</span> <span class="va">feat.methods</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="fourier-transformation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#fourier-transformation" class="anchor"></a>Fourier transformation</h2>
-<p>Now, we use the Fourier feature transformation. The Fourier transform takes a functional and transforms it to a frequency domain by splitting the signal up into its different frequency components. A more detailed tutorial on Fourier transform can be found <a href="http://www0.cs.ucl.ac.uk/teaching/GZ05/03-fourier.pdf">here</a>. Either the amplitude or the phase of the complex Fourier coefficients can be used for analysis. This can be specified in the additional <code>trafo.coeff</code> argument:</p>
+<div class="section level2">
+<h2 id="fourier-transformation">Fourier transformation<a class="anchor" aria-label="anchor" href="#fourier-transformation"></a>
+</h2>
+<p>Now, we use the Fourier feature transformation. The Fourier transform takes a functional and transforms it to a frequency domain by splitting the signal up into its different frequency components. A more detailed tutorial on Fourier transform can be found <a href="http://www0.cs.ucl.ac.uk/teaching/GZ05/03-fourier.pdf" class="external-link">here</a>. Either the amplitude or the phase of the complex Fourier coefficients can be used for analysis. This can be specified in the additional <code>trafo.coeff</code> argument:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Specify the feature extraction method and generate new task.</span>
 <span class="co"># We use the Fourier features and the amplitude for NIR, as well as the phase for UVVIS</span>
-<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"NIR"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span><span class="op">(</span>trafo.coeff <span class="op">=</span> <span class="st">"amplitude"</span><span class="op">)</span>,
+<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"NIR"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span><span class="op">(</span>trafo.coeff <span class="op">=</span> <span class="st">"amplitude"</span><span class="op">)</span>,
                     <span class="st">"UVVIS"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span><span class="op">(</span>trafo.coeff <span class="op">=</span> <span class="st">"phase"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">task.fourier</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFeatures.html">extractFDAFeatures</a></span><span class="op">(</span><span class="va">tsk1</span>, feat.methods <span class="op">=</span> <span class="va">feat.methods</span><span class="op">)</span>
 <span class="va">task.fourier</span></code></pre></div>
 </div>
 </div>
-<div id="wrappers" class="section level1">
-<h1 class="hasAnchor">
-<a href="#wrappers" class="anchor"></a>Wrappers</h1>
+<div class="section level1">
+<h1 id="wrappers">Wrappers<a class="anchor" aria-label="anchor" href="#wrappers"></a>
+</h1>
 <p>Additionally we can wrap the preprocessing around a standard learner such as <a href="rpart::rpart()">classif.rpart</a>. For additional information, please consider the <a href="wrapper.html#wrapper">Wrappers</a> section.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Use a FDAFeatExtractWrapper</span>
 <span class="co"># In this case we extract the Fourier features from the NIR variable</span>
-<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"NIR"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="va">feat.methods</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"NIR"</span> <span class="op">=</span> <span class="fu"><a href="../../reference/extractFDAFourier.html">extractFDAFourier</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="va">wrapped.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeExtractFDAFeatsWrapper.html">makeExtractFDAFeatsWrapper</a></span><span class="op">(</span><span class="st">"regr.rpart"</span>,  feat.methods <span class="op">=</span> <span class="va">feat.methods</span><span class="op">)</span>
 
 <span class="co"># And run the learner</span>
@@ -561,11 +571,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
+  <p></p>
+<p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>

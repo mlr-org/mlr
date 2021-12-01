@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,7 +45,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
@@ -69,7 +71,8 @@
       <a href="../../articles/tutorial/predict.html">Predict</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/preproc.html">Preprocessing</a>
     </li>
     <li>
@@ -82,7 +85,8 @@
       <a href="../../articles/tutorial/benchmark_experiments.html">Benchmarking</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/parallelization.html">Parallelization</a>
     </li>
     <li>
@@ -92,7 +96,8 @@
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/usecase_regression.html">Use case - Regression</a>
     </li>
   </ul>
@@ -111,7 +116,8 @@
       <a href="../../articles/tutorial/wrapper.html">Wrapped Learners</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/impute.html">Imputation</a>
     </li>
     <li>
@@ -148,7 +154,8 @@
       <a href="../../articles/tutorial/out_of_bag_predictions.html">Out-of-Bag Predictions</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/multilabel.html">Multilabel Classification</a>
     </li>
     <li>
@@ -203,27 +210,30 @@
       <a href="../../articles/tutorial/filter_methods.html">Integrated Filter Methods</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/mlr-outreach">Talks, Videos and Workshops</a>
+      <a href="https://github.com/mlr-org/mlr-outreach" class="external-link">Talks, Videos and Workshops</a>
     </li>
     <li class="divider">
-    <li>
-      <a href="https://mlrmbo.mlr-org.com">mlrMBO</a>
+    </li>
+<li>
+      <a href="https://mlrmbo.mlr-org.com" class="external-link">mlrMBO</a>
     </li>
     <li>
-      <a href="https://https://mlrcpo.mlr-org.com">mlrCPO</a>
+      <a href="https://https://mlrcpo.mlr-org.com" class="external-link">mlrCPO</a>
     </li>
     <li>
-      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html" class="external-link">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/">OpenML</a>
+      <a href="http://openml.github.io/openml-r/" class="external-link">OpenML</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../news/index.html">Changelog</a>
     </li>
   </ul>
@@ -232,25 +242,25 @@
   <a href="../../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr/">
+  <a href="https://github.com/mlr-org/mlr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link">
     <span class="fa fa-comments"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://stackoverflow.com/questions/tagged/mlr">
+  <a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link">
     <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.com/">
+  <a href="https://mlr-org.com/" class="external-link">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -277,7 +287,7 @@
       <h1 data-toc-skip>Data Preprocessing</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/preproc.Rmd"><code>vignettes/tutorial/preproc.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/HEAD/vignettes/tutorial/preproc.Rmd" class="external-link"><code>vignettes/tutorial/preproc.Rmd</code></a></small>
       <div class="hidden name"><code>preproc.Rmd</code></div>
 
     </div>
@@ -311,9 +321,9 @@
 <li>
 <a href="impute.html" target="_blank">Imputation of missing values</a>.</li>
 </ul>
-<div id="fusing-learners-with-preprocessing" class="section level1">
-<h1 class="hasAnchor">
-<a href="#fusing-learners-with-preprocessing" class="anchor"></a>Fusing learners with preprocessing</h1>
+<div class="section level1">
+<h1 id="fusing-learners-with-preprocessing">Fusing learners with preprocessing<a class="anchor" aria-label="anchor" href="#fusing-learners-with-preprocessing"></a>
+</h1>
 <p><code>mlr</code>’s wrapper functionality permits to combine learners with preprocessing steps. This means that the preprocessing “belongs” to the learner and is done any time the learner is trained or predictions are made.</p>
 <p>This is, on the one hand, very practical. You don’t need to change any data or learning <code><a href="../../reference/Task.html">Task()</a></code>s and it’s quite easy to combine different learners with different preprocessing steps.</p>
 <p>On the other hand this helps to avoid a common mistake in evaluating the performance of a learner with preprocessing: Preprocessing is often seen as completely independent of the later applied learning algorithms. When estimating the performance of a learner, e.g., by cross-validation all preprocessing is done beforehand on the full data set and only training/predicting the learner is done on the train/test sets. Depending on what exactly is done as preprocessing this can lead to overoptimistic results. For example if imputation by the mean is done on the whole data set before evaluating the learner performance you are using information from the test data during training, which can cause overoptimistic performance results.</p>
@@ -322,7 +332,7 @@
 <p>To this end <code>mlr</code> provides two <a href="wrapper.html" target="_blank">wrappers</a>:</p>
 <ul>
 <li>
-<code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> is an interface to all preprocessing options offered by <code>caret</code>’s <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html">caret::preProcess()</a></code> function.</li>
+<code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> is an interface to all preprocessing options offered by <code>caret</code>’s <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code> function.</li>
 <li>
 <code><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper()</a></code> permits to write your own custom preprocessing methods by defining the actions to be taken before training and before prediction.</li>
 </ul>
@@ -334,24 +344,24 @@
 </ul>
 <p>We start with some examples for <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code>.</p>
 </div>
-<div id="preprocessing-with-makepreprocwrappercaret" class="section level1">
-<h1 class="hasAnchor">
-<a href="#preprocessing-with-makepreprocwrappercaret" class="anchor"></a>Preprocessing with makePreprocWrapperCaret</h1>
-<p><code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> is an interface to <code>caret</code>’s <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html">caret::preProcess()</a></code> function that provides many different options like imputation of missing values, data transformations as scaling the features to a certain range or Box-Cox and dimensionality reduction via Independent or Principal Component Analysis. For all possible options see the help page of function <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html">caret::preProcess()</a></code>.</p>
-<p>Note that the usage of <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> is slightly different than that of <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html">caret::preProcess()</a></code>.</p>
+<div class="section level1">
+<h1 id="preprocessing-with-makepreprocwrappercaret">Preprocessing with makePreprocWrapperCaret<a class="anchor" aria-label="anchor" href="#preprocessing-with-makepreprocwrappercaret"></a>
+</h1>
+<p><code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> is an interface to <code>caret</code>’s <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code> function that provides many different options like imputation of missing values, data transformations as scaling the features to a certain range or Box-Cox and dimensionality reduction via Independent or Principal Component Analysis. For all possible options see the help page of function <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code>.</p>
+<p>Note that the usage of <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> is slightly different than that of <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code>.</p>
 <ul>
 <li>
-<code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> takes (almost) the same formal arguments as <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html">caret::preProcess()</a></code>, but their names are prefixed by <code>ppc.</code>.</li>
-<li>The only exception: <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> does not have a <code>method</code> argument. Instead all preprocessing options that would be passed to <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html">caret::preProcess()</a></code>’s <code>method</code> argument are given as individual logical parameters to <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code>.</li>
+<code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> takes (almost) the same formal arguments as <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code>, but their names are prefixed by <code>ppc.</code>.</li>
+<li>The only exception: <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> does not have a <code>method</code> argument. Instead all preprocessing options that would be passed to <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code>’s <code>method</code> argument are given as individual logical parameters to <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code>.</li>
 </ul>
-<p>For example the following call to <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html">caret::preProcess()</a></code></p>
+<p>For example the following call to <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/caret/man/preProcess.html">preProcess</a></span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"knnImpute"</span>, <span class="st">"pca"</span><span class="op">)</span>, pcaComp <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">preProcess</a></span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"knnImpute"</span>, <span class="st">"pca"</span><span class="op">)</span>, pcaComp <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <p>with <code>x</code> being a <code>matrix</code> or <code>data.frame</code> would thus translate into</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span><span class="op">(</span><span class="va">learner</span>, ppc.knnImpute <span class="op">=</span> <span class="cn">TRUE</span>, ppc.pca <span class="op">=</span> <span class="cn">TRUE</span>, ppc.pcaComp <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <p>where <code>learner</code> is a <code>mlr</code> Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) or the name of a learner class like <code>"classif.lda"</code>.</p>
-<p>If you enable multiple preprocessing options (like knn imputation and principal component analysis above) these are executed in a certain order detailed on the help page of function <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html">caret::preProcess()</a></code>.</p>
+<p>If you enable multiple preprocessing options (like knn imputation and principal component analysis above) these are executed in a certain order detailed on the help page of function <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code>.</p>
 <p>In the following we show an example where principal components analysis (PCA) is used for dimensionality reduction. This should never be applied blindly, but can be beneficial with learners that get problems with high dimensionality or those that can profit from rotating the data.</p>
 <p>We consider the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>, which poses a binary classification problem with 208 observations and 60 features.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -371,7 +381,7 @@
 <span class="co">##   M   R </span>
 <span class="co">## 111  97 </span>
 <span class="co">## Positive class: M</span></code></pre></div>
-<p>Below we fuse quadratic discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code>) from package <code>MASS</code> with a principal components preprocessing step. The threshold is set to 0.9, i.e., the principal components necessary to explain a cumulative percentage of 90% of the total variance are kept. The data are automatically standardized prior to PCA.</p>
+<p>Below we fuse quadratic discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code>) from package <code>MASS</code> with a principal components preprocessing step. The threshold is set to 0.9, i.e., the principal components necessary to explain a cumulative percentage of 90% of the total variance are kept. The data are automatically standardized prior to PCA.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, ppc.pca <span class="op">=</span> <span class="cn">TRUE</span>, ppc.thresh <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span>
 <span class="va">lrn</span>
@@ -382,7 +392,7 @@
 <span class="co">## Properties: twoclass,multiclass,numerics,factors,prob</span>
 <span class="co">## Predict-Type: response</span>
 <span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span></code></pre></div>
-<p>The wrapped learner is trained on the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>. By inspecting the underlying <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> model, we see that the first 22 principal components have been used for training.</p>
+<p>The wrapped learner is trained on the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>. By inspecting the underlying <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> model, we see that the first 22 principal components have been used for training.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span><span class="op">)</span>
 <span class="va">mod</span>
@@ -416,19 +426,19 @@
 <span class="co">##          PC19         PC20        PC21         PC22</span>
 <span class="co">## M -0.01192247  0.006098658  0.01263492 -0.001224809</span>
 <span class="co">## R  0.01364323 -0.006978877 -0.01445851  0.001401586</span></code></pre></div>
-<p>Below the performances of <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> with and without PCA preprocessing are compared in a <a href="benchmark_experiments.html" target="_blank">benchmark experiment</a>. Note that we use stratified resampling to prevent errors in <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> due to a too small number of observations from either class.</p>
+<p>Below the performances of <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> with and without PCA preprocessing are compared in a <a href="benchmark_experiments.html" target="_blank">benchmark experiment</a>. Note that we use stratified resampling to prevent errors in <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> due to a too small number of observations from either class.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span>, stratify <span class="op">=</span> <span class="cn">TRUE</span>, task <span class="op">=</span> <span class="va">sonar.task</span><span class="op">)</span>
-<span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, <span class="va">lrn</span><span class="op">)</span>, <span class="va">sonar.task</span>, <span class="va">rin</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, <span class="va">lrn</span><span class="op">)</span>, <span class="va">sonar.task</span>, <span class="va">rin</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">res</span>
 <span class="co">##         task.id          learner.id mmce.test.mean</span>
 <span class="co">## 1 Sonar-example         classif.qda      0.2932367</span>
 <span class="co">## 2 Sonar-example classif.qda.preproc      0.1779848</span></code></pre></div>
 <p>PCA preprocessing in this case turns out to be really beneficial for the performance of Quadratic Discriminant Analysis.</p>
-<div id="joint-tuning-of-preprocessing-options-and-learner-parameters" class="section level2">
-<h2 class="hasAnchor">
-<a href="#joint-tuning-of-preprocessing-options-and-learner-parameters" class="anchor"></a>Joint tuning of preprocessing options and learner parameters</h2>
-<p>Let’s see if we can optimize this a bit. The threshold value of 0.9 above was chosen arbitrarily and led to 22 out of 60 principal components. But maybe a lower or higher number of principal components should be used. Moreover, <code>qda</code> (<code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code>) has several options that control how the class covariance matrices or class probabilities are estimated.</p>
+<div class="section level2">
+<h2 id="joint-tuning-of-preprocessing-options-and-learner-parameters">Joint tuning of preprocessing options and learner parameters<a class="anchor" aria-label="anchor" href="#joint-tuning-of-preprocessing-options-and-learner-parameters"></a>
+</h2>
+<p>Let’s see if we can optimize this a bit. The threshold value of 0.9 above was chosen arbitrarily and led to 22 out of 60 principal components. But maybe a lower or higher number of principal components should be used. Moreover, <code>qda</code> (<code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code>) has several options that control how the class covariance matrices or class probabilities are estimated.</p>
 <p>Those preprocessing and learner parameters can be <a href="tune.html" target="_blank">tuned</a> jointly. Before doing this let’s first get an overview of all the parameters of the wrapped learner using function <code><a href="../../reference/getParamSet.html">getParamSet()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span>
@@ -490,13 +500,13 @@
 <span class="co">## method               -</span>
 <span class="co">## nu                   -</span>
 <span class="co">## predict.method       -</span></code></pre></div>
-<p>The parameters prefixed by <code>ppc.</code> belong to preprocessing. <code>method</code>, <code>nu</code> and <code>predict.method</code> are <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> parameters.</p>
-<p>Instead of tuning the PCA threshold (<code>ppc.thresh</code>) we tune the number of principal components (<code>ppc.pcaComp</code>) directly. Moreover, for <code><a href="https://rdrr.io/pkg/MASS/man/qda.html">MASS::qda()</a></code> we try two different ways to estimate the posterior probabilities (parameter <code>predict.method</code>): the usual plug-in estimates and unbiased estimates.</p>
+<p>The parameters prefixed by <code>ppc.</code> belong to preprocessing. <code>method</code>, <code>nu</code> and <code>predict.method</code> are <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> parameters.</p>
+<p>Instead of tuning the PCA threshold (<code>ppc.thresh</code>) we tune the number of principal components (<code>ppc.pcaComp</code>) directly. Moreover, for <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> we try two different ways to estimate the posterior probabilities (parameter <code>predict.method</code>): the usual plug-in estimates and unbiased estimates.</p>
 <p>We perform a grid search and set the resolution to 10. This is for demonstration. You might want to use a finer resolution.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeIntegerParam</a></span><span class="op">(</span><span class="st">"ppc.pcaComp"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span><span class="op">(</span><span class="va">sonar.task</span><span class="op">)</span><span class="op">)</span>,
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"predict.method"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"plug-in"</span>, <span class="st">"debiased"</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeIntegerParam</a></span><span class="op">(</span><span class="st">"ppc.pcaComp"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span><span class="op">(</span><span class="va">sonar.task</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"predict.method"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plug-in"</span>, <span class="st">"debiased"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span>resolution <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span>, <span class="va">rin</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -505,7 +515,7 @@
 <span class="co">## Op. pars: ppc.pcaComp=21; predict.method=plug-in</span>
 <span class="co">## mmce.test.mean=0.1779848</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
+<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
 <span class="co">##    ppc.pcaComp predict.method mmce.test.mean</span>
 <span class="co">## 1            1        plug-in      0.4518288</span>
 <span class="co">## 2            8        plug-in      0.2449275</span>
@@ -530,16 +540,16 @@
 <p>There seems to be a preference for a lower number of principal components (&lt;27) for both <code>"plug-in"</code> and <code>"debiased"</code> with <code>"plug-in"</code> achieving slightly lower error rates.</p>
 </div>
 </div>
-<div id="writing-a-custom-preprocessing-wrapper" class="section level1">
-<h1 class="hasAnchor">
-<a href="#writing-a-custom-preprocessing-wrapper" class="anchor"></a>Writing a custom preprocessing wrapper</h1>
+<div class="section level1">
+<h1 id="writing-a-custom-preprocessing-wrapper">Writing a custom preprocessing wrapper<a class="anchor" aria-label="anchor" href="#writing-a-custom-preprocessing-wrapper"></a>
+</h1>
 <p>If the options offered by <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> are not enough, you can write your own preprocessing wrapper using function <code><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper()</a></code>.</p>
 <p>As described in the tutorial section about <a href="wrapper.html" target="_blank">wrapped learners</a> wrappers are implemented using a <em>train</em> and a <em>predict</em> method. In case of preprocessing wrappers these methods specify how to transform the data before training and before prediction and are <em>completely user-defined</em>.</p>
-<p>Below we show how to create a preprocessing wrapper that centers and scales the data before training/predicting. Some learning methods as, e.g., k nearest neighbors, support vector machines or neural networks usually require scaled features. Many, but not all, have a built-in scaling option where the training data set is scaled before model fitting and the test data set is scaled accordingly, that is by using the scaling parameters from the training stage, before making predictions. In the following we show how to add a scaling option to a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) by coupling it with function <code><a href="https://rdrr.io/r/base/scale.html">base::scale()</a></code>.</p>
+<p>Below we show how to create a preprocessing wrapper that centers and scales the data before training/predicting. Some learning methods as, e.g., k nearest neighbors, support vector machines or neural networks usually require scaled features. Many, but not all, have a built-in scaling option where the training data set is scaled before model fitting and the test data set is scaled accordingly, that is by using the scaling parameters from the training stage, before making predictions. In the following we show how to add a scaling option to a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) by coupling it with function <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">base::scale()</a></code>.</p>
 <p>Note that we chose this simple example for demonstration. Centering/scaling the data is also possible with <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code>.</p>
-<div id="specifying-the-train-function" class="section level2">
-<h2 class="hasAnchor">
-<a href="#specifying-the-train-function" class="anchor"></a>Specifying the train function</h2>
+<div class="section level2">
+<h2 id="specifying-the-train-function">Specifying the train function<a class="anchor" aria-label="anchor" href="#specifying-the-train-function"></a>
+</h2>
 <p>The <em>train</em> function has to be a function with the following arguments:</p>
 <ul>
 <li>
@@ -550,33 +560,33 @@
 <code>args</code> is a <code>list</code> of further arguments and parameters that influence the preprocessing.</li>
 </ul>
 <p>It must return a <code>list</code> with elements <code>$data</code> and <code>$control</code>, where <code>$data</code> is the preprocessed data set and <code>$control</code> stores all information required to preprocess the data before prediction.</p>
-<p>The <em>train</em> function for the scaling example is given below. It calls <code><a href="https://rdrr.io/r/base/scale.html">base::scale()</a></code> on the numerical features and returns the scaled training data and the corresponding scaling parameters.</p>
-<p><code>args</code> contains the <code>center</code> and <code>scale</code> arguments of function <code><a href="https://rdrr.io/r/base/scale.html">base::scale()</a></code> and slot <code>$control</code> stores the scaling parameters to be used in the prediction stage.</p>
-<p>Regarding the latter note that the <code>center</code> and <code>scale</code> arguments of <code><a href="https://rdrr.io/r/base/scale.html">base::scale()</a></code> can be either a logical value or a numeric vector of length equal to the number of the numeric columns in <code>data</code>, respectively. If a logical value was passed to <code>args</code> we store the column means and standard deviations/root mean squares in the <code>$center</code> and <code>$scale</code> slots of the returned <code>$control</code> object.</p>
+<p>The <em>train</em> function for the scaling example is given below. It calls <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">base::scale()</a></code> on the numerical features and returns the scaled training data and the corresponding scaling parameters.</p>
+<p><code>args</code> contains the <code>center</code> and <code>scale</code> arguments of function <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">base::scale()</a></code> and slot <code>$control</code> stores the scaling parameters to be used in the prediction stage.</p>
+<p>Regarding the latter note that the <code>center</code> and <code>scale</code> arguments of <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">base::scale()</a></code> can be either a logical value or a numeric vector of length equal to the number of the numeric columns in <code>data</code>, respectively. If a logical value was passed to <code>args</code> we store the column means and standard deviations/root mean squares in the <code>$center</code> and <code>$scale</code> slots of the returned <code>$control</code> object.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">trainfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">center</span>, <span class="va">scale</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+<code class="sourceCode R"><span class="va">trainfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">center</span>, <span class="va">scale</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="co"># Identify numerical features</span>
-  <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-  <span class="va">nums</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span><span class="op">(</span><span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span>, <span class="va">target</span><span class="op">)</span>
+  <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
+  <span class="va">nums</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span>, <span class="va">target</span><span class="op">)</span>
   <span class="co"># Extract numerical features from the data set and call scale</span>
-  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
-  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
+  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
+  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
   <span class="co"># Store the scaling parameters in control</span>
   <span class="co"># These are needed to preprocess the data before prediction</span>
   <span class="va">control</span> <span class="op">=</span> <span class="va">args</span>
-  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span>
-    <span class="va">control</span><span class="op">$</span><span class="va">center</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:center"</span><span class="op">)</span>
-  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
-    <span class="va">control</span><span class="op">$</span><span class="va">scale</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:scale"</span><span class="op">)</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span>
+    <span class="va">control</span><span class="op">$</span><span class="va">center</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:center"</span><span class="op">)</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
+    <span class="va">control</span><span class="op">$</span><span class="va">scale</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:scale"</span><span class="op">)</span>
   <span class="co"># Recombine the data</span>
-  <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
-  <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span>, control <span class="op">=</span> <span class="va">control</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
+  <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span>, control <span class="op">=</span> <span class="va">control</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="specifying-the-predict-function" class="section level2">
-<h2 class="hasAnchor">
-<a href="#specifying-the-predict-function" class="anchor"></a>Specifying the predict function</h2>
+<div class="section level2">
+<h2 id="specifying-the-predict-function">Specifying the predict function<a class="anchor" aria-label="anchor" href="#specifying-the-predict-function"></a>
+</h2>
 <p>The <em>predict</em> function has the following arguments:</p>
 <ul>
 <li>
@@ -593,26 +603,26 @@
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predictfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span>, <span class="va">control</span><span class="op">)</span> <span class="op">{</span>
   <span class="co"># Identify numerical features</span>
-  <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-  <span class="va">nums</span> <span class="op">=</span> <span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span>
+  <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
+  <span class="va">nums</span> <span class="op">=</span> <span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span>
   <span class="co"># Extract numerical features from the data set and call scale</span>
-  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
-  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
+  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
+  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
   <span class="co"># Recombine the data</span>
-  <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
-  <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
+  <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
+  <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="creating-the-preprocessing-wrapper" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-the-preprocessing-wrapper" class="anchor"></a>Creating the preprocessing wrapper</h2>
-<p>Below we create a preprocessing wrapper with a regression neural network (<code><a href="https://rdrr.io/pkg/nnet/man/nnet.html">nnet::nnet()</a></code>) (which itself does not have a scaling option) as base learner.</p>
+<div class="section level2">
+<h2 id="creating-the-preprocessing-wrapper">Creating the preprocessing wrapper<a class="anchor" aria-label="anchor" href="#creating-the-preprocessing-wrapper"></a>
+</h2>
+<p>Below we create a preprocessing wrapper with a regression neural network (<code><a href="https://rdrr.io/pkg/nnet/man/nnet.html" class="external-link">nnet::nnet()</a></code>) (which itself does not have a scaling option) as base learner.</p>
 <p>The <em>train</em> and <em>predict</em> functions defined above are passed to <code><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper()</a></code> via the <code>train</code> and <code>predict</code> arguments. <code>par.vals</code> is a <code>list</code> of parameter values that is relayed to the <code>args</code> argument of the <em>train</em> function.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.nnet"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span>, decay <span class="op">=</span> <span class="fl">1e-02</span><span class="op">)</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, train <span class="op">=</span> <span class="va">trainfun</span>, predict <span class="op">=</span> <span class="va">predictfun</span>,
-  par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+  par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 <span class="va">lrn</span>
 <span class="co">## Learner regr.nnet.preproc from package nnet</span>
 <span class="co">## Type: regr</span>
@@ -621,7 +631,7 @@
 <span class="co">## Properties: numerics,factors,weights</span>
 <span class="co">## Predict-Type: response</span>
 <span class="co">## Hyperparameters: size=3,trace=FALSE,decay=0.01</span></code></pre></div>
-<p>Let’s compare the cross-validated mean squared error (<a href="measures.html" target="_blank">mse</a>) on the Boston Housing data set (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) with and without scaling.</p>
+<p>Let’s compare the cross-validated mean squared error (<a href="measures.html" target="_blank">mse</a>) on the Boston Housing data set (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html" class="external-link">mlbench::BostonHousing()</a></code>) with and without scaling.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 
@@ -644,20 +654,20 @@
 <span class="co">## Aggr perf: mse.test.mean=56.8645496</span>
 <span class="co">## Runtime: 0.0463462</span></code></pre></div>
 </div>
-<div id="joint-tuning-of-preprocessing-and-learner-parameters" class="section level2">
-<h2 class="hasAnchor">
-<a href="#joint-tuning-of-preprocessing-and-learner-parameters" class="anchor"></a>Joint tuning of preprocessing and learner parameters</h2>
+<div class="section level2">
+<h2 id="joint-tuning-of-preprocessing-and-learner-parameters">Joint tuning of preprocessing and learner parameters<a class="anchor" aria-label="anchor" href="#joint-tuning-of-preprocessing-and-learner-parameters"></a>
+</h2>
 <p>Often it’s not clear which preprocessing options work best with a certain learning algorithm. As already shown for the number of principal components in <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> we can <a href="tune.html" target="_blank">tune</a> them easily together with other hyperparameters of the learner.</p>
-<p>In our scaling example we can try if <code><a href="https://rdrr.io/pkg/nnet/man/nnet.html">nnet::nnet()</a></code> works best with both centering and scaling the data or if it’s better to omit one of the two operations or do no preprocessing at all. In order to tune <code>center</code> and <code>scale</code> we have to add appropriate <code>LearnerParam</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html">ParamHelpers::LearnerParam()</a></code>)s to the parameter set (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">ParamHelpers::ParamSet()</a></code>) of the wrapped learner.</p>
-<p>As mentioned above <code><a href="https://rdrr.io/r/base/scale.html">base::scale()</a></code> allows for numeric and logical <code>center</code> and <code>scale</code> arguments. As we want to use the latter option we declare <code>center</code> and <code>scale</code> as logical learner parameters.</p>
+<p>In our scaling example we can try if <code><a href="https://rdrr.io/pkg/nnet/man/nnet.html" class="external-link">nnet::nnet()</a></code> works best with both centering and scaling the data or if it’s better to omit one of the two operations or do no preprocessing at all. In order to tune <code>center</code> and <code>scale</code> we have to add appropriate <code>LearnerParam</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">ParamHelpers::LearnerParam()</a></code>)s to the parameter set (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::ParamSet()</a></code>) of the wrapped learner.</p>
+<p>As mentioned above <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">base::scale()</a></code> allows for numeric and logical <code>center</code> and <code>scale</code> arguments. As we want to use the latter option we declare <code>center</code> and <code>scale</code> as logical learner parameters.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.nnet"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, train <span class="op">=</span> <span class="va">trainfun</span>, predict <span class="op">=</span> <span class="va">predictfun</span>,
-  par.set <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
-    <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
+  par.set <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
+    <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
   <span class="op">)</span>,
-  par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+  par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">lrn</span>
 <span class="co">## Learner regr.nnet.preproc from package nnet</span>
@@ -682,13 +692,13 @@
 <span class="co">## MaxNWts integer   -   1000    1 to Inf   -   FALSE     -</span>
 <span class="co">## abstol  numeric   - 0.0001 -Inf to Inf   -    TRUE     -</span>
 <span class="co">## reltol  numeric   -  1e-08 -Inf to Inf   -    TRUE     -</span></code></pre></div>
-<p>Now we do a simple grid search for the <code>decay</code> parameter of <code><a href="https://rdrr.io/pkg/nnet/man/nnet.html">nnet::nnet()</a></code> and the <code>center</code> and <code>scale</code> parameters.</p>
+<p>Now we do a simple grid search for the <code>decay</code> parameter of <code><a href="https://rdrr.io/pkg/nnet/man/nnet.html" class="external-link">nnet::nnet()</a></code> and the <code>center</code> and <code>scale</code> parameters.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
-<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"decay"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>,
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeLogicalParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html">makeLogicalParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
+<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"decay"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>,
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeLogicalParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
+  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeLogicalParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">bh.task</span>, <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -698,8 +708,8 @@
 <span class="co">## Op. pars: decay=0; center=FALSE; scale=TRUE</span>
 <span class="co">## mse.test.mean=15.3770780</span>
 
-<span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span>
-<span class="va">df</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">]</span>
+<span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span>
+<span class="va">df</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">]</span>
 <span class="co">##    decay center scale mse.test.mean dob eol error.message</span>
 <span class="co">## 1      0   TRUE  TRUE      23.87357   1  NA          &lt;NA&gt;</span>
 <span class="co">## 2   0.05   TRUE  TRUE      20.76474   2  NA          &lt;NA&gt;</span>
@@ -714,44 +724,44 @@
 <span class="co">## 11  0.05  FALSE FALSE      38.53006  11  NA          &lt;NA&gt;</span>
 <span class="co">## 12   0.1  FALSE FALSE      32.56318  12  NA          &lt;NA&gt;</span></code></pre></div>
 </div>
-<div id="preprocessing-wrapper-functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#preprocessing-wrapper-functions" class="anchor"></a>Preprocessing wrapper functions</h2>
-<p>If you have written a preprocessing wrapper that you might want to use from time to time it’s a good idea to encapsulate it in an own function as shown below. If you think your preprocessing method is something others might want to use as well and should be integrated into <code>mlr</code> just <a href="https://github.com/mlr-org/mlr/issues">contact us</a>.</p>
+<div class="section level2">
+<h2 id="preprocessing-wrapper-functions">Preprocessing wrapper functions<a class="anchor" aria-label="anchor" href="#preprocessing-wrapper-functions"></a>
+</h2>
+<p>If you have written a preprocessing wrapper that you might want to use from time to time it’s a good idea to encapsulate it in an own function as shown below. If you think your preprocessing method is something others might want to use as well and should be integrated into <code>mlr</code> just <a href="https://github.com/mlr-org/mlr/issues" class="external-link">contact us</a>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">makePreprocWrapperScale</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">learner</span>, <span class="va">center</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">scale</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">trainfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">center</span>, <span class="va">scale</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-    <span class="va">nums</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span><span class="op">(</span><span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span>, <span class="va">target</span><span class="op">)</span>
-    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
-    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
+  <span class="va">trainfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">center</span>, <span class="va">scale</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
+    <span class="va">nums</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span>, <span class="va">target</span><span class="op">)</span>
+    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
+    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
     <span class="va">control</span> <span class="op">=</span> <span class="va">args</span>
-    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span>
-      <span class="va">control</span><span class="op">$</span><span class="va">center</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:center"</span><span class="op">)</span>
-    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
-      <span class="va">control</span><span class="op">$</span><span class="va">scale</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:scale"</span><span class="op">)</span>
-    <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
-    <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span>, control <span class="op">=</span> <span class="va">control</span><span class="op">)</span><span class="op">)</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span>
+      <span class="va">control</span><span class="op">$</span><span class="va">center</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:center"</span><span class="op">)</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
+      <span class="va">control</span><span class="op">$</span><span class="va">scale</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:scale"</span><span class="op">)</span>
+    <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
+    <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span>, control <span class="op">=</span> <span class="va">control</span><span class="op">)</span><span class="op">)</span>
   <span class="op">}</span>
   <span class="va">predictfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span>, <span class="va">control</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-    <span class="va">nums</span> <span class="op">=</span> <span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span>
-    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
-    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
-    <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
-    <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
+    <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
+    <span class="va">nums</span> <span class="op">=</span> <span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span>
+    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
+    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
+    <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
+    <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
   <span class="op">}</span>
   <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span><span class="op">(</span>
     <span class="va">learner</span>,
     train <span class="op">=</span> <span class="va">trainfun</span>,
     predict <span class="op">=</span> <span class="va">predictfun</span>,
-    par.set <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html">makeParamSet</a></span><span class="op">(</span>
-      <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
-      <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
+    par.set <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
+      <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
     <span class="op">)</span>,
-    par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="va">center</span>, scale <span class="op">=</span> <span class="va">scale</span><span class="op">)</span>
+    par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="va">center</span>, scale <span class="op">=</span> <span class="va">scale</span><span class="op">)</span>
   <span class="op">)</span>
 <span class="op">}</span>
 
@@ -775,11 +785,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
+  <p></p>
+<p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>

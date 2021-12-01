@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,7 +45,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
@@ -69,7 +71,8 @@
       <a href="../../articles/tutorial/predict.html">Predict</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/preproc.html">Preprocessing</a>
     </li>
     <li>
@@ -82,7 +85,8 @@
       <a href="../../articles/tutorial/benchmark_experiments.html">Benchmarking</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/parallelization.html">Parallelization</a>
     </li>
     <li>
@@ -92,7 +96,8 @@
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/usecase_regression.html">Use case - Regression</a>
     </li>
   </ul>
@@ -111,7 +116,8 @@
       <a href="../../articles/tutorial/wrapper.html">Wrapped Learners</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/impute.html">Imputation</a>
     </li>
     <li>
@@ -148,7 +154,8 @@
       <a href="../../articles/tutorial/out_of_bag_predictions.html">Out-of-Bag Predictions</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/multilabel.html">Multilabel Classification</a>
     </li>
     <li>
@@ -203,27 +210,30 @@
       <a href="../../articles/tutorial/filter_methods.html">Integrated Filter Methods</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/mlr-outreach">Talks, Videos and Workshops</a>
+      <a href="https://github.com/mlr-org/mlr-outreach" class="external-link">Talks, Videos and Workshops</a>
     </li>
     <li class="divider">
-    <li>
-      <a href="https://mlrmbo.mlr-org.com">mlrMBO</a>
+    </li>
+<li>
+      <a href="https://mlrmbo.mlr-org.com" class="external-link">mlrMBO</a>
     </li>
     <li>
-      <a href="https://https://mlrcpo.mlr-org.com">mlrCPO</a>
+      <a href="https://https://mlrcpo.mlr-org.com" class="external-link">mlrCPO</a>
     </li>
     <li>
-      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html" class="external-link">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/">OpenML</a>
+      <a href="http://openml.github.io/openml-r/" class="external-link">OpenML</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../news/index.html">Changelog</a>
     </li>
   </ul>
@@ -232,25 +242,25 @@
   <a href="../../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr/">
+  <a href="https://github.com/mlr-org/mlr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link">
     <span class="fa fa-comments"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://stackoverflow.com/questions/tagged/mlr">
+  <a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link">
     <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.com/">
+  <a href="https://mlr-org.com/" class="external-link">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -277,7 +287,7 @@
       <h1 data-toc-skip>Training a Learner</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/train.Rmd"><code>vignettes/tutorial/train.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/HEAD/vignettes/tutorial/train.Rmd" class="external-link"><code>vignettes/tutorial/train.Rmd</code></a></small>
       <div class="hidden name"><code>train.Rmd</code></div>
 
     </div>
@@ -285,10 +295,10 @@
     
     
 <p>Training a learner means fitting a model to a given data set. In <code>mlr</code> this can be done by calling function <code><a href="../../reference/train.html">train()</a></code> on a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) and a suitable <code><a href="../../reference/Task.html">Task()</a></code>.</p>
-<p>We start with a classification example and perform a linear discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/lda.html">MASS::lda()</a></code>) on the iris (<code><a href="https://rdrr.io/r/datasets/iris.html">datasets::iris()</a></code>) data set.</p>
+<p>We start with a classification example and perform a linear discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">MASS::lda()</a></code>) on the iris (<code><a href="https://rdrr.io/r/datasets/iris.html" class="external-link">datasets::iris()</a></code>) data set.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Generate the task</span>
-<span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, target <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span>
+<span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, target <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span>
 
 <span class="co"># Generate the learner</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.lda"</span><span class="op">)</span>
@@ -306,26 +316,26 @@
 <span class="co">## Model for learner.id=classif.lda; learner.class=classif.lda</span>
 <span class="co">## Trained on: task.id = iris; obs = 150; features = 4</span>
 <span class="co">## Hyperparameters:</span></code></pre></div>
-<p>Training a learner works the same way for every type of learning problem. Below is a survival analysis example where a Cox proportional hazards model (<code><a href="https://rdrr.io/pkg/survival/man/coxph.html">survival::coxph()</a></code>) is fitted to the <code><a href="https://rdrr.io/pkg/survival/man/lung.html">survival::lung()</a></code> data set. Note that we use the corresponding <code><a href="../../reference/lung.task.html">lung.task()</a></code> provided by <code>mlr</code>. All available <code><a href="../../reference/Task.html">Task()</a></code>s are listed in the <a href="example_tasks.html" target="_blank">Appendix</a>.</p>
+<p>Training a learner works the same way for every type of learning problem. Below is a survival analysis example where a Cox proportional hazards model (<code><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">survival::coxph()</a></code>) is fitted to the <code><a href="https://rdrr.io/pkg/survival/man/lung.html" class="external-link">survival::lung()</a></code> data set. Note that we use the corresponding <code><a href="../../reference/lung.task.html">lung.task()</a></code> provided by <code>mlr</code>. All available <code><a href="../../reference/Task.html">Task()</a></code>s are listed in the <a href="example_tasks.html" target="_blank">Appendix</a>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"surv.coxph"</span>, <span class="va">lung.task</span><span class="op">)</span>
 <span class="va">mod</span>
 <span class="co">## Model for learner.id=surv.coxph; learner.class=surv.coxph</span>
 <span class="co">## Trained on: task.id = lung-example; obs = 167; features = 8</span>
 <span class="co">## Hyperparameters:</span></code></pre></div>
-<div id="accessing-learner-models" class="section level1">
-<h1 class="hasAnchor">
-<a href="#accessing-learner-models" class="anchor"></a>Accessing learner models</h1>
+<div class="section level1">
+<h1 id="accessing-learner-models">Accessing learner models<a class="anchor" aria-label="anchor" href="#accessing-learner-models"></a>
+</h1>
 <p>Function <code><a href="../../reference/train.html">train()</a></code> returns an object of class <code>WrappedModel</code> (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>), which encapsulates the fitted model, i.e., the output of the underlying <strong>R</strong> learning method. Additionally, it contains some information about the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>), the <code><a href="../../reference/Task.html">Task()</a></code>, the features and observations used for training, and the training time. A <code>WrappedModel</code> (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) can subsequently be used to make a prediction (<code><a href="../../reference/predict.WrappedModel.html">predict.WrappedModel()</a></code>) for new observations.</p>
 <p>The fitted model in slot <code>$learner.model</code> of the <code>WrappedModel</code> (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) object can be accessed using function <code>getLearnerModel</code>.</p>
-<p>In the following example we cluster the <code>Ruspini</code> (<code><a href="https://rdrr.io/pkg/cluster/man/ruspini.html">cluster::ruspini()</a></code>) data set (which has four groups and two features) by <span class="math inline">\(K\)</span>-means with <span class="math inline">\(K = 4\)</span> and extract the output of the underlying <code><a href="https://rdrr.io/r/stats/kmeans.html">stats::kmeans()</a></code> function.</p>
+<p>In the following example we cluster the <code>Ruspini</code> (<code><a href="https://rdrr.io/pkg/cluster/man/ruspini.html" class="external-link">cluster::ruspini()</a></code>) data set (which has four groups and two features) by <span class="math inline">\(K\)</span>-means with <span class="math inline">\(K = 4\)</span> and extract the output of the underlying <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code> function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ruspini</span>, package <span class="op">=</span> <span class="st">"cluster"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mboost/man/plot.html">plot</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, <span class="va">ruspini</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ruspini</span>, package <span class="op">=</span> <span class="st">"cluster"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/mboost/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, <span class="va">ruspini</span><span class="op">)</span></code></pre></div>
 <p><img src="train_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Generate the task</span>
-<span class="va">ruspini.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeClusterTask.html">makeClusterTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">ruspini</span><span class="op">)</span>
+<span class="va">ruspini.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClusterTask.html">makeClusterTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">ruspini</span><span class="op">)</span>
 
 <span class="co"># Generate the learner</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"cluster.kmeans"</span>, centers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
@@ -338,7 +348,7 @@
 <span class="co">## Hyperparameters: centers=4</span>
 
 <span class="co"># Peak into mod</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
 <span class="co">## [1] "learner"       "learner.model" "task.desc"     "subset"       </span>
 <span class="co">## [5] "features"      "factor.levels" "time"          "dump"</span>
 
@@ -382,17 +392,17 @@
 <span class="co">## [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"</span>
 <span class="co">## [6] "betweenss"    "size"         "iter"         "ifault"</span></code></pre></div>
 </div>
-<div id="further-options-and-comments" class="section level1">
-<h1 class="hasAnchor">
-<a href="#further-options-and-comments" class="anchor"></a>Further options and comments</h1>
+<div class="section level1">
+<h1 id="further-options-and-comments">Further options and comments<a class="anchor" aria-label="anchor" href="#further-options-and-comments"></a>
+</h1>
 <p>By default, the whole data set in the <code><a href="../../reference/Task.html">Task()</a></code> is used for training. The <code>subset</code> argument of <code><a href="../../reference/train.html">train()</a></code> takes a logical or integer vector that indicates which observations to use, for example if you want to split your data into a training and a test set or if you want to fit separate models to different subgroups in the data.</p>
-<p>Below we fit a linear regression model (<code><a href="https://rdrr.io/r/stats/lm.html">stats::lm()</a></code>) to the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html">mlbench::BostonHousing()</a></code>) data set (<code><a href="../../reference/bh.task.html">bh.task()</a></code>) and randomly select 1/3 of the data set for training.</p>
+<p>Below we fit a linear regression model (<code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code>) to the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html" class="external-link">mlbench::BostonHousing()</a></code>) data set (<code><a href="../../reference/bh.task.html">bh.task()</a></code>) and randomly select 1/3 of the data set for training.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get the number of observations</span>
 <span class="va">n</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span><span class="op">(</span><span class="va">bh.task</span><span class="op">)</span>
 
 <span class="co"># Use 1/3 of the observations for training</span>
-<span class="va">train.set</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">n</span>, size <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>
+<span class="va">train.set</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">n</span>, size <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>
 
 <span class="co"># Train the learner</span>
 <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"regr.lm"</span>, <span class="va">bh.task</span>, subset <span class="op">=</span> <span class="va">train.set</span><span class="op">)</span>
@@ -402,11 +412,11 @@
 <span class="co">## Hyperparameters:</span></code></pre></div>
 <p>Note, for later, that all standard <a href="resample.html" target="_blank">resampling strategies</a> are supported. Therefore you usually do not have to subset the data yourself.</p>
 <p>Moreover, if the learner supports this, you can specify observation <code>weights</code> that reflect the relevance of observations in the training process. Weights can be useful in many regards, for example to express the reliability of the training observations, reduce the influence of outliers or, if the data were collected over a longer time period, increase the influence of recent data. In supervised classification weights can be used to incorporate misclassification costs or account for class imbalance.</p>
-<p>For example in the <code><a href="https://rdrr.io/pkg/mlbench/man/BreastCancer.html">mlbench::BreastCancer()</a></code> data set class <code>benign</code> is almost twice as frequent as class <code>malignant</code>. In order to grant both classes equal importance in training the classifier we can weight the examples according to the inverse class frequencies in the data set as shown in the following <strong>R</strong> code.</p>
+<p>For example in the <code><a href="https://rdrr.io/pkg/mlbench/man/BreastCancer.html" class="external-link">mlbench::BreastCancer()</a></code> data set class <code>benign</code> is almost twice as frequent as class <code>malignant</code>. In order to grant both classes equal importance in training the classifier we can weight the examples according to the inverse class frequencies in the data set as shown in the following <strong>R</strong> code.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Calculate the observation weights</span>
 <span class="va">target</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">bc.task</span><span class="op">)</span>
-<span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">target</span><span class="op">)</span><span class="op">)</span>
+<span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">target</span><span class="op">)</span><span class="op">)</span>
 <span class="va">w</span> <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="va">tab</span><span class="op">[</span><span class="va">target</span><span class="op">]</span>
 
 <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, task <span class="op">=</span> <span class="va">bc.task</span>, weights <span class="op">=</span> <span class="va">w</span><span class="op">)</span>
@@ -430,11 +440,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
+  <p></p>
+<p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>

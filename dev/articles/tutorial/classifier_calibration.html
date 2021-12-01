@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,7 +45,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
@@ -69,7 +71,8 @@
       <a href="../../articles/tutorial/predict.html">Predict</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/preproc.html">Preprocessing</a>
     </li>
     <li>
@@ -82,7 +85,8 @@
       <a href="../../articles/tutorial/benchmark_experiments.html">Benchmarking</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/parallelization.html">Parallelization</a>
     </li>
     <li>
@@ -92,7 +96,8 @@
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/usecase_regression.html">Use case - Regression</a>
     </li>
   </ul>
@@ -111,7 +116,8 @@
       <a href="../../articles/tutorial/wrapper.html">Wrapped Learners</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/impute.html">Imputation</a>
     </li>
     <li>
@@ -148,7 +154,8 @@
       <a href="../../articles/tutorial/out_of_bag_predictions.html">Out-of-Bag Predictions</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/multilabel.html">Multilabel Classification</a>
     </li>
     <li>
@@ -203,27 +210,30 @@
       <a href="../../articles/tutorial/filter_methods.html">Integrated Filter Methods</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/mlr-outreach">Talks, Videos and Workshops</a>
+      <a href="https://github.com/mlr-org/mlr-outreach" class="external-link">Talks, Videos and Workshops</a>
     </li>
     <li class="divider">
-    <li>
-      <a href="https://mlrmbo.mlr-org.com">mlrMBO</a>
+    </li>
+<li>
+      <a href="https://mlrmbo.mlr-org.com" class="external-link">mlrMBO</a>
     </li>
     <li>
-      <a href="https://https://mlrcpo.mlr-org.com">mlrCPO</a>
+      <a href="https://https://mlrcpo.mlr-org.com" class="external-link">mlrCPO</a>
     </li>
     <li>
-      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html" class="external-link">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/">OpenML</a>
+      <a href="http://openml.github.io/openml-r/" class="external-link">OpenML</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../news/index.html">Changelog</a>
     </li>
   </ul>
@@ -232,25 +242,25 @@
   <a href="../../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr/">
+  <a href="https://github.com/mlr-org/mlr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link">
     <span class="fa fa-comments"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://stackoverflow.com/questions/tagged/mlr">
+  <a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link">
     <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.com/">
+  <a href="https://mlr-org.com/" class="external-link">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -277,7 +287,7 @@
       <h1 data-toc-skip>Classifier Calibration</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/classifier_calibration.Rmd"><code>vignettes/tutorial/classifier_calibration.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/HEAD/vignettes/tutorial/classifier_calibration.Rmd" class="external-link"><code>vignettes/tutorial/classifier_calibration.Rmd</code></a></small>
       <div class="hidden name"><code>classifier_calibration.Rmd</code></div>
 
     </div>
@@ -289,7 +299,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
 <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">sonar.task</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">sonar.task</span><span class="op">)</span>
+<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">sonar.task</span><span class="op">)</span>
 <span class="va">cal</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>
 <span class="va">cal</span><span class="op">$</span><span class="va">proportion</span>
 <span class="co">##      Learner       bin Class Proportion</span>
@@ -301,7 +311,7 @@
 <span class="co">## 6 prediction (0.4,0.5]     M  0.4615385</span>
 <span class="co">## 7 prediction (0.8,0.9]     M  0.0000000</span>
 <span class="co">## 8 prediction (0.5,0.6]     M  0.0000000</span></code></pre></div>
-<p>The manner in which the predicted probabilities are discretized is controlled by two arguments: <code>breaks</code> and <code>groups</code>. By default <code>breaks = "Sturges"</code> which uses the Sturges algorithm in <code><a href="https://rdrr.io/r/graphics/hist.html">graphics::hist()</a></code>. This argument can specify other algorithms available in <code><a href="https://rdrr.io/r/graphics/hist.html">graphics::hist()</a></code>, it can be a numeric vector specifying breakpoints for <code><a href="https://rdrr.io/r/base/cut.html">base::cut()</a></code>, or a single integer specifying the number of bins to create (which are evenly spaced). Alternatively, <code>groups</code> can be set to a positive integer value (by default <code>groups = NULL</code>) in which case <code><a href="https://rdrr.io/pkg/Hmisc/man/cut2.html">Hmisc::cut2()</a></code> is used to create bins with an approximately equal number of observations in each bin.</p>
+<p>The manner in which the predicted probabilities are discretized is controlled by two arguments: <code>breaks</code> and <code>groups</code>. By default <code>breaks = "Sturges"</code> which uses the Sturges algorithm in <code><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">graphics::hist()</a></code>. This argument can specify other algorithms available in <code><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">graphics::hist()</a></code>, it can be a numeric vector specifying breakpoints for <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">base::cut()</a></code>, or a single integer specifying the number of bins to create (which are evenly spaced). Alternatively, <code>groups</code> can be set to a positive integer value (by default <code>groups = NULL</code>) in which case <code><a href="https://rdrr.io/pkg/Hmisc/man/cut2.html" class="external-link">Hmisc::cut2()</a></code> is used to create bins with an approximately equal number of observations in each bin.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cal</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span><span class="op">(</span><span class="va">pred</span>, groups <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">cal</span><span class="op">$</span><span class="va">proportion</span>
@@ -322,14 +332,14 @@
 <p><img src="classifier_calibration_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>All of the above functionality works with multi-class classification as well.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
   <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.randomForest"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>,
   <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.nnet"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">lrns</span>, <span class="va">train</span>, task <span class="op">=</span> <span class="va">iris.task</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">predict</span>, task <span class="op">=</span> <span class="va">iris.task</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"randomForest"</span>, <span class="st">"nnet"</span><span class="op">)</span>
-<span class="va">cal</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span><span class="op">(</span><span class="va">pred</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">.3</span>, <span class="fl">.6</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">lrns</span>, <span class="va">train</span>, task <span class="op">=</span> <span class="va">iris.task</span><span class="op">)</span>
+<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">predict</span>, task <span class="op">=</span> <span class="va">iris.task</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"randomForest"</span>, <span class="st">"nnet"</span><span class="op">)</span>
+<span class="va">cal</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span><span class="op">(</span><span class="va">pred</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">.3</span>, <span class="fl">.6</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/plotCalibration.html">plotCalibration</a></span><span class="op">(</span><span class="va">cal</span><span class="op">)</span></code></pre></div>
 <p><img src="classifier_calibration_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
   </div>
@@ -343,11 +353,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
+  <p></p>
+<p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>

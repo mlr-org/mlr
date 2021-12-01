@@ -31,6 +31,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,7 +45,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
@@ -69,7 +71,8 @@
       <a href="../../articles/tutorial/predict.html">Predict</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/preproc.html">Preprocessing</a>
     </li>
     <li>
@@ -82,7 +85,8 @@
       <a href="../../articles/tutorial/benchmark_experiments.html">Benchmarking</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/parallelization.html">Parallelization</a>
     </li>
     <li>
@@ -92,7 +96,8 @@
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/usecase_regression.html">Use case - Regression</a>
     </li>
   </ul>
@@ -111,7 +116,8 @@
       <a href="../../articles/tutorial/wrapper.html">Wrapped Learners</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/impute.html">Imputation</a>
     </li>
     <li>
@@ -148,7 +154,8 @@
       <a href="../../articles/tutorial/out_of_bag_predictions.html">Out-of-Bag Predictions</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/multilabel.html">Multilabel Classification</a>
     </li>
     <li>
@@ -203,27 +210,30 @@
       <a href="../../articles/tutorial/filter_methods.html">Integrated Filter Methods</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../articles/tutorial/mlr_publications.html">mlr Publications</a>
     </li>
     <li>
-      <a href="https://github.com/mlr-org/mlr-outreach">Talks, Videos and Workshops</a>
+      <a href="https://github.com/mlr-org/mlr-outreach" class="external-link">Talks, Videos and Workshops</a>
     </li>
     <li class="divider">
-    <li>
-      <a href="https://mlrmbo.mlr-org.com">mlrMBO</a>
+    </li>
+<li>
+      <a href="https://mlrmbo.mlr-org.com" class="external-link">mlrMBO</a>
     </li>
     <li>
-      <a href="https://https://mlrcpo.mlr-org.com">mlrCPO</a>
+      <a href="https://https://mlrcpo.mlr-org.com" class="external-link">mlrCPO</a>
     </li>
     <li>
-      <a href="https://jakob-r.de/mlrHyperopt/index.html">mlrHyperopt</a>
+      <a href="https://jakob-r.de/mlrHyperopt/index.html" class="external-link">mlrHyperopt</a>
     </li>
     <li>
-      <a href="http://openml.github.io/openml-r/">OpenML</a>
+      <a href="http://openml.github.io/openml-r/" class="external-link">OpenML</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../../news/index.html">Changelog</a>
     </li>
   </ul>
@@ -232,25 +242,25 @@
   <a href="../../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr/">
+  <a href="https://github.com/mlr-org/mlr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link">
     <span class="fa fa-comments"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://stackoverflow.com/questions/tagged/mlr">
+  <a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link">
     <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.com/">
+  <a href="https://mlr-org.com/" class="external-link">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -277,7 +287,7 @@
       <h1 data-toc-skip>Integrating Another Filter Method</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/create_filter.Rmd"><code>vignettes/tutorial/create_filter.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr/blob/HEAD/vignettes/tutorial/create_filter.Rmd" class="external-link"><code>vignettes/tutorial/create_filter.Rmd</code></a></small>
       <div class="hidden name"><code>create_filter.Rmd</code></div>
 
     </div>
@@ -285,19 +295,19 @@
     
     
 <p>A lot of feature filter methods are already integrated in <code>mlr</code> and a complete list is given in the <a href="filter_methods.html" target="_blank">Appendix</a> or can be obtained using <code><a href="../../reference/listFilterMethods.html">listFilterMethods()</a></code>. You can easily add another filter, be it a brand new one or a method which is already implemented in another package, via function <code><a href="../../reference/makeFilter.html">makeFilter()</a></code>.</p>
-<div id="filter-objects" class="section level1">
-<h1 class="hasAnchor">
-<a href="#filter-objects" class="anchor"></a>Filter objects</h1>
+<div class="section level1">
+<h1 id="filter-objects">Filter objects<a class="anchor" aria-label="anchor" href="#filter-objects"></a>
+</h1>
 <p>In <code>mlr</code> all filter methods are objects of class Filter (<code><a href="../../reference/makeFilter.html">makeFilter()</a></code>) and are registered in an environment called <code>.FilterRegister</code> (where <code><a href="../../reference/listFilterMethods.html">listFilterMethods()</a></code> looks them up to compile the list of available methods). To get to know their structure let’s have a closer look at the <code>"rank.correlation"</code> filter.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">filters</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="fu">mlr</span><span class="fu">:::</span><span class="va">.FilterRegister</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">filters</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fu">mlr</span><span class="fu">:::</span><span class="va">.FilterRegister</span><span class="op">)</span>
 <span class="va">filters</span><span class="op">$</span><span class="va">rank.correlation</span>
 <span class="co">## Filter: 'rank.correlation'</span>
 <span class="co">## Packages: ''</span>
 <span class="co">## Supported tasks: regr</span>
 <span class="co">## Supported features: numerics</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">filters</span><span class="op">$</span><span class="va">rank.correlation</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">filters</span><span class="op">$</span><span class="va">rank.correlation</span><span class="op">)</span>
 <span class="co">## List of 6</span>
 <span class="co">##  $ name              : chr "rank.correlation"</span>
 <span class="co">##  $ desc              : chr "Spearman's correlation between feature and target"</span>
@@ -319,9 +329,9 @@
 <p>The core element is <code>$fun</code> which calculates the feature importance. For the <code>"rank.correlation"</code> filter it just extracts the data and formula from the <code>task</code> and passes them on to the <code>base::cor()</code> function.</p>
 <p>Additionally, each Filter (<code><a href="../../reference/makeFilter.html">makeFilter()</a></code>) object has a <code>$name</code>, which should be short and is for example used to annotate graphics (cp. <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code>), and a slightly more detailed description in slot <code>$desc</code>. If the filter method is implemented by another package its name is given in the <code>$pkg</code> member. Moreover, the supported task types and feature types are listed.</p>
 </div>
-<div id="writing-a-new-filter-method" class="section level1">
-<h1 class="hasAnchor">
-<a href="#writing-a-new-filter-method" class="anchor"></a>Writing a new filter method</h1>
+<div class="section level1">
+<h1 id="writing-a-new-filter-method">Writing a new filter method<a class="anchor" aria-label="anchor" href="#writing-a-new-filter-method"></a>
+</h1>
 <p>You can integrate your own filter method using <code><a href="../../reference/makeFilter.html">makeFilter()</a></code>. This function generates a Filter (<code><a href="../../reference/makeFilter.html">makeFilter()</a></code>) object and also registers it in the <code>.FilterRegister</code> environment.</p>
 <p>The arguments of <code><a href="../../reference/makeFilter.html">makeFilter()</a></code> correspond to the slot names of the Filter (<code><a href="../../reference/makeFilter.html">makeFilter()</a></code>) object above. Currently, feature filtering is only supported for supervised learning tasks and possible values for <code>supported.tasks</code> are <code>"regr"</code>, <code>"classif"</code> and <code>"surv"</code>. <code>supported.features</code> can be <code>"numerics"</code>, <code>"factors"</code> and <code>"ordered"</code>.</p>
 <p><code>fun</code> must be a function with at least the following formal arguments:</p>
@@ -341,13 +351,13 @@
 <code class="sourceCode R"><span class="fu"><a href="../../reference/makeFilter.html">makeFilter</a></span><span class="op">(</span>
   name <span class="op">=</span> <span class="st">"nonsense.filter"</span>,
   desc <span class="op">=</span> <span class="st">"Calculates scores according to alphabetical order of features"</span>,
-  pkg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,
-  supported.tasks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"classif"</span>, <span class="st">"regr"</span>, <span class="st">"surv"</span><span class="op">)</span>,
-  supported.features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"ordered"</span><span class="op">)</span>,
+  pkg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,
+  supported.tasks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classif"</span>, <span class="st">"regr"</span>, <span class="st">"surv"</span><span class="op">)</span>,
+  supported.features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"ordered"</span><span class="op">)</span>,
   fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">task</span>, <span class="va">nselect</span>, <span class="va">decreasing</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
     <span class="va">feats</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span>
-    <span class="va">imp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">feats</span>, decreasing <span class="op">=</span> <span class="va">decreasing</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span> <span class="op">=</span> <span class="va">feats</span>
+    <span class="va">imp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">feats</span>, decreasing <span class="op">=</span> <span class="va">decreasing</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span> <span class="op">=</span> <span class="va">feats</span>
     <span class="va">imp</span>
   <span class="op">}</span>
 <span class="op">)</span>
@@ -394,7 +404,7 @@
 <span class="co">## [34] "variance"</span></code></pre></div>
 <p>You can use it like any other filter method already integrated in <code>mlr</code> (i.e., via the <code>method</code> argument of <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code> or the <code>fw.method</code> argument of <code><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper()</a></code>; see also the page on <a href="feature_selection.html" target="_blank">feature selection</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span><span class="op">(</span><span class="va">iris.task</span>, method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nonsense.filter"</span>, <span class="st">"anova.test"</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span><span class="op">(</span><span class="va">iris.task</span>, method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nonsense.filter"</span>, <span class="st">"anova.test"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">d</span>
 <span class="co">## FilterValues:</span>
 <span class="co">## Task: iris-example</span>
@@ -431,7 +441,7 @@
 
 <span class="fu"><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames</a></span><span class="op">(</span><span class="va">iris.task.filtered</span><span class="op">)</span>
 <span class="co">## [1] "Petal.Length" "Petal.Width"</span></code></pre></div>
-<p>You might also want to have a look at the <a href="https://github.com/mlr-org/mlr/blob/main/R/Filter.R#L95">source code</a> of the filter methods already integrated in <code>mlr</code> for some more complex and meaningful examples.</p>
+<p>You might also want to have a look at the <a href="https://github.com/mlr-org/mlr/blob/main/R/Filter.R#L95" class="external-link">source code</a> of the filter methods already integrated in <code>mlr</code> for some more complex and meaningful examples.</p>
 </div>
   </div>
 
@@ -446,11 +456,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
+  <p></p>
+<p>Developed by Bernd Bischl, Michel Lang, Lars Kotthoff, Patrick Schratz, Julia Schiffner, Jakob Richter, Zachary Jones, Giuseppe Casalicchio, Mason Gallo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>
