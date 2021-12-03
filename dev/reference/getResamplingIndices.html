@@ -308,14 +308,14 @@ If <code>TRUE</code>, returns the inner indices of a nested resampling setting.<
 <span class="r-msg co"><span class="r-pr">#&gt;</span> With control class: TuneControlGrid</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Imputation value: 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-x] 1: cp=0.05; minsplit=10</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 1: mmce.test.mean=0.0400000; time: 0.0 min</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 1: mmce.test.mean=0.0800000; time: 0.0 min</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-x] 2: cp=0.1; minsplit=10</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 2: mmce.test.mean=0.0400000; time: 0.0 min</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 2: mmce.test.mean=0.0800000; time: 0.0 min</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-x] 3: cp=0.05; minsplit=20</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 3: mmce.test.mean=0.0800000; time: 0.0 min</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-x] 4: cp=0.1; minsplit=20</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 4: mmce.test.mean=0.0400000; time: 0.0 min</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune] Result: cp=0.05; minsplit=10 : mmce.test.mean=0.0400000</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 4: mmce.test.mean=0.0800000; time: 0.0 min</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune] Result: cp=0.05; minsplit=20 : mmce.test.mean=0.0800000</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.0666667 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune] Started tuning learner classif.rpart for parameter set:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>              Type len Def   Constr Req Tunable Trafo</span>
@@ -331,40 +331,40 @@ If <code>TRUE</code>, returns the inner indices of a nested resampling setting.<
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 3: mmce.test.mean=0.0000000; time: 0.0 min</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-x] 4: cp=0.1; minsplit=20</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 4: mmce.test.mean=0.0000000; time: 0.0 min</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune] Result: cp=0.1; minsplit=10 : mmce.test.mean=0.0000000</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.0533333 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune] Result: cp=0.05; minsplit=20 : mmce.test.mean=0.0000000</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.0666667 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: mmce.test.mean=0.0600000</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: mmce.test.mean=0.0666667</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="co"># get tuning indices</span></span>
 <span class="r-in"><span class="fu">getResamplingIndices</span><span class="op">(</span><span class="va">r</span>, inner <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$train.inds</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$train.inds[[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 129  12  38 140 126 113  26  93  95  52  97  16   5 127  45  92  88  22  65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20]   2  15 107 130  27 115  41  23  75 137 136  14 135  60  85  71   4 101  56</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [39]  10  51  13  30  48 148  89 132  69 125  70   6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 138 113  88  58 117  70  20  49  48 116 133  29  89 120 105  69  85   5 119</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20] 112  71  46 136  51 104 110  68 107 100  10  91  54  99  98  95  16  19  22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [39] 140   7  72  74  53  47  13  90  59  50  79  11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$test.inds</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$test.inds[[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  54  79 124 144  35   3  42 119  50  96  57 142  66 110  91 141  20  17  59</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20]  47  39  87 116  19 138</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 131  80 134 144  57 128  94 111  17 118  27 124   8  30  64 135 123 115  82</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20]  93  24  86 142  73 148</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$train.inds</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$train.inds[[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  24  11  94 147 131 112  86  99 111 139  61 123 108  18 104   7 114  98  73</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20]  33   9  77  78 150  36  62 128  21 146  68  80 120  29  34 121 122  83  31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [39]  44 149   8 134  58  28 106  37  64  72  84 133</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  96  62  65  81  63  34  78 109  40  61  67  37  45  25  55  23 101  66 132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20] 122  41 139 103 108  56   3  52  42 130  87 145 146   9  21  15 114  32 137</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [39]  36 125   2  35  84 143  28  12 106 147  83  77</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$test.inds</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$test.inds[[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  81  63  32 103   1 145  53  49  43  67 118  90  40  55  76  25 100 102 143</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20] 109 105 117  82  46  74</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  33  76  60  39  75 149  14   4   6 141  18 129  92  43  38  44  26  97 150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20] 121   1  31 126 127 102</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
