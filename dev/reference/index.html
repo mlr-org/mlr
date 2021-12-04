@@ -17,7 +17,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
@@ -335,11 +335,6 @@ multilabel task.</p></td>
         </td>
         <td><p>Create a survival task.</p></td>
       </tr><tr><td>
-          <p><code><a href="Task.html">Task</a></code> </p>
-        </td>
-        <td><p>Create a classification, regression, survival, cluster, cost-sensitive classification or
-multilabel task.</p></td>
-      </tr><tr><td>
           <p><code><a href="convertMLBenchObjToTask.html">convertMLBenchObjToTask()</a></code> </p>
         </td>
         <td><p>Convert a machine learning benchmark / demo object from package mlbench to a task.</p></td>
@@ -427,18 +422,6 @@ multilabel task.</p></td>
           <p><code><a href="makeTuneControlRandom.html">makeTuneControlRandom()</a></code> </p>
         </td>
         <td><p>Create control object for hyperparameter tuning with random search.</p></td>
-      </tr><tr><td>
-          <p><code><a href="tuneParams.html">tuneParams()</a></code> </p>
-        </td>
-        <td><p>Hyperparameter tuning.</p></td>
-      </tr><tr><td>
-          <p><code><a href="tuneParamsMultiCrit.html">tuneParamsMultiCrit()</a></code> </p>
-        </td>
-        <td><p>Hyperparameter tuning for multiple measures at once.</p></td>
-      </tr><tr><td>
-          <p><code><a href="tuneThreshold.html">tuneThreshold()</a></code> </p>
-        </td>
-        <td><p>Tune prediction threshold.</p></td>
       </tr><tr><td>
           <p><code><a href="tuneParams.html">tuneParams()</a></code> </p>
         </td>
@@ -753,6 +736,46 @@ possible models.</p></td>
         </td>
         <td><p>Filter features by thresholding filter values.</p></td>
       </tr><tr><td>
+          <p><code><a href="generateFilterValuesData.html">generateFilterValuesData()</a></code> </p>
+        </td>
+        <td><p>Calculates feature filter values.</p></td>
+      </tr><tr><td>
+          <p><code><a href="getBMRFilteredFeatures.html">getBMRFilteredFeatures()</a></code> </p>
+        </td>
+        <td><p>Extract the feature selection results from a benchmark result.</p></td>
+      </tr><tr><td>
+          <p><code><a href="getFilteredFeatures.html">getFilteredFeatures()</a></code> </p>
+        </td>
+        <td><p>Returns the filtered features.</p></td>
+      </tr><tr><td>
+          <p><code><a href="listFilterEnsembleMethods.html">listFilterEnsembleMethods()</a></code> </p>
+        </td>
+        <td><p>List ensemble filter methods.</p></td>
+      </tr><tr><td>
+          <p><code><a href="listFilterMethods.html">listFilterMethods()</a></code> </p>
+        </td>
+        <td><p>List filter methods.</p></td>
+      </tr><tr><td>
+          <p><code><a href="makeFilter.html">makeFilter()</a></code> </p>
+        </td>
+        <td><p>Create a feature filter.</p></td>
+      </tr><tr><td>
+          <p><code><a href="makeFilterEnsemble.html">makeFilterEnsemble()</a></code> </p>
+        </td>
+        <td><p>Create an ensemble feature filter.</p></td>
+      </tr><tr><td>
+          <p><code><a href="makeFilterWrapper.html">makeFilterWrapper()</a></code> </p>
+        </td>
+        <td><p>Fuse learner with a feature filter method.</p></td>
+      </tr><tr><td>
+          <p><code><a href="plotFilterValues.html">plotFilterValues()</a></code> </p>
+        </td>
+        <td><p>Plot filter values using ggplot2.</p></td>
+      </tr><tr><td>
+          <p><code><a href="generateFeatureImportanceData.html">generateFeatureImportanceData()</a></code> </p>
+        </td>
+        <td><p>Generate feature importance.</p></td>
+      </tr><tr><td>
           <p><code><a href="analyzeFeatSelResult.html">analyzeFeatSelResult()</a></code> </p>
         </td>
         <td><p>Show and visualize the steps of feature selection.</p></td>
@@ -868,6 +891,10 @@ possible models.</p></td>
           <p><code><a href="makeImputeMethod.html">makeImputeMethod()</a></code> </p>
         </td>
         <td><p>Create a custom imputation method.</p></td>
+      </tr><tr><td>
+          <p><code><a href="reimpute.html">reimpute()</a></code> </p>
+        </td>
+        <td><p>Re-impute a data set</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="spatial">Spatial <a href="#spatial" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
@@ -1096,6 +1123,10 @@ possible models.</p></td>
           <p><code><a href="hasProperties.html">hasProperties()</a></code> </p>
         </td>
         <td><p>Deprecated, use <code>hasLearnerProperties</code> instead.</p></td>
+      </tr><tr><td>
+          <p><code><a href="isFailureModel.html">isFailureModel()</a></code> </p>
+        </td>
+        <td><p>Is the model a FailureModel?</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="wrappers">Wrappers <a href="#wrappers" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
@@ -1553,7 +1584,7 @@ possible models.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer></div>

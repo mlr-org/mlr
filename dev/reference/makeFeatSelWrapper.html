@@ -25,7 +25,7 @@ retrieved with getFeatSelResult."><meta property="og:image" content="https://mlr
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="../index.html">mlr <small>v2.19.0.9001</small></a>
       </div>
     </div>
@@ -259,7 +259,8 @@ the complete training data with these variables and returned. See
 retrieved with <a href="getFeatSelResult.html">getFeatSelResult</a>.</p>
     </div>
 
-    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">makeFeatSelWrapper</span><span class="op">(</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">makeFeatSelWrapper</span><span class="op">(</span>
   <span class="va">learner</span>,
   <span class="va">resampling</span>,
   <span class="va">measures</span>,
@@ -267,7 +268,8 @@ retrieved with <a href="getFeatSelResult.html">getFeatSelResult</a>.</p>
   <span class="va">bits.to.features</span>,
   <span class="va">control</span>,
   show.info <span class="op">=</span> <span class="fu">getMlrOption</span><span class="op">(</span><span class="st">"show.info"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div></div>
+<span class="op">)</span></code></pre></div>
+    </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
@@ -358,21 +360,21 @@ Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel] Started selecting features for learner 'classif.ksvm'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> With control class: FeatSelControlRandom</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Imputation value: 1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel-x] 1: 0011 (2 bits)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel-y] 1: mmce.test.mean=0.0400000; time: 0.0 min</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel-x] 1: 0101 (2 bits)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel-y] 1: mmce.test.mean=0.0800000; time: 0.0 min</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>one argument not used by format '[FeatSel] Result: %s (%i bits)'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel] Result: Petal.Length,Petal.Width (2 bits)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.0133333 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel] Result: Sepal.Width,Petal.Width (2 bits)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.0400000 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel] Started selecting features for learner 'classif.ksvm'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> With control class: FeatSelControlRandom</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Imputation value: 1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel-x] 1: 1010 (2 bits)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel-y] 1: mmce.test.mean=0.0000000; time: 0.0 min</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel-x] 1: 0111 (3 bits)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel-y] 1: mmce.test.mean=0.0400000; time: 0.0 min</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>one argument not used by format '[FeatSel] Result: %s (%i bits)'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel] Result: Sepal.Length,Petal.Length (2 bits)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.0666667 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel] Result: Sepal.Width,Petal.Length,Pe... (3 bits)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.0533333 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: mmce.test.mean=0.0400000</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: mmce.test.mean=0.0466667</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
@@ -388,7 +390,7 @@ Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer></div>
