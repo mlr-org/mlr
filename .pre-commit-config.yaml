@@ -1,30 +1,8 @@
 # All available hooks: https://pre-commit.com/hooks.html
-repos:
--   repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.1.3
-    hooks:
-    # any R project
-    -   id: style-files
-        args: [--style_pkg=styler, --style_fun=mlr_style] # install with remotes::install_github("pat-s/styler@mlr-style")
-    # -   id: lintr
-    -   id: parsable-R
-    -   id: no-browser-statement
-    -   id: readme-rmd-rendered
-    #  R package development
-    #-   id: roxygenize
-    #-   id: use-tidy-description
-    #-   id: deps-in-desc
-        args: [--allow_private_imports]
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
-    hooks:
-    -   id: check-added-large-files
-        args: ['--maxkb=200']
-# All available hooks: https://pre-commit.com/hooks.html
 # R specific hooks: https://github.com/lorenzwalthert/precommit
 repos:
 -   repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.1.3.9014
+    rev: v0.2.0
     hooks:
     -   id: style-files
         args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
