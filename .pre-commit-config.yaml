@@ -6,6 +6,8 @@ repos:
     hooks:
     -   id: style-files
         args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
+        additional_dependencies:
+        - mlr-org/styler.mlr
     -   id: roxygenize
     -   id: use-tidy-description
     # -   id: spell-check
