@@ -215,7 +215,7 @@ If <code>TRUE</code>, returns the inner indices of a nested resampling setting.<
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-x] 4: cp=0.1; minsplit=20</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 4: mmce.test.mean=0.0800000; time: 0.0 min</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune] Result: cp=0.1; minsplit=10 : mmce.test.mean=0.0800000</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.0533333 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.0666667 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune] Started tuning learner classif.rpart for parameter set:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>              Type len Def   Constr Req Tunable Trafo</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> cp       discrete   -   - 0.05,0.1   -    TRUE     -</span>
@@ -230,8 +230,8 @@ If <code>TRUE</code>, returns the inner indices of a nested resampling setting.<
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-x] 4: cp=0.1; minsplit=20</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 4: mmce.test.mean=0.0400000; time: 0.0 min</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune] Result: cp=0.1; minsplit=20 : mmce.test.mean=0.0400000</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.0666667 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune] Result: cp=0.1; minsplit=10 : mmce.test.mean=0.0400000</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.0533333 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: mmce.test.mean=0.0600000</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -240,30 +240,30 @@ If <code>TRUE</code>, returns the inner indices of a nested resampling setting.<
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$train.inds</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$train.inds[[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 101  65  57  30  90 103   3 146  97  15 131  49  56 115 127 141  76  35 144</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20] 106  70 125  40  86  63  52  42   1  73  46  17  39  81  37 104  82 114  67</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [39] 105 112   9 107  51 116 138  84  61 139  72  54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  69  73  19  50  10  15  92  88 100 146  59 134 120   8  38  55  35  39 147</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20]  78 129  37 102  16  25 108  95  36 118  21  72  23  86 133   4 148  85  12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [39]  93 101  30  97  68 136 121  34   3  22  32  80</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$test.inds</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$test.inds[[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  31  26 119  50  83  41  89   8 111 134 109  80 132 100  88 148 122 135  18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20]  87  12  13 124 123  21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  43   1 114  48  58  47  61  41  28  67  29  71  51  74 132 119 123 112 127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20]  81  45  57 103 107  98</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$train.inds</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$train.inds[[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 120  43  32 133  96  95 150  55  62  27  47  64   7  28  93 128  11  22 149</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20]  45 140 145   2 102  16  75 136 137  71   5 126 113 121 110  92  20  53  98</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [39]  19  24  59  44  74 108 118 117  77  36  23  58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  84 135 117  13  90  26  64   9  49   7  76 116  31  44  99 113 109 105   5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20]  11  52  27  46  24  18  91  17 124  89  42 125 138   6 150  77 104 142  94</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [39]  96  79 141  75 110 131 144 137 111   2 149  82</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$test.inds</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$test.inds[[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  94   6  25  33  29  85 130  10  91   4  60 143  99  68 147 129  79 142  48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20]  78  14  34  66  38  69</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  53  66 140  40 115  83  65  54  33 128 106 145  63  62 143  20 130  70 139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20]  87 122  56  14  60 126</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
