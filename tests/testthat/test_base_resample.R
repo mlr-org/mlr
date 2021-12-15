@@ -211,4 +211,3 @@ test_that("resample drops unseen factors in predict data set", {
   model = train(lrn, train_task)
   expect_warning(predict(model, newdata = data[5:6,]), "produced NAs because of new factor levels")
 })
-

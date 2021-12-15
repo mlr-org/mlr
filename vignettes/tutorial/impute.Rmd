@@ -57,7 +57,7 @@ For demonstration purposes we insert artificial ``NA's`` in column ``Wind`` (win
 airq = airquality
 ind = sample(nrow(airq), 10)
 airq$Wind[ind] = NA
-airq$Wind = cut(airq$Wind, c(0,8,16,24))
+airq$Wind = cut(airq$Wind, c(0, 8, 16, 24))
 summary(airq)
 ```
 
@@ -101,8 +101,8 @@ airq = subset(airq, select = 1:4)
 The first 100 observations are used as training data set.
 
 ```{r}
-airq.train = airq[1:100,]
-airq.test = airq[-c(1:100),]
+airq.train = airq[1:100, ]
+airq.test = airq[-c(1:100), ]
 ```
 
 In case of a supervised learning problem you need to pass the name of the target variable to `impute()`.

@@ -41,4 +41,3 @@ predictLearner.classif.bdk = function(.learner, .model, .newdata, ...) {
     return(p$unit.predictions[p$unit.classif,])
   }
 }
-

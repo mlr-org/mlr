@@ -73,4 +73,3 @@ parallelExport("trainLearner.<my_new_learner>", "predictLearner.<my_new_learner>
 
 For further details, consult the
 [parallelMap tutorial](https://github.com/berndbischl/parallelMap#parallelmap) and help (`?parallelMap()`).
-

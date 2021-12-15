@@ -61,4 +61,3 @@ test_that("regr_blackboost works with families for count data", {
   }
   testSimpleParsets("regr.blackboost", new.regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list2)
 })
-
