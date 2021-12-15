@@ -41,6 +41,3 @@ predictLearner.classif.grplasso = function(.learner, .model, .newdata, ...) {
     return(p)
   }
 }
-
-
-

@@ -17,4 +17,3 @@ ks = makeMeasure(id = "ks", minimize = FALSE, classif = TRUE, only.binary = TRUE
     max(abs(z))
   }
 )
-

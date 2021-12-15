@@ -110,7 +110,7 @@ learner supports this.
 
 ```{r}
 mod = train(lrn.br, yeast.task)
-mod = train(lrn.br, yeast.task, subset = 1:1500, weights = rep(1/1500, 1500))
+mod = train(lrn.br, yeast.task, subset = 1:1500, weights = rep(1 / 1500, 1500))
 mod
 
 mod2 = train(lrn.rfsrc, yeast.task, subset = 1:100)
@@ -124,7 +124,7 @@ As always you can specify a ``subset`` of the data which should be predicted.
 
 ```{r}
 pred = predict(mod, task = yeast.task, subset = 1:10)
-pred = predict(mod, newdata = yeast[1501:1600,])
+pred = predict(mod, newdata = yeast[1501:1600, ])
 names(as.data.frame(pred))
 
 pred2 = predict(mod2, task = yeast.task)
@@ -156,9 +156,9 @@ performance(pred)
 performance(pred2, measures = list(multilabel.subset01, multilabel.hamloss, multilabel.acc,
   multilabel.f1, timepredict))
 
-## multilabel.subset01  multilabel.hamloss      multilabel.acc 
-##           0.8721556           0.2047402           0.4611732 
-##       multilabel.f1         timepredict 
+## multilabel.subset01  multilabel.hamloss      multilabel.acc
+##           0.8721556           0.2047402           0.4611732
+##       multilabel.f1         timepredict
 ##           0.5715320           0.9210000
 
 listMeasures("multilabel")
@@ -212,4 +212,3 @@ getMultilabelBinaryPerformances(pred, measures = list(acc, mmce, auc))
 
 getMultilabelBinaryPerformances(r$pred, measures = list(acc, mmce))
 ```
-

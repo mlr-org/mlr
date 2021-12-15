@@ -38,5 +38,3 @@ SEXP c_smote(SEXP s_x, SEXP s_isnum, SEXP s_nn, SEXP s_res) {
   PutRNGstate();
   return s_res;
 }
-
-

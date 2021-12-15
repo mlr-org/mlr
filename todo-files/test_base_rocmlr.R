@@ -43,5 +43,3 @@ test_that("roc coords work", {
     0.0, 1.0, 1.0
   ), byrow = TRUE, ncol = 3L)))
 })
-
-

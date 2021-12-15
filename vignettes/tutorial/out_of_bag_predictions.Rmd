@@ -40,4 +40,3 @@ performance(oob, measures = list(auc, mmce))
 ```
 
 As the predictions that are used are out-of-bag, this evaluation strategy is very similar to common resampling strategies like 10-fold cross-validation, but much faster, as only one training instance of the model is required.
-
