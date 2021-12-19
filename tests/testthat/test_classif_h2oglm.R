@@ -55,5 +55,5 @@ test_that("feature importances are returned", {
   names(feat.imp) = names(feat.imp.h2o)
   feat.imp = feat.imp[order(feat.imp$relative_importance, decreasing = TRUE), ]
 
-  expect_equal(feat.imp, feat.imp.h2o, ignore_attr = "row.names")
+  expect_equal(feat.imp, feat.imp.h2o, ignore_attr = c("row.names", "class"))
 })

@@ -187,4 +187,3 @@ The top left $2 \times 2$ matrix is the [confusion matrix](predict.html){target=
 By default some additional info about the measures is printed.
 You can turn this off using the `abbreviations` argument of the `print` (`calculateROCMeasures()`) method:
 `print(r, abbreviations = FALSE)`.
-

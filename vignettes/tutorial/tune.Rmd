@@ -227,7 +227,7 @@ predict(m, task = iris.task)
 
 ## Prediction: 150 observations
 ## predict.type: response
-## threshold: 
+## threshold:
 ## time: 0.00
 ##   id  truth response
 ## 1  1 setosa   setosa

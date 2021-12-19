@@ -1,70 +1,42 @@
-
 test_that("plotResiduals with prediction object", {
+
+  set.seed(getOption("mlr.debug.seed"))
+
   learner = makeLearner("regr.rpart")
   mod = train(learner, regr.task)
   preds = predict(mod, regr.task)
-  suppressMessages(plotResiduals(preds))
-  dir = tempdir()
-  path = file.path(dir, "test.svg")
-  suppressMessages(ggsave(path))
-  doc = XML::xmlParse(path)
-  # points
-  expect_equal(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), getTaskSize(regr.task))
-  # loess
-  expect_equal(length(XML::getNodeSet(doc, mediumblue.line.xpath, ns.svg)), 1L)
-  # rug
-  expect_equal(length(XML::getNodeSet(doc, red.rug.line.xpath, ns.svg)), getTaskSize(regr.task) * 2L)
+  plot = plotResiduals(preds)
+  vdiffr::expect_doppelganger("plotResiduals - regr", plot)
 
   # histogram
-  plotResiduals(preds, type = "hist")
-  dir = tempdir()
-  path = file.path(dir, "test.svg")
-  suppressMessages(ggsave(path))
-  doc = XML::xmlParse(path)
-  expect_equal(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), 30L)
-  # task.type == "classif"
+  p_hist = plotResiduals(preds, type = "hist")
+  vdiffr::expect_doppelganger("plotResiduals - hist", p_hist)
+
+  # classif
   learner = makeLearner("classif.rpart")
   mod = train(learner, multiclass.task)
   preds = predict(mod, multiclass.task)
-  plotResiduals(preds)
-  dir = tempdir()
-  path = file.path(dir, "test.svg")
-  suppressMessages(ggsave(path))
-  doc = XML::xmlParse(path)
-  num.points = sum(calculateConfusionMatrix(preds)$result[1:3, 1:3] != 0)
-  expect_true(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)) > num.points)
+  p_hist = plotResiduals(preds)
+  vdiffr::expect_doppelganger("plotResiduals - classif", p_hist)
+
 })
 
 test_that("plotResiduals with BenchmarkResult", {
   lrns = list(makeLearner("classif.ksvm"), makeLearner("classif.rpart"))
   tasks = list(multiclass.task, binaryclass.task)
   bmr = benchmark(lrns, tasks, hout, measures = getDefaultMeasure(multiclass.task))
-  plotResiduals(bmr, type = "scatterplot")
-  dir = tempdir()
-  path = file.path(dir, "test.svg")
-  suppressMessages(ggsave(path))
-  doc = XML::xmlParse(path)
-  grid.size = length(getBMRTaskIds(bmr)) * length(getBMRLearnerIds(bmr))
-  # facets
-  expect_equal(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), grid.size)
-  # histogram
+
+  # scatterplot
+  p_scatter = plotResiduals(bmr, type = "scatterplot")
+  vdiffr::expect_doppelganger("plotResiduals - scatter - bmr", p_scatter)
+
+  # histogram - bmr
   plotResiduals(bmr, type = "hist")
-  dir = tempdir()
-  path = file.path(dir, "test.svg")
-  suppressMessages(ggsave(path))
-  doc = XML::xmlParse(path)
-  # barplot now. We can't test for exact number of bars anymore
-  expect_true(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)) > 0L)
+  p_hist_bmr = plotResiduals(bmr, type = "hist")
+  vdiffr::expect_doppelganger("plotResiduals - hist - bmr", p_hist_bmr)
 
-  # check pretty names
-  testDocForStrings(doc, getBMRLearnerShortNames(bmr), grid.size = 2L)
-
-  plotResiduals(bmr, pretty.names = FALSE)
-  dir = tempdir()
-  path = file.path(dir, "test.svg")
-  suppressMessages(ggsave(path))
-  doc = XML::xmlParse(path)
-  testDocForStrings(doc, getBMRLearnerShortNames(bmr), grid.size = 2L)
+  p_hist_bmr_pretty = plotResiduals(bmr, pretty.names = FALSE)
+  vdiffr::expect_doppelganger("plotResiduals - hist - bmr - pretty", p_hist_bmr_pretty)
 
   # check error when learner short names are not unique
   lrns = list(

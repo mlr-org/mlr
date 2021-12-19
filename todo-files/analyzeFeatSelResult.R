@@ -107,5 +107,3 @@ printAnalyzeFeatSelResultGA.old = function(x, printed.features=10L) {
     } ## end of loop of individuals per generation
   } ## end of generations-loop
 }
-
-

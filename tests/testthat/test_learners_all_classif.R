@@ -101,7 +101,6 @@ test_that("learners work: classif", {
   # classif.pamr (maybe only subset error),
   # classif.plsdaCaret (error maybe fixable in caret),
   # classif.rotationForest (gives some error, no one would use it for 1d anyway),
-  # classif.rrlda error eccours in the learner.
   # classif.cforest: fraction of 0.000000 is too small (only travis?)
   not.working = c(
     "classif.boosting",
@@ -118,7 +117,6 @@ test_that("learners work: classif", {
     "classif.plsdaCaret",
     "classif.quaDA",
     "classif.rotationForest",
-    "classif.rrlda",
     "classif.rknn")
   lrns_sub = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% not.working]
   foo = suppressWarnings(lapply(lrns_sub, testBasicLearnerProperties,

@@ -81,7 +81,7 @@ test_that("no labels are switched", {
       tmp = holdout(lrn, task, split = 0.5, stratify = TRUE)
       # print(as.data.frame(getRRPredictions(tmp)))
       err = tmp$aggr[[1L]]
-      expect_true(!is.na(err) & err <= 1 / 3,
+      expect_true(!is.na(err) & err <= 0.4,
         info = paste(getTaskDesc(task)$id, id, err, sep = ", "))
       err
     })

@@ -424,4 +424,3 @@ predictLearner.classif.mxff = function(.learner, .model, .newdata, ...) {
     return(p)
   }
 }
-

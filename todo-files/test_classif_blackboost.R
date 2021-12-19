@@ -92,4 +92,3 @@ test_that("classif_blackboost probability predictions with family 'AUC' and 'Ada
 #   orig.pred = predict(orig.mod, newdata = mini.data, type = "response")
 #   expect_equal(getPredictionProbabilities(pred), orig.pred[1])
 # })
-

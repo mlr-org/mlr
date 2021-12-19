@@ -1,6 +1,5 @@
-
-cat("plotFilterValues")
 test_that("n.show arg has an effect in plotFilterValues()", {
+  set.seed(getOption("mlr.debug.seed"))
   fv = generateFilterValuesData(iris.task, method = "variance")
   fv_plot = plotFilterValues(fv, n.show = 2)
 
@@ -8,6 +7,7 @@ test_that("n.show arg has an effect in plotFilterValues()", {
 })
 
 test_that("feat.type.cols arg has an effect in plotFilterValues()", {
+  set.seed(getOption("mlr.debug.seed"))
   fv = generateFilterValuesData(bh.task, method = "praznik_CMIM")
   fv_plot1 = plotFilterValues(fv, feat.type.cols = TRUE)
 
@@ -15,6 +15,7 @@ test_that("feat.type.cols arg has an effect in plotFilterValues()", {
 })
 
 test_that("plotFilterValues shows the correct count when n.show > nfeat", {
+  set.seed(getOption("mlr.debug.seed"))
   fv = generateFilterValuesData(bh.task, method = "praznik_CMIM")
   fv_plot2 = plotFilterValues(fv, n.show = 25)
 
@@ -22,16 +23,19 @@ test_that("plotFilterValues shows the correct count when n.show > nfeat", {
 })
 
 test_that("plotFilterValues errors if arg 'filter' is not avail", {
+  set.seed(getOption("mlr.debug.seed"))
   fv = generateFilterValuesData(bh.task, method = "praznik_CMIM")
   expect_error(plotFilterValues(fv, filter = "foo"))
 })
 
 test_that("plotFilterValues errors if arg 'filter' is not avail", {
+  set.seed(getOption("mlr.debug.seed"))
   fv = generateFilterValuesData(iris.task, method = c("variance", "praznik_CMIM"))
   expect_error(plotFilterValues(fv))
 })
 
 test_that("plotFilterValues arg 'filter' works", {
+  set.seed(getOption("mlr.debug.seed"))
   fv = generateFilterValuesData(iris.task, method = c("variance", "praznik_CMIM"))
   fv_plot3 = plotFilterValues(fv, filter = "variance")
 

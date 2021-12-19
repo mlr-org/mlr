@@ -25,7 +25,7 @@ test_that("removeConstantFeatures", {
   res = getTaskData(removeConstantFeatures(task, na.ignore = TRUE))
   expect_equal(colnames(res), c("a", "b", "c", "d", "target", "safe"))
 
-  res = getTaskData(removeConstantFeatures(task, tol = 0, na.ignore = TRUE))
+  res = getTaskData(removeConstantFeatures(task, wrap.tol = 0, na.ignore = TRUE))
   expect_true(setequal(colnames(res), c("a", "b", "c", "d", "target", "safe", "n")))
 
   res = getTaskData(removeConstantFeatures(task, na.ignore = FALSE))

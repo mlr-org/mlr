@@ -57,8 +57,8 @@ test_that("fixed in nested resampling", {
   tune.wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,
     control = ctrl, show.info = FALSE, measures = getDefaultMeasure(ct))
   suppressWarnings({
-  p = resample(tune.wrapper, ct, outer, show.info = FALSE,
-    extract = getTuneResult)
+    p = resample(tune.wrapper, ct, outer, show.info = FALSE,
+      extract = getTuneResult)
   })
   expect_length(getResamplingIndices(p, inner = TRUE)[[1]][[1]], 6)
 })

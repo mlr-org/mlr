@@ -123,4 +123,3 @@ Despite the tuning procedure performed before, the benchmark experiment for line
 ```{r}
 plotBMRBoxplots(bmr)
 ```
-

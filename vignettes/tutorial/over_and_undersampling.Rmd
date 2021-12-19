@@ -327,4 +327,3 @@ If the underlying learner already has a parameter for class weighting (e.g.,
 lrn = makeLearner("classif.ksvm")
 wcw.lrn = makeWeightedClassesWrapper(lrn, wcw.weight = 0.01)
 ```
-

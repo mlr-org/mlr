@@ -138,4 +138,3 @@ As you may recall, it is also possible to set observation weights when creating 
 As a general rule, you should specify them in `make*Task` (`Task()`) if the weights really "belong" to the task and always should be used.
 Otherwise, pass them to `train()`.
 The weights in `train()` take precedence over the weights in `Task()`.
-

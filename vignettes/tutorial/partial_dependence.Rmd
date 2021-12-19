@@ -231,4 +231,3 @@ Plotting partial derivative functions works the same as partial dependence. Belo
 ```{r, fig.asp = 0.5}
 plotPartialDependence(pd.regr.der)
 ```
-

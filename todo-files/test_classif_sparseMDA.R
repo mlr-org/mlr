@@ -35,4 +35,3 @@ test_that("classif_sparseMDA", {
   testProbParsets  ("classif.sparseMDA", multiclass.df, multiclass.target, 
     multiclass.train.inds, old.probs.list, parset.list)
 })
-

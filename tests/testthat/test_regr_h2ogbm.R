@@ -27,7 +27,7 @@ test_that("regr_h2ogbm", {
     list(ntrees = 5L, histogram_type = "Random", seed = getOption("mlr.debug.seed")),
     list(ntrees = 5L, score_each_iteration = TRUE),
     list(ntrees = 5L, score_tree_interval = 2),
-    list(ntrees = 5L, stopping_rounds = 3, stopping_metric = "MAE"),
+    list(ntrees = 5L, stopping_rounds = 3, stopping_metric = "MAE", score_each_iteration = TRUE),
     list(ntrees = 5L, distribution = "quantile", quantile_alpha = 0.6),
     list(ntrees = 5L, distribution = "tweedie", tweedie_power = 1.1),
     list(ntrees = 5L, distribution = "huber", huber_alpha = 0.8),

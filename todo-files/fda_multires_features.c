@@ -91,6 +91,3 @@ void c_get_multires_curve_features(SEXP s_x, SEXP s_curve_lens, SEXP s_resmat, S
     }
   }
 }
-
-
-

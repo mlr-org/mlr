@@ -247,4 +247,3 @@ These are also used throughout this tutorial in order to get shorter and more re
 A list of all `Task()`s can be found in the [Appendix](example_tasks.html){target="_blank"}.
 
 Moreover, `mlr`'s function `convertMLBenchObjToTask()` can generate `Task()`s from the data sets and data generating functions in package `mlbench::mlbench()`.
-
