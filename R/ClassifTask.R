@@ -57,7 +57,7 @@ makeClassifTaskDesc = function(id, data, target, weights, blocking, positive, co
   td$class.levels = levs
   td$positive = positive
   td$negative = NA_character_
-  td$class.distribution = table(data[target])
+  td$class.distribution = table(data[target], dnn = "")
   if (length(td$class.levels) == 1L) {
     td$negative = stri_paste("not_", positive)
   } else if (length(td$class.levels) == 2L) {
