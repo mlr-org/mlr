@@ -281,7 +281,7 @@
 <p>You can <code><a href="../../reference/train.html">train()</a></code> a model as usual with a multilabel learner and a multilabel task as input. You can also pass <code>subset</code> and <code>weights</code> arguments if the learner supports this.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.br</span>, <span class="va">yeast.task</span><span class="op">)</span>
-<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.br</span>, <span class="va">yeast.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1500</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">1500</span>, <span class="fl">1500</span><span class="op">)</span><span class="op">)</span>
+<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.br</span>, <span class="va">yeast.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1500</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fl">1500</span>, <span class="fl">1500</span><span class="op">)</span><span class="op">)</span>
 <span class="va">mod</span>
 <span class="co">## Model for learner.id=multilabel.binaryRelevance.classif.rpart; learner.class=MultilabelBinaryRelevanceWrapper</span>
 <span class="co">## Trained on: task.id = multi; obs = 1500; features = 103</span>
@@ -299,7 +299,7 @@
 <p>Prediction can be done as usual in <code>mlr</code> with <code>predict</code> (<code><a href="../../reference/predict.WrappedModel.html">predict.WrappedModel()</a></code>) and by passing a trained model and either the task to the <code>task</code> argument or some new data to the <code>newdata</code> argument. As always you can specify a <code>subset</code> of the data which should be predicted.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">yeast.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">yeast</span><span class="op">[</span><span class="fl">1501</span><span class="op">:</span><span class="fl">1600</span>,<span class="op">]</span><span class="op">)</span>
+<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">yeast</span><span class="op">[</span><span class="fl">1501</span><span class="op">:</span><span class="fl">1600</span>, <span class="op">]</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##  [1] "truth.label1"     "truth.label2"     "truth.label3"     "truth.label4"    </span>
 <span class="co">##  [5] "truth.label5"     "truth.label6"     "truth.label7"     "truth.label8"    </span>
@@ -335,9 +335,9 @@
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred2</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">multilabel.subset01</span>, <span class="va">multilabel.hamloss</span>, <span class="va">multilabel.acc</span>,
   <span class="va">multilabel.f1</span>, <span class="va">timepredict</span><span class="op">)</span><span class="op">)</span>
 
-<span class="co">## multilabel.subset01  multilabel.hamloss      multilabel.acc </span>
-<span class="co">##           0.8721556           0.2047402           0.4611732 </span>
-<span class="co">##       multilabel.f1         timepredict </span>
+<span class="co">## multilabel.subset01  multilabel.hamloss      multilabel.acc</span>
+<span class="co">##           0.8721556           0.2047402           0.4611732</span>
+<span class="co">##       multilabel.f1         timepredict</span>
 <span class="co">##           0.5715320           0.9210000</span>
 
 <span class="fu"><a href="../../reference/listMeasures.html">listMeasures</a></span><span class="op">(</span><span class="st">"multilabel"</span><span class="op">)</span></code></pre></div>

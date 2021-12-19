@@ -190,7 +190,7 @@
 
 <span class="co">## Prediction: 253 observations</span>
 <span class="co">## predict.type: response</span>
-<span class="co">## threshold: </span>
+<span class="co">## threshold:</span>
 <span class="co">## time: 0.00</span>
 <span class="co">##    id truth response</span>
 <span class="co">## 2   2  21.6 22.27841</span>
@@ -214,7 +214,7 @@
 
 <span class="co">## Prediction: 75 observations</span>
 <span class="co">## predict.type: response</span>
-<span class="co">## threshold: </span>
+<span class="co">## threshold:</span>
 <span class="co">## time: 0.00</span>
 <span class="co">##    response</span>
 <span class="co">## 2         2</span>
@@ -301,14 +301,14 @@
 <p>In this example we train a linear regression model (<code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code>) on the <code>BostonHousing</code> (<code><a href="../../reference/bh.task.html">bh.task()</a></code>) dataset. In order to calculate standard errors set the <code>predict.type</code> to <code>"se"</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">### Create learner and specify predict.type</span>
-<span class="va">lrn.lm</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.lm"</span>, predict.type <span class="op">=</span> <span class="st">'se'</span><span class="op">)</span>
+<span class="va">lrn.lm</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.lm"</span>, predict.type <span class="op">=</span> <span class="st">"se"</span><span class="op">)</span>
 <span class="va">mod.lm</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.lm</span>, <span class="va">bh.task</span>, subset <span class="op">=</span> <span class="va">train.set</span><span class="op">)</span>
 <span class="va">task.pred.lm</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod.lm</span>, task <span class="op">=</span> <span class="va">bh.task</span>, subset <span class="op">=</span> <span class="va">test.set</span><span class="op">)</span>
 <span class="va">task.pred.lm</span>
 
 <span class="co">## Prediction: 253 observations</span>
 <span class="co">## predict.type: se</span>
-<span class="co">## threshold: </span>
+<span class="co">## threshold:</span>
 <span class="co">## time: 0.00</span>
 <span class="co">##    id truth response        se</span>
 <span class="co">## 2   2  21.6 24.83734 0.7501615</span>
@@ -462,13 +462,13 @@
 <span class="co">### Default threshold</span>
 <span class="va">pred1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">sonar.task</span><span class="op">)</span>
 <span class="va">pred1</span><span class="op">$</span><span class="va">threshold</span>
-<span class="co">##   M   R </span>
+<span class="co">##   M   R</span>
 <span class="co">## 0.5 0.5</span>
 
 <span class="co">### Set the threshold value for the positive class</span>
 <span class="va">pred2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setThreshold.html">setThreshold</a></span><span class="op">(</span><span class="va">pred1</span>, <span class="fl">0.9</span><span class="op">)</span>
 <span class="va">pred2</span><span class="op">$</span><span class="va">threshold</span>
-<span class="co">##   M   R </span>
+<span class="co">##   M   R</span>
 <span class="co">## 0.9 0.1</span>
 
 <span class="va">pred2</span>
