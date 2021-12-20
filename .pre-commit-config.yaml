@@ -9,6 +9,9 @@ repos:
         additional_dependencies:
         - mlr-org/styler.mlr
     -   id: roxygenize
+        additional_dependencies:
+        - git2r
+        - pkgbuild
     -   id: use-tidy-description
     # -   id: spell-check
         exclude: >
