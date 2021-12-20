@@ -5,7 +5,7 @@ if (Sys.info()[["sysname"]] != "Windows") {
 }
 
 # R CMD Check
-do_package_checks(error_on = "warning", codecov = FALSE)
+do_package_checks(error_on = "warning", codecov = TRUE)
 
 # pkgdown
 if (ci_on_ghactions() && ci_has_env("BUILD_PKGDOWN")) {

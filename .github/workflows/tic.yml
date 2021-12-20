@@ -25,7 +25,7 @@ jobs:
           - { os: windows-latest, r: "release" }
           - { os: macOS-latest, r: "release", pkgdown: "true", latex: "true" }
           - { os: ubuntu-latest, r: "devel" }
-          - { os: ubuntu-latest, r: "release" }
+          - { os: ubuntu-latest, r: "release", codecov: "true" }
 
     env:
       # [Custom env var] fake virtual display for rgl package
