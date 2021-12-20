@@ -1,4 +1,3 @@
-
 test_that("checkData", {
   expect_error(
     makeClassifTask(data = binaryclass.df, target = "foo"),
