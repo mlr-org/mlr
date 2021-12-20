@@ -253,7 +253,7 @@
 <span class="op">)</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/TuneMultiCritControl.html">makeTuneMultiCritControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">30L</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
-<span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParamsMultiCrit.html">tuneParamsMultiCrit</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, task <span class="op">=</span> <span class="va">sonar.task</span>, 
+<span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParamsMultiCrit.html">tuneParamsMultiCrit</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, task <span class="op">=</span> <span class="va">sonar.task</span>,
   resampling <span class="op">=</span> <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>,
   measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">fpr</span>, <span class="va">fnr</span><span class="op">)</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">res</span>

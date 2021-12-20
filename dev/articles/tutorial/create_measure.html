@@ -317,8 +317,9 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my.range.aggr</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeAggregation.html">makeAggregation</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"test.range"</span>, name <span class="op">=</span> <span class="st">"Test Range"</span>,
   properties <span class="op">=</span> <span class="st">"req.test"</span>,
-  fun <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">task</span>, <span class="va">perf.test</span>, <span class="va">perf.train</span>, <span class="va">measure</span>, <span class="va">group</span>, <span class="va">pred</span><span class="op">)</span>
+  fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">task</span>, <span class="va">perf.test</span>, <span class="va">perf.train</span>, <span class="va">measure</span>, <span class="va">group</span>, <span class="va">pred</span><span class="op">)</span> <span class="op">{</span>
     <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">perf.test</span><span class="op">)</span><span class="op">)</span>
+  <span class="op">}</span>
 <span class="op">)</span></code></pre></div>
 <p><code>perf.train</code> and <code>perf.test</code> are both numerical vectors containing the performances on the train and test data sets. In most cases (unless you are using bootstrap as resampling strategy or have set <code>predict = "both"</code> in <code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>) the <code>perf.train</code> vector is empty.</p>
 <p>Now we can run a feature selection based on the first measure in the provided list and see how the other measures turn out.</p>

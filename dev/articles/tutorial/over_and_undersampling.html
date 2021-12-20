@@ -195,7 +195,7 @@
 <span class="op">)</span>
 <span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data.imbal.train</span>, target <span class="op">=</span> <span class="st">"class"</span><span class="op">)</span>
 <span class="va">task.over</span> <span class="op">=</span> <span class="fu"><a href="../../reference/oversample.html">oversample</a></span><span class="op">(</span><span class="va">task</span>, rate <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>
-<span class="va">task.under</span> <span class="op">=</span> <span class="fu"><a href="../../reference/oversample.html">undersample</a></span><span class="op">(</span><span class="va">task</span>, rate <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">8</span><span class="op">)</span>
+<span class="va">task.under</span> <span class="op">=</span> <span class="fu"><a href="../../reference/oversample.html">undersample</a></span><span class="op">(</span><span class="va">task</span>, rate <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">8</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## </span>
@@ -243,7 +243,7 @@
 <p>The example given above is repeated once again, but this time with extended learners instead of modified tasks (see <code><a href="../../reference/makeUndersampleWrapper.html">makeOversampleWrapper()</a></code> and <code><a href="../../reference/makeUndersampleWrapper.html">makeUndersampleWrapper()</a></code>). Just like before the <em>undersampling rate</em> has to be between 0 and 1, while the <em>oversampling rate</em> has a lower boundary of 1.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn.over</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeUndersampleWrapper.html">makeOversampleWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, osw.rate <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>
-<span class="va">lrn.under</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeUndersampleWrapper.html">makeUndersampleWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, usw.rate <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">8</span><span class="op">)</span>
+<span class="va">lrn.under</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeUndersampleWrapper.html">makeUndersampleWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, usw.rate <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">8</span><span class="op">)</span>
 <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">task</span><span class="op">)</span>
 <span class="va">mod.over</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.over</span>, <span class="va">task</span><span class="op">)</span>
 <span class="va">mod.under</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.under</span>, <span class="va">task</span><span class="op">)</span>
@@ -391,22 +391,22 @@
 <span class="co">## [Tune-y] 2: mmce.test.mean=0.0606496; time: 0.0 min</span>
 <span class="co">## [Tune] Result: interaction.depth=3 : mmce.test.mean=0.0577155</span>
 <span class="co">## [Resample] iter 3:    0.0625815</span>
-<span class="co">## </span>
+<span class="co">##</span>
 <span class="co">## Aggregated Result: mmce.test.mean=0.0556385</span>
-<span class="co">## </span>
+<span class="co">##</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">extract</span><span class="op">)</span>
 <span class="co">## [[1]]</span>
 <span class="co">## Tune result:</span>
 <span class="co">## Op. pars: interaction.depth=5</span>
 <span class="co">## Threshold: 0.48</span>
 <span class="co">## mmce.test.mean=0.0599739</span>
-<span class="co">## </span>
+<span class="co">##</span>
 <span class="co">## [[2]]</span>
 <span class="co">## Tune result:</span>
 <span class="co">## Op. pars: interaction.depth=3</span>
 <span class="co">## Threshold: 0.48</span>
 <span class="co">## mmce.test.mean=0.0586882</span>
-<span class="co">## </span>
+<span class="co">##</span>
 <span class="co">## [[3]]</span>
 <span class="co">## Tune result:</span>
 <span class="co">## Op. pars: interaction.depth=3</span>

@@ -291,7 +291,7 @@
 <p>Below the theoretical threshold for the German Credit data set (<code><a href="https://rdrr.io/pkg/caret/man/GermanCredit.html" class="external-link">caret::GermanCredit()</a></code>) is calculated and used to predict class labels. Since the diagonal of the cost matrix is zero the formula given above simplifies accordingly.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Calculate the theoretical threshold for the positive class</span>
-<span class="va">th</span> <span class="op">=</span> <span class="va">costs</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">]</span><span class="op">/</span><span class="op">(</span><span class="va">costs</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">costs</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>
+<span class="va">th</span> <span class="op">=</span> <span class="va">costs</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">/</span> <span class="op">(</span><span class="va">costs</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">costs</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span>
 <span class="va">th</span>
 <span class="co">## [1] 0.1666667</span></code></pre></div>
 <p>As you may recall you can change thresholds in <code>mlr</code> either before training by using the <code>predict.threshold</code> option of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> or after prediction by calling <code><a href="../../reference/setThreshold.html">setThreshold()</a></code> on the <code><a href="../../reference/Prediction.html">Prediction()</a></code> object.</p>
@@ -381,9 +381,9 @@
 
 <span class="co">## $th</span>
 <span class="co">## [1] 0.1062593</span>
-<span class="co">## </span>
+<span class="co">##</span>
 <span class="co">## $perf</span>
-<span class="co">## credit.costs </span>
+<span class="co">## credit.costs</span>
 <span class="co">##     0.527033</span></code></pre></div>
 <p><code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code> returns the optimal threshold value for the positive class and the corresponding performance. As expected the tuned threshold is smaller than the theoretical threshold.</p>
 </div>
@@ -442,7 +442,7 @@
 <p>For the credit example (<code>caret:GermanCredit()</code>) the theoretical threshold corresponds to a weight of 5 for the positive class.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Weight for positive class corresponding to theoretical treshold</span>
-<span class="va">w</span> <span class="op">=</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">th</span><span class="op">)</span><span class="op">/</span><span class="va">th</span>
+<span class="va">w</span> <span class="op">=</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">th</span><span class="op">)</span> <span class="op">/</span> <span class="va">th</span>
 <span class="va">w</span>
 <span class="co">## [1] 5</span></code></pre></div>
 <p>A unified and convenient way to assign class weights to a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) (and tune them) is provided by function <code><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper()</a></code>. The class weights are specified using argument <code>wcw.weight</code>. For learners that support observation weights a suitable weight vector is then generated internally during training or resampling. If the learner can deal with class weights, the weights are basically passed on to the appropriate learner parameter. The advantage of using the wrapper in this case is the unified way to specify the class weights.</p>
@@ -530,7 +530,7 @@
 
 <span class="co">## Learner classif.multinom.oversampled from package mlr,nnet</span>
 <span class="co">## Type: classif</span>
-<span class="co">## Name: ; Short name: </span>
+<span class="co">## Name: ; Short name:</span>
 <span class="co">## Class: OversampleWrapper</span>
 <span class="co">## Properties: numerics,factors,weights,prob,twoclass,multiclass</span>
 <span class="co">## Predict-Type: response</span>
@@ -621,17 +621,17 @@
 <span class="co">## Runtime: 0.0586474</span>
 
 <span class="co"># Calculate thresholds as 1/(average costs of true classes)</span>
-<span class="va">th</span> <span class="op">=</span> <span class="fl">2</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span>
+<span class="va">th</span> <span class="op">=</span> <span class="fl">2</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">th</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span><span class="op">(</span><span class="va">wf.task</span><span class="op">)</span>
 <span class="va">th</span>
 
-<span class="co">##          1          2          3 </span>
+<span class="co">##          1          2          3</span>
 <span class="co">## 0.01818182 0.22222222 0.11111111</span>
 
 <span class="va">pred.th</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setThreshold.html">setThreshold</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">pred</span>, threshold <span class="op">=</span> <span class="va">th</span><span class="op">)</span>
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred.th</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">wf.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
 
-<span class="co">##  wf.costs      mmce </span>
+<span class="co">##  wf.costs      mmce</span>
 <span class="co">## 4.6863021 0.2919823</span></code></pre></div>
 <p>The threshold vector <code>th</code> in the above example is chosen according to the average costs of the true classes 55, 4.5 and 9. More exactly, <code>th</code> corresponds to an artificial cost matrix of the structure mentioned above with off-diagonal elements <span class="math inline">\(c(2,1) = c(3,1) = 55\)</span>, <span class="math inline">\(c(1,2) = c(3,2) = 4.5\)</span> and <span class="math inline">\(c(1,3) = c(2,3) = 9\)</span>. This threshold vector may be not optimal but leads to smaller total costs on the data set than the default.</p>
 <div class="section level4">
@@ -649,7 +649,7 @@
 <span class="co">## [1] 4.594</span></code></pre></div>
 <p>For comparison we show the standardized version of the theoretically motivated threshold vector chosen above.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">th</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">th</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">th</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">th</span><span class="op">)</span>
 <span class="co">##          1          2          3 </span>
 <span class="co">## 0.05172414 0.63218391 0.31609195</span></code></pre></div>
 </div>
@@ -684,7 +684,7 @@
 <p>We use the iris (<code><a href="https://rdrr.io/r/datasets/iris.html" class="external-link">datasets::iris()</a></code>) data and generate an artificial cost matrix (see <a href="https://doi.org/10.1145/1102351.1102358" class="external-link">Beygelzimer et al., 2005</a>).</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">=</span> <span class="va">iris</span>
-<span class="va">cost</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">150</span> <span class="op">*</span> <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">2000</span><span class="op">)</span>, <span class="fl">150</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span>,<span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">150</span>, <span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>
+<span class="va">cost</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">150</span> <span class="op">*</span> <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">2000</span><span class="op">)</span>, <span class="fl">150</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span>, <span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">150</span>, <span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">cost</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">cost</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">=</span> <span class="cn">NULL</span>
@@ -753,7 +753,7 @@
 
 <span class="co">## Prediction: 150 observations</span>
 <span class="co">## predict.type: response</span>
-<span class="co">## threshold: </span>
+<span class="co">## threshold:</span>
 <span class="co">## time: 0.04</span>
 <span class="co">##   id response</span>
 <span class="co">## 1  1   setosa</span>
@@ -766,7 +766,7 @@
 
 <span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">meancosts</span>, <span class="va">mcp</span><span class="op">)</span>, task <span class="op">=</span> <span class="va">costsens.task</span><span class="op">)</span>
 
-<span class="co">## meancosts       mcp </span>
+<span class="co">## meancosts       mcp</span>
 <span class="co">##  129.5971  124.8077</span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

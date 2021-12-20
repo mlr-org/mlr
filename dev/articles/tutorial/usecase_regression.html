@@ -273,7 +273,7 @@
 <span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.lm"</span><span class="op">)</span>, <span class="va">tuned.ksvm</span>, <span class="va">tuned.rf</span><span class="op">)</span>
 
 <span class="co"># Conduct the benchmark experiment</span>
-<span class="va">bmr</span> <span class="op">=</span> <span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span><span class="op">(</span>learners <span class="op">=</span> <span class="va">lrns</span>, tasks <span class="op">=</span> <span class="va">regr.task</span>, resamplings <span class="op">=</span> <span class="va">rdesc</span>, measures <span class="op">=</span> <span class="va">rmse</span>, 
+<span class="va">bmr</span> <span class="op">=</span> <span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span><span class="op">(</span>learners <span class="op">=</span> <span class="va">lrns</span>, tasks <span class="op">=</span> <span class="va">regr.task</span>, resamplings <span class="op">=</span> <span class="va">rdesc</span>, measures <span class="op">=</span> <span class="va">rmse</span>,
   show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level1">
