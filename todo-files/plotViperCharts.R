@@ -79,24 +79,28 @@ plotViperCharts.list = function(obj, chart = "rocc", browse = TRUE, auth.key = N
   )
   url = "http://viper.ijs.si/api/"
   headers = list("Accept" = "application/json", "Content-Type" = "application/json")
-  if (!is.null(auth.key))
+  if (!is.null(auth.key)) {
     headers["AUTH-KEY"] = auth.key
+  }
   resp = RCurl::postForm(url, .opts = list(postfields = rjson::toJSON(inp), httpheader = headers))
   resp = rjson::fromJSON(resp)
-  if (resp$url == "")
+  if (resp$url == "") {
     stopf("ViperCharts error: %s", resp$msg)
-  if (browse)
+  }
+  if (browse) {
     browseURL(resp$url)
+  }
   invisible(resp$url)
 }
 
 #' @export
 plotViperCharts.BenchmarkResult = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL, task.id = NULL) {
   tids = getBMRTaskIds(obj)
-  if (is.null(task.id))
+  if (is.null(task.id)) {
     task.id = tids[1L]
-  else
+  } else {
     assertChoice(task.id, tids)
+  }
   ps = getBMRPredictions(obj, task.ids = task.id, as.df = FALSE)[[1L]]
   plotViperCharts.list(ps, chart, browse, auth.key)
 }

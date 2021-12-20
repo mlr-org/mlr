@@ -44,7 +44,6 @@ performance(pred, measure = list(multilabel.hamloss, multilabel.subset01, multil
 # the next call basically has the same structure for any multilabel meta wrapper
 getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 # above works also with predictions from resample!
-
 }
 \references{
 Montanes, E. et al. (2013)

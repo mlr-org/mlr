@@ -105,7 +105,7 @@ We will use the resampling strategy and the performance measure from the previou
 lrns = list(makeLearner("regr.lm"), tuned.ksvm, tuned.rf)
 
 # Conduct the benchmark experiment
-bmr = benchmark(learners = lrns, tasks = regr.task, resamplings = rdesc, measures = rmse, 
+bmr = benchmark(learners = lrns, tasks = regr.task, resamplings = rdesc, measures = rmse,
   show.info = FALSE)
 ```
 

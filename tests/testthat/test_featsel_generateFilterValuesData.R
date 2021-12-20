@@ -172,7 +172,8 @@ test_that("filter values are named and ordered correctly", {
       names(d) = ns
       d = c(d[-1], d[1])
       d
-    })
+    }
+  )
   fv = generateFilterValuesData(regr.task, method = "mock.filter")
   expect_equal(fv$data$name, ns)
   expect_equal(fv$data$value, seq_along(ns))

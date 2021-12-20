@@ -3,7 +3,7 @@ test_that("classif_obliqueRF", {
   requirePackages("obliqueRF", default.method = "load")
   parset.list = list(
     list(),
-    list(ntree = 5L,  mtry = 2L),
+    list(ntree = 5L, mtry = 2L),
     list(training_method = "svm")
   )
 

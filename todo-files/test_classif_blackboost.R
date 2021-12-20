@@ -44,7 +44,7 @@ test_that("classif_blackboost", {
 
 test_that("classif_blackboost probability predictions with family 'AUC' and 'AdaExp'", {
   families = list("AUC", "AdaExp")
-  lapply(families, FUN = function(x){
+  lapply(families, FUN = function(x) {
     lrn = makeLearner("classif.blackboost", par.vals = list(family = x), predict.type = "prob")
     mod = train(lrn, binaryclass.task)
     expect_error(predict(mod, binaryclass.task), "support probabilities")

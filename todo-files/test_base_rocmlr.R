@@ -37,8 +37,8 @@ test_that("roc coords work", {
 
   expect_equal(rc$data, as.data.frame(matrix(c(
     1.0, 0.0, 0.0,
-    0.7, 1/4, 0.5,
-    0.3, 3/4, 0.5,
+    0.7, 1 / 4, 0.5,
+    0.3, 3 / 4, 0.5,
     0.1, 1.0, 1.0,
     0.0, 1.0, 1.0
   ), byrow = TRUE, ncol = 3L)))

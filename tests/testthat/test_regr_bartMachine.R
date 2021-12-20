@@ -6,11 +6,11 @@ test_that("regr_bartMachine", {
     list(num_burn_in = 10L, num_iterations_after_burn_in = 10L,
       run_in_sample = FALSE,
       seed = getOption("mlr.debug.seed")
-      ),
+    ),
     list(num_burn_in = 10L, num_iterations_after_burn_in = 10L, alpha = 0.8,
       num_trees = 25L, run_in_sample = FALSE,
       seed = getOption("mlr.debug.seed")
-      )
+    )
   )
 
   old.predicts.list = list()

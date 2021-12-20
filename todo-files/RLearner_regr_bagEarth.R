@@ -10,16 +10,17 @@ makeRLearner.regr.bagEarth = function() {
   )
 }
 
-trainLearner.regr.bagEarth = function(.learner, .task, .subset,  ...) {
+trainLearner.regr.bagEarth = function(.learner, .task, .subset, ...) {
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
   if (.task$task.desc$has.weights) {
     f = getTaskFormula(.task)
-    bagEarth(f, data=getTaskData(.task, .subset), ...)
-  }else  
-    bagEarth(f, data=d, ...)
+    bagEarth(f, data = getTaskData(.task, .subset), ...)
+  } else {
+    bagEarth(f, data = d, ...)
+  }
 }
 
 predictLearner.regr.bagEarth = function(.learner, .model, .newdata, ...) {
-  predict.bagEarth(.model$learner.model, newdata=.newdata)
+  predict.bagEarth(.model$learner.model, newdata = .newdata)
 }

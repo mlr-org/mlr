@@ -16,8 +16,9 @@ makePreprocWrapperPCA = function(learner) {
   trainfun = function(data, target, args) {
     cns = colnames(data)
     nums = setdiff(cns[vlapply(data, is.numeric)], target)
-    if (!length(nums))
+    if (!length(nums)) {
       return(list(data = data, control = list()))
+    }
     x = data[, nums, drop = FALSE]
     pca = prcomp(x, scale = TRUE)
     data = data[, setdiff(cns, nums), drop = FALSE]
@@ -28,8 +29,9 @@ makePreprocWrapperPCA = function(learner) {
 
   predictfun = function(data, target, args, control) {
     # no numeric features ?
-    if (!length(control))
+    if (!length(control)) {
       return(data)
+    }
     cns = colnames(data)
     nums = control$pca.colnames
     x = as.matrix(data[, nums, drop = FALSE])
@@ -38,6 +40,6 @@ makePreprocWrapperPCA = function(learner) {
     data = data[, setdiff(cns, nums), drop = FALSE]
     cbind(data, as.data.frame(x))
   }
-  
+
   makePreprocWrapper(learner, trainfun, predictfun)
 }

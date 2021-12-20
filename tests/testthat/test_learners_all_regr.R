@@ -6,7 +6,7 @@ test_that("learners work: regr ", {
 
   # because of missing rJava for bartMachine
   skip_on_os("windows")
-  #suppressPackageStartupMessages(requirePackagesOrSkip("crs", default.method = "load"))
+  # suppressPackageStartupMessages(requirePackagesOrSkip("crs", default.method = "load"))
 
   # settings to make learners faster and deal with small data size
   hyperpars = list(

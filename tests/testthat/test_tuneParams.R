@@ -16,7 +16,7 @@ test_that("names for minimize are set correctly", {
 test_that("tuneParams with resample.fun", {
   cl =
 
-  lrn = makeLearner("classif.rpart")
+    lrn = makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
     makeNumericParam("cp", lower = 0.001, upper = 1),
@@ -66,7 +66,7 @@ test_that("tuneParams with resample.fun", {
 
 test_that("tuneParams output works as documented", {
   cl =
-  lrn = makeLearner("classif.ksvm")
+    lrn = makeLearner("classif.ksvm")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
     makeNumericParam("C", lower = 0.001, upper = 1)
@@ -101,7 +101,7 @@ test_that("tuneParams output works as documented", {
 test_that("tuneParams output works as documented", {
   cl =
 
-  lrn = makeLearner("classif.ksvm")
+    lrn = makeLearner("classif.ksvm")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
     makeNumericParam("C", lower = 0.001, upper = 1)
@@ -137,10 +137,10 @@ test_that("tuning with a fixed ensemble methods and varying base methods works",
 
   cl =
 
-  # TODO: make it possible to choose arbitrary number of base.methods -> cannot
-  # tune an argument of a param. We need to make makeDiscreteVectorParam more
-  # flexible to allow more than one ensemble.method
-  lrn = makeFilterWrapper(learner = "classif.ksvm", fw.method = "E-min")
+    # TODO: make it possible to choose arbitrary number of base.methods -> cannot
+    # tune an argument of a param. We need to make makeDiscreteVectorParam more
+    # flexible to allow more than one ensemble.method
+    lrn = makeFilterWrapper(learner = "classif.ksvm", fw.method = "E-min")
 
   filter.list = listFilterMethods(desc = FALSE, tasks = TRUE, features = FALSE)
   filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
@@ -170,10 +170,10 @@ test_that("tuning with a fixed ensemble methods and varying base methods works",
 
   cl =
 
-  # TODO: choose arbitrary number of base.methods -> cannot tune an argument of
-  # a param. We need to make makeDiscreteVectorParam more flexible. allow more
-  # than one ensemble.method
-  lrn = makeFilterWrapper(learner = "classif.ksvm", fw.method = "E-min")
+    # TODO: choose arbitrary number of base.methods -> cannot tune an argument of
+    # a param. We need to make makeDiscreteVectorParam more flexible. allow more
+    # than one ensemble.method
+    lrn = makeFilterWrapper(learner = "classif.ksvm", fw.method = "E-min")
 
   filter.list = listFilterMethods(desc = FALSE, tasks = TRUE, features = FALSE)
   filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
@@ -226,6 +226,5 @@ test_that("passing more than one fw.method raises an error", {
   expect_error(makeFilterWrapper(
     learner = "classif.ksvm",
     fw.method = c("E-min", "E-max"),
-    fw.base.methods = c("gain.ratio", "information.gain"))
-  )
+    fw.base.methods = c("gain.ratio", "information.gain")))
 })

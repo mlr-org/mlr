@@ -91,7 +91,7 @@ ps = makeParamSet(
 )
 ctrl = makeTuneMultiCritControlRandom(maxit = 30L)
 rdesc = makeResampleDesc("Holdout")
-res = tuneParamsMultiCrit("classif.ksvm", task = sonar.task, 
+res = tuneParamsMultiCrit("classif.ksvm", task = sonar.task,
   resampling = rdesc, par.set = ps,
   measures = list(fpr, fnr), control = ctrl, show.info = FALSE)
 res

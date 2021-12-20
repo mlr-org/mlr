@@ -26,8 +26,9 @@ trainLearner.classif.wsrf = function(.learner, .task, .subset, .weights = NULL, 
 #' @export
 predictLearner.classif.wsrf = function(.learner, .model, .newdata, ...) {
   p = wsrf::predict.wsrf(.model$learner.model, .newdata, type = .learner$predict.type)
-  if (.learner$predict.type == "response")
+  if (.learner$predict.type == "response") {
     return(p)
-  else
+  } else {
     return(as.matrix(p))
+  }
 }

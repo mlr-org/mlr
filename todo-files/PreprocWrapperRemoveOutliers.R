@@ -1,5 +1,5 @@
-#FIXME: read this, better way to require package
-#only export if proved useful
+# FIXME: read this, better way to require package
+# only export if proved useful
 # simul study?
 # FIXME: indexing without drop
 
@@ -11,13 +11,13 @@ makePreprocWrapperRemoveOutliers = function(learner, ro.alpha = 0.5) {
     cns = colnames(data)
     nums = setdiff(cns[vlapply(data, is.numeric)], target)
     # we must have at least n = 2*p obs
-    if (length(nums) && nrow(data) >= 2L*length(nums)) {
+    if (length(nums) && nrow(data) >= 2L * length(nums)) {
       x = data[, nums, drop = FALSE]
       # split x in classes
       x.splitted = split(x, data[, target])
       idx = lapply(x.splitted, function(d) as.logical(covMcd(x = d, alpha = args$ro.alpha)$mcd.wt))
       idx = unsplit(idx, data[, target])
-      data = data[idx,]
+      data = data[idx, ]
     }
     list(data = data, control = list())
   }

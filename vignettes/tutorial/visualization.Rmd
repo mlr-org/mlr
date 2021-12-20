@@ -104,7 +104,7 @@ measure_names = c(
 )
 # Manipulate the measure names via the labeller function and
 # arrange the panels in two columns and choose common axis limits for all panels
-plt = plt + facet_wrap( ~ measure, labeller = labeller(measure = measure_names), ncol = 2)
+plt = plt + facet_wrap(~measure, labeller = labeller(measure = measure_names), ncol = 2)
 plt = plt + xlab("Decision threshold") + ylab("Performance")
 plt
 ```

@@ -141,7 +141,7 @@ In the following example we use the `datasets::iris()` data and an artificial co
 
 ```{r}
 df = iris
-cost = matrix(runif(150 * 3, 0, 2000), 150) * (1 - diag(3))[df$Species,]
+cost = matrix(runif(150 * 3, 0, 2000), 150) * (1 - diag(3))[df$Species, ]
 df$Species = NULL
 
 costsens.task = makeCostSensTask(data = df, cost = cost)

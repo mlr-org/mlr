@@ -54,8 +54,7 @@ getResamplingIndices = function(object, inner = FALSE) {
         simplify = FALSE)
       },
       simplify = FALSE)
-    }
-    )
+    })
 
     return(inner.inds.translated)
 

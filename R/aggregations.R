@@ -216,7 +216,8 @@ b632 = makeAggregation(
   properties = c("req.train", "req.test"),
   fun = function(task, perf.test, perf.train, measure, group, pred) {
     mean(0.632 * perf.test + 0.368 * perf.train)
-  })
+  }
+)
 
 
 # FIXME: read this again properly and double check it
@@ -247,7 +248,8 @@ b632plus = makeAggregation(
       a[i] = (1 - w) * perf.train[i] + w * perf.test[i]
     }
     return(mean(a))
-  })
+  }
+)
 
 #' @export
 #' @usage NULL
@@ -259,7 +261,8 @@ testgroup.mean = makeAggregation(
   properties = "req.test",
   fun = function(task, perf.test, perf.train, measure, group, pred) {
     mean(vnapply(split(perf.test, group), mean))
-  })
+  }
+)
 
 #' @export
 #' @usage NULL
@@ -271,7 +274,8 @@ testgroup.sd = makeAggregation(
   properties = "req.test",
   fun = function(task, perf.test, perf.train, measure, group, pred) {
     sd(BBmisc::vnapply(split(perf.test, group), mean))
-  })
+  }
+)
 
 #' @export
 #' @usage NULL
@@ -297,4 +301,5 @@ test.join = makeAggregation(
       )
       performance(npred, measure)
     }))
-  })
+  }
+)

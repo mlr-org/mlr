@@ -150,7 +150,7 @@ Below, the error rate ([mmce](measures.html){target="_blank"}), false positive a
 rdesc = makeResampleDesc("Subsample", iters = 5)
 
 # Subsampling with 5 iterations and 4/5 training data
-rdesc = makeResampleDesc("Subsample", iters = 5, split = 4/5)
+rdesc = makeResampleDesc("Subsample", iters = 5, split = 4 / 5)
 
 # Classification tree with information splitting criterion
 lrn = makeLearner("classif.rpart", parms = list(split = "information"))
@@ -164,7 +164,7 @@ r = resample(lrn, sonar.task, rdesc, measures = list(mmce, fpr, fnr, timetrain))
 rdesc = makeResampleDesc("Subsample", iters = 5)
 
 # Subsampling with 5 iterations and 4/5 training data
-rdesc = makeResampleDesc("Subsample", iters = 5, split = 4/5)
+rdesc = makeResampleDesc("Subsample", iters = 5, split = 4 / 5)
 
 # Classification tree with information splitting criterion
 lrn = makeLearner("classif.rpart", parms = list(split = "information"))
@@ -564,8 +564,8 @@ In the inner level, the number of folds will simply be one less than in the oute
 ```{r, warning=FALSE}
 # test fixed in nested resampling
 lrn = makeLearner("classif.lda")
-ctrl <- makeTuneControlRandom(maxit = 2)
-ps <- makeParamSet(makeNumericParam("nu", lower = 2, upper = 20))
+ctrl = makeTuneControlRandom(maxit = 2)
+ps = makeParamSet(makeNumericParam("nu", lower = 2, upper = 20))
 inner = makeResampleDesc("CV", fixed = TRUE)
 outer = makeResampleDesc("CV", fixed = TRUE)
 tune_wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps,

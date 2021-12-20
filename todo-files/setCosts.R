@@ -37,23 +37,26 @@
 #' pred = setCosts(pred, costs)
 #' performance(pred, measures = list(iris.costs, mmce))
 #' head(as.data.frame(pred))
-
 setCosts = function(pred, costs) {
   assertClass(pred, classes = "Prediction")
   assertMatrix(costs, any.missing = FALSE)
   td = pred$task.desc
-  if (td$type != "classif") 
+  if (td$type != "classif") {
     stop("Costs can only be set for classification predictions!")
-  if (pred$predict.type != "prob") 
+  }
+  if (pred$predict.type != "prob") {
     stop("Costs can only be set for predict.type 'prob'!")
+  }
   levs = td$class.levels
   if (any(dim(costs))) {
-    if (any(dim(costs) != length(levs))) 
+    if (any(dim(costs) != length(levs))) {
       stop("Dimensions of costs have to be the same as number of class levels!")
+    }
     rns = rownames(costs)
     cns = colnames(costs)
-    if (!setequal(rns, levs) || !setequal(cns, levs)) 
+    if (!setequal(rns, levs) || !setequal(cns, levs)) {
       stop("Row and column names of cost matrix have to equal class levels!")
+    }
   }
   p = getPredictionProbabilities(pred, cl = levs)
   # resort rows and columns of cost matrix so we have same order as in p
@@ -66,19 +69,19 @@ setCosts = function(pred, costs) {
   pred$data$response = factor(ind, levels = seq_along(levs), labels = levs)
   ncl = length(levs)
   if (ncl == 2L) {
-  	threshold = costs[td$negative, td$positive]/(costs[td$negative, td$positive] + costs[td$positive, td$negative])
-  	threshold = c(threshold, 1 - threshold)
-  	names(threshold) = c(td$positive, td$negative)
+    threshold = costs[td$negative, td$positive] / (costs[td$negative, td$positive] + costs[td$positive, td$negative])
+    threshold = c(threshold, 1 - threshold)
+    names(threshold) = c(td$positive, td$negative)
   } else {
-  	# check row-wise equality of off-diagonal elements
-  	u = apply(costs, 1, function(x) length(unique(x)))
-  	if (all(u < 3)) {
-		threshold = (ncl - 1)/rowSums(costs)
-		threshold = threshold/sum(threshold)
-  	} else {
-  		threshold = rep_len(NA, ncl)
-  	}
-  	names(threshold) = levs
+    # check row-wise equality of off-diagonal elements
+    u = apply(costs, 1, function(x) length(unique(x)))
+    if (all(u < 3)) {
+      threshold = (ncl - 1) / rowSums(costs)
+      threshold = threshold / sum(threshold)
+    } else {
+      threshold = rep_len(NA, ncl)
+    }
+    names(threshold) = levs
   }
   pred$threshold = threshold
   return(pred)

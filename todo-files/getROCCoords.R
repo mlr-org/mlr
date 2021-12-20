@@ -39,10 +39,10 @@ getROCCoords.Prediction = function(obj, thresholds = 50L) {
   data = sortByCol(data, "prob", asc = FALSE)
   n.pos = sum(data$truth == pos)
   n.neg = nrow(data) - n.pos
-  data = data.frame(threshold = data$prob, tpr = cumsum(data$truth == pos)/n.pos, fpr = cumsum(data$truth != pos)/n.neg)
+  data = data.frame(threshold = data$prob, tpr = cumsum(data$truth == pos) / n.pos, fpr = cumsum(data$truth != pos) / n.neg)
   # forcefully add th = 0 and th = 1
   data = rbind(data.frame(threshold = 1, tpr = 0, fpr = 0), data, data.frame(threshold = 0, tpr = 1, fpr = 1))
-  data = data[!duplicated(data$thres, fromLast = TRUE),]
+  data = data[!duplicated(data$thres, fromLast = TRUE), ]
   rownames(data) = NULL
   makeS3Obj("ROCCoords", data = data, averaged = FALSE)
 }
@@ -59,8 +59,8 @@ getROCCoords.ResamplePrediction = function(obj, thresholds = 50L) {
     n.pos = sum(is.pos)
     n.neg = sum(is.neg)
     prob = df[, paste0("prob.", pos)]
-    tpr = vnapply(thres, function(i) sum(prob >= i & is.pos)/n.pos)
-    fpr = vnapply(thres, function(i) sum(prob >= i & is.neg)/n.neg)
+    tpr = vnapply(thres, function(i) sum(prob >= i & is.pos) / n.pos)
+    fpr = vnapply(thres, function(i) sum(prob >= i & is.neg) / n.neg)
     cbind(thres, tpr, fpr)
   })
   data = ddply(coords, ~ set + thres, summarize, tpr = mean(tpr), fpr = mean(fpr))
@@ -97,22 +97,27 @@ getROCCoords.BenchmarkResult = function(obj, thresholds = 50L) {
 #' @export
 plotROCCoords = function(coords, line.size = 0.5, coord.fixed = TRUE, xlab = NULL, ylab = NULL) {
   dat = coords$data
-  if (is.null (xlab))
+  if (is.null(xlab)) {
     xlab = paste0(ifelse(coords$averaged, "Average f", "F"), "alse positive rate")
-  if (is.null (ylab))
+  }
+  if (is.null(ylab)) {
     ylab = paste0(ifelse(coords$averaged, "Average t", "T"), "rue positive rate")
-  n = c(learner = nlevels(dat$learner), task = nlevels(dat$task), set = nlevels(dat$set)) 
+  }
+  n = c(learner = nlevels(dat$learner), task = nlevels(dat$task), set = nlevels(dat$set))
   vars = names(sort(n[n > 1L], decreasing = TRUE))
-  color.var = if(!length(vars)) NULL else vars[1]
+  color.var = if (!length(vars)) NULL else vars[1]
   pl = ggplot(dat, aes(x = fpr, y = tpr)) +
     geom_segment(aes(x = 0, y = 0, xend = 1, yend = 1), color = "grey", size = line.size) +
     labs(y = ylab, x = xlab) +
     geom_path(size = line.size, aes_string(color = color.var, group = color.var))
-  if (length(vars) == 2)
+  if (length(vars) == 2) {
     pl = pl + facet_wrap(reformulate(vars[2L]))
-  if (length(vars) == 3)
+  }
+  if (length(vars) == 3) {
     pl = pl + facet_grid(reformulate(vars[2L], vars[3L]))
-  if (coord.fixed)
+  }
+  if (coord.fixed) {
     pl = pl + coord_fixed(ratio = 1)
+  }
   return(pl)
 }

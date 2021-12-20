@@ -3,20 +3,23 @@ batchmark = function(reg, learners, tasks, resamplings, measures = NULL, repls =
   fixID = function(x) gsub(".", "_", x, fixed = TRUE)
 
   BatchExperiments:::checkExperimentRegistry(reg)
-  if ("mlr" %nin% names(reg$packages))
+  if ("mlr" %nin% names(reg$packages)) {
     stop("mlr is required on the slaves, please add mlr via 'addRegistryPackages'")
+  }
 
   learners = ensureVector(learners, 1L, cl = "Learner")
   assertList(learners, types = "Learner", min.len = 1L)
   learner.ids = vcapply(learners, "[[", "id")
-  if (anyDuplicated(learner.ids))
+  if (anyDuplicated(learner.ids)) {
     stop("Duplicated learner ids found")
+  }
 
   tasks = ensureVector(tasks, 1L, cl = "Task")
   assertList(tasks, types = "Task", min.len = 1L)
   task.ids = vcapply(tasks, getTaskId)
-  if (anyDuplicated(task.ids))
+  if (anyDuplicated(task.ids)) {
     stop("Duplicated task ids found")
+  }
 
   resamplings = ensureVector(resamplings, length(tasks), "ResampleDesc")
   assertList(resamplings, "ResampleDesc", len = length(tasks))

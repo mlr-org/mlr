@@ -9,9 +9,9 @@ makeRLearner.classif.plsDA = function() {
     package = "DiscriMiner",
     par.set = makeParamSet(
       makeLogicalLearnerParam(id = "autosel", default = TRUE),
-      makeIntegerLearnerParam(id = "comps", lower = 1L, default = 2L, requires = expression(autosel==TRUE)),
+      makeIntegerLearnerParam(id = "comps", lower = 1L, default = 2L, requires = expression(autosel == TRUE)),
       makeLogicalLearnerParam(id = "retain.models", default = FALSE)
-      ),
+    ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Partial Least Squares (PLS) Discriminant Analysis",
     short.name = "plsda",
@@ -20,7 +20,7 @@ makeRLearner.classif.plsDA = function() {
 }
 
 #' @export
-trainLearner.classif.plsDA = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.plsDA = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   DiscriMiner::plsDA(variables = d$data, group = d$target, ...)
 }
@@ -29,6 +29,6 @@ trainLearner.classif.plsDA = function(.learner, .task, .subset, .weights = NULL,
 predictLearner.classif.plsDA = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   p = DiscriMiner::classify(m, newdata = .newdata)
-  #p$scores #we loose this information
+  # p$scores #we loose this information
   p$pred_class
 }

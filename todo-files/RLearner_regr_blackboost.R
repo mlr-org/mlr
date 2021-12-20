@@ -45,7 +45,7 @@ trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights = NUL
   if (missing(mincriterion)) mincriterion = defaults$mincriterion
   if (missing(maxdepth)) maxdepth = defaults$maxdepth
   if (missing(savesplitstats)) savesplitstats = defaults$savesplitstats
-  tc =  learnerArgsToControl(party::ctree_control, teststat, testtype, mincriterion,
+  tc = learnerArgsToControl(party::ctree_control, teststat, testtype, mincriterion,
     maxdepth, savesplitstats, ...)
   family = switch(family,
     Gaussian = mboost::Gaussian(),
@@ -58,10 +58,11 @@ trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights = NUL
     custom.family = custom.family.definition
   )
   f = getTaskFormula(.task)
-  if (!is.null(.weights))
+  if (!is.null(.weights)) {
     mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights, family = family, ...)
-  else
+  } else {
     mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, family = family, ...)
+  }
 }
 
 predictLearner.regr.blackboost = function(.learner, .model, .newdata, ...) {

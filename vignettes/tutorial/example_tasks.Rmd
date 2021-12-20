@@ -29,13 +29,13 @@ linkTask = function(x) {
 }
 d = data(package = "mlr")
 d = d$results
-types = sapply(d[,"Item"], function(x) getTaskDesc(eval(parse(text = x)))$type)
+types = sapply(d[, "Item"], function(x) getTaskDesc(eval(parse(text = x)))$type)
 names(types) = NULL
 ord = order(types)
-d = d[ord,]
+d = d[ord, ]
 types = types[ord]
 types[duplicated(types)] = ""
-df = data.frame(Type = types, Task = d[,"Item"], Description = d[,"Title"])
+df = data.frame(Type = types, Task = d[, "Item"], Description = d[, "Title"])
 df$Task = sapply(df$Task, linkTask)
 pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf,
   justify = rep("left", 3))

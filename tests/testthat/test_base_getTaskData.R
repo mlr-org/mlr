@@ -27,8 +27,7 @@ test_that("getTaskData", {
   expect_true(all(sapply(df[, multilabel.target], is.factor)))
   expect_true(all(df[multilabel.small.inds, multilabel.target] == data.frame(
     y1 = as.factor(c(TRUE, FALSE, TRUE, TRUE)),
-    y2 = as.factor(c(FALSE, TRUE, FALSE, FALSE)))
-  ))
+    y2 = as.factor(c(FALSE, TRUE, FALSE, FALSE)))))
   expect_equal(rownames(df[multilabel.small.inds, multilabel.target]), c("1", "52", "53", "123"))
 
   df = getTaskData(binaryclass.task, subset = 1:150, features = colnames(binaryclass.df)[1:2])

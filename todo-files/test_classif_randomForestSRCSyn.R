@@ -22,11 +22,11 @@ test_that("classif_randomForestSRCSyn", {
     set.seed(getOption("mlr.debug.seed"))
     p = randomForestSRC::rfsrcSyn(object = m, newdata = binaryclass.test, na.action = "na.impute", verbose = FALSE, membership = FALSE)$rfSynPred
     old.predicts.list[[i]] = p$class
-    old.probs.list[[i]] = p$predicted[,binaryclass.class.levs[1]]
+    old.probs.list[[i]] = p$predicted[, binaryclass.class.levs[1]]
   }
 
   testSimpleParsets("classif.randomForestSRCSyn", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets ("classif.randomForestSRCSyn", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list)
+  testProbParsets("classif.randomForestSRCSyn", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list)
 
   ## multiclass
   old.predicts.list = list()
@@ -44,6 +44,6 @@ test_that("classif_randomForestSRCSyn", {
   }
 
   testSimpleParsets("classif.randomForestSRCSyn", multiclass.df, multiclass.target, multiclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets ("classif.randomForestSRCSyn", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
+  testProbParsets("classif.randomForestSRCSyn", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
 
 })

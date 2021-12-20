@@ -1,7 +1,7 @@
 
 skip("still in todo")
 
-#test_that("regr_logicreg", {
+# test_that("regr_logicreg", {
 #  requirePackages("LogicReg")
 #  set.seed(1)
 #  mydata = as.data.frame(matrix(rbinom(100*5, 1, 0.5), 100, 5))
@@ -31,4 +31,4 @@ skip("still in todo")
 #  }
 #
 #  testSimpleParsets("regr.logicreg", mydata, "y", 1:60, old.predicts.list, parset.list2)
-#})
+# })

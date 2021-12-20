@@ -67,7 +67,7 @@ data.imbal.train = rbind(
 )
 task = makeClassifTask(data = data.imbal.train, target = "class")
 task.over = oversample(task, rate = 8)
-task.under = undersample(task, rate = 1/8)
+task.under = undersample(task, rate = 1 / 8)
 
 table(getTaskTargets(task))
 
@@ -111,7 +111,7 @@ Just like before the *undersampling rate* has to be between 0 and 1, while the *
 
 ```{r over-/undersampling_wrapper}
 lrn.over = makeOversampleWrapper(lrn, osw.rate = 8)
-lrn.under = makeUndersampleWrapper(lrn, usw.rate = 1/8)
+lrn.under = makeUndersampleWrapper(lrn, usw.rate = 1 / 8)
 mod = train(lrn, task)
 mod.over = train(lrn.over, task)
 mod.under = train(lrn.under, task)
@@ -270,22 +270,22 @@ r = resample(lrn, spam.task, cv3, extract = getTuneResult)
 ## [Tune-y] 2: mmce.test.mean=0.0606496; time: 0.0 min
 ## [Tune] Result: interaction.depth=3 : mmce.test.mean=0.0577155
 ## [Resample] iter 3:    0.0625815
-## 
+##
 ## Aggregated Result: mmce.test.mean=0.0556385
-## 
+##
 print(r$extract)
 ## [[1]]
 ## Tune result:
 ## Op. pars: interaction.depth=5
 ## Threshold: 0.48
 ## mmce.test.mean=0.0599739
-## 
+##
 ## [[2]]
 ## Tune result:
 ## Op. pars: interaction.depth=3
 ## Threshold: 0.48
 ## mmce.test.mean=0.0586882
-## 
+##
 ## [[3]]
 ## Tune result:
 ## Op. pars: interaction.depth=3

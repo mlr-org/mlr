@@ -16,11 +16,6 @@ This document provides an in-depth introduction to [Machine Learning in R: mlr](
 In this tutorial, we focus on basic functions and applications.
 More detailed technical information can be found in the [manual pages](https://mlr-org.github.io/mlr/index.html){target="_blank"} which are regularly updated and reflect the documentation of the current package development version.
 
-Offline versions of this tutorial are also available for download:
-
-* [current mlr release on CRAN](https://github.com/mlr-org/mlr/blob/tutorial_pdf_release/vignettes/tutorial/release/pdf/mlr-tutorial_release.pdf)
-* [the mlr devel version on GitHub](https://github.com/mlr-org/mlr/blob/tutorial_pdf_dev/vignettes/tutorial/devel/pdf/mlr-tutorial_dev.pdf)
-
 The tutorial aims to walkthrough basic data analysis tasks step by step.
 We will use simple examples from classification, regression, cluster and survival analysis to illustrate the main features of the package.
 
@@ -44,7 +39,7 @@ task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.lda")
 
 n = nrow(iris)
-train.set = sample(n, size = 2/3*n)
+train.set = sample(n, size = 2 / 3 * n)
 test.set = setdiff(1:n, train.set)
 
 # 3) Fit the model

@@ -47,7 +47,8 @@ test_that("PreprocWrapper with glmnet (#958)", {
     },
     predict = function(data, target, args, control) {
       return(data)
-    })
+    }
+  )
   mod = train(lrn2, multiclass.task)
   pred = predict(mod, multiclass.task)
   expect_error(pred, NA)

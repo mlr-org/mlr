@@ -43,6 +43,7 @@ showFunctionDef = function(fun, name = sub("^[^:]*:+", "", deparse(substitute(fu
 imputeMean (`imputations()`) calls the unexported `mlr` function `simpleImpute` which is defined as follows.
 
 ```{r, code=showFunctionDef(mlr:::simpleImpute), eval=FALSE, tidy = TRUE, purl= FALSE}
+
 ```
 
 The *learn* function calculates the mean of the non-missing observations in column ``col``.
@@ -65,10 +66,10 @@ imputeLOCF = function() {
       x = data[[col]]
       ind = is.na(x)
       dind = diff(ind)
-      lastValue = which(dind == 1)  # position of the last observed value previous to NA
-      lastNA = which(dind == -1)    # position of the last of potentially several consecutive NA's
-      values = x[lastValue]         # last observed value previous to NA
-      times = lastNA - lastValue    # number of consecutive NA's
+      lastValue = which(dind == 1) # position of the last observed value previous to NA
+      lastNA = which(dind == -1) # position of the last of potentially several consecutive NA's
+      values = x[lastValue] # last observed value previous to NA
+      times = lastNA - lastValue # number of consecutive NA's
       return(list(values = values, times = times))
     },
     impute = function(data, target, col, values, times) {

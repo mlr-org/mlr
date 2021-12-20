@@ -3,7 +3,7 @@ library(BBmisc)
 library(devtools)
 
 
-DATASEED = 7761  # nolint
+DATASEED = 7761 # nolint
 COMPRESSION = "xz" # nolint
 
 # classification
@@ -22,7 +22,7 @@ use_data(sonar.task, overwrite = TRUE, compress = COMPRESSION)
 set.seed(DATASEED)
 data(BreastCancer, package = "mlbench")
 BreastCancer$Id = NULL
-BreastCancer = BreastCancer[complete.cases(BreastCancer), ]  # nolint
+BreastCancer = BreastCancer[complete.cases(BreastCancer), ] # nolint
 bc.task = makeClassifTask("BreastCancer-example", data = BreastCancer, target = "Class")
 use_data(bc.task, overwrite = TRUE, compress = COMPRESSION)
 
@@ -101,7 +101,7 @@ len1 = length(fuelSubset$uvvis.lambda)
 len2 = length(fuelSubset$nir.lambda)
 fdf = list(UVVIS = 1:len1, NIR = (len1 + 1):(len1 + len2))
 fs = data.frame("UVVIS" = fuelSubset$UVVIS, "NIR" = fuelSubset$NIR,
-  "heatan" = fuelSubset$heatan,  "h20" = fuelSubset$h2o)
+  "heatan" = fuelSubset$heatan, "h20" = fuelSubset$h2o)
 fs.fdf = makeFunctionalData(fs, fd.features = fdf)
 fuelsubset.task = makeRegrTask(data = fs.fdf, target = "heatan")
 use_data(fuelsubset.task, overwrite = TRUE, compress = COMPRESSION)
@@ -121,5 +121,5 @@ coords = ecuador[, c("x", "y")]
 ecuador$x = NULL
 ecuador$y = NULL
 spatial.task = makeClassifTask(target = "slides", data = ecuador, coordinates = coords,
-                               positive = "TRUE")
+  positive = "TRUE")
 use_data(spatial.task, overwrite = TRUE, compress = COMPRESSION)

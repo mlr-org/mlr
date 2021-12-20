@@ -7,15 +7,15 @@ makeRLearner.regr.fgam = function() {
       makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),
       makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),
       makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, default = NA, special.vals = list(NA)),
-      makeIntegerVectorLearnerParam(id = "mgcv.teti.m", lower = 1L),  # see mgcv::te() documentation
-      makeIntegerVectorLearnerParam(id = "mgcv.teti.k", lower = 1L),  # see mgcv::te() documentation
+      makeIntegerVectorLearnerParam(id = "mgcv.teti.m", lower = 1L), # see mgcv::te() documentation
+      makeIntegerVectorLearnerParam(id = "mgcv.teti.k", lower = 1L), # see mgcv::te() documentation
       # skipped argvals
       makeDiscreteLearnerParam(id = "basistype", values = c("te", "t2", "s"), default = "te"),
       makeDiscreteLearnerParam(id = "integration", values = c("simpson", "trapezoidal", "riemann"), default = "simpson"),
       makeDiscreteLearnerParam(id = "presmooth", values = c("fpca.sc", "fpca.face", "fpca.ssvd", "fpca.bspline",
         "fpca.interpolate", NULL), default = NULL, special.vals = list(NULL)),
       # skipped presmooth.opts, Xrange
-      makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
+      makeLogicalLearnerParam(id = "Qtransform", default = TRUE) # c.d.f transform
     ),
     properties = c("functionals"),
     name = "functional general additive model",
@@ -58,8 +58,8 @@ trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL,
   formula.terms = namedList(fdns)
   for (fdn in fdns) {
     gn = paste0(fdn, ".grid")
-    mat.list[[fdn]]=  as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
-    formula.terms[fdn] = sprintf("af(%s, basistype = 's', Qtransform = %d, k = %s, bs = %s)",     fdn, Qtransform, deparse(mgcv.s.k), bs)
+    mat.list[[fdn]] = as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
+    formula.terms[fdn] = sprintf("af(%s, basistype = 's', Qtransform = %d, k = %s, bs = %s)", fdn, Qtransform, deparse(mgcv.s.k), bs)
   }
   mat.list = c(mat.list, fdg)
   mat.list[[tn]] = d[, tn]
@@ -70,8 +70,8 @@ trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL,
 
 
 
-reformat2list4mat2 = function(.data, tdesc){
-  df =  .data
+reformat2list4mat2 = function(.data, tdesc) {
+  df = .data
   fd.features = tdesc$fd.features
   fd.grids = tdesc$fd.grids
   tn = tdesc$target
@@ -80,17 +80,17 @@ reformat2list4mat2 = function(.data, tdesc){
   name4channel = names(index.list)
   num4channel = length(index.list)
   list4mat = list()
-  for(i in 1:num4channel){
-    list4mat[[name4channel[[i]]]]=  as.matrix(subset(df, select = channel.list[[i]]))
+  for (i in 1:num4channel) {
+    list4mat[[name4channel[[i]]]] = as.matrix(subset(df, select = channel.list[[i]]))
   }
   return(list4mat)
 }
 
 #' @export
 predictLearner.regr.fgam = function(.learner, .model, .newdata, ...) {
-  mextra_para  = list(...)
+  mextra_para = list(...)
   tdesc = getTaskDesc(.model)
   list4mat = reformat2list4mat2(.newdata, tdesc)
-  pred = predict(.model$learner.model, newdata = list4mat, type = 'response')
+  pred = predict(.model$learner.model, newdata = list4mat, type = "response")
   return(as.vector(pred))
 }

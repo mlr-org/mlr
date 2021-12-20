@@ -14,8 +14,8 @@ makeRLearner.regr.randomForestSRCSyn = function() {
       makeIntegerVectorLearnerParam(id = "nodesizeSeq", default = c(1L:10L, 20L, 30L, 50L, 100L)),
       makeIntegerLearnerParam(id = "nsplit", lower = 0L, default = 0L,
         requires = quote(splitrule != "random")),
-        # for the synthetic forest nsplit is ignored and internally set to 1L if splitrule = "random"
-        # splitrule cannot be set for the RF machines, so if nsplit != 0 mse splitting with nsplit randomly selected split points is done
+      # for the synthetic forest nsplit is ignored and internally set to 1L if splitrule = "random"
+      # splitrule cannot be set for the RF machines, so if nsplit != 0 mse splitting with nsplit randomly selected split points is done
       makeNumericLearnerParam(id = "min.node", default = 3L, lower = 0L),
       makeLogicalLearnerParam(id = "use.org.features", default = TRUE),
       makeDiscreteLearnerParam(id = "na.action", default = "na.omit",
@@ -55,7 +55,7 @@ makeRLearner.regr.randomForestSRCSyn = function() {
     name = "Synthetic Random Forest",
     short.name = "rfsrcSyn",
     note = '`na.action` has been set to `"na.impute"` by default to allow missing data support and `verbose` has been set to `FALSE`.'
-    )
+  )
 }
 
 #' @export

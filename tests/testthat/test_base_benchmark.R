@@ -321,8 +321,7 @@ test_that("benchmark works with ensemble filters", {
 
   expect_class(benchmark(
     learners = tune_wrapper_svm, task = tasks,
-    resampling = rin, measures = list(acc)), "BenchmarkResult"
-  )
+    resampling = rin, measures = list(acc)), "BenchmarkResult")
 })
 test_that("benchmark handles failure models correctly", {
 
@@ -379,10 +378,10 @@ test_that("benchmark handles failure models correctly", {
   # Tests
   # Expect benchmark failing
   suppressMessages(
-  expect_error(benchmark(
-    learners = stop.learner, tasks = task,
-    resamplings = outer,
-    keep.pred = FALSE, models = FALSE, show.info = TRUE))
+    expect_error(benchmark(
+      learners = stop.learner, tasks = task,
+      resamplings = outer,
+      keep.pred = FALSE, models = FALSE, show.info = TRUE))
   )
 
   # Expect benchmark warning

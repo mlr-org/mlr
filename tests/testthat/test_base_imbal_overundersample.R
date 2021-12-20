@@ -84,7 +84,8 @@ test_that("training performance works as expected (#1357)", {
     name = "Number",
     fun = function(task, model, pred, feats, extra.args) {
       length(pred$data$response)
-    })
+    }
+  )
 
   y = binaryclass.df[, binaryclass.target]
   z = getMinMaxClass(y)

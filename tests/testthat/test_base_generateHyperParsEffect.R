@@ -4,8 +4,7 @@ test_that("generate data", {
   # generate data with nested no trafo
   ps = makeParamSet(makeNumericParam("C",
     lower = -5, upper = 5,
-    trafo = function(x) 2^x)
-  )
+    trafo = function(x) 2^x))
   ctrl = makeTuneControlRandom(maxit = 5L)
   rdesc = makeResampleDesc("Holdout")
   lrn = makeTuneWrapper("classif.ksvm",
@@ -63,16 +62,14 @@ test_that("1 numeric hyperparam", {
   # test facet 1D with non-nested shouldn't produce
   expect_error(plotHyperParsEffect(new,
     x = "iteration", y = "acc.test.mean",
-    plot.type = "line", facet = "nested_cv_run")
-  )
+    plot.type = "line", facet = "nested_cv_run"))
 })
 
 test_that("1 discrete hyperparam", {
   # generate data
   ps = makeParamSet(makeDiscreteParam("kernel", values = c(
     "vanilladot",
-    "polydot", "rbfdot"), default = "rbfdot")
-  )
+    "polydot", "rbfdot"), default = "rbfdot"))
   ctrl = makeTuneControlGrid()
   rdesc = makeResampleDesc("Holdout")
   res = tuneParams("classif.ksvm",

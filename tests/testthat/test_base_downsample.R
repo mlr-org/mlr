@@ -11,8 +11,7 @@ test_that("downsample", {
         length(rin2$train.inds[[i]]),
         length(rin$train.inds[[i]]) / 2
       )
-    }
-    )
+    })
   }
 })
 
@@ -70,7 +69,8 @@ test_that("training performance works as expected (#1357)", {
     name = "Number",
     fun = function(task, model, pred, feats, extra.args) {
       length(pred$data$response)
-    })
+    }
+  )
 
   rdesc = makeResampleDesc("Holdout", predict = "both")
   lrn = makeDownsampleWrapper("classif.rpart", dw.perc = 0.1)

@@ -32,9 +32,9 @@ trainLearner.classif.xyf = function(.learner, .task, .subset, .weights = NULL, x
 #' @export
 predictLearner.classif.xyf = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, as.matrix(.newdata), ...)
-  if (.learner$predict.type == "response"){
+  if (.learner$predict.type == "response") {
     return(p$prediction)
   } else {
-    return(p$unit.predictions[p$unit.classif,])
+    return(p$unit.predictions[p$unit.classif, ])
   }
 }

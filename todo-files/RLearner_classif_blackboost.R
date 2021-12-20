@@ -8,8 +8,8 @@ makeRLearner.classif.blackboost = function() {
       makeDiscreteLearnerParam(id = "family", default = "Binomial",
         values = c("Binomial", "AdaExp", "AUC", "custom.family")),
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
-      #makeNumericVectorLearnerParam(id = "nuirange", default = c(-0.5,-1), requires = quote(family == "PropOdds")),
-      #makeNumericVectorLearnerParam(id = "offrange", default = c(-5,5), requires = quote(family == "PropOdds")),
+      # makeNumericVectorLearnerParam(id = "nuirange", default = c(-0.5,-1), requires = quote(family == "PropOdds")),
+      # makeNumericVectorLearnerParam(id = "offrange", default = c(-5,5), requires = quote(family == "PropOdds")),
       makeDiscreteLearnerParam(id = "Binomial.link", default = "logit", values = c("logit", "probit")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
@@ -49,19 +49,20 @@ trainLearner.classif.blackboost = function(.learner, .task, .subset, .weights = 
   if (missing(mincriterion)) mincriterion = defaults$mincriterion
   if (missing(maxdepth)) maxdepth = defaults$maxdepth
   if (missing(savesplitstats)) savesplitstats = defaults$savesplitstats
-  tc =  learnerArgsToControl(party::ctree_control, teststat, testtype, mincriterion,
+  tc = learnerArgsToControl(party::ctree_control, teststat, testtype, mincriterion,
     maxdepth, savesplitstats, ...)
   f = getTaskFormula(.task)
   family = switch(family,
     Binomial = mboost::Binomial(link = Binomial.link),
     AdaExp = mboost::AdaExp(),
     AUC = mboost::AUC(),
-    #PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange),
+    # PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange),
     custom.family = custom.family.definition)
-  if (!is.null(.weights))
+  if (!is.null(.weights)) {
     mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights, family = family, ...)
-  else
+  } else {
     mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, family = family, ...)
+  }
 }
 
 #' @export
@@ -69,7 +70,7 @@ predictLearner.classif.blackboost = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "class", "response")
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   if (.learner$predict.type == "prob") {
-    if (!is.matrix(p) && is.na(p)){
+    if (!is.matrix(p) && is.na(p)) {
       stopf("The selected family %s does not support probabilities", getHyperPars(.learner)$family)
     } else {
       td = .model$task.desc

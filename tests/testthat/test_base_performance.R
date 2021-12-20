@@ -28,7 +28,8 @@ test_that("performance", {
       e2 = mean(t2 != pred$data$response)
       expect_equal(e1, e2)
       0
-    })
+    }
+  )
   r = resample(lrn, task = binaryclass.task, resampling = res,
     measures = mymeasure)
   expect_true(r$aggr >= 0)
@@ -49,7 +50,8 @@ test_that("performance", {
     properties = c("classif", "predtype.response"),
     fun = function(task, group, pred, feats, extra.args) {
       mean(pred$data$truth != pred$data$response)
-    })
+    }
+  )
   rdesc = makeResampleDesc("Holdout")
   r = resample(lrn, binaryclass.task, rdesc, measures = list(mmce, mymeasure))
   expect_equal(as.numeric(r$aggr["mmce.test.mean"]), as.numeric(r$aggr["mym.train.mean"]))
@@ -74,10 +76,10 @@ test_that("performance is NA if 'on.measure.not.applicable' is not 'stop'", {
       expect_warning(expect_equal(unname(performance(pred, auc)), NA_real_))
       # does this also work with benchmark?
       suppressWarnings(
-      expect_warning({
-        b = benchmark(lrn, binaryclass.task, measures = list(acc, auc),
-          resamplings = cv5)
-      })
+        expect_warning({
+          b = benchmark(lrn, binaryclass.task, measures = list(acc, auc),
+            resamplings = cv5)
+        })
       )
       expect_true(any(is.na(as.data.frame(b)$auc)))
       expect_false(any(is.na(as.data.frame(b)$acc)))

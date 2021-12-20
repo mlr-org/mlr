@@ -10,11 +10,11 @@ makeRLearner.regr.icr = function() {
   )
 }
 
-trainLearner.regr.icr = function(.learner, .task, .subset,  ...) {
+trainLearner.regr.icr = function(.learner, .task, .subset, ...) {
   f = getTaskFormula(.task)
-  icr(f, data=getTaskData(.task, .subset), ...)
+  icr(f, data = getTaskData(.task, .subset), ...)
 }
 
 predictLearner.regr.icr = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata=.newdata)
+  predict(.model$learner.model, newdata = .newdata)
 }

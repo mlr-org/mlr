@@ -3,8 +3,7 @@ test_that("getTuneResultOptPath", {
   ctrl = makeTuneControlRandom(maxit = 3L)
   rdesc = makeResampleDesc("CV", iters = 3L)
   ps = makeParamSet(
-    makeDiscreteParam("C", values = seq(1:10)
-  ))
+    makeDiscreteParam("C", values = seq(1:10)))
   rdesc = makeResampleDesc("CV", iters = 3L)
   res = tuneParams("classif.ksvm", task = iris.task, resampling = rdesc,
     par.set = ps, control = ctrl)

@@ -4,13 +4,13 @@ test_that("regr_mxff", {
   # tests for FeedForward networks with only FullyConnected layers using mx.mlp
   parset.list.mxnet = list(
     list(hidden_node = c(20, 20), activation = c("sigmoid", "relu"),
-      learning.rate = 0.2, array.layout = "rowmajor", num.round = 100)#,
+      learning.rate = 0.2, array.layout = "rowmajor", num.round = 100) # ,
     # list(hidden_node = c(10, 6), activation = c("sigmoid", "relu"),
     #  learning.rate = 0.2, dropout = 0.5, array.layout = "rowmajor", num.round = 10)
   )
   parset.list.mlr = list(
     list(layers = 2, num.layer1 = 20, num.layer2 = 20, act1 = "sigmoid",
-      act2 = "relu", learning.rate = 0.2, num.round = 100)#,
+      act2 = "relu", learning.rate = 0.2, num.round = 100) # ,
     # list(layers = 2, num.layer1 = 10, num.layer2 = 6, act1 = "sigmoid",
     #  act2 = "relu", learning.rate = 0.2, dropout.global = FALSE, dropout.layer1 = 0.5,
     # dropout.layer2 = 0.5, dropout.mode = "training", num.round = 10)
@@ -22,8 +22,8 @@ test_that("regr_mxff", {
   for (i in seq_along(parset.list.mxnet)) {
     x = data.matrix(regr.num.train[, -ncol(regr.num.train)])
     y = as.numeric(regr.num.train[, ncol(regr.num.train)]) - 1
-#    pars = c(parset.list.mxnet[[i]], list(data = x, label = y), out_node = 1)
-#    m = do.call(mxnet::mx.mlp, pars)
+    #    pars = c(parset.list.mxnet[[i]], list(data = x, label = y), out_node = 1)
+    #    m = do.call(mxnet::mx.mlp, pars)
     sym = mxnet::mx.symbol.Variable("data")
     sym = mxnet::mx.symbol.FullyConnected(sym, num_hidden = parset.list.mxnet[[i]]$hidden_node[1])
     sym = mxnet::mx.symbol.Activation(sym, act_type = parset.list.mxnet[[i]]$activation[1])

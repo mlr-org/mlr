@@ -12,7 +12,8 @@ test_that("measures", {
     fun = function(task, model, pred, feats, extra.args) {
       tt = pred
       1
-    })
+    }
+  )
   ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1, mymeasure)
 
   lrn = makeLearner("classif.rpart")
@@ -873,7 +874,7 @@ test_that("check measure calculations", {
   dists = as.matrix(dist(data.cluster, method = "euclidian"))
   c2.dists = as.vector(dists[, 3L])
   c2.dists = c2.dists[c2.dists != 0L]
-  c1.dists = unique(as.vector(dists [-3L, -3L]))
+  c1.dists = unique(as.vector(dists[-3L, -3L]))
   c1.dists = c1.dists[c1.dists != 0L]
   con.pairs = vapply(
     c1.dists, function(x) x < c2.dists,
@@ -933,7 +934,8 @@ test_that("measure properties", {
     function(m) {
       res = hasMeasureProperties(m, m$properties)
       all(res) & length(res) > 0
-    })))
+    }
+  )))
   props = listMeasureProperties()
   # all props exist in mlr$measure.properties
   expect_true(all(vlapply(
@@ -941,7 +943,8 @@ test_that("measure properties", {
     function(m) {
       res = all(getMeasureProperties(m) %in% props)
       all(res) & length(res) > 0
-    })))
+    }
+  )))
 })
 
 test_that("measures ppv denominator 0", {

@@ -144,7 +144,7 @@ Since the diagonal of the cost matrix is zero the formula given above simplifies
 
 ```{r}
 # Calculate the theoretical threshold for the positive class
-th = costs[2,1]/(costs[2,1] + costs[1,2])
+th = costs[2, 1] / (costs[2, 1] + costs[1, 2])
 th
 ```
 
@@ -269,9 +269,9 @@ tune.res
 
 ## $th
 ## [1] 0.1062593
-## 
+##
 ## $perf
-## credit.costs 
+## credit.costs
 ##     0.527033
 ```
 
@@ -313,7 +313,7 @@ For the credit example (`caret:GermanCredit()`) the theoretical threshold corres
 
 ```{r}
 # Weight for positive class corresponding to theoretical treshold
-w = (1 - th)/th
+w = (1 - th) / th
 w
 ```
 
@@ -439,7 +439,7 @@ lrn
 
 ## Learner classif.multinom.oversampled from package mlr,nnet
 ## Type: classif
-## Name: ; Short name: 
+## Name: ; Short name:
 ## Class: OversampleWrapper
 ## Properties: numerics,factors,weights,prob,twoclass,multiclass
 ## Predict-Type: response
@@ -516,7 +516,7 @@ rin = makeResampleInstance("CV", iters = 3, task = wf.task)
 r = resample(lrn, wf.task, rin, measures = list(wf.costs, mmce), show.info = FALSE)
 r
 
-th = 2/rowSums(costs)
+th = 2 / rowSums(costs)
 names(th) = getTaskClassLevels(wf.task)
 th
 
@@ -537,17 +537,17 @@ r
 ## Runtime: 0.0586474
 
 # Calculate thresholds as 1/(average costs of true classes)
-th = 2/rowSums(costs)
+th = 2 / rowSums(costs)
 names(th) = getTaskClassLevels(wf.task)
 th
 
-##          1          2          3 
+##          1          2          3
 ## 0.01818182 0.22222222 0.11111111
 
 pred.th = setThreshold(r$pred, threshold = th)
 performance(pred.th, measures = list(wf.costs, mmce))
 
-##  wf.costs      mmce 
+##  wf.costs      mmce
 ## 4.6863021 0.2919823
 ```
 
@@ -569,7 +569,7 @@ tune.res
 For comparison we show the standardized version of the theoretically motivated threshold vector chosen above.
 
 ```{r}
-th/sum(th)
+th / sum(th)
 ```
 
 ### 2. Rebalancing
@@ -602,7 +602,7 @@ We use the iris (`datasets::iris()`) data and generate an artificial cost matrix
 
 ```{r}
 df = iris
-cost = matrix(runif(150 * 3, 0, 2000), 150) * (1 - diag(3))[df$Species,] + runif(150, 0, 10)
+cost = matrix(runif(150 * 3, 0, 2000), 150) * (1 - diag(3))[df$Species, ] + runif(150, 0, 10)
 colnames(cost) = levels(iris$Species)
 rownames(cost) = rownames(iris)
 df$Species = NULL
@@ -663,7 +663,7 @@ pred
 
 ## Prediction: 150 observations
 ## predict.type: response
-## threshold: 
+## threshold:
 ## time: 0.04
 ##   id response
 ## 1  1   setosa
@@ -676,6 +676,6 @@ pred
 
 performance(pred, measures = list(meancosts, mcp), task = costsens.task)
 
-## meancosts       mcp 
+## meancosts       mcp
 ##  129.5971  124.8077
 ```

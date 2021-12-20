@@ -92,7 +92,7 @@ makeRLearner.regr.mxff = function() {
       makeNumericLearnerParam(id = "dropout.layer3", lower = 0, upper = 1 - 1e-7,
         requires = quote(dropout.global == FALSE)),
       makeDiscreteLearnerParam(id = "dropout.mode", default = "training", values = c("training", "always")),
-      makeIntegerLearnerParam(id = "dropout.predict.repls", default = 20, lower = 2, requires = quote(dropout.mode  == "always")),
+      makeIntegerLearnerParam(id = "dropout.predict.repls", default = 20, lower = 2, requires = quote(dropout.mode == "always")),
       makeUntypedLearnerParam(id = "ctx", default = mxnet::mx.ctx.default(), tunable = FALSE),
       makeIntegerLearnerParam(id = "begin.round", default = 1L),
       makeIntegerLearnerParam(id = "num.round", default = 10L),
@@ -203,8 +203,9 @@ trainLearner.regr.mxff = function(.learner, .task, .subset, .weights = NULL,
   early.stop.badsteps = NULL, epoch.end.callback = NULL, early.stop.maximize = TRUE,
   array.layout = "rowmajor", dropout.mode = "training", dropout.predict.repls = 20, ...) {
 
-  if (.learner$predict.type == "se" & dropout.mode != "always")
+  if (.learner$predict.type == "se" & dropout.mode != "always") {
     stop("dropout.mode needs to be equal to 'always' for se prediction.")
+  }
 
   # transform data in correct format
   d = getTaskData(.task, subset = .subset, target.extra = TRUE)

@@ -72,7 +72,7 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
 
   # get perc and learner col data
   perc = extractSubList(bench.res$learners, c("par.vals", "dw.perc")) # get downsample reate
-  learner = extractSubList(bench.res$learners, c("next.learner", "id")) #get ID of unwrapped learner
+  learner = extractSubList(bench.res$learners, c("next.learner", "id")) # get ID of unwrapped learner
   perfs = dropNamed(perfs, c("task.id", "learner.id"))
 
   # set short measures names and resort cols

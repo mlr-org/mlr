@@ -213,8 +213,9 @@ Let's say you are interested in the range of the performance values obtained on 
 ```{r}
 my.range.aggr = makeAggregation(id = "test.range", name = "Test Range",
   properties = "req.test",
-  fun = function (task, perf.test, perf.train, measure, group, pred)
+  fun = function(task, perf.test, perf.train, measure, group, pred) {
     diff(range(perf.test))
+  }
 )
 ```
 

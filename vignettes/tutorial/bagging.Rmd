@@ -35,8 +35,8 @@ Of course we also need a Learner which we have to pass to `makeBaggingWrapper()`
 
 ```{r makeBaggingWrapper_setup}
 lrn = makeLearner("classif.rpart")
-bag.lrn = makeBaggingWrapper(lrn, bw.iters = 50, bw.replace = TRUE, 
-  bw.size = 0.8, bw.feats = 3/4)
+bag.lrn = makeBaggingWrapper(lrn, bw.iters = 50, bw.replace = TRUE,
+  bw.size = 0.8, bw.feats = 3 / 4)
 ```
 
 Now we can compare the performance with and without bagging.
@@ -78,7 +78,7 @@ Below, we give a small example for regression.
 ```{r makeBaggingWrapper_regression}
 n = getTaskSize(bh.task)
 train.inds = seq(1, n, 3)
-test.inds  = setdiff(1:n, train.inds)
+test.inds = setdiff(1:n, train.inds)
 lrn = makeLearner("regr.rpart")
 bag.lrn = makeBaggingWrapper(lrn)
 bag.lrn = setPredictType(bag.lrn, predict.type = "se")

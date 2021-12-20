@@ -29,6 +29,6 @@ test_that("classif_xyf", {
 
   testSimpleParsets("classif.xyf", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list2)
-  testProbParsets ("classif.xyf", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+  testProbParsets("classif.xyf", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.probs.list, parset.list2)
 })

@@ -17,7 +17,7 @@ makeRLearner.classif.sparseMDA = function() {
 }
 
 #' @export
-trainLearner.classif.sparseMDA = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.sparseMDA = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   y = d$target
   lvls = levels(y)
@@ -27,10 +27,11 @@ trainLearner.classif.sparseMDA = function(.learner, .task, .subset, .weights = N
 
 #' @export
 predictLearner.classif.sparseMDA = function(.learner, .model, .newdata, ...) {
-  p = sparseLDA::predict.smda(.model$learner.model, 
+  p = sparseLDA::predict.smda(.model$learner.model,
     newdata = subset(.newdata, select = .model$features), ...)
-  if(.learner$predict.type == "response")
+  if (.learner$predict.type == "response") {
     return(p$class)
-  else
+  } else {
     return(p$posterior)
+  }
 }

@@ -74,8 +74,7 @@ predictLearner.BaseWrapper = function(.learner, .model, .newdata, ...) {
   args = removeFromDots(names(.learner$par.vals), ...)
   do.call(predictLearner, c(
     list(.learner = .learner$next.learner, .model = .model$learner.model$next.model, .newdata = .newdata),
-    args)
-  )
+    args))
 }
 
 #' @export
