@@ -11,6 +11,7 @@ repos:
           todo-files/.*|
           tests/.*|
           man-roxygen/.*|
+          inst/.*|
           )$
         additional_dependencies:
         - mlr-org/styler.mlr@86e6d72
