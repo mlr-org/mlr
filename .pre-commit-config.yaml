@@ -13,7 +13,7 @@ repos:
           man-roxygen/.*|
           )$
         additional_dependencies:
-        - mlr-org/styler.mlr
+        - mlr-org/styler.mlr@86e6d72
 #     -   id: style-files
 #         args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
 #         exclude: > 
