@@ -11,6 +11,7 @@ repos:
           todo-files/.*|
           tests/.*|
           vignettes/.*|
+          R/.*|
           )$
         additional_dependencies:
         - mlr-org/styler.mlr
