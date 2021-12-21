@@ -19,7 +19,7 @@ repos:
         args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
         exclude: > 
           (?x)^(
-          tests/.*|
+          todo-files/.*|
           vignettes/.*|
           R/.*|
           )$
@@ -29,7 +29,7 @@ repos:
         args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
         exclude: > 
           (?x)^(
-          vignettes/.*|
+          todo-files/.*|
           R/.*|
           )$
         additional_dependencies:
