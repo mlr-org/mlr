@@ -25,15 +25,15 @@ repos:
           )$
         additional_dependencies:
         - mlr-org/styler.mlr
-#     -   id: style-files
-#         args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
-#         exclude: > 
-#           (?x)^(
-#           vignettes/.*|
-#           R/.*|
-#           )$
-#         additional_dependencies:
-#         - mlr-org/styler.mlr
+    -   id: style-files
+        args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
+        exclude: > 
+          (?x)^(
+          vignettes/.*|
+          R/.*|
+          )$
+        additional_dependencies:
+        - mlr-org/styler.mlr
 #     -   id: style-files
 #         args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
 #         exclude: > 
