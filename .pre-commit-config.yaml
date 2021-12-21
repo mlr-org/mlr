@@ -10,6 +10,7 @@ repos:
           (?x)^(
           todo-files/.*|
           tests/.*|
+          vignettes/.*|
           )$
         additional_dependencies:
         - mlr-org/styler.mlr
