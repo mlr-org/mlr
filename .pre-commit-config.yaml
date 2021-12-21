@@ -9,6 +9,7 @@ repos:
         exclude: > 
           (?x)^(
           todo-files/.*|
+          tests/|
           )$
         additional_dependencies:
         - mlr-org/styler.mlr
