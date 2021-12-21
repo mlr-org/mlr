@@ -103,7 +103,7 @@ Below we fit a linear regression model (`stats::lm()`) to the `BostonHousing` (`
 n = getTaskSize(bh.task)
 
 # Use 1/3 of the observations for training
-train.set = sample(n, size = n/3)
+train.set = sample(n, size = n / 3)
 
 # Train the learner
 mod = train("regr.lm", bh.task, subset = train.set)
@@ -124,7 +124,7 @@ In order to grant both classes equal importance in training the classifier we ca
 # Calculate the observation weights
 target = getTaskTargets(bc.task)
 tab = as.numeric(table(target))
-w = 1/tab[target]
+w = 1 / tab[target]
 
 train("classif.rpart", task = bc.task, weights = w)
 ```
