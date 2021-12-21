@@ -132,8 +132,7 @@ test_that("Fourier equal to expected", {
   data$fd = matrix(c(
     .6 * cos(2 * pi * t) + .3 * cos(4 * 2 * pi * t + pi / 4),
     .8 * cos(2 * pi * t) + .1 * cos(4 * 2 * pi * t + pi / 4)
-  ), nrow = 2, byrow = TRUE
-  )
+  ), nrow = 2, byrow = TRUE)
   data$a = NULL
 
   extr = extractFDAFourier()

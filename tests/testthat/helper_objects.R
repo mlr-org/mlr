@@ -214,8 +214,7 @@ test.confMatrix = function(p) {
 
 task.filters.rank = structure(list(type = "surv", weights = NULL,
   blocking = NULL, coordinates = NULL, task.desc = structure(list(
-    id = "VET", type = "surv", target = c("time", "status"
-    ), size = 137L, n.feat = c(numerics = 9L, factors = 0L,
+    id = "VET", type = "surv", target = c("time", "status"), size = 137L, n.feat = c(numerics = 9L, factors = 0L,
       ordered = 0L, functionals = 0L), has.missings = FALSE,
     has.weights = FALSE, has.blocking = FALSE, has.coordinates = FALSE), class = c("SurvTaskDesc",
     "SupervisedTaskDesc", "TaskDesc"))), class = c("SurvTask",
