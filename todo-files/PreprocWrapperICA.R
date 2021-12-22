@@ -1,9 +1,9 @@
 #' @title Perform a ICA on all numeric columns in the data set.
-#'   
+#'
 #' @description Before training a ICA (Independent Component Analysis) will be
 #' performed on all numeric columns in the trainings dataset. Internally uses
 #' \code{\link{e1071::ica}} before training.
-#' 
+#'
 #' @template arg_learner
 #' @param lrate \code{numeric(1)} \cr
 #'   learning rate
@@ -19,9 +19,10 @@ makePreprocWrapperICA = function(learner, lrate, ...) {
   trainfun = function(data, target, args) {
     cns = colnames(data)
     nums = setdiff(cns[vlapply(data, is.numeric)], target)
-    if (!length(nums))
+    if (!length(nums)) {
       return(list(data = data, control = list()))
-    
+    }
+
     requirePackages("e1071", "makePreprocWrapperICA")
     x = data[, nums, drop = FALSE]
     ica = do.call(e1071::ica, c(list(X = x), args))
@@ -29,12 +30,13 @@ makePreprocWrapperICA = function(learner, lrate, ...) {
     data = cbind(data, as.data.frame(ica$projection))
     ctrl = c(dropNamed(ica, "projection"), list(ica.colnames = nums))
     list(data = data, control = ctrl)
-  }  
+  }
 
   predictfun = function(data, target, args, control) {
     # no numeric features ?
-    if (!length(control))
+    if (!length(control)) {
       return(data)
+    }
 
     cns = colnames(data)
     nums = control$ica.colnames

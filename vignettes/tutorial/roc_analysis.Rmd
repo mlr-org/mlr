@@ -62,7 +62,7 @@ We consider the `Sonar` (`mlbench::Sonar()`) data set from package `mlbench`, wh
 
 ```{r}
 n = getTaskSize(sonar.task)
-train.set = sample(n, size = round(2/3 * n))
+train.set = sample(n, size = round(2 / 3 * n))
 test.set = setdiff(seq_len(n), train.set)
 
 lrn1 = makeLearner("classif.lda", predict.type = "prob")
@@ -214,7 +214,10 @@ Averaging methods are normally preferred (cp. [Fawcett, 2006](https://ccrma.stan
 preds = getBMRPredictions(bmr, drop = TRUE)
 
 # Change the class attribute
-preds2 = lapply(preds, function(x) {class(x) = "Prediction"; return(x)})
+preds2 = lapply(preds, function(x) {
+  class(x) = "Prediction"
+  return(x)
+})
 
 # Draw ROC curves
 df = generateThreshVsPerfData(preds2, measures = list(fpr, tpr, mmce))
@@ -241,7 +244,7 @@ We go back to out first example where we trained and predicted `MASS::lda()` on 
 
 ```{r}
 n = getTaskSize(sonar.task)
-train.set = sample(n, size = round(2/3 * n))
+train.set = sample(n, size = round(2 / 3 * n))
 test.set = setdiff(seq_len(n), train.set)
 
 # Train and predict linear discriminant analysis
@@ -343,7 +346,7 @@ ROCRperfs = lapply(ROCRpreds, function(x) ROCR::performance(x, "acc"))
 
 # Plot accuracy versus threshold
 plot(ROCRperfs[[1]], avg = "vertical", spread.estimate = "boxplot", lwd = 2, col = "blue",
-  show.spread.at = seq(0.1, 0.9, 0.1), ylim = c(0,1), xlab = "Threshold")
+  show.spread.at = seq(0.1, 0.9, 0.1), ylim = c(0, 1), xlab = "Threshold")
 ```
 
 # Viper charts

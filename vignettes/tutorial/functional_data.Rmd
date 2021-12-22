@@ -43,8 +43,8 @@ data(fuelSubset, package = "FDboost")
 # NIR_Obs_1 contains the measurements for NIR of the first functional covariate and
 # lambda indicates the wavelength points the data was measured at.
 df = data.frame("NIR_Obs1" = fuelSubset$NIR[1, ],
-                "lambda" = fuelSubset$nir.lambda)
-ggplot(df) + 
+  "lambda" = fuelSubset$nir.lambda)
+ggplot(df) +
   geom_line(aes(y = NIR_Obs1, x = lambda))
 ```
 
@@ -113,7 +113,7 @@ Alternatively, we could also specify the respective column names.
 
 ```{r}
 library(mlr)
-# fd.features is a named list, where each name corresponds to the name of the 
+# fd.features is a named list, where each name corresponds to the name of the
 # functional feature and the values to the respective column indices or column names.
 fd.features = list("UVVIS" = 3:136, "NIR" = 137:367)
 fdf = makeFunctionalData(df, fd.features = fd.features)
@@ -267,7 +267,7 @@ This can be specified in the additional `trafo.coeff` argument:
 # Specify the feature extraction method and generate new task.
 # We use the Fourier features and the amplitude for NIR, as well as the phase for UVVIS
 feat.methods = list("NIR" = extractFDAFourier(trafo.coeff = "amplitude"),
-                    "UVVIS" = extractFDAFourier(trafo.coeff = "phase"))
+  "UVVIS" = extractFDAFourier(trafo.coeff = "phase"))
 task.fourier = extractFDAFeatures(tsk1, feat.methods = feat.methods)
 task.fourier
 ```
@@ -281,7 +281,7 @@ For additional information, please consider the [Wrappers](wrapper.html#wrapper)
 # Use a FDAFeatExtractWrapper
 # In this case we extract the Fourier features from the NIR variable
 feat.methods = list("NIR" = extractFDAFourier())
-wrapped.lrn = makeExtractFDAFeatsWrapper("regr.rpart",  feat.methods = feat.methods)
+wrapped.lrn = makeExtractFDAFeatsWrapper("regr.rpart", feat.methods = feat.methods)
 
 # And run the learner
 train(wrapped.lrn, fuelsubset.task)

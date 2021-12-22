@@ -27,22 +27,22 @@ test_that("generateThreshVsPerfData", {
   suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   expect_equal(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)),
-               length(pvs$measures))
+    length(pvs$measures))
   expect_equal(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)),
-               length(pvs$measures))
+    length(pvs$measures))
 
   pvs = generateThreshVsPerfData(r, list(tpr, fpr, acc), aggregate = FALSE)
   plotThreshVsPerf(pvs, measures = list(tpr, fpr, acc))
   suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   expect_equal(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)),
-              length(pvs$measures) * length(unique(pvs$data$iter)))
+    length(pvs$measures) * length(unique(pvs$data$iter)))
 
   plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
   suppressMessages(ggsave(path))
   doc = XML::xmlParse(path)
   expect_equal(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)),
-              length(unique(pvs$data$iter)))
+    length(unique(pvs$data$iter)))
 
   pvs = generateThreshVsPerfData(r, list(tpr, fpr), aggregate = FALSE)
   plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
