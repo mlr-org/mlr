@@ -6,7 +6,7 @@ repos:
     hooks:
     -   id: style-files
         args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
-        exclude: > 
+        exclude: >
           (?x)^(
           todo-files/.*|
           tests/.*|
@@ -14,19 +14,22 @@ repos:
           inst/.*|
           )$
         additional_dependencies:
-        - mlr-org/styler.mlr@86e6d72
-#     -   id: style-files
-#         args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
-#         exclude: > 
-#           (?x)^(
-#           R/.*|
-#           )$
-#         additional_dependencies:
-#         - mlr-org/styler.mlr
-#     -   id: style-files
-#         args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
-#         additional_dependencies:
-#         - mlr-org/styler.mlr
+        - mlr-org/styler.mlr
+    -   id: roxygenize
+        additional_dependencies:
+        -    ParamHelpers
+        -    backports
+        -    BBmisc
+        -    checkmate
+        -    data.table
+        -    ggplot2
+        -    methods
+        -    parallelMap
+        -    stats
+        -    stringi
+        -    survival
+        -    utils
+        -    XML
     -   id: use-tidy-description
     -   id: readme-rmd-rendered
     -   id: parsable-R
@@ -47,3 +50,6 @@ repos:
         files: '\.Rhistory|\.RData|\.Rds|\.rds$'
         exclude: "gunpoint.RData|yeast.RData"
         # `exclude: <regex>` to allow committing specific files.
+
+ci:
+    skip: [roxygenize]
