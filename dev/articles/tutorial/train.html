@@ -277,7 +277,7 @@
 <span class="va">n</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span><span class="op">(</span><span class="va">bh.task</span><span class="op">)</span>
 
 <span class="co"># Use 1/3 of the observations for training</span>
-<span class="va">train.set</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">n</span>, size <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>
+<span class="va">train.set</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">n</span>, size <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fl">3</span><span class="op">)</span>
 
 <span class="co"># Train the learner</span>
 <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"regr.lm"</span>, <span class="va">bh.task</span>, subset <span class="op">=</span> <span class="va">train.set</span><span class="op">)</span>
@@ -292,7 +292,7 @@
 <code class="sourceCode R"><span class="co"># Calculate the observation weights</span>
 <span class="va">target</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">bc.task</span><span class="op">)</span>
 <span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">target</span><span class="op">)</span><span class="op">)</span>
-<span class="va">w</span> <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="va">tab</span><span class="op">[</span><span class="va">target</span><span class="op">]</span>
+<span class="va">w</span> <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="va">tab</span><span class="op">[</span><span class="va">target</span><span class="op">]</span>
 
 <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, task <span class="op">=</span> <span class="va">bc.task</span>, weights <span class="op">=</span> <span class="va">w</span><span class="op">)</span>
 <span class="co">## Model for learner.id=classif.rpart; learner.class=classif.rpart</span>
