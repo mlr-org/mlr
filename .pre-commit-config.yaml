@@ -35,7 +35,7 @@ repos:
     -   id: parsable-R
     -   id: no-browser-statement
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.1.0
     hooks:
     -   id: check-added-large-files
         args: ['--maxkb=1000']
