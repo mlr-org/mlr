@@ -159,7 +159,8 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && requireNamespace("
           }
         }
 
-      })
+      }
+    )
   }
 
   infix.spaces.linter = function(source_file) {
@@ -195,7 +196,8 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && requireNamespace("
               linter = "infix.spaces.linter")
           }
         }
-      })
+      }
+    )
   }
 
 

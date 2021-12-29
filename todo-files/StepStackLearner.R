@@ -24,41 +24,47 @@
 #'   The default \code{NULL} uses 5-fold CV.
 #' @export
 makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL,
-                              method = "stack.nocv",
-                              use.feat = FALSE, resampling = NULL) {
-  
+  method = "stack.nocv",
+  use.feat = FALSE, resampling = NULL) {
+
   baseType = unique(extractSubList(base.learners, "type"))
   if (!is.null(resampling) & method != "stack.cv") {
     stop("No resampling needed for this method")
   }
   if (is.null(resampling)) {
-    resampling = makeResampleDesc("CV", iters= 5L,
-                                  stratify = ifelse(baseType == "classif", TRUE, FALSE))
+    resampling = makeResampleDesc("CV", iters = 5L,
+      stratify = ifelse(baseType == "classif", TRUE, FALSE))
   }
   assertChoice(method, c("average", "stack.nocv", "stack.cv", "step.stack.nocv", "step.stack.cv"))
   assertClass(resampling, "ResampleDesc")
-  
+
   pts = unique(extractSubList(base.learners, "predict.type"))
-  if (length(pts) > 1L)
+  if (length(pts) > 1L) {
     stop("Base learner must all have the same predict type!")
-  if (method == "average" & (!is.null(super.learner) | is.null(predict.type)) )
+  }
+  if (method == "average" & (!is.null(super.learner) | is.null(predict.type))) {
     stop("No super learner needed for this method or the 'predict.type' is not specified.")
-  if (method != "average" & is.null(super.learner))
+  }
+  if (method != "average" & is.null(super.learner)) {
     stop("You have to specify a super learner for this method.")
-  if (method != "average" & !is.null(predict.type))
+  }
+  if (method != "average" & !is.null(predict.type)) {
     stop("Predict type has to be specified within the super learner.")
-  if (method == "average" & use.feat)
+  }
+  if (method == "average" & use.feat) {
     stop("The original features can not be used for this method")
-  if (!inherits(resampling, "CVDesc"))
+  }
+  if (!inherits(resampling, "CVDesc")) {
     stop("Currently only CV is allowed for resampling!")
-  
+  }
+
   # lrn$predict.type is "response" by default change it using setPredictType
-  lrn =  makeBaseEnsemble(
+  lrn = makeBaseEnsemble(
     id = "stack",
     base.learners = base.learners,
     cl = "StackedLearner"
   )
-  
+
   # get predict.type from super learner or from predict.type
   if (!is.null(super.learner)) {
     super.learner = checkLearner(super.learner)
@@ -66,10 +72,10 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   } else {
     lrn = setPredictType(lrn, predict.type = predict.type)
   }
-  
+
   lrn$fix.factors.prediction = TRUE
   lrn$use.feat = use.feat
-  
+
   lrn$method = method
   lrn$super.learner = super.learner
   lrn$resampling = resampling
@@ -84,43 +90,43 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
   .task = subsetTask(.task, subset = .subset)
   # init prob result matrix, where base learners store predictions
   probs = makeDataFrame(.task$task.desc$size, ncol = length(bls), col.types = "numeric",
-                        col.names = ids)
+    col.names = ids)
   switch(.learner$method,
-         average = averageBaseLearners(.learner, .task, probs),
-         stack.nocv = stackNoCV(.learner, .task, probs),
-         stack.cv = stackCV(.learner, .task, probs),
-         step.stack.nocv = stepStackNoCV(.learner, .task, probs),
-         step.stack.cv = stepStackCV(.learner, .task, probs)
+    average = averageBaseLearners(.learner, .task, probs),
+    stack.nocv = stackNoCV(.learner, .task, probs),
+    stack.cv = stackCV(.learner, .task, probs),
+    step.stack.nocv = stepStackNoCV(.learner, .task, probs),
+    step.stack.cv = stepStackCV(.learner, .task, probs)
   )
 }
 
 #' @export
 predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
   use.feat = .model$learner$use.feat
-  
+
   # get predict.type from learner and super model (if available)
   sm.pt = .model$learner$predict.type
   sm = .model$learner.model$super.model
-  
+
   # get base learner and predict type
   bms.pt = unique(extractSubList(.model$learner$base.learners, "predict.type"))
-  
+
   # get task information (classif)
   levs = .model$task.desc$class.levels
   td = .model$task.desc
   type = ifelse(td$type == "regr", "regr",
-                ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
-  
+    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+
   # predict prob vectors with each base model
   # FIXME: does this work correctly for CV-methods?
   probs = exportPredictions(model = .model, newdata = .newdata,
-                            full.matrix = ifelse(.learner$method == "average", TRUE, FALSE),
-                            method = .learner$method)
-  
+    full.matrix = ifelse(.learner$method == "average", TRUE, FALSE),
+    method = .learner$method)
+
   if (.learner$method == "average") {
     if (bms.pt == "prob") {
       # if base learner predictions are probabilities for classification
-      prob = Reduce("+", probs) / length(probs) #rowMeans(probs)
+      prob = Reduce("+", probs) / length(probs) # rowMeans(probs)
       if (sm.pt == "prob") {
         # if super learner predictions should be probabilities
         return(as.matrix(prob))
@@ -135,7 +141,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
         # if base learner predictions are responses for classification
         if (sm.pt == "prob") {
           # if super learner predictions should be probabilities
-          return(as.matrix(t(apply(probs, 1L, function(X) (table(factor(X, td$class.levels) )/length(X)) ))) )
+          return(as.matrix(t(apply(probs, 1L, function(X) (table(factor(X, td$class.levels)) / length(X))))))
         } else {
           # if super learner predictions should be responses
           return(factor(apply(probs, 1L, computeMode), td$class.levels))
@@ -143,21 +149,21 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
       }
       if (type == "regr") {
         # if base learner predictions are responses for regression
-        prob = Reduce("+", probs) / length(probs) #rowMeans(probs)
+        prob = Reduce("+", probs) / length(probs) # rowMeans(probs)
         return(prob)
       }
     }
   } else {
     probs = as.data.frame(probs)
     # feed probs into super model and we are done
-    feat = .newdata[, !colnames(.newdata)%in%.model$task.desc$target, drop = FALSE]
-    
+    feat = .newdata[, !colnames(.newdata) %in% .model$task.desc$target, drop = FALSE]
+
     if (use.feat) {
       predData = cbind(probs, feat)
     } else {
       predData = probs
     }
-    
+
     pred = predict(sm, newdata = predData)$data
     if (sm.pt == "prob") {
       # return predicted probabilities from super learner
@@ -175,7 +181,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 setPredictType.StackedLearner = function(learner, predict.type) {
   lrn = setPredictType.Learner(learner, predict.type)
   lrn$predict.type = predict.type
-  if ("super.learner"%in%names(lrn)) lrn$super.learner$predict.type = predict.type
+  if ("super.learner" %in% names(lrn)) lrn$super.learner$predict.type = predict.type
   return(lrn)
 }
 
@@ -184,26 +190,26 @@ setPredictType.StackedLearner = function(learner, predict.type) {
 exportPredictions = function(model, newdata, full.matrix = TRUE, method) {
   # get base learner and predict type
   bms = model$learner.model$base.models
-  
+
   # predict prob vectors with each base model
   probs = vector("list", length(bms))
   if (grepl("step", method)) {
     for (i in seq_along(bms)) {
       pred = predict(bms[[i]], newdata = newdata)
-      probs[[i]] = getResponse(pred, full.matrix =  full.matrix)
+      probs[[i]] = getResponse(pred, full.matrix = full.matrix)
       # predictions of previous base learner are appended
       addCol = cbind(probs[[i]])
-      colnames(addCol) =  bms[[i]]$learner$id
+      colnames(addCol) = bms[[i]]$learner$id
       newdata = cbind(newdata, addCol)
     }
   } else {
     for (i in seq_along(bms)) {
       pred = predict(bms[[i]], newdata = newdata)
-      probs[[i]] = getResponse(pred, full.matrix =  full.matrix)
+      probs[[i]] = getResponse(pred, full.matrix = full.matrix)
     }
   }
-  
-  names(probs) = sapply(bms, function(X) X$learner$id)#names(.learner$base.learners)
+
+  names(probs) = sapply(bms, function(X) X$learner$id) # names(.learner$base.learners)
   return(probs)
 }
 
@@ -224,7 +230,7 @@ averageBaseLearners = function(learner, task, probs) {
 # stacking where we predict the training set in-sample, then super-learn on that
 stackNoCV = function(learner, task, probs) {
   type = ifelse(task$task.desc$type == "regr", "regr",
-                ifelse(length(task$task.desc$class.levels) == 2L, "classif", "multiclassif"))
+    ifelse(length(task$task.desc$class.levels) == 2L, "classif", "multiclassif"))
   bls = learner$base.learners
   use.feat = learner$use.feat
   base.models = probs = vector("list", length(bls))
@@ -236,22 +242,22 @@ stackNoCV = function(learner, task, probs) {
     probs[[i]] = getResponse(pred, full.matrix = FALSE)
   }
   names(probs) = names(bls)
-  
+
   if (type == "regr" | type == "classif") {
     probs = as.data.frame(probs)
   } else {
-    probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
+    probs = as.data.frame(lapply(probs, function(X) X)) # X[,-ncol(X)]))
   }
-  
+
   # now fit the super learner for predicted_probs --> target
   probs[[task$task.desc$target]] = getTaskTargets(task)
   if (use.feat) {
     # add data with normal features
     feat = getTaskData(task)
-    feat = feat[, !colnames(feat)%in%task$task.desc$target, drop = FALSE]
+    feat = feat[, !colnames(feat) %in% task$task.desc$target, drop = FALSE]
     probs = cbind(probs, feat)
     super.task = makeSuperLearnerTask(learner, data = probs,
-                                      target = task$task.desc$target)
+      target = task$task.desc$target)
   } else {
     super.task = makeSuperLearnerTask(learner, data = probs, target = task$task.desc$target)
   }
@@ -262,7 +268,7 @@ stackNoCV = function(learner, task, probs) {
 # stacking where we crossval the training set with the base learners, then super-learn on that
 stackCV = function(learner, task, probs) {
   type = ifelse(task$task.desc$type == "regr", "regr",
-                ifelse(length(task$task.desc$class.levels) == 2L, "classif", "multiclassif"))
+    ifelse(length(task$task.desc$class.levels) == 2L, "classif", "multiclassif"))
   bls = learner$base.learners
   use.feat = learner$use.feat
   # cross-validate all base learners and get a prob vector for the whole dataset for each learner
@@ -276,24 +282,24 @@ stackCV = function(learner, task, probs) {
     base.models[[i]] = train(bl, task)
   }
   names(probs) = names(bls)
-  
+
   if (type == "regr" | type == "classif") {
     probs = as.data.frame(probs)
   } else {
-    probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
+    probs = as.data.frame(lapply(probs, function(X) X)) # X[,-ncol(X)]))
   }
-  
+
   # add true target column IN CORRECT ORDER
   tn = task$task.desc$target
   test.inds = unlist(rin$test.inds)
   probs[[tn]] = getTaskTargets(task)[test.inds]
-  
+
   # now fit the super learner for predicted_probs --> target
   probs = probs[order(test.inds), , drop = FALSE]
   if (use.feat) {
     # add data with normal features IN CORRECT ORDER
-    feat = getTaskData(task)#[test.inds, ]
-    feat = feat[, !colnames(feat)%in%tn, drop = FALSE]
+    feat = getTaskData(task) # [test.inds, ]
+    feat = feat[, !colnames(feat) %in% tn, drop = FALSE]
     probs = cbind(probs, feat)
     super.task = makeSuperLearnerTask(learner, data = probs, target = tn)
   } else {
@@ -307,7 +313,7 @@ stackCV = function(learner, task, probs) {
 # from previous base learners into the task-data (after fitting each base learner)
 stepStackNoCV = function(learner, task, probs) {
   type = ifelse(task$task.desc$type == "regr", "regr",
-                ifelse(length(task$task.desc$class.levels) == 2L, "classif", "multiclassif"))
+    ifelse(length(task$task.desc$class.levels) == 2L, "classif", "multiclassif"))
   if (type == "multiclassif") stop("Currently, this method does not support multiclass tasks")
   bls = learner$base.learners
   use.feat = learner$use.feat
@@ -320,32 +326,32 @@ stepStackNoCV = function(learner, task, probs) {
     probs[[i]] = getResponse(pred, full.matrix = FALSE)
     if (is.null(ncol(probs[[i]]))) {
       addCol = cbind(probs[[i]])
-      colnames(addCol) =  names(bls)[[i]]
+      colnames(addCol) = names(bls)[[i]]
     } else {
       # FIXME: for multiclass, predictions are matrices
       addCol = probs[[i]]
-      colnames(addCol) =  paste(names(bls)[[i]], colnames(addCol), sep = ".")
+      colnames(addCol) = paste(names(bls)[[i]], colnames(addCol), sep = ".")
     }
     # append prediction of i-th base learner
     task = addFeature(task, add = addCol)
   }
   names(probs) = names(bls)
-  
+
   if (type == "regr" | type == "classif") {
     probs = as.data.frame(probs)
   } else {
-    probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
+    probs = as.data.frame(lapply(probs, function(X) X)) # X[,-ncol(X)]))
   }
-  
+
   # now fit the super learner for predicted_probs --> target
   probs[[task$task.desc$target]] = getTaskTargets(task)
   if (use.feat) {
     # add data with normal features
     feat = getTaskData(task)
-    #feat = feat[, !colnames(feat)%in%task$task.desc$target, drop = FALSE]
-    #probs = cbind(probs, feat)
+    # feat = feat[, !colnames(feat)%in%task$task.desc$target, drop = FALSE]
+    # probs = cbind(probs, feat)
     super.task = makeSuperLearnerTask(learner, data = probs,
-                                      target = task$task.desc$target)
+      target = task$task.desc$target)
   } else {
     super.task = makeSuperLearnerTask(learner, data = probs, target = task$task.desc$target)
   }
@@ -357,12 +363,12 @@ stepStackNoCV = function(learner, task, probs) {
 # from previous base learners into the task-data (after fitting each base learner)
 stepStackCV = function(learner, task, probs) {
   type = ifelse(task$task.desc$type == "regr", "regr",
-                ifelse(length(task$task.desc$class.levels) == 2L, "classif", "multiclassif"))
+    ifelse(length(task$task.desc$class.levels) == 2L, "classif", "multiclassif"))
   if (type == "multiclassif") stop("Currently, this method does not support multiclass tasks")
   bls = learner$base.learners
   use.feat = learner$use.feat
   base.models = probs = vector("list", length(bls))
-  
+
   rin = makeResampleInstance(learner$resampling, task = task)
   for (i in seq_along(bls)) {
     bl = bls[[i]]
@@ -373,37 +379,37 @@ stepStackCV = function(learner, task, probs) {
     # add predictions in correct order
     if (is.null(ncol(probs[[i]]))) {
       addCol = cbind(probs[[i]][order(unlist(rin$test.inds))])
-      colnames(addCol) =  names(bls)[[i]]
+      colnames(addCol) = names(bls)[[i]]
     } else {
       # FIXME: for multiclass, predictions are matrices
       addCol = probs[[i]][order(unlist(rin$test.inds))]
-      colnames(addCol) =  paste(names(bls)[[i]], colnames(addCol), sep = ".")
+      colnames(addCol) = paste(names(bls)[[i]], colnames(addCol), sep = ".")
     }
     # append prediction of i-th base learner
     task = addFeature(task, add = addCol)
   }
   names(probs) = names(bls)
-  
+
   if (type == "regr" | type == "classif") {
     probs = as.data.frame(probs)
   } else {
-    probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
+    probs = as.data.frame(lapply(probs, function(X) X)) # X[,-ncol(X)]))
   }
-  
+
   # add true target column IN CORRECT ORDER
   tn = task$task.desc$target
   test.inds = unlist(rin$test.inds)
   probs[[tn]] = getTaskTargets(task)[test.inds]
-  
+
   # now fit the super learner for predicted_probs --> target
   probs = probs[order(test.inds), , drop = FALSE]
   if (use.feat) {
     # add data with normal features
     feat = getTaskData(task)
-    #feat = feat[, !colnames(feat)%in%task$task.desc$target, drop = FALSE]
-    #probs = cbind(probs, feat)
+    # feat = feat[, !colnames(feat)%in%task$task.desc$target, drop = FALSE]
+    # probs = cbind(probs, feat)
     super.task = makeSuperLearnerTask(learner, data = probs,
-                                      target = task$task.desc$target)
+      target = task$task.desc$target)
   } else {
     super.task = makeSuperLearnerTask(learner, data = probs, target = task$task.desc$target)
   }
@@ -417,10 +423,12 @@ stepStackCV = function(learner, task, probs) {
 addFeature = function(task, subset, features, add) {
   task = changeData(task, cbind(getTaskData(task, subset, features), add), getTaskCosts(task, subset))
   if (!missing(subset)) {
-    if (task$task.desc$has.blocking)
+    if (task$task.desc$has.blocking) {
       task$blocking = task$blocking[subset]
-    if (task$task.desc$has.weights)
+    }
+    if (task$task.desc$has.weights) {
       task$weights = task$weights[subset]
+    }
   }
   return(task)
 }

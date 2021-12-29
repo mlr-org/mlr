@@ -6,36 +6,36 @@ repos:
     hooks:
     -   id: style-files
         args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
-        additional_dependencies:
-        - mlr-org/styler.mlr
-    -   id: use-tidy-description
         exclude: >
           (?x)^(
-          data/.*|
-          (.*/|)\.Rprofile|
-          (.*/|)\.Renviron|
-          (.*/|)\.gitignore|
-          (.*/|)NAMESPACE|
-          (.*/|)WORDLIST|
-          (.*/|)\.travis.yml|
-          (.*/|)appveyor.yml|
-          (.*/|)\.Rbuildignore|
-          (.*/|)\.pre-commit-.*|
-          .*\.[rR]|
-          .*\.Rproj|
-          .*\.py|
-          .*\.feather|
-          .*\.rds|
-          .*\.Rds|
-          .*\.sh|
-          .*\.RData|
-          .*\.svg
+          todo-files/.*|
+          tests/.*|
+          man-roxygen/.*|
+          inst/.*|
           )$
+        additional_dependencies:
+        - mlr-org/styler.mlr
+    -   id: roxygenize
+        additional_dependencies:
+        -    ParamHelpers
+        -    backports
+        -    BBmisc
+        -    checkmate
+        -    data.table
+        -    ggplot2
+        -    methods
+        -    parallelMap
+        -    stats
+        -    stringi
+        -    survival
+        -    utils
+        -    XML
+    -   id: use-tidy-description
     -   id: readme-rmd-rendered
     -   id: parsable-R
     -   id: no-browser-statement
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.1.0
     hooks:
     -   id: check-added-large-files
         args: ['--maxkb=1000']
@@ -50,3 +50,6 @@ repos:
         files: '\.Rhistory|\.RData|\.Rds|\.rds$'
         exclude: "gunpoint.RData|yeast.RData"
         # `exclude: <regex>` to allow committing specific files.
+
+ci:
+    skip: [roxygenize]

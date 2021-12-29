@@ -46,8 +46,7 @@ test_that("tuneParamsMultiCrit", {
   # suppressed warnings: "generateDesign could only produce 50 points instead of
   # 1000!"
   res = suppressWarnings(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
-    measures = list(tpr, fpr), control = ctrl)
-  )
+    measures = list(tpr, fpr), control = ctrl))
   mycheck(res, 4L * length(ps$pars) + 1L)
 
   # MBO with mbo.control

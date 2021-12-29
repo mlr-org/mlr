@@ -51,12 +51,12 @@ test_that("classif_ksvm", {
 test_that("classif_ksvm produces error for new factor levels on predict", {
   # https://github.com/mlr-org/mlr/issues/2771
   train_data = data.frame(
-    A = sample(c("A","B"), 10, TRUE),
+    A = sample(c("A", "B"), 10, TRUE),
     B = factor(sample(c("A", "B"), 10, replace = T))
   )
   test_data = data.frame(
-    A = sample(c("A","B"), 10, TRUE),
-    B = factor(sample(c("A", "B","C"), 10, replace = T))
+    A = sample(c("A", "B"), 10, TRUE),
+    B = factor(sample(c("A", "B", "C"), 10, replace = T))
   )
   lrn = makeLearner("classif.ksvm", fix.factors.prediction = TRUE)
   train_task = makeClassifTask(data = train_data, target = "A")
