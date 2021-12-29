@@ -53,3 +53,4 @@ repos:
 
 ci:
     skip: [roxygenize]
+    autoupdate_schedule: monthly
