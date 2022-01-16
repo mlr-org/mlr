@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="tune_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Tuning Hyperparameters</h1>
@@ -194,9 +197,9 @@
 <p>In this tutorial, we show how to specify the search space and optimization algorithm, how to do the tuning and how to access the tuning result, and how to visualize the hyperparameter tuning effects through several examples.</p>
 <p>Throughout this section we consider classification examples. For the other types of learning problems, you can follow the same process analogously.</p>
 <p>We use the iris classification task (<code><a href="../../reference/iris.task.html">iris.task()</a></code>) for illustration and tune the hyperparameters of an SVM (function <code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html" class="external-link">kernlab::ksvm()</a></code>) from the <code>kernlab</code> package) with a radial basis kernel. The following examples tune the cost parameter <code>C</code> and the RBF kernel parameter <code>sigma</code> of the <code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html" class="external-link">kernlab::ksvm()</a></code>) function.</p>
-<div class="section level1">
-<h1 id="specifying-the-search-space">Specifying the search space<a class="anchor" aria-label="anchor" href="#specifying-the-search-space"></a>
-</h1>
+<div class="section level2">
+<h2 id="specifying-the-search-space">Specifying the search space<a class="anchor" aria-label="anchor" href="#specifying-the-search-space"></a>
+</h2>
 <p>We first must define a space to search when tuning our learner. For example, maybe we want to tune several specific values of a hyperparameter or perhaps we want to define a space from <span class="math inline">\(10^{-10}\)</span> to <span class="math inline">\(10^{10}\)</span> and let the optimization algorithm decide which points to choose.</p>
 <p>In order to define a search space, we create a <code>ParamSet</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::makeParamSet()</a></code>) object, which describes the parameter space we wish to search. This is done via the function <code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::makeParamSet()</a></code>.</p>
 <p>For example, we could define a search space with just the values 0.5, 1.0, 1.5, 2.0 for both <code>C</code> and <code>gamma</code>. Notice how we name each parameter as it’s defined in the <code>kernlab</code> package:</p>
@@ -220,9 +223,9 @@
 <p>In order to standardize your workflow across several packages, whenever parameters in the underlying <strong>R</strong> functions should be passed in a <code>list</code> structure, <code>mlr</code> tries to give you direct access to each parameter and get rid of the list structure!</p>
 <p>This is the case with the <code>kpar</code> argument of <code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html" class="external-link">kernlab::ksvm()</a></code>) which is a list of kernel parameters like <code>sigma</code>. This allows us to interface with learners from different packages in the same way when defining parameters to tune!</p>
 </div>
-<div class="section level1">
-<h1 id="specifying-the-optimization-algorithm">Specifying the optimization algorithm<a class="anchor" aria-label="anchor" href="#specifying-the-optimization-algorithm"></a>
-</h1>
+<div class="section level2">
+<h2 id="specifying-the-optimization-algorithm">Specifying the optimization algorithm<a class="anchor" aria-label="anchor" href="#specifying-the-optimization-algorithm"></a>
+</h2>
 <p>Now that we have specified the search space, we need to choose an optimization algorithm for our parameters to pass to the <code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html" class="external-link">kernlab::ksvm()</a></code>) learner. Optimization algorithms are considered <code><a href="../../reference/TuneControl.html">TuneControl()</a></code> objects in <code>mlr</code>.</p>
 <p>A grid search is one of the standard – albeit slow – ways to choose an appropriate set of parameters from a given search space.</p>
 <p>In the case of <code>discrete_ps</code> above, since we have manually specified the values, grid search will simply be the cross product. We create the grid search object using the defaults, noting that we will have <span class="math inline">\(4 \times 4 = 16\)</span> combinations in the case of <code>discrete_ps</code>:</p>
@@ -239,9 +242,9 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">200L</span><span class="op">)</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="performing-the-tuning">Performing the tuning<a class="anchor" aria-label="anchor" href="#performing-the-tuning"></a>
-</h1>
+<div class="section level2">
+<h2 id="performing-the-tuning">Performing the tuning<a class="anchor" aria-label="anchor" href="#performing-the-tuning"></a>
+</h2>
 <p>Now that we have specified a search space and the optimization algorithm, it’s time to perform the tuning. We will need to define a resampling strategy and make note of our performance measure.</p>
 <p>We will use 3-fold cross-validation to assess the quality of a specific parameter setting. For this we need to create a resampling description just like in the <a href="resample.html" target="_blank">resampling</a> part of the tutorial.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -325,9 +328,9 @@
 <span class="co">## Op. pars: C=15.5; sigma=0.0345</span>
 <span class="co">## acc.test.mean=0.9600000,acc.test.sd=0.0000000</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="accessing-the-tuning-result">Accessing the tuning result<a class="anchor" aria-label="anchor" href="#accessing-the-tuning-result"></a>
-</h1>
+<div class="section level2">
+<h2 id="accessing-the-tuning-result">Accessing the tuning result<a class="anchor" aria-label="anchor" href="#accessing-the-tuning-result"></a>
+</h2>
 <p>The result object <code><a href="../../reference/TuneResult.html">TuneResult()</a></code> allows you to access the best found settings <code>$x</code> and their estimated performance <code>$y</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span><span class="op">$</span><span class="va">x</span>
@@ -370,9 +373,9 @@
 <span class="co">## ... (#rows: 150, #cols: 3)</span></code></pre></div>
 <p>But what if you wanted to inspect the other points on the search path, not just the optimal?</p>
 </div>
-<div class="section level1">
-<h1 id="investigating-hyperparameter-tuning-effects">Investigating hyperparameter tuning effects<a class="anchor" aria-label="anchor" href="#investigating-hyperparameter-tuning-effects"></a>
-</h1>
+<div class="section level2">
+<h2 id="investigating-hyperparameter-tuning-effects">Investigating hyperparameter tuning effects<a class="anchor" aria-label="anchor" href="#investigating-hyperparameter-tuning-effects"></a>
+</h2>
 <p>We can inspect all points evaluated during the search by using <code><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData()</a></code>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
@@ -435,9 +438,9 @@
 <p>Note that by default, we only plot the current global optima. This can be changed with the <code>global.only</code> argument.</p>
 <p>For an in-depth exploration of generating hyperparameter tuning effects and plotting the data, check out <a href="hyperpar_tuning_effects.html" target="_blank">Hyperparameter Tuning Effects</a>.</p>
 </div>
-<div class="section level1">
-<h1 id="further-comments">Further comments<a class="anchor" aria-label="anchor" href="#further-comments"></a>
-</h1>
+<div class="section level2">
+<h2 id="further-comments">Further comments<a class="anchor" aria-label="anchor" href="#further-comments"></a>
+</h2>
 <ul>
 <li><p>Tuning works for all other tasks like regression, survival analysis and so on in a completely similar fashion.</p></li>
 <li><p>In longer running tuning experiments it is very annoying if the computation stops due to numerical or other errors. Have a look at <code>on.learner.error</code> in <code><a href="../../reference/configureMlr.html">configureMlr()</a></code> as well as the examples given in section <a href="configureMlr.html" target="_blank">configure mlr</a> of this tutorial. You might also want to inform yourself about <code>impute.val</code> in <code><a href="../../reference/TuneControl.html">TuneControl()</a></code>.</p></li>
@@ -451,7 +454,8 @@
 
 )-->
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
@@ -463,7 +467,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

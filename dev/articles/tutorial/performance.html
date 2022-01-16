@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="performance_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Evaluating Learner Performance</h1>
@@ -170,16 +173,16 @@
     
     
 <p>The quality of the predictions of a model in <code>mlr</code> can be assessed with respect to a number of different performance measures. In order to calculate the performance measures, call <code><a href="../../reference/performance.html">performance()</a></code> on the object returned by <code>predict</code> (<code><a href="../../reference/predict.WrappedModel.html">predict.WrappedModel()</a></code>) and specify the desired performance measures.</p>
-<div class="section level1">
-<h1 id="available-performance-measures">Available performance measures<a class="anchor" aria-label="anchor" href="#available-performance-measures"></a>
-</h1>
+<div class="section level2">
+<h2 id="available-performance-measures">Available performance measures<a class="anchor" aria-label="anchor" href="#available-performance-measures"></a>
+</h2>
 <p><code>mlr</code> provides a large number of performance measures for all types of learning problems. Typical performance measures for <em>classification</em> are the mean misclassification error (<a href="measures.html" target="_blank">mmce</a>), accuracy (<a href="measures.html" target="_blank">acc</a>) or measures based on <a href="roc_analysis.html" target="_blank">ROC analysis</a>. For <em>regression</em> the mean of squared errors (<a href="measures.html" target="_blank">mse</a>) or mean of absolute errors (<a href="measures.html" target="_blank">mae</a>) are usually considered. For <em>clustering</em> tasks, measures such as the Dunn index (<a href="measures.html" target="_blank">G1 index</a>) are provided, while for <em>survival</em> predictions, the Concordance Index (<a href="measures.html" target="_blank">cindex</a>) is supported, and for <em>cost-sensitive</em> predictions the misclassification penalty (<a href="measures.html" target="_blank">mcp</a>) and others. It is also possible to access the time to train the learner (<a href="measures.html" target="_blank">timetrain</a>), the time to compute the prediction (<a href="measures.html" target="_blank">timepredict</a>) and their sum (<a href="measures.html" target="_blank">timeboth</a>) as performance measures.</p>
 <p>To see which performance measures are implemented, have a look at the table of <a href="measures.html" target="_blank">performance measures</a> and the <code><a href="../../reference/measures.html">measures()</a></code> documentation page.</p>
 <p>If you want to implement an additional measure or include a measure with non-standard misclassification costs, see the section on <a href="create_measure.html" target="_blank">creating custom measures</a>.</p>
 </div>
-<div class="section level1">
-<h1 id="listing-measures">Listing measures<a class="anchor" aria-label="anchor" href="#listing-measures"></a>
-</h1>
+<div class="section level2">
+<h2 id="listing-measures">Listing measures<a class="anchor" aria-label="anchor" href="#listing-measures"></a>
+</h2>
 <p>The properties and requirements of the individual measures are shown in the table of <a href="measures.html" target="_blank">performance measures</a>.</p>
 <p>If you would like a list of available measures with certain properties or suitable for a certain learning <code><a href="../../reference/Task.html">Task()</a></code> use the function <code><a href="../../reference/listMeasures.html">listMeasures()</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -221,9 +224,9 @@
 <span class="co">## Arguments: </span>
 <span class="co">## Note: Defined as: mean((response - truth)^2)</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="calculate-performance-measures">Calculate performance measures<a class="anchor" aria-label="anchor" href="#calculate-performance-measures"></a>
-</h1>
+<div class="section level2">
+<h2 id="calculate-performance-measures">Calculate performance measures<a class="anchor" aria-label="anchor" href="#calculate-performance-measures"></a>
+</h2>
 <p>In the following example we fit a gradient boosting machine (<code><a href="https://rdrr.io/pkg/gbm/man/gbm.html" class="external-link">gbm::gbm()</a></code>) on a subset of the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html" class="external-link">mlbench::BostonHousing()</a></code>) data set and calculate the default measure mean squared error (<a href="measures.html" target="_blank">mse</a>) on the remaining observations.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span><span class="op">(</span><span class="va">bh.task</span><span class="op">)</span>
@@ -246,9 +249,9 @@
 <span class="co">##       mse     medse       mae </span>
 <span class="co">## 14.385956  4.209155  2.716451</span></code></pre></div>
 <p>For the other types of learning problems and measures, calculating the performance basically works in the same way.</p>
-<div class="section level2">
-<h2 id="requirements-of-performance-measures">Requirements of performance measures<a class="anchor" aria-label="anchor" href="#requirements-of-performance-measures"></a>
-</h2>
+<div class="section level3">
+<h3 id="requirements-of-performance-measures">Requirements of performance measures<a class="anchor" aria-label="anchor" href="#requirements-of-performance-measures"></a>
+</h3>
 <p>Note that in order to calculate some performance measures it is required that you pass the <code><a href="../../reference/Task.html">Task()</a></code> or the fitted model (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) in addition to the <code><a href="../../reference/Prediction.html">Prediction()</a></code>.</p>
 <p>For example in order to assess the time needed for training (<a href="measures.html" target="_blank">timetrain</a>), the fitted model has to be passed.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -277,9 +280,9 @@
 <p>Also bear in mind that many of the performance measures that are available for classification, e.g., the false positive rate (<a href="measures.html" target="_blank">fpr</a>), are only suitable for binary problems.</p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="access-a-performance-measure">Access a performance measure<a class="anchor" aria-label="anchor" href="#access-a-performance-measure"></a>
-</h1>
+<div class="section level2">
+<h2 id="access-a-performance-measure">Access a performance measure<a class="anchor" aria-label="anchor" href="#access-a-performance-measure"></a>
+</h2>
 <p>Performance measures in <code>mlr</code> are objects of class <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>). If you are interested in the properties or requirements of a single measure you can access it directly. See the help page of <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) for information on the individual slots.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Mean misclassification error</span>
@@ -302,13 +305,13 @@
 <span class="co">##   ..- attr(*, "class")= chr "Aggregation"</span>
 <span class="co">##  - attr(*, "class")= chr "Measure"</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="binary-classification">Binary classification<a class="anchor" aria-label="anchor" href="#binary-classification"></a>
-</h1>
-<p>For binary classification specialized techniques exist to analyze the performance.</p>
 <div class="section level2">
-<h2 id="plot-performance-versus-threshold">Plot performance versus threshold<a class="anchor" aria-label="anchor" href="#plot-performance-versus-threshold"></a>
+<h2 id="binary-classification">Binary classification<a class="anchor" aria-label="anchor" href="#binary-classification"></a>
 </h2>
+<p>For binary classification specialized techniques exist to analyze the performance.</p>
+<div class="section level3">
+<h3 id="plot-performance-versus-threshold">Plot performance versus threshold<a class="anchor" aria-label="anchor" href="#plot-performance-versus-threshold"></a>
+</h3>
 <p>As you may recall (see the previous section on <a href="predict.html" target="_blank">making predictions</a>) in binary classification we can adjust the threshold used to map probabilities to class labels. Helpful in this regard is are the functions <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code> and <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>, which generate and plot, respectively, the learner performance versus the threshold.</p>
 <p>For more performance plots and automatic threshold tuning see the section on <a href="roc_analysis.html" target="_blank">ROC analysis</a>.</p>
 <p>In the following example we consider the <code><a href="https://rdrr.io/pkg/mlbench/man/Sonar.html" class="external-link">mlbench::Sonar()</a></code> data set and plot the false positive rate (<a href="measures.html" target="_blank">fpr</a>), the false negative rate (<a href="measures.html" target="_blank">fnr</a>) as well as the misclassification rate (<a href="measures.html" target="_blank">mmce</a>) for all possible threshold values.</p>
@@ -330,9 +333,9 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">plotThreshVsPerfGGVIS</span><span class="op">(</span><span class="va">d</span><span class="op">)</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="roc-measures">ROC measures<a class="anchor" aria-label="anchor" href="#roc-measures"></a>
-</h2>
+<div class="section level3">
+<h3 id="roc-measures">ROC measures<a class="anchor" aria-label="anchor" href="#roc-measures"></a>
+</h3>
 <p>For binary classification a large number of specialized measures exist, which can be nicely formatted into one matrix, see for example the <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic" class="external-link">receiver operating characteristic page on wikipedia</a>.</p>
 <p>We can generate a similiar table with the <code><a href="../../reference/calculateROCMeasures.html">calculateROCMeasures()</a></code> function.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -375,7 +378,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="cost_sensitive_classif_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Cost-Sensitive Classification</h1>
@@ -173,9 +176,9 @@
 <p>In case of <em>class-dependent costs</em> the costs depend on the true and predicted class label. The costs <span class="math inline">\(c(k, l)\)</span> for predicting class <span class="math inline">\(k\)</span> if the true label is <span class="math inline">\(l\)</span> are usually organized into a <span class="math inline">\(K \times K\)</span> cost matrix where <span class="math inline">\(K\)</span> is the number of classes. Naturally, it is assumed that the cost of predicting the correct class label <span class="math inline">\(y\)</span> is minimal (that is <span class="math inline">\(c(y, y) \leq c(k, y)\)</span> for all <span class="math inline">\(k = 1,\ldots,K\)</span>).</p>
 <p>A further generalization of this scenario are <em>example-dependent misclassification costs</em> where each example <span class="math inline">\((x, y)\)</span> is coupled with an individual cost vector of length <span class="math inline">\(K\)</span>. Its <span class="math inline">\(k\)</span>-th component expresses the cost of assigning <span class="math inline">\(x\)</span> to class <span class="math inline">\(k\)</span>. A real-world example is fraud detection where the costs do not only depend on the true and predicted status fraud/non-fraud, but also on the amount of money involved in each case. Naturally, the cost of predicting the true class label <span class="math inline">\(y\)</span> is assumed to be minimum. The true class labels are redundant information, as they can be easily inferred from the cost vectors. Moreover, given the cost vector, the expected costs do not depend on the true class label <span class="math inline">\(y\)</span>. The classification problem is therefore completely defined by the feature values <span class="math inline">\(x\)</span> and the corresponding cost vectors.</p>
 <p>In the following we show ways to handle cost-sensitive classification problems in <code>mlr</code>. Some of the functionality is currently experimental, and there may be changes in the future.</p>
-<div class="section level2">
-<h2 id="class-dependent-misclassification-costs">Class-dependent misclassification costs<a class="anchor" aria-label="anchor" href="#class-dependent-misclassification-costs"></a>
-</h2>
+<div class="section level3">
+<h3 id="class-dependent-misclassification-costs">Class-dependent misclassification costs<a class="anchor" aria-label="anchor" href="#class-dependent-misclassification-costs"></a>
+</h3>
 <p>There are some classification methods that can accomodate misclassification costs directly. One example is <code><a href="https://rdrr.io/pkg/rpart/man/rpart.html" class="external-link">rpart::rpart()</a></code>.</p>
 <p>Alternatively, we can use cost-insensitive methods and manipulate the predictions or the training data in order to take misclassification costs into account. <code>mlr</code> supports <em>thresholding</em> and <em>rebalancing</em>.</p>
 <ol style="list-style-type: decimal">
@@ -190,9 +193,9 @@
 </ol>
 <p>We start with binary classification problems and afterwards deal with multi-class problems.</p>
 </div>
-<div class="section level2">
-<h2 id="binary-classification-problems">Binary classification problems<a class="anchor" aria-label="anchor" href="#binary-classification-problems"></a>
-</h2>
+<div class="section level3">
+<h3 id="binary-classification-problems">Binary classification problems<a class="anchor" aria-label="anchor" href="#binary-classification-problems"></a>
+</h3>
 <p>The positive and negative classes are labeled <span class="math inline">\(1\)</span> and <span class="math inline">\(-1\)</span>, respectively, and we consider the following cost matrix where the rows indicate true classes and the columns predicted classes:</p>
 <table class="table"><tbody>
 <tr class="odd">
@@ -261,9 +264,9 @@
 <span class="co">##      Bad Good</span>
 <span class="co">## Bad    0    5</span>
 <span class="co">## Good   1    0</span></code></pre></div>
-<div class="section level3">
-<h3 id="thresholding">1. Thresholding<a class="anchor" aria-label="anchor" href="#thresholding"></a>
-</h3>
+<div class="section level4">
+<h4 id="thresholding">1. Thresholding<a class="anchor" aria-label="anchor" href="#thresholding"></a>
+</h4>
 <p>We start by fitting a logistic regression model (<code><a href="https://rdrr.io/pkg/nnet/man/multinom.html" class="external-link">nnet::multinom()</a></code>) to the German Credit data set (<code><a href="https://rdrr.io/pkg/caret/man/GermanCredit.html" class="external-link">caret::GermanCredit()</a></code>) and predict posterior probabilities.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Train and predict posterior probabilities</span>
@@ -284,9 +287,9 @@
 <span class="co">## 6  6  Good 0.26230149 0.7376985     Good</span>
 <span class="co">## ... (#rows: 1000, #cols: 5)</span></code></pre></div>
 <p>The default thresholds for both classes are 0.5. But according to the cost matrix we should predict class Good only if we are very sure that Good is indeed the correct label. Therefore we should increase the threshold for class Good and decrease the threshold for class Bad.</p>
-<div class="section level4">
-<h4 id="i--theoretical-thresholding">i. Theoretical thresholding<a class="anchor" aria-label="anchor" href="#i--theoretical-thresholding"></a>
-</h4>
+<div class="section level5">
+<h5 id="i--theoretical-thresholding">i. Theoretical thresholding<a class="anchor" aria-label="anchor" href="#i--theoretical-thresholding"></a>
+</h5>
 <p>The theoretical threshold for the <em>positive</em> class can be calculated from the cost matrix as <span class="math display">\[t^* = \frac{c(+1,-1) - c(-1,-1)}{c(+1,-1) - c(+1,+1) + c(-1,+1) - c(-1,-1)}.\]</span> For more details see <a href="http://www.cs.iastate.edu/~honavar/elkan.pdf" class="external-link">Elkan (2001)</a>.</p>
 <p>Below the theoretical threshold for the German Credit data set (<code><a href="https://rdrr.io/pkg/caret/man/GermanCredit.html" class="external-link">caret::GermanCredit()</a></code>) is calculated and used to predict class labels. Since the diagonal of the cost matrix is zero the formula given above simplifies accordingly.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -357,9 +360,9 @@
 <span class="fu"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span><span class="op">(</span><span class="va">d</span>, mark.th <span class="op">=</span> <span class="va">th</span><span class="op">)</span></code></pre></div>
 <p><img src="cost_sensitive_classif_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 </div>
-<div class="section level4">
-<h4 id="ii--empirical-thresholding">ii. Empirical thresholding<a class="anchor" aria-label="anchor" href="#ii--empirical-thresholding"></a>
-</h4>
+<div class="section level5">
+<h5 id="ii--empirical-thresholding">ii. Empirical thresholding<a class="anchor" aria-label="anchor" href="#ii--empirical-thresholding"></a>
+</h5>
 <p>The idea of <em>empirical thresholding</em> (see <a href="http://sun0.cs.uca.edu/~ssheng/papers/AAAI06a.pdf" class="external-link">Sheng and Ling, 2006</a>) is to select cost-optimal threshold values for a given learning method based on the training data. In contrast to <em>theoretical thresholding</em> it suffices if the estimated posterior probabilities are order-correct.</p>
 <p>In order to determine optimal threshold values you can use <code>mlr</code>’s function <code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code>. As tuning the threshold on the complete training data set can lead to overfitting, you should use resampling strategies. Below we perform 3-fold cross-validation and use <code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code> to calculate threshold values with lowest average costs over the 3 test data sets.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -388,9 +391,9 @@
 <p><code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code> returns the optimal threshold value for the positive class and the corresponding performance. As expected the tuned threshold is smaller than the theoretical threshold.</p>
 </div>
 </div>
-<div class="section level3">
-<h3 id="rebalancing">2. Rebalancing<a class="anchor" aria-label="anchor" href="#rebalancing"></a>
-</h3>
+<div class="section level4">
+<h4 id="rebalancing">2. Rebalancing<a class="anchor" aria-label="anchor" href="#rebalancing"></a>
+</h4>
 <p>In order to minimize the average costs, observations from the less costly class should be given higher importance during training. This can be achieved by <em>weighting</em> the classes, provided that the learner under consideration has a ‘class weights’ or an ‘observation weights’ argument. To find out which learning methods support either type of weights have a look at the list of <a href="integrated_learners.html" target="_blank">integrated learners</a> in the Appendix or use <code><a href="../../reference/listLearners.html">listLearners()</a></code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Learners that accept observation weights</span>
@@ -434,9 +437,9 @@
 <span class="co">## 8           classif.randomForest randomForest</span>
 <span class="co">## 9                    classif.svm        e1071</span></code></pre></div>
 <p>Alternatively, <em>over- and undersampling</em> techniques can be used.</p>
-<div class="section level4">
-<h4 id="i--weighting">i. Weighting<a class="anchor" aria-label="anchor" href="#i--weighting"></a>
-</h4>
+<div class="section level5">
+<h5 id="i--weighting">i. Weighting<a class="anchor" aria-label="anchor" href="#i--weighting"></a>
+</h5>
 <p>Just as <em>theoretical thresholds</em>, <em>theoretical weights</em> can be calculated from the cost matrix. If <span class="math inline">\(t\)</span> indicates the target threshold and <span class="math inline">\(t_0\)</span> the original threshold for the positive class the proportion of observations in the positive class has to be multiplied by <span class="math display">\[\frac{1-t}{t} \frac{t_0}{1-t_0}.\]</span> Alternatively, the proportion of observations in the negative class can be multiplied by the inverse. A proof is given by <a href="http://www.cs.iastate.edu/~honavar/elkan.pdf" class="external-link">Elkan (2001)</a>.</p>
 <p>In most cases, the original threshold is <span class="math inline">\(t_0 = 0.5\)</span> and thus the second factor vanishes. If additionally the target threshold <span class="math inline">\(t\)</span> equals the theoretical threshold <span class="math inline">\(t^*\)</span> the proportion of observations in the positive class has to be multiplied by <span class="math display">\[\frac{1-t^*}{t^*} = \frac{c(-1,+1) - c(+1,+1)}{c(+1,-1) - c(-1,-1)}.\]</span></p>
 <p>For the credit example (<code>caret:GermanCredit()</code>) the theoretical threshold corresponds to a weight of 5 for the positive class.</p>
@@ -508,9 +511,9 @@
 <span class="co">## 16       11.5              0.5439601      0.4439919</span>
 <span class="co">## 17         12              0.5499661      0.4499979</span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="ii--over--and-undersampling">ii. Over- and undersampling<a class="anchor" aria-label="anchor" href="#ii--over--and-undersampling"></a>
-</h4>
+<div class="section level5">
+<h5 id="ii--over--and-undersampling">ii. Over- and undersampling<a class="anchor" aria-label="anchor" href="#ii--over--and-undersampling"></a>
+</h5>
 <p>If the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) supports neither observation nor class weights the proportions of the classes in the training data can be changed by over- or undersampling.</p>
 <p>In the GermanCredit data set (<code><a href="https://rdrr.io/pkg/caret/man/GermanCredit.html" class="external-link">caret::GermanCredit()</a></code>) the positive class Bad should receive a theoretical weight of <code>w = (1 - th)/th = 5</code>. This can be achieved by oversampling class Bad with a <code>rate</code> of 5 or by undersampling class Good with a <code>rate</code> of 1/5 (using functions <code><a href="../../reference/oversample.html">oversample()</a></code> or undersample (<code><a href="../../reference/oversample.html">undersample()</a></code>).</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -559,9 +562,9 @@
 </div>
 </div>
 </div>
-<div class="section level2">
-<h2 id="multi-class-problems">Multi-class problems<a class="anchor" aria-label="anchor" href="#multi-class-problems"></a>
-</h2>
+<div class="section level3">
+<h3 id="multi-class-problems">Multi-class problems<a class="anchor" aria-label="anchor" href="#multi-class-problems"></a>
+</h3>
 <p>We consider the waveform <code><a href="https://rdrr.io/pkg/mlbench/man/mlbench.waveform.html" class="external-link">mlbench::mlbench.waveform()</a></code> data set from package <code>mlbench::mlbench()</code> and add an artificial cost matrix:</p>
 <table class="table"><tbody>
 <tr class="odd">
@@ -603,9 +606,9 @@
 <span class="va">wf.costs</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeCostMeasure.html">makeCostMeasure</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"wf.costs"</span>, name <span class="op">=</span> <span class="st">"Waveform costs"</span>, costs <span class="op">=</span> <span class="va">costs</span>,
   best <span class="op">=</span> <span class="fl">0</span>, worst <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <p>In the multi-class case, both, <em>thresholding</em> and <em>rebalancing</em> correspond to cost matrices of a certain structure where <span class="math inline">\(c(k,l) = c(l)\)</span> for <span class="math inline">\(k\)</span>, <span class="math inline">\(l = 1, \ldots, K\)</span>, <span class="math inline">\(k \neq l\)</span>. This condition means that the cost of misclassifying an observation is independent of the predicted class label (see <a href="http://homes.cs.washington.edu/~pedrod/papers/kdd99.pdf" class="external-link">Domingos, 1999</a>). Given a cost matrix of this type, theoretical thresholds and weights can be derived in a similar manner as in the binary case. Obviously, the cost matrix given above does not have this special structure.</p>
-<div class="section level3">
-<h3 id="thresholding-1">1. Thresholding<a class="anchor" aria-label="anchor" href="#thresholding-1"></a>
-</h3>
+<div class="section level4">
+<h4 id="thresholding-1">1. Thresholding<a class="anchor" aria-label="anchor" href="#thresholding-1"></a>
+</h4>
 <p>Given a vector of positive threshold values as long as the number of classes <span class="math inline">\(K\)</span>, the predicted probabilities for all classes are adjusted by dividing them by the corresponding threshold value. Then the class with the highest adjusted probability is predicted. This way, as in the binary case, classes with a low threshold are preferred to classes with a larger threshold.</p>
 <p>Again this can be done by function <code><a href="../../reference/setThreshold.html">setThreshold()</a></code> as shown in the following example (or alternatively by the <code>predict.threshold</code> option of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>). Note that the threshold vector needs to have names that correspond to the class labels.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
@@ -634,9 +637,9 @@
 <span class="co">##  wf.costs      mmce</span>
 <span class="co">## 4.6863021 0.2919823</span></code></pre></div>
 <p>The threshold vector <code>th</code> in the above example is chosen according to the average costs of the true classes 55, 4.5 and 9. More exactly, <code>th</code> corresponds to an artificial cost matrix of the structure mentioned above with off-diagonal elements <span class="math inline">\(c(2,1) = c(3,1) = 55\)</span>, <span class="math inline">\(c(1,2) = c(3,2) = 4.5\)</span> and <span class="math inline">\(c(1,3) = c(2,3) = 9\)</span>. This threshold vector may be not optimal but leads to smaller total costs on the data set than the default.</p>
-<div class="section level4">
-<h4 id="ii--empirical-thresholding-1">ii. Empirical thresholding<a class="anchor" aria-label="anchor" href="#ii--empirical-thresholding-1"></a>
-</h4>
+<div class="section level5">
+<h5 id="ii--empirical-thresholding-1">ii. Empirical thresholding<a class="anchor" aria-label="anchor" href="#ii--empirical-thresholding-1"></a>
+</h5>
 <p>As in the binary case it is possible to tune the threshold vector using function <code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code>. Since the scaling of the threshold vector does not change the predicted class labels <code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code> returns threshold values that lie in [0,1] and sum to unity.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tune.res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneThreshold.html">tuneThreshold</a></span><span class="op">(</span>pred <span class="op">=</span> <span class="va">r</span><span class="op">$</span><span class="va">pred</span>, measure <span class="op">=</span> <span class="va">wf.costs</span><span class="op">)</span>
@@ -654,12 +657,12 @@
 <span class="co">## 0.05172414 0.63218391 0.31609195</span></code></pre></div>
 </div>
 </div>
-<div class="section level3">
-<h3 id="rebalancing-1">2. Rebalancing<a class="anchor" aria-label="anchor" href="#rebalancing-1"></a>
-</h3>
 <div class="section level4">
-<h4 id="i--weighting-1">i. Weighting<a class="anchor" aria-label="anchor" href="#i--weighting-1"></a>
+<h4 id="rebalancing-1">2. Rebalancing<a class="anchor" aria-label="anchor" href="#rebalancing-1"></a>
 </h4>
+<div class="section level5">
+<h5 id="i--weighting-1">i. Weighting<a class="anchor" aria-label="anchor" href="#i--weighting-1"></a>
+</h5>
 <p>In the multi-class case you have to pass a vector of weights as long as the number of classes <span class="math inline">\(K\)</span> to function <code><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper()</a></code>. The weight vector can be tuned using function <code><a href="../../reference/tuneParams.html">tuneParams()</a></code>.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -677,9 +680,9 @@
 </div>
 </div>
 </div>
-<div class="section level1">
-<h1 id="example-dependent-misclassification-costs">Example-dependent misclassification costs<a class="anchor" aria-label="anchor" href="#example-dependent-misclassification-costs"></a>
-</h1>
+<div class="section level2">
+<h2 id="example-dependent-misclassification-costs">Example-dependent misclassification costs<a class="anchor" aria-label="anchor" href="#example-dependent-misclassification-costs"></a>
+</h2>
 <p>In case of example-dependent costs we have to create a special <code><a href="../../reference/Task.html">Task()</a></code> via function <code><a href="../../reference/CostSensTask.html">makeCostSensTask()</a></code>. For this purpose the feature values <span class="math inline">\(x\)</span> and an <span class="math inline">\(n \times K\)</span> <code>cost</code> matrix that contains the cost vectors for all <span class="math inline">\(n\)</span> examples in the data set are required.</p>
 <p>We use the iris (<code><a href="https://rdrr.io/r/datasets/iris.html" class="external-link">datasets::iris()</a></code>) data and generate an artificial cost matrix (see <a href="https://doi.org/10.1145/1102351.1102358" class="external-link">Beygelzimer et al., 2005</a>).</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
@@ -782,7 +785,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="multilabel_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Multilabel Classification</h1>
@@ -171,9 +174,9 @@
     
 <p>Multilabel classification is a classification problem where multiple target labels can be assigned to each observation instead of only one like in multiclass classification.</p>
 <p>Two different approaches exist for multilabel classification. <em>Problem transformation methods</em> try to transform the multilabel classification into binary or multiclass classification problems. <em>Algorithm adaptation methods</em> adapt multiclass algorithms so they can be applied directly to the problem.</p>
-<div class="section level1">
-<h1 id="creating-a-task">Creating a task<a class="anchor" aria-label="anchor" href="#creating-a-task"></a>
-</h1>
+<div class="section level2">
+<h2 id="creating-a-task">Creating a task<a class="anchor" aria-label="anchor" href="#creating-a-task"></a>
+</h2>
 <p>The first thing you have to do for multilabel classification in <code>mlr</code> is to get your data in the right format. You need a <code>data.frame</code> which consists of the features and a logical vector for each label which indicates if the label is present in the observation or not. After that you can create a <code>MultilabelTask</code> (<code><a href="../../reference/Task.html">Task()</a></code>) like a normal <code>ClassifTask</code> (<code><a href="../../reference/Task.html">Task()</a></code>). Instead of one target name you have to specify a vector of targets which correspond to the names of logical variables in the <code>data.frame</code>. In the following example we get the yeast data frame from the already existing <code><a href="../../reference/yeast.task.html">yeast.task()</a></code>, extract the 14 label names and create the task again.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">yeast</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">yeast.task</span><span class="op">)</span>
@@ -197,17 +200,17 @@
 <span class="co">## label11 label12 label13 label14 </span>
 <span class="co">##     289    1816    1799      34</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="constructing-a-learner">Constructing a learner<a class="anchor" aria-label="anchor" href="#constructing-a-learner"></a>
-</h1>
+<div class="section level2">
+<h2 id="constructing-a-learner">Constructing a learner<a class="anchor" aria-label="anchor" href="#constructing-a-learner"></a>
+</h2>
 <p>Multilabel classification in <code>mlr</code> can currently be done in two ways:</p>
 <ul>
 <li><p>Algorithm adaptation methods: Treat the whole problem with a specific algorithm.</p></li>
 <li><p>Problem transformation methods: Transform the problem, so that simple binary classification algorithms can be applied.</p></li>
 </ul>
-<div class="section level2">
-<h2 id="algorithm-adaptation-methods">Algorithm adaptation methods<a class="anchor" aria-label="anchor" href="#algorithm-adaptation-methods"></a>
-</h2>
+<div class="section level3">
+<h3 id="algorithm-adaptation-methods">Algorithm adaptation methods<a class="anchor" aria-label="anchor" href="#algorithm-adaptation-methods"></a>
+</h3>
 <p>Currently the available algorithm adaptation methods in <strong>R</strong> are the multivariate random forest in the [%randomForestSRC] package and the random ferns multilabel algorithm in the [%rFerns] package. You can create the learner for these algorithms like in multiclass classification problems.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn.rfsrc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"multilabel.randomForestSRC"</span><span class="op">)</span>
@@ -221,9 +224,9 @@
 <span class="co">## Predict-Type: response</span>
 <span class="co">## Hyperparameters:</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="problem-transformation-methods">Problem transformation methods<a class="anchor" aria-label="anchor" href="#problem-transformation-methods"></a>
-</h2>
+<div class="section level3">
+<h3 id="problem-transformation-methods">Problem transformation methods<a class="anchor" aria-label="anchor" href="#problem-transformation-methods"></a>
+</h3>
 <p>For generating a wrapped multilabel learner first create a binary (or multiclass) classification learner with <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>. Afterwards apply a function like <code><a href="../../reference/makeMultilabelBinaryRelevanceWrapper.html">makeMultilabelBinaryRelevanceWrapper()</a></code>, <code><a href="../../reference/makeMultilabelClassifierChainsWrapper.html">makeMultilabelClassifierChainsWrapper()</a></code>, <code><a href="../../reference/makeMultilabelNestedStackingWrapper.html">makeMultilabelNestedStackingWrapper()</a></code>, <code><a href="../../reference/makeMultilabelDBRWrapper.html">makeMultilabelDBRWrapper()</a></code> or <code><a href="../../reference/makeMultilabelStackingWrapper.html">makeMultilabelStackingWrapper()</a></code> on the learner to convert it to a learner that uses the respective problem transformation method.</p>
 <p>You can also generate a binary relevance learner directly, as you can see in the example.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -248,36 +251,36 @@
 <span class="co">## Predict-Type: response</span>
 <span class="co">## Hyperparameters: xval=0</span></code></pre></div>
 <p>The different methods are shortly described in the following.</p>
-<div class="section level3">
-<h3 id="binary-relevance">Binary relevance<a class="anchor" aria-label="anchor" href="#binary-relevance"></a>
-</h3>
+<div class="section level4">
+<h4 id="binary-relevance">Binary relevance<a class="anchor" aria-label="anchor" href="#binary-relevance"></a>
+</h4>
 <p>This problem transformation method converts the multilabel problem to binary classification problems for each label and applies a simple binary classificator on these. In <code>mlr</code> this can be done by converting your binary learner to a wrapped binary relevance multilabel learner.</p>
 </div>
-<div class="section level3">
-<h3 id="classifier-chains">Classifier chains<a class="anchor" aria-label="anchor" href="#classifier-chains"></a>
-</h3>
+<div class="section level4">
+<h4 id="classifier-chains">Classifier chains<a class="anchor" aria-label="anchor" href="#classifier-chains"></a>
+</h4>
 <p>Trains consecutively the labels with the input data. The input data in each step is augmented by the already trained labels (with the real observed values). Therefore an order of the labels has to be specified. At prediction time the labels are predicted in the same order as while training. The required labels in the input data are given by the previous done prediction of the respective label.</p>
 </div>
-<div class="section level3">
-<h3 id="nested-stacking">Nested stacking<a class="anchor" aria-label="anchor" href="#nested-stacking"></a>
-</h3>
+<div class="section level4">
+<h4 id="nested-stacking">Nested stacking<a class="anchor" aria-label="anchor" href="#nested-stacking"></a>
+</h4>
 <p>Same as classifier chains, but the labels in the input data are not the real ones, but estimations of the labels obtained by the already trained learners.</p>
 </div>
-<div class="section level3">
-<h3 id="dependent-binary-relevance">Dependent binary relevance<a class="anchor" aria-label="anchor" href="#dependent-binary-relevance"></a>
-</h3>
+<div class="section level4">
+<h4 id="dependent-binary-relevance">Dependent binary relevance<a class="anchor" aria-label="anchor" href="#dependent-binary-relevance"></a>
+</h4>
 <p>Each label is trained with the real observed values of all other labels. In prediction phase for a label the other necessary labels are obtained in a previous step by a base learner like the binary relevance method.</p>
 </div>
-<div class="section level3">
-<h3 id="stacking">Stacking<a class="anchor" aria-label="anchor" href="#stacking"></a>
-</h3>
+<div class="section level4">
+<h4 id="stacking">Stacking<a class="anchor" aria-label="anchor" href="#stacking"></a>
+</h4>
 <p>Same as the dependent binary relevance method, but in the training phase the labels used as input for each label are obtained by the binary relevance method.</p>
 </div>
 </div>
 </div>
-<div class="section level1">
-<h1 id="train">Train<a class="anchor" aria-label="anchor" href="#train"></a>
-</h1>
+<div class="section level2">
+<h2 id="train">Train<a class="anchor" aria-label="anchor" href="#train"></a>
+</h2>
 <p>You can <code><a href="../../reference/train.html">train()</a></code> a model as usual with a multilabel learner and a multilabel task as input. You can also pass <code>subset</code> and <code>weights</code> arguments if the learner supports this.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.br</span>, <span class="va">yeast.task</span><span class="op">)</span>
@@ -293,9 +296,9 @@
 <span class="co">## Trained on: task.id = multi; obs = 100; features = 103</span>
 <span class="co">## Hyperparameters: na.action=na.impute</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="predict">Predict<a class="anchor" aria-label="anchor" href="#predict"></a>
-</h1>
+<div class="section level2">
+<h2 id="predict">Predict<a class="anchor" aria-label="anchor" href="#predict"></a>
+</h2>
 <p>Prediction can be done as usual in <code>mlr</code> with <code>predict</code> (<code><a href="../../reference/predict.WrappedModel.html">predict.WrappedModel()</a></code>) and by passing a trained model and either the task to the <code>task</code> argument or some new data to the <code>newdata</code> argument. As always you can specify a <code>subset</code> of the data which should be predicted.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">yeast.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
@@ -325,9 +328,9 @@
 <span class="co">## [29] "response.label14"</span></code></pre></div>
 <p>Depending on the chosen <code>predict.type</code> of the learner you get true and predicted values and possibly probabilities for each class label. These can be extracted by the usual accessor functions <code><a href="../../reference/getPredictionResponse.html">getPredictionTruth()</a></code>, <code><a href="../../reference/getPredictionResponse.html">getPredictionResponse()</a></code> and <code><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities()</a></code>.</p>
 </div>
-<div class="section level1">
-<h1 id="performance">Performance<a class="anchor" aria-label="anchor" href="#performance"></a>
-</h1>
+<div class="section level2">
+<h2 id="performance">Performance<a class="anchor" aria-label="anchor" href="#performance"></a>
+</h2>
 <p>The performance of your prediction can be assessed via function <code><a href="../../reference/performance.html">performance()</a></code>. You can specify via the <code>measures</code> argument which <a href="measures.html" target="_blank">measure(s)</a> to calculate. The default measure for multilabel classification is the Hamming loss <a href="measures.html" target="_blank">multilabel.hamloss</a>. All available measures for multilabel classification can be shown by <code><a href="../../reference/listMeasures.html">listMeasures()</a></code> and found in the table of performance <a href="measures.html" target="_blank">measures</a> and the <code>?measures()</code> documentation page.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>
@@ -342,9 +345,9 @@
 
 <span class="fu"><a href="../../reference/listMeasures.html">listMeasures</a></span><span class="op">(</span><span class="st">"multilabel"</span><span class="op">)</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="resampling">Resampling<a class="anchor" aria-label="anchor" href="#resampling"></a>
-</h1>
+<div class="section level2">
+<h2 id="resampling">Resampling<a class="anchor" aria-label="anchor" href="#resampling"></a>
+</h2>
 <p>For evaluating the overall performance of the learning algorithm you can do some <a href="resample.html" target="_blank">resampling</a>. As usual you have to define a resampling strategy, either via <code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code> or <code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>. After that you can run the <code><a href="../../reference/resample.html">resample()</a></code> function. Below the default measure Hamming loss is calculated.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"CV"</span>, stratify <span class="op">=</span> <span class="cn">FALSE</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
@@ -366,9 +369,9 @@
 <span class="co">## Aggr perf: multilabel.hamloss.test.mean=0.4762392</span>
 <span class="co">## Runtime: 0.320362</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="binary-performance">Binary performance<a class="anchor" aria-label="anchor" href="#binary-performance"></a>
-</h1>
+<div class="section level2">
+<h2 id="binary-performance">Binary performance<a class="anchor" aria-label="anchor" href="#binary-performance"></a>
+</h2>
 <p>If you want to calculate a binary performance measure like, e.g., the <a href="measures.html" target="_blank">accuracy</a>, the <a href="measures.html" target="_blank">mmce</a> or the <a href="measures.html" target="_blank">auc</a> for each label, you can use function <code><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances()</a></code>. You can apply this function to any multilabel prediction, e.g., also on the resample multilabel prediction. For calculating the <a href="measures.html" target="_blank">auc</a> you need predicted probabilities.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
@@ -418,7 +421,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="benchmark_experiments_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Benchmark Experiments</h1>
@@ -171,9 +174,9 @@
     
 <p>In a benchmark experiment different learning methods are applied to one or several data sets with the aim to compare and rank the algorithms with respect to one or more performance measures.</p>
 <p>In <code>mlr</code> a benchmark experiment can be conducted by calling function <code><a href="../../reference/benchmark.html">benchmark()</a></code> on a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">base::list()</a></code> of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>s and a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">base::list()</a></code> of <code><a href="../../reference/Task.html">Task()</a></code>s. <code><a href="../../reference/benchmark.html">benchmark()</a></code> basically executes <code><a href="../../reference/resample.html">resample()</a></code> for each combination of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> and <code><a href="../../reference/Task.html">Task()</a></code>. You can specify an individual resampling strategy for each <code><a href="../../reference/Task.html">Task()</a></code> and select one or multiple performance measures to be calculated.</p>
-<div class="section level1">
-<h1 id="conducting-benchmark-experiments">Conducting benchmark experiments<a class="anchor" aria-label="anchor" href="#conducting-benchmark-experiments"></a>
-</h1>
+<div class="section level2">
+<h2 id="conducting-benchmark-experiments">Conducting benchmark experiments<a class="anchor" aria-label="anchor" href="#conducting-benchmark-experiments"></a>
+</h2>
 <p>We start with a small example. Two learners, <code><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">MASS::lda()</a></code> and a <code><a href="https://rdrr.io/pkg/rpart/man/rpart.html" class="external-link">rpart::rpart()</a></code>, are applied to one classification problem (<code><a href="../../reference/sonar.task.html">sonar.task()</a></code>). As resampling strategy we choose <code>"Holdout"</code>. The performance is thus calculated on a single randomly sampled test data set.</p>
 <p>In the example below we create a resample description (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>), which is automatically instantiated by <code><a href="../../reference/benchmark.html">benchmark()</a></code>. The instantiation is done only once per <code><a href="../../reference/Task.html">Task()</a></code>, i.e., the same training and test sets are used for all learners. It is also possible to directly pass a <code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>.</p>
 <p>If you would like to use a <em>fixed test data set</em> instead of a randomly selected one, you can create a suitable <code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code> through function <code><a href="../../reference/makeFixedHoldoutInstance.html">makeFixedHoldoutInstance()</a></code>.</p>
@@ -236,20 +239,20 @@
 <p>We also need to set <code>models = TRUE</code> explicitly if we want to take a look at them later. By default, models are not stored in the benchmark result object.</p>
 <p>In the printed summary table every row corresponds to one pair of <code><a href="../../reference/Task.html">Task()</a></code> and <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>. The entries show the <a href="measures.html" target="_blank">mean misclassification error</a>, the default performance measure for classification, on the test data set.</p>
 <p>The result <code>bmr</code> is an object of class <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code>. Basically, it contains a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">base::list()</a></code> of lists of <code><a href="../../reference/ResampleResult.html">ResampleResult()</a></code> objects, first ordered by <code><a href="../../reference/Task.html">Task()</a></code> and then by <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>.</p>
-<div class="section level2">
-<h2 id="making-experiments-reproducible">Making experiments reproducible<a class="anchor" aria-label="anchor" href="#making-experiments-reproducible"></a>
-</h2>
+<div class="section level3">
+<h3 id="making-experiments-reproducible">Making experiments reproducible<a class="anchor" aria-label="anchor" href="#making-experiments-reproducible"></a>
+</h3>
 <p>Typically, we would want our experiment results to be reproducible. <code>mlr</code> obeys the <code>set.seed</code> function, so make sure to use <code>set.seed</code> at the beginning of your script if you would like your results to be reproducible.</p>
 <p>Note that if you are using parallel computing, you may need to adjust how you call <code>set.seed</code> depending on your usecase. One possibility is to use <code>set.seed(123, "L'Ecuyer")</code> in order to ensure the results are reproducible for each child process. See the examples in <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">parallel::mclapply()</a></code> for more information on reproducibility and parallel computing.</p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="accessing-benchmark-results">Accessing benchmark results<a class="anchor" aria-label="anchor" href="#accessing-benchmark-results"></a>
-</h1>
-<p><code>mlr</code> provides several accessor functions, named <code>getBMR&lt;WhatToExtract&gt;</code>, that permit to retrieve information for further analyses. This includes for example the performances or predictions of the learning algorithms under consideration.</p>
 <div class="section level2">
-<h2 id="learner-performances">Learner performances<a class="anchor" aria-label="anchor" href="#learner-performances"></a>
+<h2 id="accessing-benchmark-results">Accessing benchmark results<a class="anchor" aria-label="anchor" href="#accessing-benchmark-results"></a>
 </h2>
+<p><code>mlr</code> provides several accessor functions, named <code>getBMR&lt;WhatToExtract&gt;</code>, that permit to retrieve information for further analyses. This includes for example the performances or predictions of the learning algorithms under consideration.</p>
+<div class="section level3">
+<h3 id="learner-performances">Learner performances<a class="anchor" aria-label="anchor" href="#learner-performances"></a>
+</h3>
 <p>Let’s have a look at the benchmark result above. <code><a href="../../reference/getBMRPerformances.html">getBMRPerformances()</a></code> returns individual performances in resampling runs, while <code><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances()</a></code> gives the aggregated values.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
@@ -294,9 +297,9 @@
 <span class="co">## 1 Sonar-example   classif.lda      0.3285714</span>
 <span class="co">## 2 Sonar-example classif.rpart      0.3714286</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="predictions">Predictions<a class="anchor" aria-label="anchor" href="#predictions"></a>
-</h2>
+<div class="section level3">
+<h3 id="predictions">Predictions<a class="anchor" aria-label="anchor" href="#predictions"></a>
+</h3>
 <p>Per default, the <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> contains the learner predictions. If you do not want to keep them, e.g., to conserve memory, set <code>keep.pred = FALSE</code> when calling <code><a href="../../reference/benchmark.html">benchmark()</a></code>.</p>
 <p>You can access the predictions using function <code><a href="../../reference/getBMRPredictions.html">getBMRPredictions()</a></code>. Per default, you get a nested <code><a href="https://rdrr.io/r/base/list.html" class="external-link">base::list()</a></code> of <code><a href="../../reference/ResamplePrediction.html">ResamplePrediction()</a></code>objects. As above, you can use the <code>drop</code> or <code>as.df</code> options to simplify the result.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -369,9 +372,9 @@
 <span class="co">## 6 Sonar-example classif.rpart 162     M        M    1 test</span></code></pre></div>
 <p>If you don’t like the default IDs, you can set the IDs of learners and tasks via the <code>id</code> option of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> and <code>makeTask()</code>. Moreover, you can conveniently change the ID of a <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> via function <code>setLearnerid()</code>.</p>
 </div>
-<div class="section level2">
-<h2 id="ids">IDs<a class="anchor" aria-label="anchor" href="#ids"></a>
-</h2>
+<div class="section level3">
+<h3 id="ids">IDs<a class="anchor" aria-label="anchor" href="#ids"></a>
+</h3>
 <p>The IDs of all <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>s, <code><a href="../../reference/Task.html">Task()</a></code>s and Measure’s (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) in a benchmark experiment can be retrieved as follows:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/getBMRTaskIds.html">getBMRTaskIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
@@ -383,9 +386,9 @@
 <span class="fu"><a href="../../reference/getBMRMeasureIds.html">getBMRMeasureIds</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
 <span class="co">## [1] "mmce"</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="fitted-models">Fitted models<a class="anchor" aria-label="anchor" href="#fitted-models"></a>
-</h2>
+<div class="section level3">
+<h3 id="fitted-models">Fitted models<a class="anchor" aria-label="anchor" href="#fitted-models"></a>
+</h3>
 <p>By default the <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> does not contain the fitted models for all learners on all tasks. Since we used <code>models = TRUE</code> when calling <code><a href="../../reference/benchmark.html">benchmark()</a></code>, we can also inspect the created models. The fitted models can be retrieved by function <code><a href="../../reference/getBMRModels.html">getBMRModels()</a></code>. It returns a (possibly nested) <code><a href="https://rdrr.io/r/base/list.html" class="external-link">base::list()</a></code> of <code>WrappedModel</code> (<code><a href="../../reference/makeWrappedModel.html">makeWrappedModel()</a></code>) objects.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/getBMRModels.html">getBMRModels</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
@@ -425,9 +428,9 @@
 <span class="co">## Trained on: task.id = Sonar-example; obs = 138; features = 60</span>
 <span class="co">## Hyperparameters:</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="learners-and-measures">Learners and measures<a class="anchor" aria-label="anchor" href="#learners-and-measures"></a>
-</h2>
+<div class="section level3">
+<h3 id="learners-and-measures">Learners and measures<a class="anchor" aria-label="anchor" href="#learners-and-measures"></a>
+</h3>
 <p>Moreover, you can extract the employed <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>s and Measure’s (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>).</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/getBMRLearners.html">getBMRLearners</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span>
@@ -462,9 +465,9 @@
 <span class="co">## Note: Defined as: mean(response != truth)</span></code></pre></div>
 </div>
 </div>
-<div class="section level1">
-<h1 id="merging-benchmark-results">Merging benchmark results<a class="anchor" aria-label="anchor" href="#merging-benchmark-results"></a>
-</h1>
+<div class="section level2">
+<h2 id="merging-benchmark-results">Merging benchmark results<a class="anchor" aria-label="anchor" href="#merging-benchmark-results"></a>
+</h2>
 <p>Sometimes after completing a benchmark experiment it turns out that you want to extend it by another <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> or another <code><a href="../../reference/Task.html">Task()</a></code>. In this case you can perform an additional benchmark experiment and then use function <code><a href="../../reference/mergeBenchmarkResults.html">mergeBenchmarkResults()</a></code> to combine the results to a single <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> object that can be accessed and analyzed as usual.</p>
 <p>For example in the benchmark experiment above we applied <code><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">MASS::lda()</a></code> and <code><a href="https://rdrr.io/pkg/rpart/man/rpart.html" class="external-link">rpart::rpart()</a></code> to the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>. We now perform a second experiment using a <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html" class="external-link">randomForest::randomForest()</a></code> and quadratic discriminant analysis <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> and merge the results.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -515,14 +518,14 @@
 <span class="co">## 3 Sonar-example classif.randomForest      0.1428571</span>
 <span class="co">## 4 Sonar-example          classif.qda      0.3285714</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="benchmark-analysis-and-visualization">Benchmark analysis and visualization<a class="anchor" aria-label="anchor" href="#benchmark-analysis-and-visualization"></a>
-</h1>
+<div class="section level2">
+<h2 id="benchmark-analysis-and-visualization">Benchmark analysis and visualization<a class="anchor" aria-label="anchor" href="#benchmark-analysis-and-visualization"></a>
+</h2>
 <p><code>mlr</code> offers several ways to analyze the results of a benchmark experiment. This includes visualization, ranking of learning algorithms and hypothesis tests to assess performance differences between learners.</p>
 <p>In order to demonstrate the functionality we conduct a slightly larger benchmark experiment with three learning algorithms that are applied to five classification tasks.</p>
-<div class="section level2">
-<h2 id="example-comparing-lda-rpart-and-random-forest">Example: Comparing lda, rpart and random Forest<a class="anchor" aria-label="anchor" href="#example-comparing-lda-rpart-and-random-forest"></a>
-</h2>
+<div class="section level3">
+<h3 id="example-comparing-lda-rpart-and-random-forest">Example: Comparing lda, rpart and random Forest<a class="anchor" aria-label="anchor" href="#example-comparing-lda-rpart-and-random-forest"></a>
+</h3>
 <p>We consider <code><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">MASS::lda()</a></code>, classification trees <code><a href="https://rdrr.io/pkg/rpart/man/rpart.html" class="external-link">rpart::rpart()</a></code>, and random forests <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html" class="external-link">randomForest::randomForest()</a></code>. Since the default learner IDs are a little long, we choose shorter names in the <strong>R</strong> code below.</p>
 <p>We use five classification tasks. Three are already provided by <code>mlr</code>, two more data sets are taken from package <code>mlbench::mlbench()</code> and converted to <code><a href="../../reference/Task.html">Task()</a></code>s by function <code><a href="../../reference/convertMLBenchObjToTask.html">convertMLBenchObjToTask()</a></code>.</p>
 <p>For all tasks 10-fold cross-validation is chosen as resampling strategy. This is achieved by passing a single resample description (<code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>) to <code><a href="../../reference/benchmark.html">benchmark()</a></code>, which is then instantiated automatically once for each <code><a href="../../reference/Task.html">Task()</a></code>. This way, the same instance is used for all learners applied to a single task.</p>
@@ -594,13 +597,13 @@
 <p>A closer look at the result reveals that the <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html" class="external-link">randomForest::randomForest()</a></code> outperforms the classification tree (<code><a href="https://rdrr.io/pkg/rpart/man/rpart.html" class="external-link">rpart::rpart()</a></code>) in every instance, while linear discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">MASS::lda()</a></code>) performs better than <code><a href="https://rdrr.io/pkg/rpart/man/rpart.html" class="external-link">rpart::rpart()</a></code> most of the time. Additionally <code><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">MASS::lda()</a></code> sometimes even beats the <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html" class="external-link">randomForest::randomForest()</a></code>. With increasing size of such <code><a href="../../reference/benchmark.html">benchmark()</a></code> experiments, those tables become almost unreadable and hard to comprehend.</p>
 <p><code>mlr</code> features some plotting functions to visualize results of benchmark experiments that you might find useful. Moreover, <code>mlr</code> offers statistical hypothesis tests to assess performance differences between learners.</p>
 </div>
-<div class="section level2">
-<h2 id="integrated-plots">Integrated plots<a class="anchor" aria-label="anchor" href="#integrated-plots"></a>
-</h2>
-<p>Plots are generated using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot2-package.html" class="external-link">ggplot2::ggplot2()</a></code>. Further customization, such as renaming plot elements or changing colors, is easily possible.</p>
 <div class="section level3">
-<h3 id="visualizing-performances">Visualizing performances<a class="anchor" aria-label="anchor" href="#visualizing-performances"></a>
+<h3 id="integrated-plots">Integrated plots<a class="anchor" aria-label="anchor" href="#integrated-plots"></a>
 </h3>
+<p>Plots are generated using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot2-package.html" class="external-link">ggplot2::ggplot2()</a></code>. Further customization, such as renaming plot elements or changing colors, is easily possible.</p>
+<div class="section level4">
+<h4 id="visualizing-performances">Visualizing performances<a class="anchor" aria-label="anchor" href="#visualizing-performances"></a>
+</h4>
 <p><code><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots()</a></code> creates box or violin plots which show the distribution of performance values across resampling iterations for one performance measure and for all learners and tasks (and thus visualize the output of <code><a href="../../reference/getBMRPerformances.html">getBMRPerformances()</a></code>).</p>
 <p>Below are both variants, box and violin plots. The first plot shows the <a href="measures.html" target="_blank">mmce</a> and the second plot the <a href="measures.html" target="_blank">ber</a>. Moreover, in the second plot we color the boxes according to the <code>learner.id</code>s.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -648,17 +651,17 @@
 <span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Error rate"</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
 </div>
-<div class="section level3">
-<h3 id="visualizing-aggregated-performances">Visualizing aggregated performances<a class="anchor" aria-label="anchor" href="#visualizing-aggregated-performances"></a>
-</h3>
+<div class="section level4">
+<h4 id="visualizing-aggregated-performances">Visualizing aggregated performances<a class="anchor" aria-label="anchor" href="#visualizing-aggregated-performances"></a>
+</h4>
 <p>The aggregated performance values (resulting from <code><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances()</a></code>) can be visualized by function <code><a href="../../reference/plotBMRSummary.html">plotBMRSummary()</a></code>. This plot draws one line for each task on which the aggregated values of one performance measure for all learners are displayed. By default, the first measure in the <code><a href="https://rdrr.io/r/base/list.html" class="external-link">base::list()</a></code> of Measure’s (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) passed to <code><a href="../../reference/benchmark.html">benchmark()</a></code> is used, in our example <a href="measures.html" target="_blank">mmce</a>. Moreover, a small vertical jitter is added to prevent overplotting.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotBMRSummary.html">plotBMRSummary</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
 </div>
-<div class="section level3">
-<h3 id="calculating-and-visualizing-ranks">Calculating and visualizing ranks<a class="anchor" aria-label="anchor" href="#calculating-and-visualizing-ranks"></a>
-</h3>
+<div class="section level4">
+<h4 id="calculating-and-visualizing-ranks">Calculating and visualizing ranks<a class="anchor" aria-label="anchor" href="#calculating-and-visualizing-ranks"></a>
+</h4>
 <p>Additional to the absolute performance, relative performance, i.e., ranking the learners is usually of interest and might provide valuable additional insight.</p>
 <p>Function <code><a href="../../reference/convertBMRToRankMatrix.html">convertBMRToRankMatrix()</a></code> calculates ranks based on aggregated learner performances of one measure. We choose the <a href="measures.html" target="_blank">mean misclassification error</a>. The rank structure can be visualized by <code><a href="../../reference/plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart()</a></code>.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
@@ -688,9 +691,9 @@
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-25-1.png" width="50%"><img src="benchmark_experiments_files/figure-html/unnamed-chunk-25-2.png" width="50%"></p>
 </div>
 </div>
-<div class="section level2">
-<h2 id="comparing-learners-using-hypothesis-tests">Comparing learners using hypothesis tests<a class="anchor" aria-label="anchor" href="#comparing-learners-using-hypothesis-tests"></a>
-</h2>
+<div class="section level3">
+<h3 id="comparing-learners-using-hypothesis-tests">Comparing learners using hypothesis tests<a class="anchor" aria-label="anchor" href="#comparing-learners-using-hypothesis-tests"></a>
+</h3>
 <p>Many researchers feel the need to display an algorithm’s superiority by employing some sort of hypothesis testing. As non-parametric tests seem better suited for such benchmark results the tests provided in <code>mlr</code> are the <strong>Overall Friedman test</strong> and the <strong>Friedman-Nemenyi post hoc test</strong>.</p>
 <p>While the ad hoc <code><a href="../../reference/friedmanTestBMR.html">friedmanTestBMR()</a></code> based on <code><a href="https://rdrr.io/r/stats/friedman.test.html" class="external-link">stats::friedman.test()</a></code> is testing the hypothesis whether there is a significant difference between the employed learners, the post hoc <code><a href="../../reference/friedmanPostHocTestBMR.html">friedmanPostHocTestBMR()</a></code> tests for significant differences between all pairs of learners. <em>Non parametric</em> tests often do have less power then their <em>parametric</em> counterparts but less assumptions about underlying distributions have to be made. This often means many <strong>data sets</strong> are needed in order to be able to show significant differences at reasonable significance levels.</p>
 <p>In our example, we want to compare the three learners on the selected data sets. First we might we want to test the hypothesis whether there is a difference between the learners.</p>
@@ -709,9 +712,9 @@
 <span class="co">## rpart        0.254 0.069</span></code></pre></div>
 <p>At this level of significance, we can reject the null hypothesis that there exists no performance difference between the decision tree (<code><a href="https://rdrr.io/pkg/rpart/man/rpart.html" class="external-link">rpart::rpart()</a></code>) and the <code><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html" class="external-link">randomForest::randomForest()</a></code>.</p>
 </div>
-<div class="section level2">
-<h2 id="critical-differences-diagram">Critical differences diagram<a class="anchor" aria-label="anchor" href="#critical-differences-diagram"></a>
-</h2>
+<div class="section level3">
+<h3 id="critical-differences-diagram">Critical differences diagram<a class="anchor" aria-label="anchor" href="#critical-differences-diagram"></a>
+</h3>
 <p>In order to visualize differently performing learners, a critical differences diagramcan be plotted, using either the Nemenyi test (<code>test = "nemenyi"</code>) or the Bonferroni-Dunn test (<code>test = "bd"</code>).</p>
 <p>The mean rank of learners is displayed on the x-axis.</p>
 <ul>
@@ -734,9 +737,9 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lda"</span> <span class="op">=</span> <span class="st">"#F8766D"</span>, <span class="st">"rpart"</span> <span class="op">=</span> <span class="st">"#00BA38"</span>, <span class="st">"randomForest"</span> <span class="op">=</span> <span class="st">"#619CFF"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-28-2.png" width="700"></p>
 </div>
-<div class="section level2">
-<h2 id="custom-plots">Custom plots<a class="anchor" aria-label="anchor" href="#custom-plots"></a>
-</h2>
+<div class="section level3">
+<h3 id="custom-plots">Custom plots<a class="anchor" aria-label="anchor" href="#custom-plots"></a>
+</h3>
 <p>You can easily generate your own visualizations by customizing the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> objects returned by the plots above, retrieve the data from the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> objects and use them as basis for your own plots, or rely on the <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">base::data.frame()</a></code>s returned by <code><a href="../../reference/getBMRPerformances.html">getBMRPerformances()</a></code> or <code><a href="../../reference/getBMRAggrPerformances.html">getBMRAggrPerformances()</a></code>. Here are some examples.</p>
 <p>Instead of boxplots (as in <code><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots()</a></code>) we could create density plots to show the performance values resulting from individual resampling iterations.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
@@ -789,9 +792,9 @@
 <p><img src="benchmark_experiments_files/figure-html/unnamed-chunk-32-1.png" width="700"></p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="further-comments">Further comments<a class="anchor" aria-label="anchor" href="#further-comments"></a>
-</h1>
+<div class="section level2">
+<h2 id="further-comments">Further comments<a class="anchor" aria-label="anchor" href="#further-comments"></a>
+</h2>
 <ul>
 <li>Note that for supervised classification <code>mlr</code> offers some more plots that operate on <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code> objects and allow you to compare the performance of learning algorithms. See for example the tutorial page on <a href="roc_analysis.html" target="_blank">ROC analysis</a> and functions <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code>, <code><a href="../../reference/plotROCCurves.html">plotROCCurves()</a></code>, and <code>plotViperCharts()</code> as well as the page about <a href="classifier_calibration.html" target="_blank">classifier calibration</a> and function <code><a href="../../reference/generateCalibrationData.html">generateCalibrationData()</a></code>.</li>
 <li>In the examples shown in this section we applied “raw” learning algorithms, but often things are more complicated. At the very least, many learners have hyperparameters that need to be tuned to get sensible results. Reliable performance estimates can be obtained by <a href="nested_resampling.html" target="_blank">nested resampling</a>, i.e., by doing the tuning in an inner resampling loop while estimating the performance in an outer loop. Moreover, you might want to combine learners with pre-processing steps like imputation, scaling, outlier removal, dimensionality reduction or feature selection and so on. All this can be easily done using <code>mlr</code>’s wrapper functionality. The general principle is explained in the section about <a href="wrapper.html" target="_blank">wrapper</a> in the Advanced part of this tutorial. There are also several sections devoted to common pre-processing steps.</li>
@@ -811,7 +814,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

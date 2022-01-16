@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="advanced_tune_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Iterated F-Racing for mixed spaces and dependencies</h1>
@@ -193,9 +196,9 @@
 <span class="co">## 5  4.040167 vanilladot        NA     NA           0.02   1  NA          &lt;NA&gt;</span>
 <span class="co">## 6 10.677478    polydot        NA      4           0.10   1  NA          &lt;NA&gt;</span></code></pre></div>
 <p>See how we made the kernel parameters like <code>sigma</code> and <code>degree</code> dependent on the <code>kernel</code> selection parameters? This approach allows you to tune parameters of multiple kernels at once, efficiently concentrating on the ones which work best for your given data set.</p>
-<div class="section level1">
-<h1 id="tuning-across-whole-model-spaces-with-modelmultiplexer">Tuning across whole model spaces with ModelMultiplexer<a class="anchor" aria-label="anchor" href="#tuning-across-whole-model-spaces-with-modelmultiplexer"></a>
-</h1>
+<div class="section level2">
+<h2 id="tuning-across-whole-model-spaces-with-modelmultiplexer">Tuning across whole model spaces with ModelMultiplexer<a class="anchor" aria-label="anchor" href="#tuning-across-whole-model-spaces-with-modelmultiplexer"></a>
+</h2>
 <p>We can now take the following example even one step further. If we use the <code><a href="../../reference/makeModelMultiplexer.html">makeModelMultiplexer()</a></code> we can tune over different model classes at once, just as we did with the SVM kernels above.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">base.learners</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
@@ -240,9 +243,9 @@
 <span class="co">## 5     0.06666667   1  NA          &lt;NA&gt;</span>
 <span class="co">## 6     0.53333333   1  NA          &lt;NA&gt;</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="multi-criteria-evaluation-and-optimization">Multi-criteria evaluation and optimization<a class="anchor" aria-label="anchor" href="#multi-criteria-evaluation-and-optimization"></a>
-</h1>
+<div class="section level2">
+<h2 id="multi-criteria-evaluation-and-optimization">Multi-criteria evaluation and optimization<a class="anchor" aria-label="anchor" href="#multi-criteria-evaluation-and-optimization"></a>
+</h2>
 <p>During tuning you might want to optimize multiple, potentially conflicting, performance measures simultaneously.</p>
 <p>In the following example we aim to minimize both, the false positive and the false negative rates (<code>fpr</code> and <code>fnr</code>). We again tune the hyperparameters of an SVM (function <code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html" class="external-link">kernlab::ksvm()</a></code>) with a radial basis kernel and use <code><a href="../../reference/sonar.task.html">sonar.task()</a></code> for illustration. As search strategy we choose a random search.</p>
 <p>For all available multi-criteria tuning algorithms see <code><a href="../../reference/TuneMultiCritControl.html">TuneMultiCritControl()</a></code>.</p>
@@ -280,7 +283,8 @@
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></code></pre></div>
 <p><img src="advanced_tune_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
@@ -292,7 +296,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="integrated_learners_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Integrated Learners</h1>
@@ -172,9 +175,9 @@
 <p>This page lists the learning methods already integrated in <code>mlr</code>.</p>
 <p>Columns <strong>Num.</strong>, <strong>Fac.</strong>, <strong>Ord.</strong>, <strong>NAs</strong>, and <strong>Weights</strong> indicate if a method can cope with numerical, factor, and ordered factor predictors, if it can deal with missing values in a meaningful way (other than simply removing observations with missing values) and if observation weights are supported.</p>
 <p>Column <strong>Props</strong> shows further properties of the learning methods specific to the type of learning task. See also <code><a href="../../reference/RLearner.html">RLearner()</a></code> for details.</p>
-<div class="section level1">
-<h1 id="classification-83">Classification (83)<a class="anchor" aria-label="anchor" href="#classification-83"></a>
-</h1>
+<div class="section level2">
+<h2 id="classification-83">Classification (83)<a class="anchor" aria-label="anchor" href="#classification-83"></a>
+</h2>
 <p>For classification the following additional learner properties are relevant and shown in column <strong>Props</strong>:</p>
 <ul>
 <li>
@@ -1247,9 +1250,9 @@
 </tbody>
 </table>
 </div>
-<div class="section level1">
-<h1 id="regression-59">Regression (59)<a class="anchor" aria-label="anchor" href="#regression-59"></a>
-</h1>
+<div class="section level2">
+<h2 id="regression-59">Regression (59)<a class="anchor" aria-label="anchor" href="#regression-59"></a>
+</h2>
 <p>Additional learner properties:</p>
 <ul>
 <li>
@@ -2004,9 +2007,9 @@
 </tbody>
 </table>
 </div>
-<div class="section level1">
-<h1 id="survival-analysis-10">Survival analysis (10)<a class="anchor" aria-label="anchor" href="#survival-analysis-10"></a>
-</h1>
+<div class="section level2">
+<h2 id="survival-analysis-10">Survival analysis (10)<a class="anchor" aria-label="anchor" href="#survival-analysis-10"></a>
+</h2>
 <p>Additional learner properties:</p>
 <ul>
 <li>
@@ -2174,9 +2177,9 @@
 </tbody>
 </table>
 </div>
-<div class="section level1">
-<h1 id="cluster-analysis-10">Cluster analysis (10)<a class="anchor" aria-label="anchor" href="#cluster-analysis-10"></a>
-</h1>
+<div class="section level2">
+<h2 id="cluster-analysis-10">Cluster analysis (10)<a class="anchor" aria-label="anchor" href="#cluster-analysis-10"></a>
+</h2>
 <p>Additional learner properties:</p>
 <ul>
 <li>
@@ -2335,15 +2338,15 @@
 </tbody>
 </table>
 </div>
-<div class="section level1">
-<h1 id="cost-sensitive-classification">Cost-sensitive classification<a class="anchor" aria-label="anchor" href="#cost-sensitive-classification"></a>
-</h1>
+<div class="section level2">
+<h2 id="cost-sensitive-classification">Cost-sensitive classification<a class="anchor" aria-label="anchor" href="#cost-sensitive-classification"></a>
+</h2>
 <p>For <em>ordinary misclassification costs</em> you can use all the standard classification methods listed above.</p>
 <p>For <em>example-dependent costs</em> there are several ways to generate cost-sensitive learners from ordinary regression and classification learners. See section <a href="cost_sensitive_classif.html" target="_blank">cost-sensitive classification</a> and the documentation of <code><a href="../../reference/makeCostSensClassifWrapper.html">makeCostSensClassifWrapper()</a></code>, <code><a href="../../reference/makeCostSensRegrWrapper.html">makeCostSensRegrWrapper()</a></code> and <code><a href="../../reference/makeCostSensWeightedPairsWrapper.html">makeCostSensWeightedPairsWrapper()</a></code> for details.</p>
 </div>
-<div class="section level1">
-<h1 id="multilabel-classification-3">Multilabel classification (3)<a class="anchor" aria-label="anchor" href="#multilabel-classification-3"></a>
-</h1>
+<div class="section level2">
+<h2 id="multilabel-classification-3">Multilabel classification (3)<a class="anchor" aria-label="anchor" href="#multilabel-classification-3"></a>
+</h2>
 <table class="table">
 <colgroup>
 <col width="34%">
@@ -2409,7 +2412,8 @@
 </table>
 <p>Moreover, you can use the binary relevance method to apply ordinary classification learners to the multilabel problem. See the documentation of function <code><a href="../../reference/makeMultilabelBinaryRelevanceWrapper.html">makeMultilabelBinaryRelevanceWrapper()</a></code> and the tutorial section on <a href="multilabel.html" target="_blank">multilabel classification</a> for details.</p>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
@@ -2421,7 +2425,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

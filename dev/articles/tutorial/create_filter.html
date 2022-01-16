@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="create_filter_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Integrating Another Filter Method</h1>
@@ -170,9 +173,9 @@
     
     
 <p>A lot of feature filter methods are already integrated in <code>mlr</code> and a complete list is given in the <a href="filter_methods.html" target="_blank">Appendix</a> or can be obtained using <code><a href="../../reference/listFilterMethods.html">listFilterMethods()</a></code>. You can easily add another filter, be it a brand new one or a method which is already implemented in another package, via function <code><a href="../../reference/makeFilter.html">makeFilter()</a></code>.</p>
-<div class="section level1">
-<h1 id="filter-objects">Filter objects<a class="anchor" aria-label="anchor" href="#filter-objects"></a>
-</h1>
+<div class="section level2">
+<h2 id="filter-objects">Filter objects<a class="anchor" aria-label="anchor" href="#filter-objects"></a>
+</h2>
 <p>In <code>mlr</code> all filter methods are objects of class Filter (<code><a href="../../reference/makeFilter.html">makeFilter()</a></code>) and are registered in an environment called <code>.FilterRegister</code> (where <code><a href="../../reference/listFilterMethods.html">listFilterMethods()</a></code> looks them up to compile the list of available methods). To get to know their structure let’s have a closer look at the <code>"rank.correlation"</code> filter.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">filters</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fu">mlr</span><span class="fu">:::</span><span class="va">.FilterRegister</span><span class="op">)</span>
@@ -204,9 +207,9 @@
 <p>The core element is <code>$fun</code> which calculates the feature importance. For the <code>"rank.correlation"</code> filter it just extracts the data and formula from the <code>task</code> and passes them on to the <code>base::cor()</code> function.</p>
 <p>Additionally, each Filter (<code><a href="../../reference/makeFilter.html">makeFilter()</a></code>) object has a <code>$name</code>, which should be short and is for example used to annotate graphics (cp. <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code>), and a slightly more detailed description in slot <code>$desc</code>. If the filter method is implemented by another package its name is given in the <code>$pkg</code> member. Moreover, the supported task types and feature types are listed.</p>
 </div>
-<div class="section level1">
-<h1 id="writing-a-new-filter-method">Writing a new filter method<a class="anchor" aria-label="anchor" href="#writing-a-new-filter-method"></a>
-</h1>
+<div class="section level2">
+<h2 id="writing-a-new-filter-method">Writing a new filter method<a class="anchor" aria-label="anchor" href="#writing-a-new-filter-method"></a>
+</h2>
 <p>You can integrate your own filter method using <code><a href="../../reference/makeFilter.html">makeFilter()</a></code>. This function generates a Filter (<code><a href="../../reference/makeFilter.html">makeFilter()</a></code>) object and also registers it in the <code>.FilterRegister</code> environment.</p>
 <p>The arguments of <code><a href="../../reference/makeFilter.html">makeFilter()</a></code> correspond to the slot names of the Filter (<code><a href="../../reference/makeFilter.html">makeFilter()</a></code>) object above. Currently, feature filtering is only supported for supervised learning tasks and possible values for <code>supported.tasks</code> are <code>"regr"</code>, <code>"classif"</code> and <code>"surv"</code>. <code>supported.features</code> can be <code>"numerics"</code>, <code>"factors"</code> and <code>"ordered"</code>.</p>
 <p><code>fun</code> must be a function with at least the following formal arguments:</p>
@@ -318,7 +321,8 @@
 <span class="co">## [1] "Petal.Length" "Petal.Width"</span></code></pre></div>
 <p>You might also want to have a look at the <a href="https://github.com/mlr-org/mlr/blob/main/R/Filter.R#L95" class="external-link">source code</a> of the filter methods already integrated in <code>mlr</code> for some more complex and meaningful examples.</p>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
@@ -330,7 +334,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

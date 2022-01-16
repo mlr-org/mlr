@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="predict_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Predicting Outcomes for New Data</h1>
@@ -225,9 +228,9 @@
 <span class="co">## 12        2</span>
 <span class="co">## ... (#rows: 75, #cols: 1)</span></code></pre></div>
 <p>Note that for supervised learning you do not have to remove the target columns from the data. These columns are automatically removed prior to calling the underlying <code>predict</code> method of the learner.</p>
-<div class="section level1">
-<h1 id="accessing-the-prediction">Accessing the prediction<a class="anchor" aria-label="anchor" href="#accessing-the-prediction"></a>
-</h1>
+<div class="section level2">
+<h2 id="accessing-the-prediction">Accessing the prediction<a class="anchor" aria-label="anchor" href="#accessing-the-prediction"></a>
+</h2>
 <p>Function <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> returns a named <code>list</code> of class <code><a href="../../reference/Prediction.html">Prediction()</a></code>. Its most important element is <code>$data</code> which is a <code>data.frame</code> that contains columns with the true values of the target variable (in case of supervised learning problems) and the predictions. Use <code>as.data.frame</code> (<code><a href="../../reference/Prediction.html">Prediction()</a></code>) for direct access.</p>
 <p>In the following the predictions on the <code>BostonHousing</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html" class="external-link">mlbench::BostonHousing()</a></code>) and the <code>iris</code> (<code><a href="https://rdrr.io/r/datasets/iris.html" class="external-link">datasets::iris()</a></code>) data sets are shown. As you may recall, the predictions in the first case were made from a <code><a href="../../reference/Task.html">Task()</a></code> and in the second case from a <code>data.frame</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -258,9 +261,9 @@
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span><span class="op">(</span><span class="va">task.pred</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] 22.52737 36.06190 24.75354 16.90299 17.25558 20.54365</span></code></pre></div>
-<div class="section level2">
-<h2 id="regression-extracting-standard-errors">Regression: Extracting standard errors<a class="anchor" aria-label="anchor" href="#regression-extracting-standard-errors"></a>
-</h2>
+<div class="section level3">
+<h3 id="regression-extracting-standard-errors">Regression: Extracting standard errors<a class="anchor" aria-label="anchor" href="#regression-extracting-standard-errors"></a>
+</h3>
 <p>Some learners provide standard errors for predictions, which can be accessed in <code>mlr</code>. An overview is given by calling the function <code><a href="../../reference/listLearners.html">listLearners()</a></code> and setting <code>properties = "se"</code>. By assigning <code>FALSE</code> to <code>check.packages</code> learners from packages which are not installed will be included in the overview.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"regr"</span>, check.packages <span class="op">=</span> <span class="cn">FALSE</span>, properties <span class="op">=</span> <span class="st">"se"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"name"</span><span class="op">)</span><span class="op">]</span>
@@ -323,9 +326,9 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionSE</a></span><span class="op">(</span><span class="va">task.pred.lm</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## [1] 0.7501615 0.8742590 0.8652139 1.1963265 1.1793944 1.0727918</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="classification-and-clustering-extracting-probabilities">Classification and clustering: Extracting probabilities<a class="anchor" aria-label="anchor" href="#classification-and-clustering-extracting-probabilities"></a>
-</h2>
+<div class="section level3">
+<h3 id="classification-and-clustering-extracting-probabilities">Classification and clustering: Extracting probabilities<a class="anchor" aria-label="anchor" href="#classification-and-clustering-extracting-probabilities"></a>
+</h3>
 <p>The predicted probabilities can be extracted from the <code><a href="../../reference/Prediction.html">Prediction()</a></code> using function <code><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities()</a></code>. Here is another cluster analysis example. We use fuzzy c-means clustering (<code><a href="https://rdrr.io/pkg/e1071/man/cmeans.html" class="external-link">e1071::cmeans()</a></code>) on the <code>mtcars</code> (<code><a href="https://rdrr.io/r/datasets/mtcars.html" class="external-link">datasets::mtcars()</a></code>) data set.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"cluster.cmeans"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
@@ -385,9 +388,9 @@
 <span class="co">## 5      1          0         0</span>
 <span class="co">## 6      1          0         0</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="classification-confusion-matrix">Classification: Confusion matrix<a class="anchor" aria-label="anchor" href="#classification-confusion-matrix"></a>
-</h2>
+<div class="section level3">
+<h3 id="classification-confusion-matrix">Classification: Confusion matrix<a class="anchor" aria-label="anchor" href="#classification-confusion-matrix"></a>
+</h3>
 <p>A confusion matrix can be obtained by calling <code><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix()</a></code>. The columns represent predicted and the rows true class labels.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/calculateConfusionMatrix.html">calculateConfusionMatrix</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>
@@ -447,9 +450,9 @@
 <span class="co">## -err.-          0          5         1      6  NA</span>
 <span class="co">## -n-            50         54        46     NA 150</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="classification-adjusting-the-decision-threshold">Classification: Adjusting the decision threshold<a class="anchor" aria-label="anchor" href="#classification-adjusting-the-decision-threshold"></a>
-</h2>
+<div class="section level3">
+<h3 id="classification-adjusting-the-decision-threshold">Classification: Adjusting the decision threshold<a class="anchor" aria-label="anchor" href="#classification-adjusting-the-decision-threshold"></a>
+</h3>
 <p>We can set the threshold value that is used to map the predicted posterior probabilities to class labels. Note that for this purpose we need to create a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) that predicts probabilities. For binary classification, the threshold determines when the <em>positive</em> class is predicted. The default is 0.5. Now, we set the threshold for the positive class to 0.9 (that is, an example is assigned to the positive class if its posterior probability exceeds 0.9). Which of the two classes is the positive one can be seen by accessing the <code><a href="../../reference/Task.html">Task()</a></code>. To illustrate binary classification, we use the <code>Sonar</code> (<code><a href="https://rdrr.io/pkg/mlbench/man/Sonar.html" class="external-link">mlbench::Sonar()</a></code>) data set from the <code>mlbench</code> package.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
@@ -536,9 +539,9 @@
 <p>If you are interested in tuning the threshold (vector) have a look at the section about <a href="roc_analysis.html" target="_blank">performance curves and threshold tuning</a>.</p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="visualizing-the-prediction">Visualizing the prediction<a class="anchor" aria-label="anchor" href="#visualizing-the-prediction"></a>
-</h1>
+<div class="section level2">
+<h2 id="visualizing-the-prediction">Visualizing the prediction<a class="anchor" aria-label="anchor" href="#visualizing-the-prediction"></a>
+</h2>
 <p>The function <code><a href="../../reference/plotLearnerPrediction.html">plotLearnerPrediction()</a></code> allows to visualize predictions, e.g., for teaching purposes or exploring models. It trains the chosen learning method for 1 or 2 selected features and then displays the predictions with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code>.</p>
 <p>For <em>classification</em>, we get a scatter plot of 2 features (by default the first 2 in the data set). The type of symbol shows the true class labels of the data points. Symbols with white border indicate misclassified observations. The posterior probabilities (if the learner under consideration supports this) are represented by the background color where higher saturation means larger probabilities.</p>
 <p>The plot title displays the ID of the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) (in the following example CART), its parameters, its training performance and its cross-validation performance. <a href="measures.html" target="_blank">mmce</a> stands for <em>mean misclassification error</em>, i.e., the error rate. See the sections on <a href="performance.html" target="_blank">performance</a> and <a href="resample.html" target="_blank">resampling</a> for further explanations.</p>
@@ -573,7 +576,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

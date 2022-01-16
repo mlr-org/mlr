@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="visualization_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Visualization</h1>
@@ -169,9 +172,9 @@
 
     
     
-<div class="section level1">
-<h1 id="generation-and-plotting-functions">Generation and plotting functions<a class="anchor" aria-label="anchor" href="#generation-and-plotting-functions"></a>
-</h1>
+<div class="section level2">
+<h2 id="generation-and-plotting-functions">Generation and plotting functions<a class="anchor" aria-label="anchor" href="#generation-and-plotting-functions"></a>
+</h2>
 <p><code>mlr</code>’s visualization capabilities rely on <em>generation functions</em> which generate data for plots, and <em>plotting functions</em> which plot this output using either <code><a href="https://ggplot2.tidyverse.org/reference/ggplot2-package.html" class="external-link">ggplot2::ggplot2()</a></code> or <code>ggvis::ggvis()</code> (the latter being currently experimental).</p>
 <p>This separation allows users to easily make custom visualizations by taking advantage of the generation functions. The only data transformation that is handled inside plotting functions is reshaping. The reshaped data is also accessible by calling the plotting functions and then extracting the data from the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> object.</p>
 <p>The functions are named accordingly.</p>
@@ -181,9 +184,9 @@
 <li>
 <code>ggvis::ggvis()</code> plotting functions have an additional suffix <code>GGVIS</code>, i.e., <code>plotFunctionPurposeGGVIS</code>.</li>
 </ul>
-<div class="section level2">
-<h2 id="some-examples">Some examples<a class="anchor" aria-label="anchor" href="#some-examples"></a>
-</h2>
+<div class="section level3">
+<h3 id="some-examples">Some examples<a class="anchor" aria-label="anchor" href="#some-examples"></a>
+</h3>
 <p>In the example below we create a plot of classifier performance as function of the decision threshold for the binary classification problem <code>sonar.task</code>. The generation function <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code> creates an object of class <code>ThreshVsPerfData</code> which contains the data for the plot in slot <code>$data</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
@@ -216,9 +219,9 @@
 <span class="co">## [1] "fpr"</span></code></pre></div>
 <p>This does not only apply to <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>, but to other plot functions that show performance measures as well, for example <code><a href="../../reference/plotLearningCurve.html">plotLearningCurve()</a></code>. You can use the <code>id</code>s instead of the names by setting <code>pretty.names = FALSE</code>.</p>
 </div>
-<div class="section level2">
-<h2 id="customizing-plots">Customizing plots<a class="anchor" aria-label="anchor" href="#customizing-plots"></a>
-</h2>
+<div class="section level3">
+<h3 id="customizing-plots">Customizing plots<a class="anchor" aria-label="anchor" href="#customizing-plots"></a>
+</h3>
 <p>As mentioned above it is easily possible to customize the built-in plots or making your own visualizations from scratch based on the generated data.</p>
 <p>What will probably come up most often is changing labels and annotations. Generally, this can be done by manipulating the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> object, in this example the object returned by <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>, using the usual <code><a href="https://ggplot2.tidyverse.org/reference/ggplot2-package.html" class="external-link">ggplot2::ggplot2()</a></code> functions like <code><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggplot2::labs()</a></code> or <code><a href="https://ggplot2.tidyverse.org/reference/labeller.html" class="external-link">ggplot2::labeller()</a></code>. Moreover, you can change the underlying data, either <code>d$data</code> (resulting from <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code> or the possibly reshaped data contained in the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> object (resulting from <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>, most often by renaming columns or factor levels.</p>
 <p>Below are two examples of how to alter the axis and panel labels of the above plot.</p>
@@ -293,9 +296,9 @@
 <p><img src="visualization_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="available-generation-and-plotting-functions">Available generation and plotting functions<a class="anchor" aria-label="anchor" href="#available-generation-and-plotting-functions"></a>
-</h1>
+<div class="section level2">
+<h2 id="available-generation-and-plotting-functions">Available generation and plotting functions<a class="anchor" aria-label="anchor" href="#available-generation-and-plotting-functions"></a>
+</h2>
 <p>Below the currently available generation and plotting functions are listed and tutorial pages that provide in depth descriptions of the listed functions are referenced.</p>
 <p>Note that some plots, e.g., <code><a href="../../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult()</a></code> are not mentioned here since they lack a generation function. Both <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code> and <code><a href="../../reference/plotROCCurves.html">plotROCCurves()</a></code> operate on the result of <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code>. Functions <code><a href="../../reference/plotPartialDependence.html">plotPartialDependence()</a></code> and <code>plotPartialDependenceGGVIS()</code> can be applied to the results of both <code><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData()</a></code> and <code>generateFunctionalANOVAData()</code>.</p>
 <p>The <code>ggvis::ggvis()</code> functions are experimental and are subject to change, though they should work. Most generate interactive <code><a href="https://rdrr.io/pkg/shiny/man/shiny-package.html" class="external-link">shiny::shiny()</a></code> applications, that automatically start and run locally.</p>
@@ -385,7 +388,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

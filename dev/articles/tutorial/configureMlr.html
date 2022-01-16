@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="configureMlr_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Configuring mlr</h1>
@@ -176,9 +179,9 @@
 <li>All options referring to the behavior of learners (these are all options except <code>show.info</code>) can be set for an individual learner via the <code>config</code> argument of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>. The local precedes the global configuration.</li>
 <li>Some functions like <code><a href="../../reference/resample.html">resample()</a></code>, <code><a href="../../reference/benchmark.html">benchmark()</a></code>, <code><a href="../../reference/selectFeatures.html">selectFeatures()</a></code>, <code><a href="../../reference/tuneParams.html">tuneParams()</a></code>, and <code><a href="../../reference/tuneParamsMultiCrit.html">tuneParamsMultiCrit()</a></code> have a <code>show.info</code> flag that controls if progress messages are shown. The default value of <code>show.info</code> can be set by <code><a href="../../reference/configureMlr.html">configureMlr()</a></code>.</li>
 </ul>
-<div class="section level1">
-<h1 id="example-reducing-the-output-on-the-console">Example: Reducing the output on the console<a class="anchor" aria-label="anchor" href="#example-reducing-the-output-on-the-console"></a>
-</h1>
+<div class="section level2">
+<h2 id="example-reducing-the-output-on-the-console">Example: Reducing the output on the console<a class="anchor" aria-label="anchor" href="#example-reducing-the-output-on-the-console"></a>
+</h2>
 <p>You are bothered by all the output on the console like in this example?</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
@@ -213,9 +216,9 @@
 <code class="sourceCode R"><span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span>show.learner.output <span class="op">=</span> <span class="cn">FALSE</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span><span class="op">)</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="accessing-and-resetting-the-configuration">Accessing and resetting the configuration<a class="anchor" aria-label="anchor" href="#accessing-and-resetting-the-configuration"></a>
-</h1>
+<div class="section level2">
+<h2 id="accessing-and-resetting-the-configuration">Accessing and resetting the configuration<a class="anchor" aria-label="anchor" href="#accessing-and-resetting-the-configuration"></a>
+</h2>
 <p>Function <code><a href="../../reference/getMlrOptions.html">getMlrOptions()</a></code> returns a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">base::list()</a></code> with the current configuration.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/getMlrOptions.html">getMlrOptions</a></span><span class="op">(</span><span class="op">)</span>
@@ -271,9 +274,9 @@
 <span class="co">## $on.error.dump</span>
 <span class="co">## [1] FALSE</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="example-turning-off-parameter-checking">Example: Turning off parameter checking<a class="anchor" aria-label="anchor" href="#example-turning-off-parameter-checking"></a>
-</h1>
+<div class="section level2">
+<h2 id="example-turning-off-parameter-checking">Example: Turning off parameter checking<a class="anchor" aria-label="anchor" href="#example-turning-off-parameter-checking"></a>
+</h2>
 <p>It might happen that you want to set a parameter of a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>, but the parameter is not registered in the learner’s parameter set (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::makeParamSet()</a></code>) yet. In this case you might want to <a href="https://github.com/mlr-org/mlr#get-in-touch" class="external-link">contact us</a> or <a href="https://github.com/mlr-org/mlr/issues/new" class="external-link">open an issue</a> as well! But until the problem is fixed you can turn off <code>mlr</code>’s parameter checking. The parameter setting will then be passed to the underlying function without further ado.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Support Vector Machine with linear kernel and new parameter 'newParam'</span>
@@ -313,9 +316,9 @@
 <span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span>
 <span class="co">## Hyperparameters: fit=FALSE,kernl=vanilladot,newParam=3</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="example-handling-errors-in-a-learning-method">Example: Handling errors in a learning method<a class="anchor" aria-label="anchor" href="#example-handling-errors-in-a-learning-method"></a>
-</h1>
+<div class="section level2">
+<h2 id="example-handling-errors-in-a-learning-method">Example: Handling errors in a learning method<a class="anchor" aria-label="anchor" href="#example-handling-errors-in-a-learning-method"></a>
+</h2>
 <p>If a learning method throws an error the default behavior of <code>mlr</code> is to generate an exception as well. However, in some situations, for example if you conduct a larger <a href="benchmark_experiments.html" target="_blank">bechmark experiment</a> with multiple data sets and learners, you usually don’t want the whole experiment stopped due to one error. You can prevent this using the <code>on.learner.error</code> option of <code><a href="../../reference/configureMlr.html">configureMlr()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># This call gives an error caused by the low number of observations in class "virginica"</span>
@@ -367,7 +370,8 @@
 <span class="co">##   NA</span></code></pre></div>
 <p>If <code>on.learner.error = "warn"</code> a warning is issued instead of an exception and an object of class <code><a href="../../reference/FailureModel.html">FailureModel()</a></code> is created. You can extract the error message using function <code><a href="../../reference/getFailureModelMsg.html">getFailureModelMsg()</a></code>. All further steps like prediction and performance calculation work and return <code>NA's</code>.</p>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
@@ -379,7 +383,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

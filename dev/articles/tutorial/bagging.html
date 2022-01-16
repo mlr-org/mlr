@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="bagging_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Generic Bagging</h1>
@@ -202,9 +205,9 @@
 <span class="co">## mmce.test.mean </span>
 <span class="co">##      0.2161905</span></code></pre></div>
 <p>Training more learners takes more time, but can outperform pure learners on noisy data with many features.</p>
-<div class="section level1">
-<h1 id="changing-the-type-of-prediction">Changing the type of prediction<a class="anchor" aria-label="anchor" href="#changing-the-type-of-prediction"></a>
-</h1>
+<div class="section level2">
+<h2 id="changing-the-type-of-prediction">Changing the type of prediction<a class="anchor" aria-label="anchor" href="#changing-the-type-of-prediction"></a>
+</h2>
 <p>In case of a <em>classification</em> problem the predicted class labels are determined by majority voting over the predictions of the individual models. Additionally, posterior probabilities can be estimated as the relative proportions of the predicted class labels. For this purpose you have to change the predict type of the <em>bagging learner</em> as follows.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bag.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setPredictType.html">setPredictType</a></span><span class="op">(</span><span class="va">bag.lrn</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span></code></pre></div>
@@ -264,7 +267,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

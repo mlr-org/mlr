@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="preproc_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Data Preprocessing</h1>
@@ -196,9 +199,9 @@
 <li>
 <a href="impute.html" target="_blank">Imputation of missing values</a>.</li>
 </ul>
-<div class="section level1">
-<h1 id="fusing-learners-with-preprocessing">Fusing learners with preprocessing<a class="anchor" aria-label="anchor" href="#fusing-learners-with-preprocessing"></a>
-</h1>
+<div class="section level2">
+<h2 id="fusing-learners-with-preprocessing">Fusing learners with preprocessing<a class="anchor" aria-label="anchor" href="#fusing-learners-with-preprocessing"></a>
+</h2>
 <p><code>mlr</code>’s wrapper functionality permits to combine learners with preprocessing steps. This means that the preprocessing “belongs” to the learner and is done any time the learner is trained or predictions are made.</p>
 <p>This is, on the one hand, very practical. You don’t need to change any data or learning <code><a href="../../reference/Task.html">Task()</a></code>s and it’s quite easy to combine different learners with different preprocessing steps.</p>
 <p>On the other hand this helps to avoid a common mistake in evaluating the performance of a learner with preprocessing: Preprocessing is often seen as completely independent of the later applied learning algorithms. When estimating the performance of a learner, e.g., by cross-validation all preprocessing is done beforehand on the full data set and only training/predicting the learner is done on the train/test sets. Depending on what exactly is done as preprocessing this can lead to overoptimistic results. For example if imputation by the mean is done on the whole data set before evaluating the learner performance you are using information from the test data during training, which can cause overoptimistic performance results.</p>
@@ -219,9 +222,9 @@
 </ul>
 <p>We start with some examples for <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code>.</p>
 </div>
-<div class="section level1">
-<h1 id="preprocessing-with-makepreprocwrappercaret">Preprocessing with makePreprocWrapperCaret<a class="anchor" aria-label="anchor" href="#preprocessing-with-makepreprocwrappercaret"></a>
-</h1>
+<div class="section level2">
+<h2 id="preprocessing-with-makepreprocwrappercaret">Preprocessing with makePreprocWrapperCaret<a class="anchor" aria-label="anchor" href="#preprocessing-with-makepreprocwrappercaret"></a>
+</h2>
 <p><code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> is an interface to <code>caret</code>’s <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code> function that provides many different options like imputation of missing values, data transformations as scaling the features to a certain range or Box-Cox and dimensionality reduction via Independent or Principal Component Analysis. For all possible options see the help page of function <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code>.</p>
 <p>Note that the usage of <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> is slightly different than that of <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code>.</p>
 <ul>
@@ -310,9 +313,9 @@
 <span class="co">## 1 Sonar-example         classif.qda      0.2932367</span>
 <span class="co">## 2 Sonar-example classif.qda.preproc      0.1779848</span></code></pre></div>
 <p>PCA preprocessing in this case turns out to be really beneficial for the performance of Quadratic Discriminant Analysis.</p>
-<div class="section level2">
-<h2 id="joint-tuning-of-preprocessing-options-and-learner-parameters">Joint tuning of preprocessing options and learner parameters<a class="anchor" aria-label="anchor" href="#joint-tuning-of-preprocessing-options-and-learner-parameters"></a>
-</h2>
+<div class="section level3">
+<h3 id="joint-tuning-of-preprocessing-options-and-learner-parameters">Joint tuning of preprocessing options and learner parameters<a class="anchor" aria-label="anchor" href="#joint-tuning-of-preprocessing-options-and-learner-parameters"></a>
+</h3>
 <p>Let’s see if we can optimize this a bit. The threshold value of 0.9 above was chosen arbitrarily and led to 22 out of 60 principal components. But maybe a lower or higher number of principal components should be used. Moreover, <code>qda</code> (<code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code>) has several options that control how the class covariance matrices or class probabilities are estimated.</p>
 <p>Those preprocessing and learner parameters can be <a href="tune.html" target="_blank">tuned</a> jointly. Before doing this let’s first get an overview of all the parameters of the wrapped learner using function <code><a href="../../reference/getParamSet.html">getParamSet()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -415,16 +418,16 @@
 <p>There seems to be a preference for a lower number of principal components (&lt;27) for both <code>"plug-in"</code> and <code>"debiased"</code> with <code>"plug-in"</code> achieving slightly lower error rates.</p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="writing-a-custom-preprocessing-wrapper">Writing a custom preprocessing wrapper<a class="anchor" aria-label="anchor" href="#writing-a-custom-preprocessing-wrapper"></a>
-</h1>
+<div class="section level2">
+<h2 id="writing-a-custom-preprocessing-wrapper">Writing a custom preprocessing wrapper<a class="anchor" aria-label="anchor" href="#writing-a-custom-preprocessing-wrapper"></a>
+</h2>
 <p>If the options offered by <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> are not enough, you can write your own preprocessing wrapper using function <code><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper()</a></code>.</p>
 <p>As described in the tutorial section about <a href="wrapper.html" target="_blank">wrapped learners</a> wrappers are implemented using a <em>train</em> and a <em>predict</em> method. In case of preprocessing wrappers these methods specify how to transform the data before training and before prediction and are <em>completely user-defined</em>.</p>
 <p>Below we show how to create a preprocessing wrapper that centers and scales the data before training/predicting. Some learning methods as, e.g., k nearest neighbors, support vector machines or neural networks usually require scaled features. Many, but not all, have a built-in scaling option where the training data set is scaled before model fitting and the test data set is scaled accordingly, that is by using the scaling parameters from the training stage, before making predictions. In the following we show how to add a scaling option to a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) by coupling it with function <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">base::scale()</a></code>.</p>
 <p>Note that we chose this simple example for demonstration. Centering/scaling the data is also possible with <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code>.</p>
-<div class="section level2">
-<h2 id="specifying-the-train-function">Specifying the train function<a class="anchor" aria-label="anchor" href="#specifying-the-train-function"></a>
-</h2>
+<div class="section level3">
+<h3 id="specifying-the-train-function">Specifying the train function<a class="anchor" aria-label="anchor" href="#specifying-the-train-function"></a>
+</h3>
 <p>The <em>train</em> function has to be a function with the following arguments:</p>
 <ul>
 <li>
@@ -461,9 +464,9 @@
   <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span>, control <span class="op">=</span> <span class="va">control</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="specifying-the-predict-function">Specifying the predict function<a class="anchor" aria-label="anchor" href="#specifying-the-predict-function"></a>
-</h2>
+<div class="section level3">
+<h3 id="specifying-the-predict-function">Specifying the predict function<a class="anchor" aria-label="anchor" href="#specifying-the-predict-function"></a>
+</h3>
 <p>The <em>predict</em> function has the following arguments:</p>
 <ul>
 <li>
@@ -491,9 +494,9 @@
   <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="creating-the-preprocessing-wrapper">Creating the preprocessing wrapper<a class="anchor" aria-label="anchor" href="#creating-the-preprocessing-wrapper"></a>
-</h2>
+<div class="section level3">
+<h3 id="creating-the-preprocessing-wrapper">Creating the preprocessing wrapper<a class="anchor" aria-label="anchor" href="#creating-the-preprocessing-wrapper"></a>
+</h3>
 <p>Below we create a preprocessing wrapper with a regression neural network (<code><a href="https://rdrr.io/pkg/nnet/man/nnet.html" class="external-link">nnet::nnet()</a></code>) (which itself does not have a scaling option) as base learner.</p>
 <p>The <em>train</em> and <em>predict</em> functions defined above are passed to <code><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper()</a></code> via the <code>train</code> and <code>predict</code> arguments. <code>par.vals</code> is a <code>list</code> of parameter values that is relayed to the <code>args</code> argument of the <em>train</em> function.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -531,9 +534,9 @@
 <span class="co">## Aggr perf: mse.test.mean=56.8645496</span>
 <span class="co">## Runtime: 0.0463462</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="joint-tuning-of-preprocessing-and-learner-parameters">Joint tuning of preprocessing and learner parameters<a class="anchor" aria-label="anchor" href="#joint-tuning-of-preprocessing-and-learner-parameters"></a>
-</h2>
+<div class="section level3">
+<h3 id="joint-tuning-of-preprocessing-and-learner-parameters">Joint tuning of preprocessing and learner parameters<a class="anchor" aria-label="anchor" href="#joint-tuning-of-preprocessing-and-learner-parameters"></a>
+</h3>
 <p>Often it’s not clear which preprocessing options work best with a certain learning algorithm. As already shown for the number of principal components in <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> we can <a href="tune.html" target="_blank">tune</a> them easily together with other hyperparameters of the learner.</p>
 <p>In our scaling example we can try if <code><a href="https://rdrr.io/pkg/nnet/man/nnet.html" class="external-link">nnet::nnet()</a></code> works best with both centering and scaling the data or if it’s better to omit one of the two operations or do no preprocessing at all. In order to tune <code>center</code> and <code>scale</code> we have to add appropriate <code>LearnerParam</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">ParamHelpers::LearnerParam()</a></code>)s to the parameter set (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::ParamSet()</a></code>) of the wrapped learner.</p>
 <p>As mentioned above <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">base::scale()</a></code> allows for numeric and logical <code>center</code> and <code>scale</code> arguments. As we want to use the latter option we declare <code>center</code> and <code>scale</code> as logical learner parameters.</p>
@@ -601,9 +604,9 @@
 <span class="co">## 11  0.05  FALSE FALSE      38.53006  11  NA          &lt;NA&gt;</span>
 <span class="co">## 12   0.1  FALSE FALSE      32.56318  12  NA          &lt;NA&gt;</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="preprocessing-wrapper-functions">Preprocessing wrapper functions<a class="anchor" aria-label="anchor" href="#preprocessing-wrapper-functions"></a>
-</h2>
+<div class="section level3">
+<h3 id="preprocessing-wrapper-functions">Preprocessing wrapper functions<a class="anchor" aria-label="anchor" href="#preprocessing-wrapper-functions"></a>
+</h3>
 <p>If you have written a preprocessing wrapper that you might want to use from time to time it’s a good idea to encapsulate it in an own function as shown below. If you think your preprocessing method is something others might want to use as well and should be integrated into <code>mlr</code> just <a href="https://github.com/mlr-org/mlr/issues" class="external-link">contact us</a>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">makePreprocWrapperScale</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">learner</span>, <span class="va">center</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">scale</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span>
@@ -664,7 +667,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

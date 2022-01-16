@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="hyperpar_tuning_effects_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Evaluating Hyperparameter Tuning</h1>
@@ -197,9 +200,9 @@
 <li>How did the optimization algorithm (prematurely) converge?</li>
 </ul>
 <p><code>mlr</code> provides methods to generate and plot the data in order to evaluate the effect of hyperparameter tuning.</p>
-<div class="section level1">
-<h1 id="generating-hyperparameter-tuning-data">Generating hyperparameter tuning data<a class="anchor" aria-label="anchor" href="#generating-hyperparameter-tuning-data"></a>
-</h1>
+<div class="section level2">
+<h2 id="generating-hyperparameter-tuning-data">Generating hyperparameter tuning data<a class="anchor" aria-label="anchor" href="#generating-hyperparameter-tuning-data"></a>
+</h2>
 <p><code>mlr</code> separates the generation of the data from the plotting of the data in case the user wishes to use the data in a custom way downstream.</p>
 <p>The <code><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData()</a></code> method takes the tuning result along with 2 additional arguments: <code>trafo</code> and <code>include.diagnostics</code>. The <code>trafo</code> argument will convert the hyperparameter data to be on the transformed scale in case a transformation was used when creating the parameter (as in the case below). The <code>include.diagnostics</code> argument will tell <code>mlr</code> whether to include the eol and any error messages from the learner.</p>
 <p>Below we perform random search on the <code>C</code> parameter for SVM on the famous Pima Indians (<code><a href="https://rdrr.io/pkg/mlbench/man/PimaIndiansDiabetes.html" class="external-link">mlbench::PimaIndiansDiabetes()</a></code>) dataset. We generate the hyperparameter effect data so that the <code>C</code> parameter is on the transformed scale and we do not include diagnostic data:</p>
@@ -323,9 +326,9 @@
 <span class="co">## 6             1</span></code></pre></div>
 <p>After generating the hyperparameter effect data, the next step is to visualize it. <code>mlr</code> has several methods built-in to visualize the data, meant to support the needs of the researcher and the engineer in industry. The next few sections will walk through the visualization support for several use-cases.</p>
 </div>
-<div class="section level1">
-<h1 id="visualizing-the-effect-of-a-single-hyperparameter">Visualizing the effect of a single hyperparameter<a class="anchor" aria-label="anchor" href="#visualizing-the-effect-of-a-single-hyperparameter"></a>
-</h1>
+<div class="section level2">
+<h2 id="visualizing-the-effect-of-a-single-hyperparameter">Visualizing the effect of a single hyperparameter<a class="anchor" aria-label="anchor" href="#visualizing-the-effect-of-a-single-hyperparameter"></a>
+</h2>
 <p>In a situation when the user is tuning a single hyperparameter for a learner, the user may wish to plot the performance of the learner against the values of the hyperparameter.</p>
 <p>In the example below, we tune the number of clusters against the silhouette score on the mtcars dataset. We specify the x-axis with the <code>x</code> argument and the y-axis with the <code>y</code> argument. If the <code>plot.type</code> argument is not specified, <code>mlr</code> will attempt to plot a scatterplot by default. Since <code><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect()</a></code> returns a <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> object, we can easily customize it to our liking!</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -389,9 +392,9 @@
 <span class="fu"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="st">"C"</span>, y <span class="op">=</span> <span class="st">"acc.test.mean"</span>, plot.type <span class="op">=</span> <span class="st">"line"</span><span class="op">)</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/single_nested-1.png" width="700"></p>
 </div>
-<div class="section level1">
-<h1 id="visualizing-the-effect-of-2-hyperparameters">Visualizing the effect of 2 hyperparameters<a class="anchor" aria-label="anchor" href="#visualizing-the-effect-of-2-hyperparameters"></a>
-</h1>
+<div class="section level2">
+<h2 id="visualizing-the-effect-of-2-hyperparameters">Visualizing the effect of 2 hyperparameters<a class="anchor" aria-label="anchor" href="#visualizing-the-effect-of-2-hyperparameters"></a>
+</h2>
 <p>In the case of tuning 2 hyperparameters simultaneously, <code>mlr</code> provides the ability to plot a heatmap and contour plot in addition to a scatterplot or line.</p>
 <p>In the example below, we tune the <code>C</code> and <code>sigma</code> parameters for SVM on the Pima dataset. We use interpolation to produce a regular grid for plotting the heatmap. The <code>interpolation</code> argument accepts any regression learner from <code>mlr</code> to perform the interpolation. The <code>z</code> argument will be used to fill the heatmap or color lines, depending on the <code>plot.type</code> used.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -466,9 +469,9 @@
 <span class="co">## will replace the existing scale.</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/two_nested-1.png" width="700"></p>
 </div>
-<div class="section level1">
-<h1 id="visualizing-the-effects-of-more-than-2-hyperparameters">Visualizing the effects of more than 2 hyperparameters<a class="anchor" aria-label="anchor" href="#visualizing-the-effects-of-more-than-2-hyperparameters"></a>
-</h1>
+<div class="section level2">
+<h2 id="visualizing-the-effects-of-more-than-2-hyperparameters">Visualizing the effects of more than 2 hyperparameters<a class="anchor" aria-label="anchor" href="#visualizing-the-effects-of-more-than-2-hyperparameters"></a>
+</h2>
 <p>In order to visualize the result when tuning 3 or more hyperparameters simultaneously we can take advantage of <a href="partial_dependence.html" target="_blank">partial dependence plots</a> to show how the performance depends on a one- or two-dimensional subset of the hyperparameters. Below we tune three hyperparameters <code>C</code>, <code>sigma</code>, and <code>degree</code> of an SVM with Bessel kernel and set the <code>partial.dep</code> flag to <code>TRUE</code> to indicate that we intend to calculate partial dependences.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
@@ -494,7 +497,8 @@
   plot.type <span class="op">=</span> <span class="st">"heatmap"</span>, partial.dep.learn <span class="op">=</span> <span class="st">"regr.randomForest"</span><span class="op">)</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
@@ -506,7 +510,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

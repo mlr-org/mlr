@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="create_measure_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Integrating Another Measure</h1>
@@ -170,9 +173,9 @@
     
     
 <p>In some cases, you might want to evaluate a <code><a href="../../reference/Prediction.html">Prediction()</a></code> or <code><a href="../../reference/ResamplePrediction.html">ResamplePrediction()</a></code> with a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) which is not yet implemented in <code>mlr</code>. This could be either a performance measure which is not listed in the <a href="measures.html" target="_blank">Appendix</a> or a measure that uses a misclassification cost matrix.</p>
-<div class="section level1">
-<h1 id="performance-measures-and-aggregation-schemes">Performance measures and aggregation schemes<a class="anchor" aria-label="anchor" href="#performance-measures-and-aggregation-schemes"></a>
-</h1>
+<div class="section level2">
+<h2 id="performance-measures-and-aggregation-schemes">Performance measures and aggregation schemes<a class="anchor" aria-label="anchor" href="#performance-measures-and-aggregation-schemes"></a>
+</h2>
 <p>Performance measures in <code>mlr</code> are objects of class <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>). For example the <a href="measures.html" target="_blank">mse</a> (mean squared error) looks as follows.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mse</span><span class="op">)</span>
@@ -241,9 +244,9 @@
 <p>You can change the aggregation scheme of a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) via function <code><a href="../../reference/setAggregation.html">setAggregation()</a></code>. See the tutorial page on <a href="resample.html" target="_blank">resampling</a> for some examples and the <code>?aggregations()</code> help page for all available aggregation schemes.</p>
 <p>You can construct your own <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) and <code><a href="../../reference/Aggregation.html">Aggregation()</a></code> objects via functions <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>, <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code>, <code><a href="../../reference/makeCustomResampledMeasure.html">makeCustomResampledMeasure()</a></code> and <code><a href="../../reference/makeAggregation.html">makeAggregation()</a></code>. Some examples are shown in the following.</p>
 </div>
-<div class="section level1">
-<h1 id="constructing-a-performance-measure">Constructing a performance measure<a class="anchor" aria-label="anchor" href="#constructing-a-performance-measure"></a>
-</h1>
+<div class="section level2">
+<h2 id="constructing-a-performance-measure">Constructing a performance measure<a class="anchor" aria-label="anchor" href="#constructing-a-performance-measure"></a>
+</h2>
 <p>Function <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code> provides a simple way to construct your own performance measure.</p>
 <p>Below this is exemplified by re-implementing the mean misclassification error <a href="measures.html" target="_blank">mmce</a>. We first write a function that computes the measure on the basis of the true and predicted class labels. Note that this function must have certain formal arguments listed in the documentation of <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>. Then the <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) object is created and we work with it as usual with the <code><a href="../../reference/performance.html">performance()</a></code> function.</p>
 <p>See the <strong>R</strong> documentation of <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code> for more details on the various parameters.</p>
@@ -276,9 +279,9 @@
 <span class="co">## mmce </span>
 <span class="co">## 0.02</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="constructing-a-measure-for-ordinary-misclassification-costs">Constructing a measure for ordinary misclassification costs<a class="anchor" aria-label="anchor" href="#constructing-a-measure-for-ordinary-misclassification-costs"></a>
-</h1>
+<div class="section level2">
+<h2 id="constructing-a-measure-for-ordinary-misclassification-costs">Constructing a measure for ordinary misclassification costs<a class="anchor" aria-label="anchor" href="#constructing-a-measure-for-ordinary-misclassification-costs"></a>
+</h2>
 <p>For in depth explanations and details see the tutorial page on <a href="cost_sensitive_classif.html" target="_blank">cost-sensitive classification</a>.</p>
 <p>To create a measure that involves ordinary, i.e., class-dependent misclassification costs you can use function <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code>. You first need to define the cost matrix. The rows indicate true and the columns predicted classes and the rows and columns have to be named by the class labels. The cost matrix can then be wrapped in a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) object and predictions can be evaluated as usual with the <code><a href="../../reference/performance.html">performance()</a></code> function.</p>
 <p>See the <strong>R</strong> documentation of function <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code> for details on the various parameters.</p>
@@ -303,16 +306,16 @@
 <span class="co">##   my.costs </span>
 <span class="co">## 0.02666667</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="creating-an-aggregation-scheme">Creating an aggregation scheme<a class="anchor" aria-label="anchor" href="#creating-an-aggregation-scheme"></a>
-</h1>
+<div class="section level2">
+<h2 id="creating-an-aggregation-scheme">Creating an aggregation scheme<a class="anchor" aria-label="anchor" href="#creating-an-aggregation-scheme"></a>
+</h2>
 <p>It is possible to create your own aggregation scheme using function <code><a href="../../reference/makeAggregation.html">makeAggregation()</a></code>. You need to specify an identifier <code>id</code>, the <code>properties</code>, and write a function that does the actual aggregation. Optionally, you can <code>name</code> your aggregation scheme.</p>
 <p>Possible settings for <code>properties</code> are <code>"req.test"</code> and <code>"req.train"</code> if predictions on either the training or test sets are required, and the vector <code>c("req.train", "req.test")</code> if both are needed.</p>
 <p>The aggregation function must have a certain signature detailed in the documentation of <code><a href="../../reference/makeAggregation.html">makeAggregation()</a></code>. Usually, you will only need the performance values on the test sets <code>perf.test</code> or the training sets <code>perf.train</code>. In rare cases, e.g., the <code><a href="../../reference/Prediction.html">Prediction()</a></code> object <code>pred</code> or information stored in the <code><a href="../../reference/Task.html">Task()</a></code> object might be required to obtain the aggregated performance. For an example have a look at the <a href="https://github.com/mlr-org/mlr/blob/main/R/aggregations.R#L211" class="external-link">definition</a> of function <code>test.join</code> (<code><a href="../../reference/aggregations.html">aggregations()</a></code>).</p>
 </div>
-<div class="section level1">
-<h1 id="example-evaluating-the-range-of-measures">Example: Evaluating the range of measures<a class="anchor" aria-label="anchor" href="#example-evaluating-the-range-of-measures"></a>
-</h1>
+<div class="section level2">
+<h2 id="example-evaluating-the-range-of-measures">Example: Evaluating the range of measures<a class="anchor" aria-label="anchor" href="#example-evaluating-the-range-of-measures"></a>
+</h2>
 <p>Let’s say you are interested in the range of the performance values obtained on individual test sets.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my.range.aggr</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeAggregation.html">makeAggregation</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"test.range"</span>, name <span class="op">=</span> <span class="st">"Test Range"</span>,
@@ -366,7 +369,8 @@
 <p><img src="create_measure_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>The plot shows the range versus the mean misclassification error. The value on the y-axis thus corresponds to the length of the error bars. (Note that the points and error bars are jittered in y-direction.)</p>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
@@ -378,7 +382,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

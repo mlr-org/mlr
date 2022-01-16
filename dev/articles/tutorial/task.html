@@ -44,7 +44,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basics">Basics</a>
@@ -158,6 +158,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="task_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Learning Tasks</h1>
@@ -170,9 +173,9 @@
     
     
 <p>Learning tasks encapsulate the data set and further relevant information about a machine learning problem, for example the name of the target variable for supervised problems.</p>
-<div class="section level1">
-<h1 id="task-types-and-creation">Task types and creation<a class="anchor" aria-label="anchor" href="#task-types-and-creation"></a>
-</h1>
+<div class="section level2">
+<h2 id="task-types-and-creation">Task types and creation<a class="anchor" aria-label="anchor" href="#task-types-and-creation"></a>
+</h2>
 <p>The tasks are organized in a hierarchy, with the generic <code><a href="../../reference/Task.html">Task()</a></code> at the top. The following tasks can be instantiated and all inherit from the virtual superclass <code><a href="../../reference/Task.html">Task()</a></code>:</p>
 <ul>
 <li>
@@ -189,9 +192,9 @@
 <code><a href="../../reference/CostSensTask.html">CostSensTask()</a></code> for general <a href="cost_sensitive_classif.html" target="_blank">cost sensitive classification</a> (with example-specific costs).</li>
 </ul>
 <p>To create a task, just call <code>make&lt;TaskType&gt;</code>, e.g., <code><a href="../../reference/ClassifTask.html">makeClassifTask()</a></code>. All tasks require an identifier (argument <code>id</code>) and a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">base::data.frame()</a></code> (argument <code>data</code>). If no ID is provided it is automatically generated using the variable name of the data. The ID will be later used to name results, for example of <a href="benchmark_experiments.html" target="_blank">benchmark experiments</a>, and to annotate plots. Depending on the nature of the learning problem, additional arguments may be required and are discussed in the following sections.</p>
-<div class="section level2">
-<h2 id="regression">Regression<a class="anchor" aria-label="anchor" href="#regression"></a>
-</h2>
+<div class="section level3">
+<h3 id="regression">Regression<a class="anchor" aria-label="anchor" href="#regression"></a>
+</h3>
 <p>For supervised learning like regression (as well as classification and survival analysis) we, in addition to <code>data</code>, have to specify the name of the <code>target</code> variable.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">BostonHousing</span>, package <span class="op">=</span> <span class="st">"mlbench"</span><span class="op">)</span>
@@ -211,9 +214,9 @@
 <p>As you can see, the <code><a href="../../reference/Task.html">Task()</a></code> records the type of the learning problem and basic information about the data set, e.g., the types of the features (<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">base::numeric()</a></code> vectors, <code>base::factors()</code> or ordered factors), the number of observations, or whether missing values are present.</p>
 <p>Creating tasks for classification and survival analysis follows the same scheme, the data type of the target variables included in <code>data</code> is simply different. For each of these learning problems some specifics are described below.</p>
 </div>
-<div class="section level2">
-<h2 id="classification">Classification<a class="anchor" aria-label="anchor" href="#classification"></a>
-</h2>
+<div class="section level3">
+<h3 id="classification">Classification<a class="anchor" aria-label="anchor" href="#classification"></a>
+</h3>
 <p>For classification the target column has to be a <code>factor</code>.</p>
 <p>In the following example we define a classification task for the <code><a href="https://rdrr.io/pkg/mlbench/man/BreastCancer.html" class="external-link">mlbench::BreastCancer()</a></code> data set and exclude the variable <code>Id</code> from all further model fitting and evaluation.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -242,9 +245,9 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">classif.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"BreastCancer"</span>, data <span class="op">=</span> <span class="va">df</span>, target <span class="op">=</span> <span class="st">"Class"</span>, positive <span class="op">=</span> <span class="st">"malignant"</span><span class="op">)</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="survival-analysis">Survival analysis<a class="anchor" aria-label="anchor" href="#survival-analysis"></a>
-</h2>
+<div class="section level3">
+<h3 id="survival-analysis">Survival analysis<a class="anchor" aria-label="anchor" href="#survival-analysis"></a>
+</h3>
 <p>Survival tasks use two target columns. For left and right censored problems these consist of the survival time and a binary event indicator. For interval censored data the two target columns must be specified in the <code>"interval2"</code> format (see <code><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">survival::Surv()</a></code>).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">cancer</span>, package <span class="op">=</span> <span class="st">"survival"</span><span class="op">)</span>
@@ -265,9 +268,9 @@
 <span class="co">## Has coordinates: FALSE</span></code></pre></div>
 <p>The type of censoring can be specified via the argument <code>censoring</code>, which defaults to <code>"rcens"</code> for right censored data.</p>
 </div>
-<div class="section level2">
-<h2 id="multilabel-classification">Multilabel classification<a class="anchor" aria-label="anchor" href="#multilabel-classification"></a>
-</h2>
+<div class="section level3">
+<h3 id="multilabel-classification">Multilabel classification<a class="anchor" aria-label="anchor" href="#multilabel-classification"></a>
+</h3>
 <p>In multilabel classification each object can belong to more than one category at the same time.</p>
 <p>The <code>data</code> are expected to contain as many target columns as there are class labels. The target columns should be logical vectors that indicate which class labels are present. The names of the target columns are taken as class labels and need to be passed to the <code>target</code> argument of <code><a href="../../reference/MultilabelTask.html">makeMultilabelTask()</a></code>.</p>
 <p>In the following example we get the data of the yeast data set, extract the label names, and pass them to the <code>target</code> argument in <code><a href="../../reference/MultilabelTask.html">makeMultilabelTask()</a></code>.</p>
@@ -295,9 +298,9 @@
 <span class="co">##     289    1816    1799      34</span></code></pre></div>
 <p>See also the tutorial page <a href="multilabel.html" target="_blank">multilabel</a>.</p>
 </div>
-<div class="section level2">
-<h2 id="cluster-analysis">Cluster analysis<a class="anchor" aria-label="anchor" href="#cluster-analysis"></a>
-</h2>
+<div class="section level3">
+<h3 id="cluster-analysis">Cluster analysis<a class="anchor" aria-label="anchor" href="#cluster-analysis"></a>
+</h3>
 <p>As cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the <code>data</code>. Below we create a learning task from the data set <code><a href="https://rdrr.io/r/datasets/mtcars.html" class="external-link">datasets::mtcars()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mtcars</span>, package <span class="op">=</span> <span class="st">"datasets"</span><span class="op">)</span>
@@ -314,9 +317,9 @@
 <span class="co">## Has blocking: FALSE</span>
 <span class="co">## Has coordinates: FALSE</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="cost-sensitive-classification">Cost-sensitive classification<a class="anchor" aria-label="anchor" href="#cost-sensitive-classification"></a>
-</h2>
+<div class="section level3">
+<h3 id="cost-sensitive-classification">Cost-sensitive classification<a class="anchor" aria-label="anchor" href="#cost-sensitive-classification"></a>
+</h3>
 <p>The standard objective in classification is to obtain a high prediction accuracy, i.e., to minimize the number of errors. All types of misclassification errors are thereby deemed equally severe. However, in many applications different kinds of errors cause different costs.</p>
 <p>In case of <em>class-dependent costs</em>, that solely depend on the actual and predicted class labels, it is sufficient to create an ordinary <code><a href="../../reference/ClassifTask.html">ClassifTask()</a></code>.</p>
 <p>In order to handle <em>example-specific costs</em> it is necessary to generate a <code><a href="../../reference/CostSensTask.html">CostSensTask()</a></code>. In this scenario, each example <span class="math inline">\((x, y)\)</span> is associated with an individual cost vector of length <span class="math inline">\(K\)</span> with <span class="math inline">\(K\)</span> denoting the number of classes. The <span class="math inline">\(k\)</span>-th component indicates the cost of assigning <span class="math inline">\(x\)</span> to class <span class="math inline">\(k\)</span>. Naturally, it is assumed that the cost of the intended class label <span class="math inline">\(y\)</span> is minimal.</p>
@@ -343,16 +346,16 @@
 <p>For more details see the page on <a href="cost_sensitive_classif.html" target="_blank">cost sensitive classification</a>.</p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="further-settings">Further settings<a class="anchor" aria-label="anchor" href="#further-settings"></a>
-</h1>
+<div class="section level2">
+<h2 id="further-settings">Further settings<a class="anchor" aria-label="anchor" href="#further-settings"></a>
+</h2>
 <p>The <code><a href="../../reference/Task.html">Task()</a></code> help page also lists several other arguments to describe further details of the learning problem.</p>
 <p>For example, we could include a <code>blocking</code> factor in the task. This would indicate that some observations “belong together” and should not be separated when splitting the data into training and test sets for <a href="resample.html" target="_blank">resampling</a>.</p>
 <p>Another option is to assign <code>weights</code> to observations. These can simply indicate observation frequencies or result from the sampling scheme used to collect the data. Note that you should use this option only if the weights really belong to the task. If you plan to train some learning algorithms with different weights on the same <code><a href="../../reference/Task.html">Task()</a></code>, <code>mlr</code> offers several other ways to set observation or class weights (for supervised classification). See for example the tutorial page about <a href="train.html" target="_blank">training</a> or function <code><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper()</a></code>.</p>
 </div>
-<div class="section level1">
-<h1 id="accessing-a-learning-task">Accessing a learning task<a class="anchor" aria-label="anchor" href="#accessing-a-learning-task"></a>
-</h1>
+<div class="section level2">
+<h2 id="accessing-a-learning-task">Accessing a learning task<a class="anchor" aria-label="anchor" href="#accessing-a-learning-task"></a>
+</h2>
 <p>We provide many operators to access the elements stored in a <code><a href="../../reference/Task.html">Task()</a></code>. The most important ones are listed in the documentation of <code><a href="../../reference/Task.html">Task()</a></code> and <code><a href="../../reference/getTaskData.html">getTaskData()</a></code>.</p>
 <p>To access the <code><a href="../../reference/TaskDesc.html">TaskDesc()</a></code> that contains basic information about the task you can use:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -468,9 +471,9 @@
 <span class="co">## [6,]  0  779.9889  961.82166</span></code></pre></div>
 <p>Note that <code><a href="../../reference/getTaskData.html">getTaskData()</a></code> offers many options for converting the data set into a convenient format. This especially comes in handy when you <a href="create_learner.html" target="_blank">integrate a new learner</a> from another <strong>R</strong> package into <code>mlr</code>. In this regard function <code><a href="../../reference/getTaskFormula.html">getTaskFormula()</a></code> is also useful.</p>
 </div>
-<div class="section level1">
-<h1 id="modifying-a-learning-task">Modifying a learning task<a class="anchor" aria-label="anchor" href="#modifying-a-learning-task"></a>
-</h1>
+<div class="section level2">
+<h2 id="modifying-a-learning-task">Modifying a learning task<a class="anchor" aria-label="anchor" href="#modifying-a-learning-task"></a>
+</h2>
 <p><code>mlr</code> provides several functions to alter an existing <code><a href="../../reference/Task.html">Task()</a></code>, which is often more convenient than creating a new <code><a href="../../reference/Task.html">Task()</a></code> from scratch. Here are some examples.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Select observations and/or features</span>
@@ -532,9 +535,9 @@
 <span class="co">##  Max.   :0.5   Max.   :1.0000   Max.   :1.0000</span></code></pre></div>
 <p>For more functions and more detailed explanations have a look at the <a href="preproc.html" target="_blank">data preprocessing</a> page.</p>
 </div>
-<div class="section level1">
-<h1 id="example-tasks-and-convenience-functions">Example tasks and convenience functions<a class="anchor" aria-label="anchor" href="#example-tasks-and-convenience-functions"></a>
-</h1>
+<div class="section level2">
+<h2 id="example-tasks-and-convenience-functions">Example tasks and convenience functions<a class="anchor" aria-label="anchor" href="#example-tasks-and-convenience-functions"></a>
+</h2>
 <p>For your convenience <code>mlr</code> provides pre-defined <code><a href="../../reference/Task.html">Task()</a></code>s for each type of learning problem. These are also used throughout this tutorial in order to get shorter and more readable code. A list of all <code><a href="../../reference/Task.html">Task()</a></code>s can be found in the <a href="example_tasks.html" target="_blank">Appendix</a>.</p>
 <p>Moreover, <code>mlr</code>’s function <code><a href="../../reference/convertMLBenchObjToTask.html">convertMLBenchObjToTask()</a></code> can generate <code><a href="../../reference/Task.html">Task()</a></code>s from the data sets and data generating functions in package <code>mlbench::mlbench()</code>.</p>
 </div>
@@ -551,7 +554,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>
