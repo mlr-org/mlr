@@ -172,11 +172,13 @@
 
     
     
+<pre><code><span class="co">## Warning in register(): Can't find generic `scale_type` in package ggplot2 to</span>
+<span class="co">## register S3 method.</span></code></pre>
 <p>As mentioned on the <a href="tune.html" target="_blank">tuning</a> tutorial page, tuning a machine learning algorithm typically involves:</p>
 <ul>
 <li>the hyperparameter search space:</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ex: create a search space for the C hyperparameter from 0.01 to 0.1</span>
 <span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="fl">0.01</span>, upper <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>
@@ -184,13 +186,13 @@
 <ul>
 <li>the optimization algorithm (aka tuning method):</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ex: random search with 100 iterations</span>
 <span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">100L</span><span class="op">)</span></code></pre></div>
 <ul>
 <li>an evaluation method, i.e., a resampling strategy and a performance measure:</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ex: 2-fold CV</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></code></pre></div>
 <p>After tuning, you may want to evaluate the tuning process in order to answer questions such as:</p>
@@ -206,7 +208,7 @@
 <p><code>mlr</code> separates the generation of the data from the plotting of the data in case the user wishes to use the data in a custom way downstream.</p>
 <p>The <code><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData()</a></code> method takes the tuning result along with 2 additional arguments: <code>trafo</code> and <code>include.diagnostics</code>. The <code>trafo</code> argument will convert the hyperparameter data to be on the transformed scale in case a transformation was used when creating the parameter (as in the case below). The <code>include.diagnostics</code> argument will tell <code>mlr</code> whether to include the eol and any error messages from the learner.</p>
 <p>Below we perform random search on the <code>C</code> parameter for SVM on the famous Pima Indians (<code><a href="https://rdrr.io/pkg/mlbench/man/PimaIndiansDiabetes.html" class="external-link">mlbench::PimaIndiansDiabetes()</a></code>) dataset. We generate the hyperparameter effect data so that the <code>C</code> parameter is on the transformed scale and we do not include diagnostic data:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
 <span class="op">)</span>
@@ -230,7 +232,7 @@
 <span class="co">## 5 0.12179856     0.7161458      0.2838542         5     0.064</span>
 <span class="co">## 6 6.25359181     0.7239583      0.2760417         6     0.056</span></code></pre></div>
 <p>As a reminder from the <a href="resample.html" target="_blank">resampling</a> tutorial, if we wanted to generate data on the training set as well as the validation set, we only need to make a few minor changes:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
 <span class="op">)</span>
@@ -262,7 +264,7 @@
 <span class="co">## 5         5     0.071</span>
 <span class="co">## 6         6     0.088</span></code></pre></div>
 <p>In the example below, we perform grid search on the <code>C</code> parameter for SVM on the Pima Indians dataset using nested cross validation. We generate the hyperparameter effect data so that the <code>C</code> parameter is on the untransformed scale and we do not include diagnostic data. As you can see below, nested cross validation is supported without any extra work by the user, allowing the user to obtain an unbiased estimator for the performance.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
 <span class="op">)</span>
@@ -293,7 +295,7 @@
 <span class="co">## 4             1</span>
 <span class="co">## 5             1</span>
 <span class="co">## 6             1</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
 <span class="op">)</span>
@@ -331,7 +333,7 @@
 </h2>
 <p>In a situation when the user is tuning a single hyperparameter for a learner, the user may wish to plot the performance of the learner against the values of the hyperparameter.</p>
 <p>In the example below, we tune the number of clusters against the silhouette score on the mtcars dataset. We specify the x-axis with the <code>x</code> argument and the y-axis with the <code>y</code> argument. If the <code>plot.type</code> argument is not specified, <code>mlr</code> will attempt to plot a scatterplot by default. Since <code><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect()</a></code> returns a <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> object, we can easily customize it to our liking!</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="http://keii.ue.wroc.pl/clusterSim/" class="external-link">"clusterSim"</a></span><span class="op">)</span>
 
 <span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
@@ -350,7 +352,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>In the example below, we tune SVM with the <code>C</code> hyperparameter on the Pima dataset. We will use simulated annealing optimizer, so we are interested in seeing if the optimization algorithm actually improves with iterations. By default, <code>mlr</code> only plots improvements to the global optimum.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
 <span class="op">)</span>
@@ -365,7 +367,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/sa_single-1.png" width="700"></p>
 <p>In the case of a learner crash, <code>mlr</code> will impute the crash with the worst value graphically and indicate the point. In the example below, we give the <code>C</code> parameter negative values, which will result in a learner crash for SVM.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"C"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span>
 <span class="op">)</span>
@@ -379,7 +381,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/single_crash-1.png" width="700"></p>
 <p>The example below uses <a href="nested_resampling.html" target="_blank">nested cross validation</a> with an outer loop of 2 runs. <code>mlr</code> indicates each run within the visualization.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>
 <span class="op">)</span>
@@ -397,7 +399,7 @@
 </h2>
 <p>In the case of tuning 2 hyperparameters simultaneously, <code>mlr</code> provides the ability to plot a heatmap and contour plot in addition to a scatterplot or line.</p>
 <p>In the example below, we tune the <code>C</code> and <code>sigma</code> parameters for SVM on the Pima dataset. We use interpolation to produce a regular grid for plotting the heatmap. The <code>interpolation</code> argument accepts any regression learner from <code>mlr</code> to perform the interpolation. The <code>z</code> argument will be used to fill the heatmap or color lines, depending on the <code>plot.type</code> used.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
@@ -418,7 +420,7 @@
 <span class="co">## will replace the existing scale.</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/two-1.png" width="700"></p>
 <p>We can use the <code>show.experiments</code> argument in order to visualize which points were specifically passed to the learner in the original experiment and which points were interpolated by <code>mlr</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="st">"C"</span>, y <span class="op">=</span> <span class="st">"sigma"</span>, z <span class="op">=</span> <span class="st">"acc.test.mean"</span>,
   plot.type <span class="op">=</span> <span class="st">"heatmap"</span>, interpolate <span class="op">=</span> <span class="st">"regr.earth"</span>, show.experiments <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradient2</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="va">min_plt</span>, <span class="va">max_plt</span>, length.out <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,
@@ -427,12 +429,12 @@
 <span class="co">## will replace the existing scale.</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/two_showargs-1.png" width="700"></p>
 <p>We can also visualize how long the optimizer takes to reach an optima for the same example:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="st">"iteration"</span>, y <span class="op">=</span> <span class="st">"acc.test.mean"</span>,
   plot.type <span class="op">=</span> <span class="st">"line"</span><span class="op">)</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/two_optima-1.png" width="700"></p>
 <p>In the case where we are tuning 2 hyperparameters and we have a learner crash, <code>mlr</code> will indicate the respective points and impute them with the worst value. In the example below, we tune <code>C</code> and <code>sigma</code>, forcing <code>C</code> to be negative for some instances which will crash SVM. We perform interpolation to get a regular grid in order to plot a heatmap. We can see that the interpolation creates axis parallel lines resulting from the learner crashes.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"C"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -446,7 +448,7 @@
   plot.type <span class="op">=</span> <span class="st">"heatmap"</span>, interpolate <span class="op">=</span> <span class="st">"regr.earth"</span><span class="op">)</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/two_crash-1.png" width="700"></p>
 <p>A slightly more complicated example is using nested cross validation while simultaneously tuning 2 hyperparameters. In order to plot a heatmap in this case, <code>mlr</code> will aggregate each of the nested runs by a user-specified function. The default function is <code>mean</code>. As expected, we can still take advantage of interpolation.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
@@ -473,7 +475,7 @@
 <h2 id="visualizing-the-effects-of-more-than-2-hyperparameters">Visualizing the effects of more than 2 hyperparameters<a class="anchor" aria-label="anchor" href="#visualizing-the-effects-of-more-than-2-hyperparameters"></a>
 </h2>
 <p>In order to visualize the result when tuning 3 or more hyperparameters simultaneously we can take advantage of <a href="partial_dependence.html" target="_blank">partial dependence plots</a> to show how the performance depends on a one- or two-dimensional subset of the hyperparameters. Below we tune three hyperparameters <code>C</code>, <code>sigma</code>, and <code>degree</code> of an SVM with Bessel kernel and set the <code>partial.dep</code> flag to <code>TRUE</code> to indicate that we intend to calculate partial dependences.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeNumericParam</a></span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, upper <span class="op">=</span> <span class="fl">5</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,
@@ -486,13 +488,13 @@
   par.set <span class="op">=</span> <span class="va">ps</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateHyperParsEffectData.html">generateHyperParsEffectData</a></span><span class="op">(</span><span class="va">res</span>, partial.dep <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>You can generate a plot for a single hyperparameter like <code>C</code> as shown below. The <code>partial.dep.learn</code> can be any regression Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) in <code>mlr</code> and is used to regress the attained performance values on the values of the 3 hyperparameters visited during tuning. The fitted model serves as basis for calculating partial dependences.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="st">"C"</span>, y <span class="op">=</span> <span class="st">"acc.test.mean"</span>, plot.type <span class="op">=</span> <span class="st">"line"</span>,
   partial.dep.learn <span class="op">=</span> <span class="st">"regr.randomForest"</span><span class="op">)</span>
 <span class="co">## Loading required package: mmpf</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <p>We can also look at two hyperparameters simultaneously, for example <code>C</code> and <code>sigma</code>.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotHyperParsEffect.html">plotHyperParsEffect</a></span><span class="op">(</span><span class="va">data</span>, x <span class="op">=</span> <span class="st">"C"</span>, y <span class="op">=</span> <span class="st">"sigma"</span>, z <span class="op">=</span> <span class="st">"acc.test.mean"</span>,
   plot.type <span class="op">=</span> <span class="st">"heatmap"</span>, partial.dep.learn <span class="op">=</span> <span class="st">"regr.randomForest"</span><span class="op">)</span></code></pre></div>
 <p><img src="hyperpar_tuning_effects_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>

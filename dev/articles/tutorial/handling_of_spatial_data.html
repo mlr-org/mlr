@@ -173,6 +173,8 @@
 
     
     
+<pre><code><span class="co">## Warning in register(): Can't find generic `scale_type` in package ggplot2 to</span>
+<span class="co">## register S3 method.</span></code></pre>
 <p><strong>Attention</strong></p>
 <p><em>If you arrive here and did not yet start with {mlr}, please consider using {mlr3} and its extension package <a href="https://mlr3spatiotempcv.mlr-org.com" class="external-link">{mlr3spatiotempcv}</a> for spatiotemporal data handling.</em> <em>It is much more advanced and actively maintained while {mlr} and the solution shown below is deprecated and considered as legacy.</em></p>
 <div class="section level2">
@@ -205,7 +207,7 @@ Nested Spatial and Non-Spatial Cross-Validation
 <div class="section level3">
 <h3 id="spatial-cross-validation">Spatial Cross-Validation<a class="anchor" aria-label="anchor" href="#spatial-cross-validation"></a>
 </h3>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"spatial.task"</span><span class="op">)</span>
 <span class="va">spatial.task</span>
 <span class="co">## Supervised task: ecuador</span>
@@ -269,7 +271,7 @@ Nested Spatial and Non-Spatial Cross-Validation
 <div class="section level3">
 <h3 id="non-spatial-cross-validation">Non-Spatial Cross-Validation<a class="anchor" aria-label="anchor" href="#non-spatial-cross-validation"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">learner.rf</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
 
 <span class="va">resampling</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"RepCV"</span>, fold <span class="op">=</span> <span class="fl">5</span>, reps <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
@@ -318,7 +320,7 @@ Nested Spatial and Non-Spatial Cross-Validation
 </h2>
 <p>You can visualize the spatial partitioning using <code><a href="../../reference/createSpatialResamplingPlots.html">createSpatialResamplingPlots()</a></code>. This function creates multiple <code>ggplot2</code> objects that can then be visualized in a gridded way using your favorite “plot arrangement” function We recommend to use <code><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">cowplot::plot_grid()</a></code> and <code><a href="https://wilkelab.org/cowplot/reference/save_plot.html" class="external-link">cowplot::save_plot()</a></code> for this.</p>
 <p>You can pass multiple <code>resample</code> result objects as inputs. This is useful to visualize the differences between a spatial and non-spatial partitioning. If you pass the <code>resample</code> objects in a named list, those names will be populated as plot titles. By default everything is reprojected to EPSG: 4326 (WGS 84) but this can be changed using the argument <code>datum</code>. If you do not like the plot appearance, you can customize all plots stored in the resulting list by just applying a function on the list, for example using <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code>, <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">base::lapply()</a></code> or similar functions.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr.mlr-org.com">mlr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/cowplot/" class="external-link">cowplot</a></span><span class="op">)</span>
 

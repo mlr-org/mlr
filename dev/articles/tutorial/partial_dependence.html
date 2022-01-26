@@ -172,6 +172,8 @@
 
     
     
+<pre><code><span class="co">## Warning in register(): Can't find generic `scale_type` in package ggplot2 to</span>
+<span class="co">## register S3 method.</span></code></pre>
 <p>Learners use features to learn a prediction function and make predictions, but the effect of those features is often not apparent. <code>mlr</code> can estimate the partial dependence of a learned function on a subset of the feature space using <code><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData()</a></code>.</p>
 <p>Partial dependence plots reduce the potentially high dimensional function estimated by the learner, and display a marginalized version of this function in a lower dimensional space. For example suppose <span class="math inline">\(Y = f(X) + \epsilon\)</span>, where <span class="math inline">\(\mathbb{E}[\epsilon|X] = 0\)</span>. With <span class="math inline">\((X, Y)\)</span> pairs drawn independently from this statistical model, a learner may estimate <span class="math inline">\(\hat{f}\)</span>, which, if <span class="math inline">\(X\)</span> is high dimensional, can be uninterpretable. Suppose we want to approximate the relationship between some subset of <span class="math inline">\(X\)</span>. We partition <span class="math inline">\(X\)</span> into two sets, <span class="math inline">\(X_s\)</span> and <span class="math inline">\(X_c\)</span> such that <span class="math inline">\(X = X_s \cup X_c\)</span>, where <span class="math inline">\(X_s\)</span> is a subset of <span class="math inline">\(X\)</span> of interest.</p>
 <p>The partial dependence of <span class="math inline">\(f\)</span> on <span class="math inline">\(X_s\)</span> is</p>
@@ -187,7 +189,7 @@
 </h2>
 <p>Our implementation, following <code>mlr</code>’s <a href="visualization.html" target="_blank">visualization</a> pattern, consists of the above mentioned function <code><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData()</a></code>, as well as two visualization functions, <code><a href="../../reference/plotPartialDependence.html">plotPartialDependence()</a></code> and <code>plotPartialDependenceGGVIS()</code>. The former generates input (objects of class <code><a href="../../reference/generatePartialDependenceData.html">PartialDependenceData()</a></code>) for the latter.</p>
 <p>The first step executed by <code><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData()</a></code> is to generate a feature grid for every element of the character vector <code>features</code> passed. The data are given by the <code>input</code> argument, which can be a <code><a href="../../reference/Task.html">Task()</a></code> or a <code>data.frame</code>. The feature grid can be generated in several ways. A uniformly spaced grid of length <code>gridsize</code> (default 10) from the empirical minimum to the empirical maximum is created by default, but arguments <code>fmin</code> and <code>fmax</code> may be used to override the empirical default (the lengths of <code>fmin</code> and <code>fmax</code> must match the length of <code>features</code>). Alternatively the feature data can be resampled, either by using a bootstrap or by subsampling.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn.classif</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
 <span class="va">fit.classif</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.classif</span>, <span class="va">iris.task</span><span class="op">)</span>
 <span class="va">pd</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">fit.classif</span>, <span class="va">iris.task</span>, <span class="st">"Petal.Width"</span><span class="op">)</span>
@@ -209,7 +211,7 @@
 <span class="co">## 6: setosa   0.1552914   1.4333333</span>
 <span class="co">## ... (#rows: 30, #cols: 3)</span></code></pre></div>
 <p>As noted above, <span class="math inline">\(X_s\)</span> does not have to be unidimensional. If it is not, the <code>interaction</code> flag must be set to <code>TRUE</code>. Then the individual feature grids are combined using the Cartesian product, and the estimator above is applied, producing the partial dependence for every combination of unique feature values. If the <code>interaction</code> flag is <code>FALSE</code> (the default) then by default <span class="math inline">\(X_s\)</span> is assumed unidimensional, and partial dependencies are generated for each feature separately. The resulting output when <code>interaction = FALSE</code> has a column for each feature, and <code>NA</code> where the feature was not used.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pd.lst</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">fit.classif</span>, <span class="va">iris.task</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Petal.Width"</span>, <span class="st">"Petal.Length"</span><span class="op">)</span>, <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pd.lst</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
 <span class="co">##     Class Probability Petal.Width Petal.Length</span>
@@ -228,7 +230,7 @@
 <span class="co">## 4: virginica   0.5688485          NA     5.588889</span>
 <span class="co">## 5: virginica   0.6722758          NA     6.244444</span>
 <span class="co">## 6: virginica   0.6735450          NA     6.900000</span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pd.int</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">fit.classif</span>, <span class="va">iris.task</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Petal.Width"</span>, <span class="st">"Petal.Length"</span><span class="op">)</span>, <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">pd.int</span>
 <span class="co">## PartialDependenceData</span>
@@ -248,7 +250,7 @@
 <span class="co">## ... (#rows: 300, #cols: 4)</span></code></pre></div>
 <p>At each step in the estimation of <span class="math inline">\(\hat{f}_{X_s}\)</span> a set of predictions of length <span class="math inline">\(N\)</span> is generated. By default the mean prediction is used. For classification where <code>predict.type = "prob"</code> this entails the mean class probabilities. However, other summaries of the predictions may be used. For regression and survival tasks the function used here must either return one number or three, and, if the latter, the numbers must be sorted lowest to highest. For classification tasks the function must return a number for each level of the target feature.</p>
 <p>As noted, the <code>fun</code> argument can be a function which returns three numbers (sorted low to high) for a regression task. This allows further exploration of relative feature importance. If a feature is relatively important, the bounds are necessarily tighter because the feature accounts for more of the variance of the predictions, i.e., it is “used” more by the learner. More directly setting <code>fun = var</code> identifies regions of interaction between <span class="math inline">\(X_s\)</span> and <span class="math inline">\(X_c\)</span>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn.regr</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.ksvm"</span><span class="op">)</span>
 <span class="va">fit.regr</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.regr</span>, <span class="va">bh.task</span><span class="op">)</span>
 <span class="va">pd.regr</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">fit.regr</span>, <span class="va">bh.task</span>, <span class="st">"lstat"</span>, fun <span class="op">=</span> <span class="va">median</span><span class="op">)</span>
@@ -268,7 +270,7 @@
 <span class="co">## 5: 19.57175 17.836667</span>
 <span class="co">## 6: 18.95547 21.863333</span>
 <span class="co">## ... (#rows: 10, #cols: 2)</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pd.ci</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">fit.regr</span>, <span class="va">bh.task</span>, <span class="st">"lstat"</span>,
   fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.25</span>, <span class="fl">.5</span>, <span class="fl">.75</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">pd.ci</span>
@@ -287,7 +289,7 @@
 <span class="co">## 5: 16.54983 medv.25% 17.836667</span>
 <span class="co">## 6: 14.80144 medv.25% 21.863333</span>
 <span class="co">## ... (#rows: 30, #cols: 3)</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pd.classif</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">fit.classif</span>, <span class="va">iris.task</span>, <span class="st">"Petal.Length"</span>, fun <span class="op">=</span> <span class="va">median</span><span class="op">)</span>
 <span class="va">pd.classif</span>
 <span class="co">## PartialDependenceData</span>
@@ -306,7 +308,7 @@
 <span class="co">## 6: setosa  0.02892394     4.277778</span>
 <span class="co">## ... (#rows: 30, #cols: 3)</span></code></pre></div>
 <p>In addition to bounds based on a summary of the distribution of the conditional expectation of each observation, learners which can estimate the variance of their predictions can also be used. The argument <code>bounds</code> is a numeric vector of length two which is added (so the first number should be negative) to the point prediction to produce a confidence interval for the partial dependence. The default is the .025 and .975 quantiles of the Gaussian distribution.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit.se</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.randomForest"</span>, predict.type <span class="op">=</span> <span class="st">"se"</span><span class="op">)</span>, <span class="va">bh.task</span><span class="op">)</span>
 <span class="va">pd.se</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">fit.se</span>, <span class="va">bh.task</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lstat"</span>, <span class="st">"crim"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pd.se</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
@@ -327,7 +329,7 @@
 <span class="co">## 5: 10.52775 21.65359 32.77944    NA 79.09066</span>
 <span class="co">## 6: 10.52775 21.65359 32.77944    NA 88.97620</span></code></pre></div>
 <p>As previously mentioned if the aggregation function is not used, i.e., it is the identity, then the conditional expectation of <span class="math inline">\(\hat{f}^{(i)}_{X_s}\)</span> is estimated. If <code>individual = TRUE</code> then <code><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData()</a></code> returns <span class="math inline">\(n\)</span> partial dependence estimates made at each point in the prediction grid constructed from the features.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pd.ind.regr</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">fit.regr</span>, <span class="va">bh.task</span>, <span class="st">"lstat"</span>, individual <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">pd.ind.regr</span>
 <span class="co">## PartialDependenceData</span>
@@ -347,7 +349,7 @@
 <span class="co">## ... (#rows: 5060, #cols: 3)</span></code></pre></div>
 <p>The resulting output, particularly the element <code>data</code> in the returned object, has an additional column <code>idx</code> which gives the index of the observation to which the row pertains.</p>
 <p>For classification tasks this index references both the class and the observation index.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pd.ind.classif</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">fit.classif</span>, <span class="va">iris.task</span>, <span class="st">"Petal.Length"</span>, individual <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">pd.ind.classif</span>
 <span class="co">## PartialDependenceData</span>
@@ -366,7 +368,7 @@
 <span class="co">## 6: setosa  0.01018729 1     4.277778</span>
 <span class="co">## ... (#rows: 4500, #cols: 4)</span></code></pre></div>
 <p>Partial derivatives can also be computed for individual partial dependence estimates and aggregate partial dependence. This is restricted to a single feature at a time. The derivatives of individual partial dependence estimates can be useful in finding regions of interaction between the feature for which the derivative is estimated and the features excluded.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pd.regr.der</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">fit.regr</span>, <span class="va">bh.task</span>, <span class="st">"lstat"</span>, derivative <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pd.regr.der</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
 <span class="co">##          medv     lstat</span>
@@ -376,7 +378,7 @@
 <span class="co">## 4: -0.4218586 13.810000</span>
 <span class="co">## 5: -0.3767553 17.836667</span>
 <span class="co">## 6: -0.2914229 21.863333</span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pd.regr.der.ind</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">fit.regr</span>, <span class="va">bh.task</span>, <span class="st">"lstat"</span>, derivative <span class="op">=</span> <span class="cn">TRUE</span>,
   individual <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pd.regr.der.ind</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
@@ -387,7 +389,7 @@
 <span class="co">## 4: -0.1790711 15 13.810000</span>
 <span class="co">## 5: -0.1864755 15 17.836667</span>
 <span class="co">## 6: -0.1706008 15 21.863333</span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pd.classif.der</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">fit.classif</span>, <span class="va">iris.task</span>, <span class="st">"Petal.Width"</span>, derivative <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pd.classif.der</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
 <span class="co">##     Class Probability Petal.Width</span>
@@ -397,7 +399,7 @@
 <span class="co">## 4: setosa -0.30221163   0.9000000</span>
 <span class="co">## 5: setosa -0.33394805   1.1666667</span>
 <span class="co">## 6: setosa -0.20736953   1.4333333</span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pd.classif.der.ind</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">fit.classif</span>, <span class="va">iris.task</span>, <span class="st">"Petal.Width"</span>, derivative <span class="op">=</span> <span class="cn">TRUE</span>,
   individual <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pd.classif.der.ind</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
@@ -414,38 +416,38 @@
 </h2>
 <p>Results from <code><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData()</a></code> and <code>generateFunctionalANOVAData()</code> can be visualized with <code><a href="../../reference/plotPartialDependence.html">plotPartialDependence()</a></code> and <code>plotPartialDependenceGGVIS()</code>.</p>
 <p>With one feature and a regression task the output is a line plot, with a point for each point in the corresponding feature’s grid.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotPartialDependence.html">plotPartialDependence</a></span><span class="op">(</span><span class="va">pd.regr</span><span class="op">)</span></code></pre></div>
 <p><img src="partial_dependence_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 <p>With a classification task, a line is drawn for each class, which gives the estimated partial probability of that class for a particular point in the feature grid.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotPartialDependence.html">plotPartialDependence</a></span><span class="op">(</span><span class="va">pd.classif</span><span class="op">)</span></code></pre></div>
 <p><img src="partial_dependence_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 <p>For regression tasks, when the <code>fun</code> argument of <code><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData()</a></code> is used, the bounds will automatically be displayed using a gray ribbon.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotPartialDependence.html">plotPartialDependence</a></span><span class="op">(</span><span class="va">pd.ci</span><span class="op">)</span></code></pre></div>
 <p><img src="partial_dependence_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 <p>The same goes for plots of partial dependences where the learner has <code>predict.type = "se"</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotPartialDependence.html">plotPartialDependence</a></span><span class="op">(</span><span class="va">pd.se</span><span class="op">)</span></code></pre></div>
 <p><img src="partial_dependence_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 <p>When multiple features are passed to <code><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData()</a></code> but <code>interaction = FALSE</code>, facetting is used to display each estimated bivariate relationship.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotPartialDependence.html">plotPartialDependence</a></span><span class="op">(</span><span class="va">pd.lst</span><span class="op">)</span></code></pre></div>
 <p><img src="partial_dependence_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
 <p>When <code>interaction = TRUE</code> in the call to <code><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData()</a></code>, one variable must be chosen to be used for facetting, and a subplot for each value in the chosen feature’s grid is created, wherein the other feature’s partial dependences within the facetting feature’s value are shown. Note that this type of plot is limited to two features.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotPartialDependence.html">plotPartialDependence</a></span><span class="op">(</span><span class="va">pd.int</span>, facet <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span></code></pre></div>
 <p><img src="partial_dependence_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
 <p><code>plotPartialDependenceGGVIS()</code> can be used similarly, however, since <code>ggvis</code> currently lacks subplotting/facetting capabilities, the argument <code>interact</code> maps one feature to an interactive sidebar where the user can select a value of one feature.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">plotPartialDependenceGGVIS</span><span class="op">(</span><span class="va">pd.int</span>, interact <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span></code></pre></div>
 <p>When <code>individual = TRUE</code> each individual conditional expectation curve is plotted.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotPartialDependence.html">plotPartialDependence</a></span><span class="op">(</span><span class="va">pd.ind.regr</span><span class="op">)</span></code></pre></div>
 <p><img src="partial_dependence_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
 <p>Plotting partial derivative functions works the same as partial dependence. Below are estimates of the derivative of the mean aggregated partial dependence function, and the individual partial dependence functions for a regression and a classification task respectively.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotPartialDependence.html">plotPartialDependence</a></span><span class="op">(</span><span class="va">pd.regr.der</span><span class="op">)</span></code></pre></div>
 <p><img src="partial_dependence_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
 </div>
