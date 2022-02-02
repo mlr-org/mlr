@@ -172,11 +172,9 @@
 
     
     
-<pre><code><span class="co">## Warning in register(): Can't find generic `scale_type` in package ggplot2 to</span>
-<span class="co">## register S3 method.</span></code></pre>
 <p>Some learners like random forest use bagging. Bagging means that the learner consists of an ensemble of several base learners and each base learner is trained with a different random subsample or bootstrap sample from all observations. A prediction made for an observation in the original data set using only base learners not trained on this particular observation is called out-of-bag (OOB) prediction. These predictions are not prone to overfitting, as each prediction is only made by learners that did not use the observation for training.</p>
 <p>To get a list of learners that provide OOB predictions, you can call <code>listLearners(obj = NA, properties = "oobpreds")</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="cn">NA</span>, properties <span class="op">=</span> <span class="st">"oobpreds"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span>
 <span class="co">##                     class                  package</span>
 <span class="co">## 1    classif.randomForest             randomForest</span>
@@ -188,7 +186,7 @@
 <span class="co">## 7             regr.ranger                   ranger</span>
 <span class="co">## 8    surv.randomForestSRC survival,randomForestSRC</span></code></pre></div>
 <p>In <code>mlr</code> function <code><a href="../../reference/getOOBPreds.html">getOOBPreds()</a></code> can be used to extract these observations from the trained models. These predictions can be used to evaluate the performance of a given learner like in the following example.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ranger"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, predict.threshold <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span>
 <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span><span class="op">)</span>
 <span class="va">oob</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getOOBPreds.html">getOOBPreds</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">sonar.task</span><span class="op">)</span>

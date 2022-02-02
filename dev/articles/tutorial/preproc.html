@@ -172,8 +172,6 @@
 
     
     
-<pre><code><span class="co">## Warning in register(): Can't find generic `scale_type` in package ggplot2 to</span>
-<span class="co">## register S3 method.</span></code></pre>
 <p>Data preprocessing refers to any transformation of the data done before applying a learning algorithm. This comprises for example finding and resolving inconsistencies, imputation of missing values, identifying, removing or replacing outliers, discretizing numerical data or generating numerical dummy variables for categorical data, any kind of transformation like standardization of predictors or Box-Cox, dimensionality reduction and feature extraction and/or selection.</p>
 <p><code>mlr</code> offers several options for data preprocessing. Some of the following simple methods to change a <code><a href="../../reference/Task.html">Task()</a></code> (or <code>data.frame</code>) were already mentioned on the page about <a href="task.html" target="_blank">learning tasks</a>:</p>
 <ul>
@@ -235,16 +233,16 @@
 <li>The only exception: <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> does not have a <code>method</code> argument. Instead all preprocessing options that would be passed to <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code>’s <code>method</code> argument are given as individual logical parameters to <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code>.</li>
 </ul>
 <p>For example the following call to <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code></p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">preProcess</a></span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"knnImpute"</span>, <span class="st">"pca"</span><span class="op">)</span>, pcaComp <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <p>with <code>x</code> being a <code>matrix</code> or <code>data.frame</code> would thus translate into</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span><span class="op">(</span><span class="va">learner</span>, ppc.knnImpute <span class="op">=</span> <span class="cn">TRUE</span>, ppc.pca <span class="op">=</span> <span class="cn">TRUE</span>, ppc.pcaComp <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <p>where <code>learner</code> is a <code>mlr</code> Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) or the name of a learner class like <code>"classif.lda"</code>.</p>
 <p>If you enable multiple preprocessing options (like knn imputation and principal component analysis above) these are executed in a certain order detailed on the help page of function <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code>.</p>
 <p>In the following we show an example where principal components analysis (PCA) is used for dimensionality reduction. This should never be applied blindly, but can be beneficial with learners that get problems with high dimensionality or those that can profit from rotating the data.</p>
 <p>We consider the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>, which poses a binary classification problem with 208 observations and 60 features.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sonar.task</span>
 <span class="co">## Supervised task: Sonar-example</span>
 <span class="co">## Type: classif</span>
@@ -262,7 +260,7 @@
 <span class="co">## 111  97 </span>
 <span class="co">## Positive class: M</span></code></pre></div>
 <p>Below we fuse quadratic discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code>) from package <code>MASS</code> with a principal components preprocessing step. The threshold is set to 0.9, i.e., the principal components necessary to explain a cumulative percentage of 90% of the total variance are kept. The data are automatically standardized prior to PCA.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, ppc.pca <span class="op">=</span> <span class="cn">TRUE</span>, ppc.thresh <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span>
 <span class="va">lrn</span>
 <span class="co">## Learner classif.qda.preproc from package MASS</span>
@@ -273,7 +271,7 @@
 <span class="co">## Predict-Type: response</span>
 <span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span></code></pre></div>
 <p>The wrapped learner is trained on the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>. By inspecting the underlying <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> model, we see that the first 22 principal components have been used for training.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span><span class="op">)</span>
 <span class="va">mod</span>
 <span class="co">## Model for learner.id=classif.qda.preproc; learner.class=PreprocWrapperCaret</span>
@@ -307,7 +305,7 @@
 <span class="co">## M -0.01192247  0.006098658  0.01263492 -0.001224809</span>
 <span class="co">## R  0.01364323 -0.006978877 -0.01445851  0.001401586</span></code></pre></div>
 <p>Below the performances of <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> with and without PCA preprocessing are compared in a <a href="benchmark_experiments.html" target="_blank">benchmark experiment</a>. Note that we use stratified resampling to prevent errors in <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> due to a too small number of observations from either class.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span>, stratify <span class="op">=</span> <span class="cn">TRUE</span>, task <span class="op">=</span> <span class="va">sonar.task</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, <span class="va">lrn</span><span class="op">)</span>, <span class="va">sonar.task</span>, <span class="va">rin</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">res</span>
@@ -320,7 +318,7 @@
 </h3>
 <p>Let’s see if we can optimize this a bit. The threshold value of 0.9 above was chosen arbitrarily and led to 22 out of 60 principal components. But maybe a lower or higher number of principal components should be used. Moreover, <code>qda</code> (<code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code>) has several options that control how the class covariance matrices or class probabilities are estimated.</p>
 <p>Those preprocessing and learner parameters can be <a href="tune.html" target="_blank">tuned</a> jointly. Before doing this let’s first get an overview of all the parameters of the wrapped learner using function <code><a href="../../reference/getParamSet.html">getParamSet()</a></code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span>
 <span class="co">##                      Type len     Def                      Constr Req Tunable</span>
 <span class="co">## ppc.BoxCox        logical   -   FALSE                           -   -    TRUE</span>
@@ -383,7 +381,7 @@
 <p>The parameters prefixed by <code>ppc.</code> belong to preprocessing. <code>method</code>, <code>nu</code> and <code>predict.method</code> are <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> parameters.</p>
 <p>Instead of tuning the PCA threshold (<code>ppc.thresh</code>) we tune the number of principal components (<code>ppc.pcaComp</code>) directly. Moreover, for <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> we try two different ways to estimate the posterior probabilities (parameter <code>predict.method</code>): the usual plug-in estimates and unbiased estimates.</p>
 <p>We perform a grid search and set the resolution to 10. This is for demonstration. You might want to use a finer resolution.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeIntegerParam</a></span><span class="op">(</span><span class="st">"ppc.pcaComp"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span><span class="op">(</span><span class="va">sonar.task</span><span class="op">)</span><span class="op">)</span>,
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"predict.method"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plug-in"</span>, <span class="st">"debiased"</span><span class="op">)</span><span class="op">)</span>
@@ -443,7 +441,7 @@
 <p>The <em>train</em> function for the scaling example is given below. It calls <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">base::scale()</a></code> on the numerical features and returns the scaled training data and the corresponding scaling parameters.</p>
 <p><code>args</code> contains the <code>center</code> and <code>scale</code> arguments of function <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">base::scale()</a></code> and slot <code>$control</code> stores the scaling parameters to be used in the prediction stage.</p>
 <p>Regarding the latter note that the <code>center</code> and <code>scale</code> arguments of <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">base::scale()</a></code> can be either a logical value or a numeric vector of length equal to the number of the numeric columns in <code>data</code>, respectively. If a logical value was passed to <code>args</code> we store the column means and standard deviations/root mean squares in the <code>$center</code> and <code>$scale</code> slots of the returned <code>$control</code> object.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">trainfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">center</span>, <span class="va">scale</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="co"># Identify numerical features</span>
   <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
@@ -482,7 +480,7 @@
 </ul>
 <p>It returns the preprocessed data.</p>
 <p>In our scaling example the <em>predict</em> function scales the numerical features using the parameters from the training stage stored in <code>control</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predictfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span>, <span class="va">control</span><span class="op">)</span> <span class="op">{</span>
   <span class="co"># Identify numerical features</span>
   <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
@@ -501,7 +499,7 @@
 </h3>
 <p>Below we create a preprocessing wrapper with a regression neural network (<code><a href="https://rdrr.io/pkg/nnet/man/nnet.html" class="external-link">nnet::nnet()</a></code>) (which itself does not have a scaling option) as base learner.</p>
 <p>The <em>train</em> and <em>predict</em> functions defined above are passed to <code><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper()</a></code> via the <code>train</code> and <code>predict</code> arguments. <code>par.vals</code> is a <code>list</code> of parameter values that is relayed to the <code>args</code> argument of the <em>train</em> function.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.nnet"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span>, decay <span class="op">=</span> <span class="fl">1e-02</span><span class="op">)</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, train <span class="op">=</span> <span class="va">trainfun</span>, predict <span class="op">=</span> <span class="va">predictfun</span>,
   par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
@@ -514,7 +512,7 @@
 <span class="co">## Predict-Type: response</span>
 <span class="co">## Hyperparameters: size=3,trace=FALSE,decay=0.01</span></code></pre></div>
 <p>Let’s compare the cross-validated mean squared error (<a href="measures.html" target="_blank">mse</a>) on the Boston Housing data set (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html" class="external-link">mlbench::BostonHousing()</a></code>) with and without scaling.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 
 <span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">bh.task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -542,7 +540,7 @@
 <p>Often it’s not clear which preprocessing options work best with a certain learning algorithm. As already shown for the number of principal components in <code><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret()</a></code> we can <a href="tune.html" target="_blank">tune</a> them easily together with other hyperparameters of the learner.</p>
 <p>In our scaling example we can try if <code><a href="https://rdrr.io/pkg/nnet/man/nnet.html" class="external-link">nnet::nnet()</a></code> works best with both centering and scaling the data or if it’s better to omit one of the two operations or do no preprocessing at all. In order to tune <code>center</code> and <code>scale</code> we have to add appropriate <code>LearnerParam</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">ParamHelpers::LearnerParam()</a></code>)s to the parameter set (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::ParamSet()</a></code>) of the wrapped learner.</p>
 <p>As mentioned above <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">base::scale()</a></code> allows for numeric and logical <code>center</code> and <code>scale</code> arguments. As we want to use the latter option we declare <code>center</code> and <code>scale</code> as logical learner parameters.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.nnet"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, train <span class="op">=</span> <span class="va">trainfun</span>, predict <span class="op">=</span> <span class="va">predictfun</span>,
   par.set <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
@@ -575,7 +573,7 @@
 <span class="co">## abstol  numeric   - 0.0001 -Inf to Inf   -    TRUE     -</span>
 <span class="co">## reltol  numeric   -  1e-08 -Inf to Inf   -    TRUE     -</span></code></pre></div>
 <p>Now we do a simple grid search for the <code>decay</code> parameter of <code><a href="https://rdrr.io/pkg/nnet/man/nnet.html" class="external-link">nnet::nnet()</a></code> and the <code>center</code> and <code>scale</code> parameters.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
 <span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
   <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"decay"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>,
@@ -610,7 +608,7 @@
 <h3 id="preprocessing-wrapper-functions">Preprocessing wrapper functions<a class="anchor" aria-label="anchor" href="#preprocessing-wrapper-functions"></a>
 </h3>
 <p>If you have written a preprocessing wrapper that you might want to use from time to time it’s a good idea to encapsulate it in an own function as shown below. If you think your preprocessing method is something others might want to use as well and should be integrated into <code>mlr</code> just <a href="https://github.com/mlr-org/mlr/issues" class="external-link">contact us</a>.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">makePreprocWrapperScale</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">learner</span>, <span class="va">center</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">scale</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">trainfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">center</span>, <span class="va">scale</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
     <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>

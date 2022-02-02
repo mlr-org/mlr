@@ -172,11 +172,9 @@
 
     
     
-<pre><code><span class="co">## Warning in register(): Can't find generic `scale_type` in package ggplot2 to</span>
-<span class="co">## register S3 method.</span></code></pre>
 <p><strong>R</strong> by default does not make use of parallelization. With the integration of <code><a href="https://parallelmap.mlr-org.com/reference/parallelMap.html" class="external-link">parallelMap()</a></code> into <code>mlr</code>, it becomes easy to activate the parallel computing capabilities already supported by <code>mlr</code>. <code><a href="https://parallelmap.mlr-org.com/reference/parallelMap.html" class="external-link">parallelMap()</a></code> works with all major parallelization backends: local multicore execution using <code><a href="https://rdrr.io/pkg/lattice/man/splom.html" class="external-link">parallel()</a></code>, socket and MPI clusters using <code>snow()</code>, makeshift SSH-clusters using <code>BatchJobs()</code> and high performance computing clusters (managed by a scheduler like SLURM, Torque/PBS, SGE or LSF) also using <code>BatchJobs()</code>.</p>
 <p>All you have to do is select a backend by calling one of the <code>parallelStart*</code> (<code><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html" class="external-link">parallelMap::parallelStart()</a></code>) functions. The first loop <code>mlr</code> encounters which is marked as parallel executable will be automatically parallelized. It is good practice to call <code>parallelStop</code> (<code><a href="https://parallelmap.mlr-org.com/reference/parallelStop.html" class="external-link">parallelMap::parallelStop()</a></code>) at the end of your script.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://parallelmap.mlr-org.com" class="external-link">"parallelMap"</a></span><span class="op">)</span>
 <span class="fu"><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html" class="external-link">parallelStartSocket</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">## Starting parallelization in mode=socket with cpus=2.</span>
@@ -198,7 +196,7 @@
 <h2 id="parallelization-levels">Parallelization levels<a class="anchor" aria-label="anchor" href="#parallelization-levels"></a>
 </h2>
 <p>We offer different parallelization levels for fine grained control over the parallelization. E.g., if you do not want to parallelize the <code><a href="../../reference/benchmark.html">benchmark()</a></code> function because it has only very few iterations but want to parallelize the resampling (<code><a href="../../reference/resample.html">resample()</a></code>) of each learner instead, you can specifically pass the <code>level</code> <code>"mlr.resample"</code> to the <code>parallelStart*</code> (<code><a href="https://parallelmap.mlr-org.com/reference/parallelStart.html" class="external-link">parallelMap::parallelStart()</a></code>) function. Currently the following levels are supported:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://parallelmap.mlr-org.com/reference/parallelGetRegisteredLevels.html" class="external-link">parallelGetRegisteredLevels</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">## mlr: mlr.benchmark, mlr.resample, mlr.selectFeatures, mlr.tuneParams, mlr.ensemble</span></code></pre></div>
 <p>For further details please see the <code><a href="../../reference/parallelization.html">parallelization()</a></code> documentation page.</p>

@@ -172,8 +172,6 @@
 
     
     
-<pre><code><span class="co">## Warning in register(): Can't find generic `scale_type` in package ggplot2 to</span>
-<span class="co">## register S3 method.</span></code></pre>
 <p>One reason why random forests perform so well is that they are using bagging as a technique to gain more stability. But why do you want to limit yourself to the classifiers already implemented in well known random forests when it is really easy to build your own with <code>mlr</code>?</p>
 <p>Just bag an <code>mlr</code> learner already <code><a href="../../reference/makeBaggingWrapper.html">makeBaggingWrapper()</a></code>.</p>
 <p>As in a random forest, we need a Learner which is trained on a subset of the data during each iteration of the bagging process. The subsets are chosen according to the parameters given to <code><a href="../../reference/makeBaggingWrapper.html">makeBaggingWrapper()</a></code>:</p>
@@ -188,19 +186,19 @@
 <code>bw.feats</code> Percentage size of randomly selected features for each iteration.</li>
 </ul>
 <p>Of course we also need a Learner which we have to pass to <code><a href="../../reference/makeBaggingWrapper.html">makeBaggingWrapper()</a></code>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span>
 <span class="va">bag.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeBaggingWrapper.html">makeBaggingWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, bw.iters <span class="op">=</span> <span class="fl">50</span>, bw.replace <span class="op">=</span> <span class="cn">TRUE</span>,
   bw.size <span class="op">=</span> <span class="fl">0.8</span>, bw.feats <span class="op">=</span> <span class="fl">3</span> <span class="op">/</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
 <p>Now we can compare the performance with and without bagging. First let’s try it without bagging:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">lrn</span>, task <span class="op">=</span> <span class="va">sonar.task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">r</span><span class="op">$</span><span class="va">aggr</span>
 <span class="co">## mmce.test.mean </span>
 <span class="co">##       0.302619</span></code></pre></div>
 <p>And now with bagging:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="va">result</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">bag.lrn</span>, task <span class="op">=</span> <span class="va">sonar.task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">result</span><span class="op">$</span><span class="va">aggr</span>
@@ -211,11 +209,11 @@
 <h2 id="changing-the-type-of-prediction">Changing the type of prediction<a class="anchor" aria-label="anchor" href="#changing-the-type-of-prediction"></a>
 </h2>
 <p>In case of a <em>classification</em> problem the predicted class labels are determined by majority voting over the predictions of the individual models. Additionally, posterior probabilities can be estimated as the relative proportions of the predicted class labels. For this purpose you have to change the predict type of the <em>bagging learner</em> as follows.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bag.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setPredictType.html">setPredictType</a></span><span class="op">(</span><span class="va">bag.lrn</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span></code></pre></div>
 <p>Note that it is not relevant if the <em>base learner</em> itself can predict probabilities and that for this reason the predict type of the <em>base learner</em> always has to be <code>"response"</code>.</p>
 <p>For <em>regression</em> the mean value across predictions is computed. Moreover, the standard deviation across predictions is estimated if the predict type of the bagging learner is changed to <code>"se"</code>. Below, we give a small example for regression.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span><span class="op">(</span><span class="va">bh.task</span><span class="op">)</span>
 <span class="va">train.inds</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="va">test.inds</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span>, <span class="va">train.inds</span><span class="op">)</span>
@@ -224,7 +222,7 @@
 <span class="va">bag.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setPredictType.html">setPredictType</a></span><span class="op">(</span><span class="va">bag.lrn</span>, predict.type <span class="op">=</span> <span class="st">"se"</span><span class="op">)</span>
 <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">bag.lrn</span>, task <span class="op">=</span> <span class="va">bh.task</span>, subset <span class="op">=</span> <span class="va">train.inds</span><span class="op">)</span></code></pre></div>
 <p>With function <code><a href="../../reference/getLearnerModel.html">getLearnerModel()</a></code>, you can access the models fitted in the individual iterations.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>
 <span class="co">## [[1]]</span>
 <span class="co">## Model for learner.id=regr.rpart; learner.class=regr.rpart</span>
@@ -236,7 +234,7 @@
 <span class="co">## Trained on: task.id = BostonHousing-example; obs = 169; features = 13</span>
 <span class="co">## Hyperparameters: xval=0</span></code></pre></div>
 <p>Predict the response and calculate the standard deviation:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">bh.task</span>, subset <span class="op">=</span> <span class="va">test.inds</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span>
 <span class="co">##   id truth response       se</span>
@@ -248,7 +246,7 @@
 <span class="co">## 9  9  16.5 13.67014 3.147195</span></code></pre></div>
 <p>In the column labelled <code>se</code> the standard deviation for each prediction is given.</p>
 <p>Let’s visualise this a bit using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot2-package.html" class="external-link">ggplot2::ggplot2()</a></code>. Here we plot the percentage of lower status of the population (<code>lstat</code>) against the prediction.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/hadley/reshape" class="external-link">"reshape2"</a></span><span class="op">)</span>
 <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>, <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">bh.task</span>, subset <span class="op">=</span> <span class="va">test.inds</span><span class="op">)</span><span class="op">)</span>

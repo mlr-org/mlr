@@ -172,14 +172,12 @@
 
     
     
-<pre><code><span class="co">## Warning in register(): Can't find generic `scale_type` in package ggplot2 to</span>
-<span class="co">## register S3 method.</span></code></pre>
 <p>In some cases, you might want to evaluate a <code><a href="../../reference/Prediction.html">Prediction()</a></code> or <code><a href="../../reference/ResamplePrediction.html">ResamplePrediction()</a></code> with a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) which is not yet implemented in <code>mlr</code>. This could be either a performance measure which is not listed in the <a href="measures.html" target="_blank">Appendix</a> or a measure that uses a misclassification cost matrix.</p>
 <div class="section level2">
 <h2 id="performance-measures-and-aggregation-schemes">Performance measures and aggregation schemes<a class="anchor" aria-label="anchor" href="#performance-measures-and-aggregation-schemes"></a>
 </h2>
 <p>Performance measures in <code>mlr</code> are objects of class <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>). For example the <a href="measures.html" target="_blank">mse</a> (mean squared error) looks as follows.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mse</span><span class="op">)</span>
 <span class="co">## List of 10</span>
 <span class="co">##  $ id        : chr "mse"</span>
@@ -220,7 +218,7 @@
 <p>At the core is slot <code>$fun</code> which contains the function that calculates the performance value. The actual work is done by function <code>measureMSE</code> (<code><a href="../../reference/measures.html">measures()</a></code>). Similar functions, generally adhering to the naming scheme <code>measure</code> followed by the capitalized measure ID, exist for most performance measures. See the [<code><a href="../../reference/measures.html">measures()</a></code>] help page for a complete list.</p>
 <p>Just as <code><a href="../../reference/Task.html">Task()</a></code> and Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) objects each <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) has an identifier <code>$id</code> which is for example used to annotate results and plots. For plots there is also the option to use the longer measure <code>$name</code> instead. See the tutorial page on <a href="visualization.html" target="_blank">visualization</a> for more information.</p>
 <p>Moreover, a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) includes a number of <code>$properties</code> that indicate for which types of learning problems it is suitable and what information is required to calculate it. Obviously, most measures need the <code><a href="../../reference/Prediction.html">Prediction()</a></code> object (<code>"req.pred"</code>) and, for supervised problems, the true values of the target variable(s) (<code>"req.truth"</code>). You can use functions <code>getMeasureProperties</code> (<code><a href="../../reference/MeasureProperties.html">MeasureProperties()</a></code>) and <code>hasMeasureProperties</code> (<code><a href="../../reference/MeasureProperties.html">MeasureProperties()</a></code>) to determine the properties of a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>). Moreover, <code><a href="../../reference/listMeasureProperties.html">listMeasureProperties()</a></code> shows all measure properties currently available in <code>mlr</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/listMeasureProperties.html">listMeasureProperties</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">##  [1] "classif"       "classif.multi" "multilabel"    "regr"         </span>
 <span class="co">##  [5] "surv"          "cluster"       "costsens"      "req.pred"     </span>
@@ -228,7 +226,7 @@
 <span class="co">## [13] "req.prob"</span></code></pre></div>
 <p>Additional to its properties, each <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) knows its extreme values <code>$best</code> and <code>$worst</code> and if it wants to be minimized or maximized (<code>$minimize</code>) during <a href="tune.html" target="_blank">tuning</a> or <a href="feature_selection.html" target="_blank">feature selection</a>.</p>
 <p>For resampling slot <code>$aggr</code> specifies how the overall performance across all resampling iterations is calculated. Typically, this is just a matter of aggregating the performance values obtained on the test sets <code>perf.test</code> or the training sets <code>perf.train</code> by a simple function. The by far most common scheme is <code>test.mean</code> (<code><a href="../../reference/aggregations.html">aggregations()</a></code>), i.e., the unweighted mean of the performances on the test sets.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">test.mean</span><span class="op">)</span>
 <span class="co">## List of 4</span>
 <span class="co">##  $ id        : chr "test.mean"</span>
@@ -252,7 +250,7 @@
 <p>Function <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code> provides a simple way to construct your own performance measure.</p>
 <p>Below this is exemplified by re-implementing the mean misclassification error <a href="measures.html" target="_blank">mmce</a>. We first write a function that computes the measure on the basis of the true and predicted class labels. Note that this function must have certain formal arguments listed in the documentation of <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>. Then the <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) object is created and we work with it as usual with the <code><a href="../../reference/performance.html">performance()</a></code> function.</p>
 <p>See the <strong>R</strong> documentation of <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code> for more details on the various parameters.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Define a function that calculates the misclassification rate</span>
 <span class="va">my.mmce.fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">task</span>, <span class="va">model</span>, <span class="va">pred</span>, <span class="va">feats</span>, <span class="va">extra.args</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">tb</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>, <span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span>
@@ -287,7 +285,7 @@
 <p>For in depth explanations and details see the tutorial page on <a href="cost_sensitive_classif.html" target="_blank">cost-sensitive classification</a>.</p>
 <p>To create a measure that involves ordinary, i.e., class-dependent misclassification costs you can use function <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code>. You first need to define the cost matrix. The rows indicate true and the columns predicted classes and the rows and columns have to be named by the class labels. The cost matrix can then be wrapped in a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) object and predictions can be evaluated as usual with the <code><a href="../../reference/performance.html">performance()</a></code> function.</p>
 <p>See the <strong>R</strong> documentation of function <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code> for details on the various parameters.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create the cost matrix</span>
 <span class="va">costs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span><span class="op">(</span><span class="va">iris.task</span><span class="op">)</span>
@@ -319,7 +317,7 @@
 <h2 id="example-evaluating-the-range-of-measures">Example: Evaluating the range of measures<a class="anchor" aria-label="anchor" href="#example-evaluating-the-range-of-measures"></a>
 </h2>
 <p>Let’s say you are interested in the range of the performance values obtained on individual test sets.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my.range.aggr</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeAggregation.html">makeAggregation</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"test.range"</span>, name <span class="op">=</span> <span class="st">"Test Range"</span>,
   properties <span class="op">=</span> <span class="st">"req.test"</span>,
   fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">task</span>, <span class="va">perf.test</span>, <span class="va">perf.train</span>, <span class="va">measure</span>, <span class="va">group</span>, <span class="va">pred</span><span class="op">)</span> <span class="op">{</span>
@@ -328,7 +326,7 @@
 <span class="op">)</span></code></pre></div>
 <p><code>perf.train</code> and <code>perf.test</code> are both numerical vectors containing the performances on the train and test data sets. In most cases (unless you are using bootstrap as resampling strategy or have set <code>predict = "both"</code> in <code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>) the <code>perf.train</code> vector is empty.</p>
 <p>Now we can run a feature selection based on the first measure in the provided list and see how the other measures turn out.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># mmce with default aggregation scheme test.mean</span>
 <span class="va">ms1</span> <span class="op">=</span> <span class="va">mmce</span>
 

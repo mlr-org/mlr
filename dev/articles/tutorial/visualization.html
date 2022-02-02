@@ -172,8 +172,6 @@
 
     
     
-<pre><code><span class="co">## Warning in register(): Can't find generic `scale_type` in package ggplot2 to</span>
-<span class="co">## register S3 method.</span></code></pre>
 <div class="section level2">
 <h2 id="generation-and-plotting-functions">Generation and plotting functions<a class="anchor" aria-label="anchor" href="#generation-and-plotting-functions"></a>
 </h2>
@@ -190,7 +188,7 @@
 <h3 id="some-examples">Some examples<a class="anchor" aria-label="anchor" href="#some-examples"></a>
 </h3>
 <p>In the example below we create a plot of classifier performance as function of the decision threshold for the binary classification problem <code>sonar.task</code>. The generation function <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code> creates an object of class <code>ThreshVsPerfData</code> which contains the data for the plot in slot <code>$data</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
 <span class="va">n</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span><span class="op">(</span><span class="va">sonar.task</span><span class="op">)</span>
 <span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">sonar.task</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
@@ -209,11 +207,11 @@
 <span class="co">## 5 0.3333333 0.2321429 0.2788462 0.04040404</span>
 <span class="co">## 6 0.3125000 0.2321429 0.2692308 0.05050505</span></code></pre></div>
 <p>For plotting we can use the built-in <code>mlr</code> function <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p>Note that by default the <code>Measure</code> <code>name</code>s are used to annotate the panels.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fpr</span><span class="op">$</span><span class="va">name</span>
 <span class="co">## [1] "False positive rate"</span>
 
@@ -228,7 +226,7 @@
 <p>What will probably come up most often is changing labels and annotations. Generally, this can be done by manipulating the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> object, in this example the object returned by <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>, using the usual <code><a href="https://ggplot2.tidyverse.org/reference/ggplot2-package.html" class="external-link">ggplot2::ggplot2()</a></code> functions like <code><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggplot2::labs()</a></code> or <code><a href="https://ggplot2.tidyverse.org/reference/labeller.html" class="external-link">ggplot2::labeller()</a></code>. Moreover, you can change the underlying data, either <code>d$data</code> (resulting from <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code> or the possibly reshaped data contained in the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> object (resulting from <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>, most often by renaming columns or factor levels.</p>
 <p>Below are two examples of how to alter the axis and panel labels of the above plot.</p>
 <p>Imagine you want to change the order of the panels and also are not satisfied with the panel names, for example you find that “Mean misclassification error” is too long and you prefer “Error rate” instead. Moreover, you want the error rate to be displayed first.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span><span class="op">(</span><span class="va">d</span>, pretty.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># Reshaped version of the underlying data d</span>
@@ -251,7 +249,7 @@
 <span class="va">plt</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>Using the <code><a href="https://ggplot2.tidyverse.org/reference/labeller.html" class="external-link">ggplot2::labeller()</a></code> function requires calling <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">ggplot2::facet_wrap()</a></code> (or <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">ggplot2::facet_grid()</a></code>), which can be useful if you want to change how the panels are positioned (number of rows and columns) or influence the axis limits.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span><span class="op">(</span><span class="va">d</span>, pretty.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="va">measure_names</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
@@ -266,18 +264,18 @@
 <span class="va">plt</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>Instead of using the built-in function <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code> we could also manually create the plot based on the output of <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code>: In this case to plot only one measure.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">threshold</span>, <span class="va">fpr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>The decoupling of generation and plotting functions is especially practical if you prefer traditional <code><a href="https://rdrr.io/r/graphics/graphics-package.html" class="external-link">graphics::graphics()</a></code> or <code><a href="https://rdrr.io/pkg/lattice/man/Lattice.html" class="external-link">lattice::lattice()</a></code>. Here is a <code><a href="https://rdrr.io/pkg/lattice/man/Lattice.html" class="external-link">lattice::lattice()</a></code> plot which gives a result similar to that of <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">lattice</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lattice/man/xyplot.html" class="external-link">xyplot</a></span><span class="op">(</span><span class="va">fpr</span> <span class="op">+</span> <span class="va">fnr</span> <span class="op">+</span> <span class="va">mmce</span> <span class="op">~</span> <span class="va">threshold</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">$</span><span class="va">data</span>, type <span class="op">=</span> <span class="st">"l"</span>, ylab <span class="op">=</span> <span class="st">"performance"</span>,
   outer <span class="op">=</span> <span class="cn">TRUE</span>, scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>relation <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span>,
   strip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/lattice/man/strip.default.html" class="external-link">strip.custom</a></span><span class="op">(</span>factor.levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">measures</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="va">name</span><span class="op">)</span>,
     par.strip.text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cex <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>Let’s conclude with a brief look on a second example. Here we use <code><a href="../../reference/plotPartialDependence.html">plotPartialDependence()</a></code> but extract the data from the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> object <code>plt</code> and use it to create a traditional <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">graphics::plot()</a></code>, additional to the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> plot.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sonar</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">sonar.task</span><span class="op">)</span>
 <span class="va">pd</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">sonar</span>, <span class="st">"V11"</span><span class="op">)</span>
 <span class="co">## Loading required package: mmpf</span>
@@ -293,7 +291,7 @@
 
 <span class="va">plt</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/mboost/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">M</span> <span class="op">~</span> <span class="va">Value</span>, data <span class="op">=</span> <span class="va">plt</span><span class="op">$</span><span class="va">data</span>, type <span class="op">=</span> <span class="st">"b"</span>, xlab <span class="op">=</span> <span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">Feature</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>

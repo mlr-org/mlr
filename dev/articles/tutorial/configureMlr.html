@@ -172,8 +172,6 @@
 
     
     
-<pre><code><span class="co">## Warning in register(): Can't find generic `scale_type` in package ggplot2 to</span>
-<span class="co">## register S3 method.</span></code></pre>
 <p><code>mlr</code> is designed to make usage errors due to typos or invalid parameter values as unlikely as possible. Occasionally, you might want to break those barriers and get full access, for example to reduce the amount of output on the console or to turn off checks. For all available options simply refer to the documentation of <code><a href="../../reference/configureMlr.html">configureMlr()</a></code>. In the following we show some common use cases.</p>
 <p>Generally, function <code><a href="../../reference/configureMlr.html">configureMlr()</a></code> permits to set options globally for your current <strong>R</strong> session.</p>
 <p>It is also possible to set options locally.</p>
@@ -185,7 +183,7 @@
 <h2 id="example-reducing-the-output-on-the-console">Example: Reducing the output on the console<a class="anchor" aria-label="anchor" href="#example-reducing-the-output-on-the-console"></a>
 </h2>
 <p>You are bothered by all the output on the console like in this example?</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
 <span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span><span class="op">)</span>
 <span class="co">## Resampling: holdout</span>
@@ -209,12 +207,12 @@
 <span class="co">## Aggregated Result: mmce.test.mean=0.0400000</span>
 <span class="co">## </span></code></pre></div>
 <p>You can suppress the output for this Learner <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> and this <code><a href="../../reference/resample.html">resample()</a></code> call as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>show.learner.output <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
 <span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>(Note that <code><a href="https://rdrr.io/pkg/nnet/man/multinom.html" class="external-link">nnet::multinom()</a></code> has a <code>trace</code> switch that can alternatively be used to turn off the progress messages.)</p>
 <p>To globally suppress the output for all subsequent learners and calls to <code><a href="../../reference/resample.html">resample()</a></code>, <code><a href="../../reference/benchmark.html">benchmark()</a></code> etc. do the following:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span>show.learner.output <span class="op">=</span> <span class="cn">FALSE</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span><span class="op">)</span></code></pre></div>
 </div>
@@ -222,7 +220,7 @@
 <h2 id="accessing-and-resetting-the-configuration">Accessing and resetting the configuration<a class="anchor" aria-label="anchor" href="#accessing-and-resetting-the-configuration"></a>
 </h2>
 <p>Function <code><a href="../../reference/getMlrOptions.html">getMlrOptions()</a></code> returns a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">base::list()</a></code> with the current configuration.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/getMlrOptions.html">getMlrOptions</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">## $show.info</span>
 <span class="co">## [1] FALSE</span>
@@ -248,9 +246,9 @@
 <span class="co">## $on.error.dump</span>
 <span class="co">## [1] FALSE</span></code></pre></div>
 <p>To restore the default configuration call <code><a href="../../reference/configureMlr.html">configureMlr()</a></code> with an empty argument list.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/getMlrOptions.html">getMlrOptions</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">## $show.info</span>
 <span class="co">## [1] TRUE</span>
@@ -280,7 +278,7 @@
 <h2 id="example-turning-off-parameter-checking">Example: Turning off parameter checking<a class="anchor" aria-label="anchor" href="#example-turning-off-parameter-checking"></a>
 </h2>
 <p>It might happen that you want to set a parameter of a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>, but the parameter is not registered in the learner’s parameter set (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::makeParamSet()</a></code>) yet. In this case you might want to <a href="https://github.com/mlr-org/mlr#get-in-touch" class="external-link">contact us</a> or <a href="https://github.com/mlr-org/mlr/issues/new" class="external-link">open an issue</a> as well! But until the problem is fixed you can turn off <code>mlr</code>’s parameter checking. The parameter setting will then be passed to the underlying function without further ado.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Support Vector Machine with linear kernel and new parameter 'newParam'</span>
 <span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, kernel <span class="op">=</span> <span class="st">"vanilladot"</span>, newParam <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co">## Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newParam without available description object!</span>
@@ -322,7 +320,7 @@
 <h2 id="example-handling-errors-in-a-learning-method">Example: Handling errors in a learning method<a class="anchor" aria-label="anchor" href="#example-handling-errors-in-a-learning-method"></a>
 </h2>
 <p>If a learning method throws an error the default behavior of <code>mlr</code> is to generate an exception as well. However, in some situations, for example if you conduct a larger <a href="benchmark_experiments.html" target="_blank">bechmark experiment</a> with multiple data sets and learners, you usually don’t want the whole experiment stopped due to one error. You can prevent this using the <code>on.learner.error</code> option of <code><a href="../../reference/configureMlr.html">configureMlr()</a></code>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># This call gives an error caused by the low number of observations in class "virginica"</span>
 <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, task <span class="op">=</span> <span class="va">iris.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">104</span><span class="op">)</span>
 <span class="co">## Error in qda.default(x, grouping, ...): some group is too small for 'qda'</span>

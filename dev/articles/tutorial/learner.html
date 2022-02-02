@@ -172,8 +172,6 @@
 
     
     
-<pre><code><span class="co">## Warning in register(): Can't find generic `scale_type` in package ggplot2 to</span>
-<span class="co">## register S3 method.</span></code></pre>
 <p>The following classes provide a unified interface to all popular machine learning methods in <strong>R</strong>: (cost-sensitive) classification, regression, survival analysis, and clustering. Many are already integrated in <code>mlr</code>, others are not, but the package is specifically designed to make extensions simple.</p>
 <p>Section <a href="integrated_learners.html" target="_blank">integrated learners</a> shows the already implemented machine learning methods and their properties. If your favorite method is missing, either <a href="https://github.com/mlr-org/mlr/issues" class="external-link">open an issue</a> or take a look at how to <a href="create_learners.html" target="_blank">integrate a learning method yourself</a>. This basic introduction demonstrates how to use already implemented learners.</p>
 <div class="section level2">
@@ -185,7 +183,7 @@
 <li>Control the output for later prediction, e.g., for classification whether you want a factor of predicted class labels or probabilities.</li>
 <li>Set an ID to name the object (some methods will later use this ID to name results or annotate plots).</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Classification tree, set it up for predicting probabilities</span>
 <span class="va">classif.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.randomForest"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, fix.factors.prediction <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
@@ -204,7 +202,7 @@
 <p>Hyperparameter values can be specified either via the <code>...</code> argument or as a <code>list</code> via <code>par.vals</code>. The first option is preferred as <code>par.vals</code> is mainly used to declare hyperparameters that are set differently in <code>mlr</code> compared to the defaults of the underlying model. If you want to change a hyperparameter in <code>mlr</code> by default that differs from the actual default, make sure to also add an entry in the <code>"note"</code> slot of the learner. This entry should describe the reason for the change. Common ones are turning off automatic parallelization or changing logical arguments of the learner to enable a more conservative memory management.</p>
 <p>Occasionally, <code>factor</code> features may cause problems when fewer levels are present in the test data set than in the training data. By setting <code>fix.factors.prediction = TRUE</code> these are avoided by adding a factor level for missing data in the test data set.</p>
 <p>Let’s have a look at two of the learners created above.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">classif.lrn</span>
 <span class="co">## Learner classif.randomForest from package randomForest</span>
 <span class="co">## Type: classif</span>
@@ -229,7 +227,7 @@
 <h2 id="accessing-a-learner">Accessing a learner<a class="anchor" aria-label="anchor" href="#accessing-a-learner"></a>
 </h2>
 <p>The Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) object is a <code>list</code> and the following elements contain information regarding the hyperparameters and the type of prediction.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get the configured hyperparameter settings that deviate from the defaults</span>
 <span class="va">cluster.lrn</span><span class="op">$</span><span class="va">par.vals</span>
 <span class="co">## $centers</span>
@@ -261,7 +259,7 @@
 <span class="co">## [1] "response"</span></code></pre></div>
 <p>Slot <code>$par.set</code> is an object of class <code>ParamSet</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::makeParamSet()</a></code>). It contains, among others, the type of hyperparameters (e.g., numeric, logical), potential default values and the range of allowed values.</p>
 <p>Moreover, <code>mlr</code> provides function <code><a href="../../reference/getHyperPars.html">getHyperPars()</a></code> or its alternative <code><a href="../../reference/getLearnerParVals.html">getLearnerParVals()</a></code> to access the current hyperparameter setting of a Learner, (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) and <code><a href="../../reference/getParamSet.html">getParamSet()</a></code> to get a description of all possible settings. These are particularly useful in case of wrapped Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>)s, for example if a learner is fused with a feature selection strategy, and both, the learner as well the feature selection method, have hyperparameters. For details see the section on <a href="wrapper.html">wrapped learners</a>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get current hyperparameter settings</span>
 <span class="fu"><a href="../../reference/getHyperPars.html">getHyperPars</a></span><span class="op">(</span><span class="va">cluster.lrn</span><span class="op">)</span>
 <span class="co">## $centers</span>
@@ -288,7 +286,7 @@
 <span class="co">## keep.forest       logical    -  TRUE        -   -   FALSE     -</span>
 <span class="co">## keep.inbag        logical    - FALSE        -   -   FALSE     -</span></code></pre></div>
 <p>We can also use <code><a href="../../reference/getParamSet.html">getParamSet()</a></code> or its alias <code><a href="../../reference/getLearnerParamSet.html">getLearnerParamSet()</a></code> to get a quick overview about the available hyperparameters and defaults of a learning method without explicitly constructing it (by calling <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>).</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span><span class="op">(</span><span class="st">"classif.randomForest"</span><span class="op">)</span>
 <span class="co">##                      Type  len   Def   Constr Req Tunable Trafo</span>
 <span class="co">## ntree             integer    -   500 1 to Inf   -    TRUE     -</span>
@@ -309,7 +307,7 @@
 <span class="co">## keep.forest       logical    -  TRUE        -   -   FALSE     -</span>
 <span class="co">## keep.inbag        logical    - FALSE        -   -   FALSE     -</span></code></pre></div>
 <p>Functions for accessing a Learner’s meta information are available in <code>mlr</code>. We can use <code><a href="../../reference/getLearnerId.html">getLearnerId()</a></code>, <code><a href="../../reference/getLearnerShortName.html">getLearnerShortName()</a></code> and <code><a href="../../reference/getLearnerType.html">getLearnerType()</a></code> to get Learner’s ID, short name and type, respectively. Moreover, in order to show the required packages for the Learner, one can call <code><a href="../../reference/getLearnerPackages.html">getLearnerPackages()</a></code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get object's id</span>
 <span class="fu"><a href="../../reference/getLearnerId.html">getLearnerId</a></span><span class="op">(</span><span class="va">surv.lrn</span><span class="op">)</span>
 <span class="co">## [1] "cph"</span>
@@ -330,7 +328,7 @@
 <h2 id="modifying-a-learner">Modifying a learner<a class="anchor" aria-label="anchor" href="#modifying-a-learner"></a>
 </h2>
 <p>There are also some functions that enable you to change certain aspects of a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) without needing to create a new Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) from scratch. Here are some examples.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Change the ID</span>
 <span class="va">surv.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setLearnerId.html">setLearnerId</a></span><span class="op">(</span><span class="va">surv.lrn</span>, <span class="st">"CoxModel"</span><span class="op">)</span>
 <span class="va">surv.lrn</span>
@@ -356,7 +354,7 @@
 </h2>
 <p>A list of all learners integrated in <code>mlr</code> and their respective properties is shown in the <a href="integrated_learners.html" target="_blank">Appendix</a>.</p>
 <p>If you would like a list of available learners, maybe only with certain properties or suitable for a certain learning <code><a href="../../reference/Task.html">Task()</a></code> use function <code><a href="../../reference/listLearners.html">listLearners()</a></code>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># List everything in mlr</span>
 <span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>

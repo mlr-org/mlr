@@ -172,8 +172,6 @@
 
     
     
-<pre><code><span class="co">## Warning in register(): Can't find generic `scale_type` in package ggplot2 to</span>
-<span class="co">## register S3 method.</span></code></pre>
 <p>Wrappers can be employed to extend integrated learners (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) with new functionality. The broad scope of operations and methods which are implemented as wrappers underline the flexibility of the wrapping approach:</p>
 <ul>
 <li><a href="preproc.html" target="_blank">Data preprocessing</a></li>
@@ -193,11 +191,11 @@
 </h2>
 <p>In this section we exemplary describe the bagging wrapper to create a random forest which supports weights. To achieve that we combine several decision trees from the <code>rpart</code> package to create our own custom random forest.</p>
 <p>First, we create a weighted toy task.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, target <span class="op">=</span> <span class="st">"Species"</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Next, we use <code><a href="../../reference/makeBaggingWrapper.html">makeBaggingWrapper()</a></code> to create the base learners and the bagged learner. We choose to set equivalents of <code>ntree</code> (100 base learners) and <code>mtry</code> (proportion of randomly selected features).</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">base.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span>
 <span class="va">wrapped.lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeBaggingWrapper.html">makeBaggingWrapper</a></span><span class="op">(</span><span class="va">base.lrn</span>, bw.iters <span class="op">=</span> <span class="fl">100</span>, bw.feats <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">wrapped.lrn</span><span class="op">)</span>
@@ -209,7 +207,7 @@
 <span class="co">## Predict-Type: response</span>
 <span class="co">## Hyperparameters: xval=0,bw.iters=100,bw.feats=0.5</span></code></pre></div>
 <p>As we can see in the output, the wrapped learner inherited all properties from the base learner, especially the “weights” attribute is still present. We can use this newly constructed learner like all base learners, i.e. we can use it in <code><a href="../../reference/train.html">train()</a></code>, <code><a href="../../reference/benchmark.html">benchmark()</a></code>, <code><a href="../../reference/resample.html">resample()</a></code>, etc.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span><span class="op">(</span>tasks <span class="op">=</span> <span class="va">task</span>, learners <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">base.lrn</span>, <span class="va">wrapped.lrn</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## Task: iris, Learner: classif.rpart</span>
 <span class="co">## Resampling: cross-validation</span>
@@ -247,7 +245,7 @@
 <span class="co">## 1    iris        classif.rpart     0.08000000</span>
 <span class="co">## 2    iris classif.rpart.bagged     0.04666667</span></code></pre></div>
 <p>That far we are quite happy with our new learner. But we hope for a better performance by tuning some hyperparameters of both the decision trees and bagging wrapper. Let’s have a look at the available hyperparameters of the fused learner:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span><span class="op">(</span><span class="va">wrapped.lrn</span><span class="op">)</span>
 <span class="co">##                    Type len   Def   Constr Req Tunable Trafo</span>
 <span class="co">## bw.iters        integer   -    10 1 to Inf   -    TRUE     -</span>
@@ -265,7 +263,7 @@
 <span class="co">## xval            integer   -    10 0 to Inf   -   FALSE     -</span>
 <span class="co">## parms           untyped   -     -        -   -    TRUE     -</span></code></pre></div>
 <p>We choose to tune the parameters <code>minsplit</code> and <code>bw.feats</code> for the <a href="measures.html" target="_blank">mmce</a> using a random search (<code><a href="../../reference/TuneControl.html">TuneControl()</a></code>) in a 3-fold CV:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">par.set</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
@@ -288,7 +286,7 @@
 <li>The bagged models are evaluated using the mean <a href="measures.html" target="_blank">mmce</a> (default aggregation for this performance measure) and new parameters are selected using the tuning method.</li>
 <li>This is repeated until the tuner terminates. Output is a tuned bagged learner.</li>
 </ol>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">tuned.lrn</span>, task <span class="op">=</span> <span class="va">task</span><span class="op">)</span>
 <span class="co">## [Tune] Started tuning learner classif.rpart.bagged for parameter set:</span>
 <span class="co">##             Type len Def    Constr Req Tunable Trafo</span>
