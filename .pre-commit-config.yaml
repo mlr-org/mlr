@@ -30,6 +30,7 @@ repos:
         -    survival
         -    utils
         -    XML
+        -    pkgbuild
     -   id: use-tidy-description
     -   id: readme-rmd-rendered
     -   id: parsable-R
