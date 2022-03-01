@@ -52,7 +52,7 @@
 #'   method = list("E-mean", c("FSelectorRcpp_gain.ratio",
 #'     "FSelectorRcpp_information.gain")))
 #' @export
-generateFilterValuesData = function(task, method = "randomForestSRC_importance",
+generateFilterValuesData = function(task, method = "FSelectorRcpp_information.gain",
   nselect = getTaskNFeats(task), ..., more.args = list()) {
 
   # define for later checks

@@ -7,7 +7,7 @@
 \usage{
 generateFilterValuesData(
   task,
-  method = "randomForestSRC_importance",
+  method = "FSelectorRcpp_information.gain",
   nselect = getTaskNFeats(task),
   ...,
   more.args = list()
