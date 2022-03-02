@@ -21,7 +21,7 @@ The task.}
 Filter method(s).
 In case of ensemble filters the \code{list} notation needs to be used.
 See the examples for more information.
-Default is \dQuote{randomForestSRC_importance}.}
+Default is \dQuote{FSelectorRcpp_information.gain}.}
 
 \item{nselect}{(\code{integer(1)})\cr
 Number of scores to request. Scores are getting calculated for all features

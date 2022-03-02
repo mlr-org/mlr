@@ -6,7 +6,7 @@
 \usage{
 filterFeatures(
   task,
-  method = "randomForestSRC_importance",
+  method = "FSelectorRcpp_information.gain",
   fval = NULL,
   perc = NULL,
   abs = NULL,
@@ -26,7 +26,7 @@ The task.}
 
 \item{method}{(\code{character(1)})\cr
 See \link{listFilterMethods}.
-Default is \dQuote{randomForestSRC_importance}.}
+Default is \dQuote{FSelectorRcpp_information.gain}.}
 
 \item{fval}{(\link{FilterValues})\cr
 Result of \link{generateFilterValuesData}.

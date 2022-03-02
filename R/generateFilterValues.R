@@ -8,7 +8,7 @@
 #'   Filter method(s).
 #'   In case of ensemble filters the `list` notation needs to be used.
 #'   See the examples for more information.
-#'   Default is \dQuote{randomForestSRC_importance}.
+#'   Default is \dQuote{FSelectorRcpp_information.gain}.
 #' @param nselect (`integer(1)`)\cr
 #' Number of scores to request. Scores are getting calculated for all features
 #' per default.

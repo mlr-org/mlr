@@ -7,7 +7,7 @@
 #' @template arg_task
 #' @param method (`character(1)`)\cr
 #'   See [listFilterMethods].
-#'   Default is \dQuote{randomForestSRC_importance}.
+#'   Default is \dQuote{FSelectorRcpp_information.gain}.
 #' @param fval ([FilterValues])\cr
 #'   Result of [generateFilterValuesData].
 #'   If you pass this, the filter values in the object are used for feature
@@ -69,7 +69,7 @@
 #'   base.methods = c("FSelectorRcpp_gain.ratio",
 #'     "FSelectorRcpp_information.gain"), abs = 2)
 #' @export
-filterFeatures = function(task, method = "randomForestSRC_importance",
+filterFeatures = function(task, method = "FSelectorRcpp_information.gain",
   fval = NULL, perc = NULL, abs = NULL, threshold = NULL, fun = NULL,
   fun.args = NULL, mandatory.feat = NULL, select.method = NULL,
   base.methods = NULL, cache = FALSE, ...) {
