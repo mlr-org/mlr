@@ -256,17 +256,17 @@ Currently not used.</p></dd>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">calculateConfusionMatrix</span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             predicted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> true         setosa versicolor virginica -err.-</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   setosa         29          0         0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         22         0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          1        23      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   setosa         24          0         0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         24         0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          1        26      1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -err.-          0          1         0      1</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">calculateConfusionMatrix</span><span class="op">(</span><span class="va">pred</span>, sums <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            setosa versicolor virginica -err.- -n-</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> setosa         29          0         0      0  29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> versicolor      0         22         0      0  22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> virginica       0          1        23      1  24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> setosa         24          0         0      0  24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> versicolor      0         24         0      0  24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> virginica       0          1        26      1  27</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -err.-          0          1         0      1  NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -n-            29         23        23     NA  75</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -n-            24         25        26     NA  75</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">calculateConfusionMatrix</span><span class="op">(</span><span class="va">pred</span>, relative <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Relative confusion matrix (normalized by row/column):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             predicted</span>
@@ -280,9 +280,9 @@ Currently not used.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Absolute confusion matrix:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             predicted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> true         setosa versicolor virginica -err.-</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   setosa         29          0         0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         22         0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          1        23      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   setosa         24          0         0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         24         0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          1        26      1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -err.-          0          1         0      1</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># now after cross-validation</span></span>
@@ -290,17 +290,17 @@ Currently not used.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling: cross-validation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Measures:             mmce      </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.0266667 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.0133333 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.0533333 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: mmce.test.mean=0.0200000</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: mmce.test.mean=0.0400000</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">calculateConfusionMatrix</span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             predicted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> true         setosa versicolor virginica -err.-</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   setosa         50          0         0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         48         2      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          1        49      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   -err.-          0          1         2      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         47         3      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          3        47      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -err.-          0          3         3      6</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
