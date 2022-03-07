@@ -6,6 +6,7 @@ on:
     branches:
     - main
     - master
+    - randomforestsrc-multilabel
   pull_request:
     branches:
     - main
