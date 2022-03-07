@@ -80,7 +80,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     # Multilabel has a special data structure
     if (class(task)[1] == "MultilabelTask") {
       rownames(cp$data) = NULL
-      expect_equal(unname(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), unname(old.predicts))
+      expect_equal(as.data.frame(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), as.data.frame(old.predicts), ignore_attr = "names")
     } else {
       # to avoid issues with dropped levels in the class factor we only check the elements as chars
       if (is.numeric(cp$data$response) && is.numeric(old.predicts)) {
