@@ -62,6 +62,12 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     task = makeSurvTask(data = df, target = target)
   } else if (is.data.frame(df[, target]) && is.logical(df[, target[1L]])) {
     task = makeMultilabelTask(data = df, target = target)
+    # Since randomForestSRC >= 3.0.0 this test failed if the target vars in `test` are not factors
+    # (as in the comparison test in multilabel_randomForestSRC) but of type logical
+    # Hence, force converting to factor for a fair comparison
+    for (j in target) {
+      test[j] = factor(test[[j]])
+    }
   } else {
     stop("Should not happen!")
   }
