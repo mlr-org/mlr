@@ -237,14 +237,14 @@
 <span class="co">## [Resample] iter 6:    0.0000000</span>
 <span class="co">## [Resample] iter 7:    0.0000000</span>
 <span class="co">## [Resample] iter 8:    0.0000000</span>
-<span class="co">## [Resample] iter 9:    0.0666667</span>
+<span class="co">## [Resample] iter 9:    0.1333333</span>
 <span class="co">## [Resample] iter 10:   0.0666667</span>
 <span class="co">## </span>
-<span class="co">## Aggregated Result: mmce.test.mean=0.0466667</span>
+<span class="co">## Aggregated Result: mmce.test.mean=0.0533333</span>
 <span class="co">## </span>
 <span class="co">##   task.id           learner.id mmce.test.mean</span>
 <span class="co">## 1    iris        classif.rpart     0.08000000</span>
-<span class="co">## 2    iris classif.rpart.bagged     0.04666667</span></code></pre></div>
+<span class="co">## 2    iris classif.rpart.bagged     0.05333333</span></code></pre></div>
 <p>That far we are quite happy with our new learner. But we hope for a better performance by tuning some hyperparameters of both the decision trees and bagging wrapper. Let’s have a look at the available hyperparameters of the fused learner:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span><span class="op">(</span><span class="va">wrapped.lrn</span><span class="op">)</span>
