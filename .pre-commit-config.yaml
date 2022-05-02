@@ -2,7 +2,7 @@
 # R specific hooks: https://github.com/lorenzwalthert/precommit
 repos:
 -   repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.2.2.9013
+    rev: v0.2.2.9015
     hooks:
     -   id: style-files
         args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
@@ -35,7 +35,7 @@ repos:
     -   id: parsable-R
     -   id: no-browser-statement
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.1.0
+    rev: v4.2.0
     hooks:
     -   id: check-added-large-files
         args: ['--maxkb=1000']
