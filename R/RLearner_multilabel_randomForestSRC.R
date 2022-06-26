@@ -61,7 +61,7 @@ makeRLearner.multilabel.randomForestSRC = function() {
 trainLearner.multilabel.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
   targets = getTaskTargetNames(.task)
   f = as.formula(stri_paste("cbind(", stri_paste(targets, collapse = ",", sep = " "), ")  ~ .", sep = ""))
-  d = getTaskData(.task, .subset, recode.target = "multilabel.factor")
+  d = getTaskData(.task, .subset)
   randomForestSRC::rfsrc(f, data = d, case.wt = .weights, ...)
 }
 
@@ -69,8 +69,8 @@ trainLearner.multilabel.randomForestSRC = function(.learner, .task, .subset, .we
 predictLearner.multilabel.randomForestSRC = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, importance = "none", ...)
   if (.learner$predict.type == "prob") {
-    return(sapply(p$classOutput, function(x) x$predicted[, 1]))
+    return(sapply(p$regrOutput, function(x) x$predicted))
   } else {
-    return(sapply(p$classOutput, function(x) as.logical(x$class)))
+    return(sapply(p$regrOutput, function(x) as.logical(round(x$predicted))))
   }
 }

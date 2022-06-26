@@ -62,12 +62,6 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     task = makeSurvTask(data = df, target = target)
   } else if (is.data.frame(df[, target]) && is.logical(df[, target[1L]])) {
     task = makeMultilabelTask(data = df, target = target)
-    # Since randomForestSRC >= 3.0.0 this test failed if the target vars in `test` are not factors
-    # (as in the comparison test in multilabel_randomForestSRC) but of type logical
-    # Hence, force converting to factor for a fair comparison
-    for (j in target) {
-      test[j] = factor(test[[j]])
-    }
   } else {
     stop("Should not happen!")
   }
@@ -80,7 +74,8 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     # Multilabel has a special data structure
     if (class(task)[1] == "MultilabelTask") {
       rownames(cp$data) = NULL
-      expect_equal(as.data.frame(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), as.data.frame(old.predicts), ignore_attr = "names")
+      # expect_equal(as.data.frame(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), as.data.frame(old.predicts), ignore_attr = "names")
+      expect_equal(unname(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), unname(old.predicts))
     } else {
       # to avoid issues with dropped levels in the class factor we only check the elements as chars
       if (is.numeric(cp$data$response) && is.numeric(old.predicts)) {

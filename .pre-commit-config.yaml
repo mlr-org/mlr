@@ -15,21 +15,22 @@ repos:
           )$
         additional_dependencies:
         - mlr-org/styler.mlr
-    -   id: roxygenize
-        additional_dependencies:
-        -    ParamHelpers
-        -    backports
-        -    BBmisc
-        -    checkmate
-        -    data.table
-        -    ggplot2
-        -    methods
-        -    parallelMap
-        -    stats
-        -    stringi
-        -    survival
-        -    utils
-        -    XML
+    # -   id: roxygenize
+    #     additional_dependencies:
+    #     -    ParamHelpers
+    #     -    backports
+    #     -    BBmisc
+    #     -    checkmate
+    #     -    data.table
+    #     -    ggplot2
+    #     -    methods
+    #     -    parallelMap
+    #     -    stats
+    #     -    stringi
+    #     -    survival
+    #     -    pkgbuild
+    #     -    utils
+    #     -    XML
     -   id: use-tidy-description
     -   id: readme-rmd-rendered
     -   id: parsable-R
