@@ -77,8 +77,8 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && requireNamespace("
     })
   }
 
-  `%!=%` = lintr:::`%!=%`
-  `%==%` = lintr:::`%==%`
+  # `%!=%` = lintr:::`%!=%`
+  # `%==%` = lintr:::`%==%`
 
   spaces.left.parentheses.linter = function(source_file) {
     lapply(lintr:::ids_with_token(source_file, "'('"), function(id) {
@@ -230,33 +230,33 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && requireNamespace("
     )
   }
 
-  object.naming.linter = lintr:::make_object_linter(function(source_file, token) {
+  # object.naming.linter = lintr:::make_object_linter(function(source_file, token) {
 
-    sp = source_file$parsed_content
-    if (tail(c("", sp$token[sp$terminal & sp$id < token$id]), n = 1) == "'$'") {
-      # ignore list member names
-      return(NULL)
-    }
-    sp = head(sp[sp$terminal & sp$id > token$id, ], n = 2)
-    if (!sp$token[1] %in% c("LEFT_ASSIGN", "EQ_ASSIGN")) {
-      # ignore if not an assignment.
-      # we check for LEFT_ASSIGN and EQ_ASSIGN since here we are LEFT_ASSIGN tolerant
-      return(NULL)
-    }
-    if (sp$text[1] == ":=") {
-      return(NULL) # ':=' is parsed as LEFT_ASSIGN but does no actual assignment.
-    }
-    style = ifelse(sp$token[2] == "FUNCTION", "functionCamel.case", "dotted.case")
-    name = lintr:::unquote(token[["text"]])
-    if (nchar(name) <= 1) {
-      # allow single uppercase letter
-      return(NULL)
-    }
-    if (!matchesStyles(name, style)) {
-      lintr:::object_lint(source_file, token, sprintf("Variable or function name should be %s.",
-        style), "object_name_linter")
-    }
-  })
+  #   sp = source_file$parsed_content
+  #   if (tail(c("", sp$token[sp$terminal & sp$id < token$id]), n = 1) == "'$'") {
+  #     # ignore list member names
+  #     return(NULL)
+  #   }
+  #   sp = head(sp[sp$terminal & sp$id > token$id, ], n = 2)
+  #   if (!sp$token[1] %in% c("LEFT_ASSIGN", "EQ_ASSIGN")) {
+  #     # ignore if not an assignment.
+  #     # we check for LEFT_ASSIGN and EQ_ASSIGN since here we are LEFT_ASSIGN tolerant
+  #     return(NULL)
+  #   }
+  #   if (sp$text[1] == ":=") {
+  #     return(NULL) # ':=' is parsed as LEFT_ASSIGN but does no actual assignment.
+  #   }
+  #   style = ifelse(sp$token[2] == "FUNCTION", "functionCamel.case", "dotted.case")
+  #   name = lintr:::unquote(token[["text"]])
+  #   if (nchar(name) <= 1) {
+  #     # allow single uppercase letter
+  #     return(NULL)
+  #   }
+  #   if (!matchesStyles(name, style)) {
+  #     lintr:::object_lint(source_file, token, sprintf("Variable or function name should be %s.",
+  #       style), "object_name_linter")
+  #   }
+  # })
 
 
   # note that this must be a *named* list (bug in lintr)
@@ -273,8 +273,9 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && requireNamespace("
     trailing.whitespace = lintr::trailing_whitespace_linter,
     # todo.comment = lintr::todo_comment_linter(todo = "todo"), # is case-insensitive
     spaces.inside = lintr::spaces_inside_linter,
-    infix.spaces = infix.spaces.linter,
-    object.naming = object.naming.linter)
+    infix.spaces = infix.spaces.linter
+    # object.naming = object.naming.linter
+    )
   if (exists("T_and_F_symbol_linter", where = "package:lintr")) {
     linters$T.and.F.symbol = lintr::T_and_F_symbol_linter
   }
