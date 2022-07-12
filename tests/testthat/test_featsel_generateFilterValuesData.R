@@ -72,8 +72,7 @@ test_that("filterFeatures", {
   expect_equal(f, ff)
 
   f1 = filterFeatures(binaryclass.task,
-    abs = 1L, mandatory.feat = "V1",
-    ntree = 1L)
+    abs = 1L, mandatory.feat = "V1")
   f2 = subsetTask(binaryclass.task, features = "V1")
   f1$env = NULL
   f2$env = NULL

@@ -32,10 +32,6 @@
 #'    See [randomForest::importance()] for details.
 #' * RRF \cr
 #'    This is identical to randomForest.
-#' * randomForestSRC \cr
-#'    This method can calculate feature importance for various measures. By
-#'    default the Breiman-Cutler permutation method is used. See
-#'    [randomForestSRC::vimp()] for details.
 #' * ranger \cr
 #'    Supports both measures mentioned above for the randomForest
 #'    learner. Note, that you need to specifically set the learners parameter
