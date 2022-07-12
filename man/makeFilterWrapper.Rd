@@ -6,7 +6,7 @@
 \usage{
 makeFilterWrapper(
   learner,
-  fw.method = "randomForestSRC_importance",
+  fw.method = "FSelectorRcpp_information.gain",
   fw.base.methods = NULL,
   fw.perc = NULL,
   fw.abs = NULL,
@@ -25,7 +25,7 @@ If you pass a string the learner will be created via \link{makeLearner}.}
 
 \item{fw.method}{(\code{character(1)})\cr
 Filter method. See \link{listFilterMethods}.
-Default is \dQuote{randomForestSRC_importance}.}
+Default is \dQuote{FSelectorRcpp_information.gain}.}
 
 \item{fw.base.methods}{(\code{character(1)})\cr
 Simple Filter methods for ensemble filters. See \link{listFilterMethods}. Can
@@ -135,7 +135,7 @@ biggest_gap = function(values, diff) {
 }
 
 lrn = makeLearner("classif.lda")
-lrn = makeFilterWrapper(lrn, fw.method = "randomForestSRC_importance",
+lrn = makeFilterWrapper(lrn, fw.method = "FSelectorRcpp_information.gain",
   fw.fun = biggest_gap, fw.fun.args = list("diff" = 1))
 r = resample(lrn, task, outer, extract = function(model) {
   getFilteredFeatures(model)

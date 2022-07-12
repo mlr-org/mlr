@@ -7,7 +7,7 @@
 #' @template arg_learner
 #' @param fw.method (`character(1)`)\cr
 #'   Filter method. See [listFilterMethods].
-#'   Default is \dQuote{randomForestSRC_importance}.
+#'   Default is \dQuote{FSelectorRcpp_information.gain}.
 #' @param fw.base.methods (`character(1)`)\cr
 #'   Simple Filter methods for ensemble filters. See [listFilterMethods]. Can
 #'   only be used in combination with ensemble filters. See
@@ -104,14 +104,14 @@
 #' }
 #'
 #' lrn = makeLearner("classif.lda")
-#' lrn = makeFilterWrapper(lrn, fw.method = "randomForestSRC_importance",
+#' lrn = makeFilterWrapper(lrn, fw.method = "FSelectorRcpp_information.gain",
 #'   fw.fun = biggest_gap, fw.fun.args = list("diff" = 1))
 #' r = resample(lrn, task, outer, extract = function(model) {
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
 #' }
-makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
+makeFilterWrapper = function(learner, fw.method = "FSelectorRcpp_information.gain",
   fw.base.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
   fw.fun = NULL, fw.fun.args = NULL, fw.mandatory.feat = NULL, cache = FALSE, ...) {
 
@@ -171,7 +171,7 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC_importance",
 
 #' @export
 trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL,
-  .weights = NULL, fw.method = "randomForestSRC_importance",
+  .weights = NULL, fw.method = "FSelectorRcpp_information.gain",
   fw.base.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
   fw.fun = NULL, fw.fun.args = NULL, fw.mandatory.feat = NULL, ...) {
   .task = subsetTask(.task, subset = .subset)

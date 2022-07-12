@@ -8,7 +8,7 @@
 #'   Filter method(s).
 #'   In case of ensemble filters the `list` notation needs to be used.
 #'   See the examples for more information.
-#'   Default is \dQuote{randomForestSRC_importance}.
+#'   Default is \dQuote{FSelectorRcpp_information.gain}.
 #' @param nselect (`integer(1)`)\cr
 #' Number of scores to request. Scores are getting calculated for all features
 #' per default.
@@ -52,7 +52,7 @@
 #'   method = list("E-mean", c("FSelectorRcpp_gain.ratio",
 #'     "FSelectorRcpp_information.gain")))
 #' @export
-generateFilterValuesData = function(task, method = "randomForestSRC_importance",
+generateFilterValuesData = function(task, method = "FSelectorRcpp_information.gain",
   nselect = getTaskNFeats(task), ..., more.args = list()) {
 
   # define for later checks

@@ -13,7 +13,7 @@ test_that("filterFeatures 1", {
   filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
   filter.list.classif = setdiff(filter.list.classif, c(
     "univariate.model.score", "permutation.importance", "auc",
-    "univariate", "randomForest_importance", "randomForestSRC_var.select"))
+    "univariate"))
   for (filter in filter.list.classif) {
     filterFeatures(task = multiclass.task, method = filter, perc = 0.5)
   }
@@ -66,22 +66,6 @@ test_that("filterFeatures: auc", {
   expect_equal(fv$data$value, c(0.25, 0.25, 0.5, 0.5, 0.125))
 })
 
-test_that("randomForestSRC_var.select filter handles user choices correctly", {
-  expect_silent(
-    suppressWarnings(generateFilterValuesData(task = multiclass.task,
-      method = "randomForestSRC_var.select",
-      more.args = list("randomForestSRC_var.select" = c(method = "vh",
-        conservative = "high", fast = TRUE))))
-  )
-
-  # method = "vh.imp" is not supported
-  expect_error(
-    suppressWarnings(generateFilterValuesData(task = multiclass.task,
-      method = "randomForestSRC_var.select",
-      more.args = list("randomForestSRC_var.select" = c(method = "vh.imp"))))
-  )
-})
-
 test_that("Custom threshold function for filtering works correctly", {
   biggest_gap = function(values, diff) {
     gap_size = 0
@@ -104,15 +88,6 @@ test_that("Custom threshold function for filtering works correctly", {
   )
   feats = getTaskFeatureNames(ftask)
   expect_equal(feats, "Petal.Length")
-})
-
-test_that("randomForestSRC_var.select minimal depth filter returns NA for features below the threshold", {
-  dat = generateFilterValuesData(task = multiclass.task,
-    method = "randomForestSRC_var.select",
-    nselect = 5,
-    more.args = list(method = "md", nrep = 5))
-  expect_equal(all(is.na(dat$data$value[dat$data$name %in% c("Sepal.Length", "Sepal.Width")])), TRUE)
-  expect_equal(all(is.na(dat$data$value[dat$data$name %in% c("Petal.Length", "Petal.Width")])), FALSE)
 })
 
 test_that("ensemble filters subset the task correctly", {
