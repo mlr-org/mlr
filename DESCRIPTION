@@ -148,7 +148,6 @@ Suggests:
     PMCMRplus,
     praznik (>= 5.0.0),
     randomForest,
-    randomForestSRC (>= 2.7.0),
     ranger (>= 0.8.0),
     rappdirs,
     refund,
@@ -194,7 +193,7 @@ Config/testthat/start-first: featsel_plotFilterValues,base_plotResiduals,base_ge
 Encoding: UTF-8
 LazyData: yes
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 SystemRequirements: gdal (optional), geos (optional), proj (optional),
     udunits (optional), gsl (optional), gmp (optional), glu (optional),
     jags (optional), mpfr (optional), openmpi (optional)
