@@ -49,7 +49,9 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   train = df[inds, ]
   test = df[-inds, ]
 
+
   set.seed(getOption("mlr.debug.seed"))
+  # set.seed(42)
   lrn = do.call("makeLearner", c(list(t.name), parset))
   # FIXME this heuristic will backfire eventually
   if (length(target) == 0) {
@@ -65,16 +67,17 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   } else {
     stop("Should not happen!")
   }
+
   m = train(lrn, task, subset = inds)
 
   if (inherits(m, "FailureModel")) {
     expect_s3_class(old.predicts, "try-error")
   } else {
+    # cp_raw = predict(mod_old, newdata = test)
     cp = predict(m, newdata = test)
     # Multilabel has a special data structure
     if (class(task)[1] == "MultilabelTask") {
       rownames(cp$data) = NULL
-      # expect_equal(as.data.frame(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), as.data.frame(old.predicts), ignore_attr = "names")
       expect_equal(unname(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), unname(old.predicts))
     } else {
       # to avoid issues with dropped levels in the class factor we only check the elements as chars

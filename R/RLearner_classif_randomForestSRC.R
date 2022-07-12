@@ -57,7 +57,9 @@ trainLearner.classif.randomForestSRC = function(.learner, .task, .subset, .weigh
 
 #' @export
 predictLearner.classif.randomForestSRC = function(.learner, .model, .newdata, ...) {
+
   p = predict(.model$learner.model, newdata = .newdata, membership = FALSE, ...)
+  # p2 = predict(model_rfsrc, newdata = .newdata, membership = FALSE, ...)
   if (.learner$predict.type == "prob") {
     return(p$predicted)
   } else {
