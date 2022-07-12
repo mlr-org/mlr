@@ -428,22 +428,13 @@ If your newly integrated learner supports this you need to
 This method takes the `Learner()` `.learner`, the WrappedModel (`makeWrappedModel()`) `.model` and potential further arguments and calculates or extracts the feature importance.
 It must return a named vector of importance values.
 
-Below are two simple examples.
+Below is a simple example.
 In case of `"classif.rpart"` the feature importance values can be easily extracted from the fitted model.
 
 ```{r, code=showFunctionDef(mlr:::getFeatureImportanceLearner.classif.rpart), eval=FALSE, tidy=TRUE, tidy.opts=list(indent=2, width.cutoff=100)}
 getFeatureImportanceLearner.classif.rpart = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   mod$variable.importance
-}
-```
-
-For the `randomForestSRC::rfsrc()` from package `randomForestSRC` function `randomForestSRC::vimp()` is called.
-
-```{r, code=showFunctionDef(mlr:::getFeatureImportanceLearner.classif.randomForestSRC), eval=FALSE, tidy=TRUE, tidy.opts=list(indent=2, width.cutoff=100)}
-getFeatureImportanceLearner.classif.randomForestSRC = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
-  randomForestSRC::vimp(mod, ...)$importance[, "all"]
 }
 ```
 
@@ -461,7 +452,6 @@ This method takes the Learner (`makeLearner()`) `.learner` and the WrappedModel 
 It must return the predictions in the same format as the `predictLearner()` function.
 
 ```{r, code=showFunctionDef(mlr:::getOOBPredsLearner.classif.randomForest), eval=FALSE, tidy=TRUE, tidy.opts=list(indent=2, width.cutoff=100)}
-
 ```
 
 # Registering your learner
