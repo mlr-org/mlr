@@ -100,7 +100,6 @@ Suggests:
     elasticnet,
     emoa,
     evtree,
-    extraTrees,
     fda.usc,
     FDboost,
     FNN,
