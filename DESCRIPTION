@@ -94,7 +94,6 @@ Suggests:
     Cubist,
     deepnet,
     DiceKriging,
-    DiscriMiner,
     e1071,
     earth,
     elasticnet,
