@@ -135,7 +135,6 @@ Suggests:
     mRMRe,
     neuralnet,
     nnet,
-    nodeHarvest (>= 0.7-3),
     numDeriv,
     pamr,
     pander,
