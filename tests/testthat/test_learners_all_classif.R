@@ -92,7 +92,6 @@ test_that("learners work: classif", {
     y = as.factor(rep(c("a", "b"), each = 5))), target = "y")
   lrns = listLearnersCustom(min.task, create = TRUE)
   # FIXME: classif.boosting: Remove if bug is removed in adabag!
-  # FIXME: classif.rknn: Remove if bug is removed in rknn::rknn!
   # classif.cvglmnet does not claim to work for 1d problems
   # classif.dbnDNN, classif.evtree, classif.lqa
   # (not im mlr anymore),
@@ -112,8 +111,8 @@ test_that("learners work: classif", {
     "classif.mda",
     "classif.pamr",
     "classif.plsdaCaret",
-    "classif.rotationForest",
-    "classif.rknn")
+    "classif.rotationForest"
+  )
   lrns_sub = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% not.working]
   foo = suppressWarnings(lapply(lrns_sub, testBasicLearnerProperties,
     task = min.task,

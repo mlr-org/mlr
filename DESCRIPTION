@@ -152,7 +152,6 @@ Suggests:
     rex,
     rFerns,
     rgenoud,
-    rknn,
     rmarkdown,
     Rmpi,
     ROCR,
