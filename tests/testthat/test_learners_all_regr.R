@@ -16,7 +16,6 @@ test_that("learners work: regr ", {
       # see above
       replace_missing_data_with_x_j_bar = TRUE,
       num_iterations_after_burn_in = 10L),
-    regr.nodeHarvest = list(nodes = 100L, nodesize = 5L),
     regr.h2o.deeplearning = list(hidden = 2L),
     regr.ranger = list(keep.inbag = TRUE)
   )
@@ -73,7 +72,6 @@ test_that("learners work: regr ", {
   lrns = suppressMessages(listLearnersCustom(min.task, create = TRUE))
   # regr.gbm: Meaningfull error about too small dataset
   # regr.cforest: Error in model@fit(data, ...) : fraction of 0.000000 is too small
-  # regr.nodeHarvest: Error in ZRULES[[1]] : subscript out of bounds
   # others: see learners_all_classif and random errors
   not.working = c(
     "regr.cforest",
@@ -83,7 +81,6 @@ test_that("learners work: regr ", {
     "regr.gbm",
     "regr.glmnet",
     "regr.laGP",
-    "regr.nodeHarvest",
     "regr.slim")
   lrns = lrns[extractSubList(lrns, "id", simplify = TRUE) %nin% not.working]
   foo = suppressWarnings(lapply(lrns, testBasicLearnerProperties, task = min.task,

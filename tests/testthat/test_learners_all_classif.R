@@ -12,7 +12,6 @@ test_that("learners work: classif", {
     classif.earth = list(degree = 3L, nprune = 2L),
     classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
     classif.lssvm = list(kernel = "rbfdot", reduced = FALSE),
-    classif.nodeHarvest = list(nodes = 100L, nodesize = 5L),
     classif.xyf = list(ydim = 2L),
     classif.h2o.deeplearning = list(hidden = 2L),
     classif.FDboost = list(mstop = 2L)
