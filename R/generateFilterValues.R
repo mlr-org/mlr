@@ -59,7 +59,7 @@ generateFilterValuesData = function(task, method = "FSelectorRcpp_information.ga
   ens.method = NULL
 
   # ensemble
-  if (class(method) == "list") {
+  if (inherits(method, "list")) {
     if (method[[1]] %in% ls(.FilterEnsembleRegister)) {
       ens.method = method[[1]]
       method = method[[2]]
