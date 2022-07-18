@@ -28,10 +28,11 @@ jobs:
       matrix:
         config:
           # use a different tic template type if you do not want to build on all listed platforms
-          - { os: windows-latest, r: "release" }
-          - { os: macOS-latest, r: "release", pkgdown: "true", latex: "true" }
-          - { os: ubuntu-latest, r: "devel" }
-          - { os: ubuntu-latest, r: "release" }
+          # - { os: windows-latest, r: "release" }
+          # - { os: macOS-latest, r: "release", pkgdown: "true", latex: "true" }
+          - { os: ubuntu-latest, r: "4.1.3" }
+          - { os: ubuntu-latest, r: "4.0.5" }
+          # - { os: ubuntu-latest, r: "release" }
 
     env:
       # [Custom env] Set max dll number higher
