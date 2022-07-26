@@ -3,7 +3,7 @@
 # mlr 2.19.0.9001
 
 - Fixed `information.gain` filter calculation. Before, `chi.squared` was calculated even though `information.gain` was requested due to a glitch in the filter naming (#2816, @jokokojote)
-
+- Make `helpLearnerParam()`'s HTML parsing more robust (#2843)
 
 # mlr 2.19.0.9000
 
