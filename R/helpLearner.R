@@ -193,6 +193,11 @@ makeParamHelpList = function(funs, pkgs, par.set) {
     html = XML::htmlParse(html)
     # try to extract the 'R argblock' table
     tab = XML::getNodeSet(html, "//table[@summary='R argblock']")
+    if (!length(tab)) {
+      # R help html is not perfectly reliable in tagging the argblock table.
+      # In that case, use the first table under the '<h3>Arguments</h3>' heading.
+      tab = XML::getNodeSet(html, "//h3[text()='Arguments']/following-sibling::table")
+    }
     if (length(tab) < 1) {
       next
     }
