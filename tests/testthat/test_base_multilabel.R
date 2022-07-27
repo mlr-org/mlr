@@ -152,7 +152,7 @@ testMultilabelWrapper = function(fun, ...) {
     args = list(...)
     if (!is.null(args$order)) {
       lrn2 = fun(lrn1, ...)
-      expect_error(train(lrn2, multilabel3t.task), "Must be equal to set")
+      expect_error(train(lrn2, multilabel3t.task), "Must be equal to set|Must be a set equal")
     }
   })
 }
