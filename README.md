@@ -1,4 +1,4 @@
-# mlr <img src="man/figures/logo.png" align="right" />
+ mlr <img src="man/figures/logo.png" align="right" />
 
 Package website: [release](https://mlr.mlr-org.com/) | [dev](https://mlr.mlr-org.com/dev/)
 
@@ -18,7 +18,6 @@ Machine learning in R.
 
 - [CRAN release site](https://CRAN.R-project.org/package=mlr)
 - [Online tutorial](https://mlr.mlr-org.com/index.html)
-- [Cheatsheet](https://cheatsheets.mlr-org.com/mlr.pdf)
 - [Changelog](https://mlr.mlr-org.com/news/index.html)
 
 - [Stackoverflow](https://stackoverflow.com/questions/tagged/mlr): `#mlr`
