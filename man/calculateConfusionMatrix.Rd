@@ -62,11 +62,11 @@ All predictions on all test sets are joined to a vector yhat, as are all labels
 joined to a vector y. Then yhat is simply tabulated vs. y, as if both were computed on
 a single test set. This probably mainly makes sense when cross-validation is used for resampling.
 }
-\section{Methods (by generic)}{
+\section{Functions}{
 \itemize{
-\item \code{print}: 
-}}
+\item \code{print(ConfusionMatrix)}: 
 
+}}
 \examples{
 # get confusion matrix after simple manual prediction
 allinds = 1:150
