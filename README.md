@@ -12,7 +12,7 @@ Machine learning in R.
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/mlr)](https://cran.r-project.org/package=mlr)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
 [![lifecycle](https://img.shields.io/badge/lifecycle-retired-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![codecov](https://codecov.io/gh/mlr-org/mlr/branch/main/graph/badge.svg)](https://codecov.io/gh/mlr-org/mlr)
+[![codecov](https://codecov.io/gh/mlr-org/mlr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mlr-org/mlr)
 
 <!-- badges: end -->
 
