@@ -91,7 +91,7 @@ jobs:
 
       - name: "[Cache] Cache R packages"
         if: runner.os != 'Windows'
-        uses: pat-s/always-upload-cache@v2
+        uses: pat-s/always-upload-cache@v3
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
@@ -99,7 +99,7 @@ jobs:
 
       - name: "[Custom block] [Cache] Cache ccache"
         if: runner.os != 'Windows'
-        uses: pat-s/always-upload-cache@v2.0.0
+        uses: pat-s/always-upload-cache@v3
         with:
           path: ${{ env.CCACHE_DIR}}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-${{steps.datew.outputs.datew}}
