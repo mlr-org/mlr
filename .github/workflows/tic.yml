@@ -1,4 +1,4 @@
-## tic GitHub Actions template: linux-macos-windows-deploy
+## tic GitHub Actions template: custom-deploy
 ## revision date: 2022-03-01
 on:
   workflow_dispatch:
@@ -28,10 +28,10 @@ jobs:
       matrix:
         config:
           # use a different tic template type if you do not want to build on all listed platforms
-          - { os: windows-latest, r: "release" }
+          # - { os: windows-latest, r: "release" }
           - { os: macOS-latest, r: "release", pkgdown: "true", latex: "true" }
           - { os: ubuntu-latest, r: "devel" }
-          - { os: ubuntu-latest, r: "release" }
+          # - { os: ubuntu-latest, r: "release" }
 
     env:
       # [Custom env] Set max dll number higher
@@ -118,7 +118,7 @@ jobs:
           rm '/usr/local/bin/gfortran'
           brew install ccache gdal geos proj udunits jpeg sqlite
           brew install xquartz
-          mkdir ~/.R && echo -e "CPPFLAGS += -L/usr/local/opt/jpeg/lib" >> ~/.R/Makevars
+          mkdir ~/.R && echo -e "CPPFLAGS += -L/usr/local/opt/jpeg/lib -Qunused-arguments" >> ~/.R/Makevars
 
       - name: "[Stage] [Linux] Install required system libs"
         if: runner.os == 'Linux'
