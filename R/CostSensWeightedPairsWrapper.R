@@ -23,7 +23,7 @@
 #' One-versus-one Binary Classification.
 #' In: Proceedings of the Sixth Asian Conference on Machine Learning.
 #' JMLR Workshop and Conference Proceedings, vol 39, pp. 371-386. JMLR W&CP (2014).
-#' <https://www.jmlr.org/proceedings/papers/v39/lin14.pdf>
+#' <https://proceedings.mlr.press/v39/lin14.pdf>
 #' @family costsens
 #' @aliases CostSensWeightedPairsWrapper CostSensWeightedPairsModel
 makeCostSensWeightedPairsWrapper = function(learner) {
