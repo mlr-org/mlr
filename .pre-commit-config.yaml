@@ -38,3 +38,4 @@ repos:
 
 ci:
     autoupdate_schedule: monthly
+    skip: [style-files]
