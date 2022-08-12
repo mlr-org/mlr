@@ -6,7 +6,7 @@ via the methods specified in feat.methods and transforms all mentioned functiona
 Additionally, a &amp;#8220;extractFDAFeatDesc&amp;#8221; object
 which contains learned coefficients and other helpful data for
 re-extraction during the predict-phase is returned. This can be used with
-reextractFDAFeatures in order to extract features during the prediction phase."><title>Extract features from functional data. — extractFDAFeatures • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Roboto-0.4.0/font.css" rel="stylesheet"><link href="../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet"><link href="../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Extract features from functional data. — extractFDAFeatures"><meta property="og:description" content="Extract non-functional features from functional features using various methods.
+reextractFDAFeatures in order to extract features during the prediction phase."><title>Extract features from functional data. — extractFDAFeatures • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Extract features from functional data. — extractFDAFeatures"><meta property="og:description" content="Extract non-functional features from functional features using various methods.
 The function extractFDAFeatures performs the extraction for all functional features
 via the methods specified in feat.methods and transforms all mentioned functional
 (matrix) features into regular data.frame columns.
@@ -160,7 +160,7 @@ re-extraction during the predict-phase is returned. This can be used with
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">extractFDAFeatures</span><span class="op">(</span><span class="va">obj</span>, target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0L</span><span class="op">)</span>, feat.methods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">extractFDAFeatures</span><span class="op">(</span><span class="va">obj</span>, target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0L</span><span class="op">)</span>, feat.methods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -169,10 +169,14 @@ re-extraction during the predict-phase is returned. This can be used with
 <dd><p>(<a href="Task.html">Task</a> | <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>)<br>
 Task or data.frame to extract functional features from.
 Must contain functional features as matrix columns.</p></dd>
+
+
 <dt>target</dt>
 <dd><p>(<code>character(1)</code>)<br>
 Task target column. Only neccessary for data.frames
 Default is <code>character(0)</code>.</p></dd>
+
+
 <dt>feat.methods</dt>
 <dd><p>(named <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>)<br>
 List of functional features along with the desired methods for each functional feature.
@@ -183,17 +187,24 @@ Available feature extraction methods are available under family <code>fda_featex
 Specifying a functional feature multiple times with different extraction methods allows
 for the extraction of different features from the same functional.
 Default is <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> which does nothing.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>(any)<br>
 Further hyperparameters passed on to the <code>feat.methods</code> specified above.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>(<a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>)</p>
+    
+
+<p>(<a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>)</p>
 <dl><dt>data|task (<a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> | <a href="Task.html">Task</a>)</dt>
 <dd><p>Extracted features, same type as obj.</p></dd>
+
 <dt>desc (<code>extracFDAFeatDesc</code>)</dt>
 <dd><p>Description object. See description for details.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -212,12 +223,12 @@ parameters for reextraction.</p></li>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">24</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fdf</span> <span class="op">=</span> <span class="fu"><a href="makeFunctionalData.html">makeFunctionalData</a></span><span class="op">(</span><span class="va">df</span>, fd.features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, x2 <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>, exclude.cols <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">fdf</span>, target <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">extracted</span> <span class="op">=</span> <span class="fu">extractFDAFeatures</span><span class="op">(</span><span class="va">task</span>,</span>
-<span class="r-in">  feat.methods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"x1"</span> <span class="op">=</span> <span class="fu"><a href="extractFDAFourier.html">extractFDAFourier</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"x2"</span> <span class="op">=</span> <span class="fu"><a href="extractFDAWavelets.html">extractFDAWavelets</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="st">"haar"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">extracted</span><span class="op">$</span><span class="va">task</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">24</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fdf</span> <span class="op">=</span> <span class="fu"><a href="makeFunctionalData.html">makeFunctionalData</a></span><span class="op">(</span><span class="va">df</span>, fd.features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, x2 <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>, exclude.cols <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">fdf</span>, target <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">extracted</span> <span class="op">=</span> <span class="fu">extractFDAFeatures</span><span class="op">(</span><span class="va">task</span>,</span></span>
+<span class="r-in"><span>  feat.methods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"x1"</span> <span class="op">=</span> <span class="fu"><a href="extractFDAFourier.html">extractFDAFourier</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"x2"</span> <span class="op">=</span> <span class="fu"><a href="extractFDAWavelets.html">extractFDAWavelets</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="st">"haar"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">extracted</span><span class="op">$</span><span class="va">task</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Supervised task: fdf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Type: classif</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Target: y</span>
@@ -233,7 +244,7 @@ parameters for reextraction.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a b </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Positive class: a</span>
-<span class="r-in"><span class="fu"><a href="reextractFDAFeatures.html">reextractFDAFeatures</a></span><span class="op">(</span><span class="va">task</span>, <span class="va">extracted</span><span class="op">$</span><span class="va">desc</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="reextractFDAFeatures.html">reextractFDAFeatures</a></span><span class="op">(</span><span class="va">task</span>, <span class="va">extracted</span><span class="op">$</span><span class="va">desc</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Supervised task: fdf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Type: classif</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Target: y</span>
@@ -260,7 +271,7 @@ parameters for reextraction.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

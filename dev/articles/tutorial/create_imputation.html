@@ -14,10 +14,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
 <script src="../../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../../deps/_Roboto-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet">
+<link href="../../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Creating an Imputation Method">
@@ -163,7 +163,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Creating an Imputation Method</h1>
             
       
@@ -187,28 +187,28 @@
 </h2>
 <p>Let’s have a look at function imputeMean (<code><a href="../../reference/imputations.html">imputations()</a></code>).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">imputeMean</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="op">)</span> 
-<span class="op">{</span>
-    <span class="fu"><a href="../../reference/makeImputeMethod.html">makeImputeMethod</a></span><span class="op">(</span>learn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">col</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">data</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span>, 
-        na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, impute <span class="op">=</span> <span class="va">simpleImpute</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">imputeMean</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="op">)</span> </span>
+<span><span class="op">{</span></span>
+<span>    <span class="fu"><a href="../../reference/makeImputeMethod.html">makeImputeMethod</a></span><span class="op">(</span>learn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">col</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">data</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span>, </span>
+<span>        na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, impute <span class="op">=</span> <span class="va">simpleImpute</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p>imputeMean (<code><a href="../../reference/imputations.html">imputations()</a></code>) calls the unexported <code>mlr</code> function <code>simpleImpute</code> which is defined as follows.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">simpleImpute</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">col</span>, <span class="va">const</span><span class="op">)</span> 
-<span class="op">{</span>
-    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">const</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-        <span class="fu"><a href="https://rdrr.io/pkg/BBmisc/man/stopf.html" class="external-link">stopf</a></span><span class="op">(</span><span class="st">"Error imputing column '%s'. Maybe all input data was missing?"</span>, 
-            <span class="va">col</span><span class="op">)</span>
-    <span class="op">}</span>
-    <span class="va">x</span> <span class="op">=</span> <span class="va">data</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span>
-    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">const</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-        <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-    <span class="op">}</span>
-    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">is.factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">const</span> <span class="op"><a href="https://rdrr.io/pkg/BBmisc/man/nin.html" class="external-link">%nin%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-        <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">const</span><span class="op">)</span><span class="op">)</span>
-    <span class="op">}</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/replace.html" class="external-link">replace</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">const</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">simpleImpute</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">col</span>, <span class="va">const</span><span class="op">)</span> </span>
+<span><span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">const</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/BBmisc/man/stopf.html" class="external-link">stopf</a></span><span class="op">(</span><span class="st">"Error imputing column '%s'. Maybe all input data was missing?"</span>, </span>
+<span>            <span class="va">col</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="va">x</span> <span class="op">=</span> <span class="va">data</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">const</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">is.factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">const</span> <span class="op"><a href="https://rdrr.io/pkg/BBmisc/man/nin.html" class="external-link">%nin%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">const</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/replace.html" class="external-link">replace</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">const</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p>The <em>learn</em> function calculates the mean of the non-missing observations in column <code>col</code>. The mean is passed via argument <code>const</code> to the <em>impute</em> function that replaces all missing values in feature <code>col</code>.</p>
 </div>
 <div class="section level2">
@@ -217,41 +217,41 @@
 <p>Now let’s write a new imputation method: A frequently used simple technique for longitudinal data is <em>last observation carried forward</em> (LOCF). Missing values are replaced by the most recent observed value.</p>
 <p>In the <strong>R</strong> code below the <em>learn</em> function determines the last observed value previous to each <code>NA</code> (<code>values</code>) as well as the corresponding number of consecutive <code>NA's</code> (<code>times</code>). The <em>impute</em> function generates a vector by replicating the entries in <code>values</code> according to <code>times</code> and replaces the <code>NA's</code> in feature <code>col</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">imputeLOCF</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../../reference/makeImputeMethod.html">makeImputeMethod</a></span><span class="op">(</span>
-    learn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">col</span><span class="op">)</span> <span class="op">{</span>
-      <span class="va">x</span> <span class="op">=</span> <span class="va">data</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span>
-      <span class="va">ind</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-      <span class="va">dind</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">ind</span><span class="op">)</span>
-      <span class="va">lastValue</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">dind</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># position of the last observed value previous to NA</span>
-      <span class="va">lastNA</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">dind</span> <span class="op">==</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="co"># position of the last of potentially several consecutive NA's</span>
-      <span class="va">values</span> <span class="op">=</span> <span class="va">x</span><span class="op">[</span><span class="va">lastValue</span><span class="op">]</span> <span class="co"># last observed value previous to NA</span>
-      <span class="va">times</span> <span class="op">=</span> <span class="va">lastNA</span> <span class="op">-</span> <span class="va">lastValue</span> <span class="co"># number of consecutive NA's</span>
-      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">values</span>, times <span class="op">=</span> <span class="va">times</span><span class="op">)</span><span class="op">)</span>
-    <span class="op">}</span>,
-    impute <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">col</span>, <span class="va">values</span>, <span class="va">times</span><span class="op">)</span> <span class="op">{</span>
-      <span class="va">x</span> <span class="op">=</span> <span class="va">data</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/replace.html" class="external-link">replace</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">values</span>, <span class="va">times</span><span class="op">)</span><span class="op">)</span>
-    <span class="op">}</span>
-  <span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">imputeLOCF</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../../reference/makeImputeMethod.html">makeImputeMethod</a></span><span class="op">(</span></span>
+<span>    learn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">col</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">x</span> <span class="op">=</span> <span class="va">data</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span></span>
+<span>      <span class="va">ind</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>      <span class="va">dind</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">ind</span><span class="op">)</span></span>
+<span>      <span class="va">lastValue</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">dind</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># position of the last observed value previous to NA</span></span>
+<span>      <span class="va">lastNA</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">dind</span> <span class="op">==</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="co"># position of the last of potentially several consecutive NA's</span></span>
+<span>      <span class="va">values</span> <span class="op">=</span> <span class="va">x</span><span class="op">[</span><span class="va">lastValue</span><span class="op">]</span> <span class="co"># last observed value previous to NA</span></span>
+<span>      <span class="va">times</span> <span class="op">=</span> <span class="va">lastNA</span> <span class="op">-</span> <span class="va">lastValue</span> <span class="co"># number of consecutive NA's</span></span>
+<span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">values</span>, times <span class="op">=</span> <span class="va">times</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span>,</span>
+<span>    impute <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">col</span>, <span class="va">values</span>, <span class="va">times</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">x</span> <span class="op">=</span> <span class="va">data</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/replace.html" class="external-link">replace</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">values</span>, <span class="va">times</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p>Note that this function is just for demonstration and is lacking some checks for real-world usage (for example ‘What should happen if the first value in <code>x</code> is already missing?’). Below it is used to impute the missing values in features <code>Ozone</code> and <code>Solar.R</code> in the airquality (<code><a href="https://rdrr.io/r/datasets/airquality.html" class="external-link">datasets::airquality()</a></code>) data set.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span>
-<span class="va">imp</span> <span class="op">=</span> <span class="fu"><a href="../../reference/impute.html">impute</a></span><span class="op">(</span><span class="va">airquality</span>, cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Ozone <span class="op">=</span> <span class="fu">imputeLOCF</span><span class="op">(</span><span class="op">)</span>, Solar.R <span class="op">=</span> <span class="fu">imputeLOCF</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
-  dummy.cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Ozone"</span>, <span class="st">"Solar.R"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">imp</span><span class="op">$</span><span class="va">data</span>, <span class="fl">10</span><span class="op">)</span>
-<span class="co">##    Ozone Solar.R Wind Temp Month Day Ozone.dummy Solar.R.dummy</span>
-<span class="co">## 1     41     190  7.4   67     5   1       FALSE         FALSE</span>
-<span class="co">## 2     36     118  8.0   72     5   2       FALSE         FALSE</span>
-<span class="co">## 3     12     149 12.6   74     5   3       FALSE         FALSE</span>
-<span class="co">## 4     18     313 11.5   62     5   4       FALSE         FALSE</span>
-<span class="co">## 5     18     313 14.3   56     5   5        TRUE          TRUE</span>
-<span class="co">## 6     28     313 14.9   66     5   6       FALSE          TRUE</span>
-<span class="co">## 7     23     299  8.6   65     5   7       FALSE         FALSE</span>
-<span class="co">## 8     19      99 13.8   59     5   8       FALSE         FALSE</span>
-<span class="co">## 9      8      19 20.1   61     5   9       FALSE         FALSE</span>
-<span class="co">## 10     8     194  8.6   69     5  10        TRUE         FALSE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span></span>
+<span><span class="va">imp</span> <span class="op">=</span> <span class="fu"><a href="../../reference/impute.html">impute</a></span><span class="op">(</span><span class="va">airquality</span>, cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Ozone <span class="op">=</span> <span class="fu">imputeLOCF</span><span class="op">(</span><span class="op">)</span>, Solar.R <span class="op">=</span> <span class="fu">imputeLOCF</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  dummy.cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Ozone"</span>, <span class="st">"Solar.R"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">imp</span><span class="op">$</span><span class="va">data</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">##    Ozone Solar.R Wind Temp Month Day Ozone.dummy Solar.R.dummy</span></span>
+<span><span class="co">## 1     41     190  7.4   67     5   1       FALSE         FALSE</span></span>
+<span><span class="co">## 2     36     118  8.0   72     5   2       FALSE         FALSE</span></span>
+<span><span class="co">## 3     12     149 12.6   74     5   3       FALSE         FALSE</span></span>
+<span><span class="co">## 4     18     313 11.5   62     5   4       FALSE         FALSE</span></span>
+<span><span class="co">## 5     18     313 14.3   56     5   5        TRUE          TRUE</span></span>
+<span><span class="co">## 6     28     313 14.9   66     5   6       FALSE          TRUE</span></span>
+<span><span class="co">## 7     23     299  8.6   65     5   7       FALSE         FALSE</span></span>
+<span><span class="co">## 8     19      99 13.8   59     5   8       FALSE         FALSE</span></span>
+<span><span class="co">## 9      8      19 20.1   61     5   9       FALSE         FALSE</span></span>
+<span><span class="co">## 10     8     194  8.6   69     5  10        TRUE         FALSE</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -266,7 +266,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

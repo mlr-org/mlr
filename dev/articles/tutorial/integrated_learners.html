@@ -14,10 +14,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
 <script src="../../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../../deps/_Roboto-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet">
+<link href="../../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Integrated Learners">
@@ -163,7 +163,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Integrated Learners</h1>
             
       
@@ -177,7 +177,7 @@
 <p>Columns <strong>Num.</strong>, <strong>Fac.</strong>, <strong>Ord.</strong>, <strong>NAs</strong>, and <strong>Weights</strong> indicate if a method can cope with numerical, factor, and ordered factor predictors, if it can deal with missing values in a meaningful way (other than simply removing observations with missing values) and if observation weights are supported.</p>
 <p>Column <strong>Props</strong> shows further properties of the learning methods specific to the type of learning task. See also <code><a href="../../reference/RLearner.html">RLearner()</a></code> for details.</p>
 <div class="section level2">
-<h2 id="classification-83">Classification (83)<a class="anchor" aria-label="anchor" href="#classification-83"></a>
+<h2 id="classification-76">Classification (76)<a class="anchor" aria-label="anchor" href="#classification-76"></a>
 </h2>
 <p>For classification the following additional learner properties are relevant and shown in column <strong>Props</strong>:</p>
 <ul>
@@ -412,18 +412,6 @@
 </tr>
 <tr class="even">
 <td align="left">
-<strong>classif.extraTrees</strong> <br><em>extraTrees</em> <br><br>Extremely Randomized Trees</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/extraTrees/" class="external-link">extraTrees</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="left">prob<br>twoclass<br>multiclass</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left">
 <strong>classif.fdausc.glm</strong> <br><em>fdausc.glm</em> <br><br>Generalized Linear Models classification on FDA</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/fda.usc/" class="external-link">fda.usc</a></td>
 <td align="center"></td>
@@ -434,7 +422,7 @@
 <td align="left">prob<br>twoclass<br>multiclass<br>functionals</td>
 <td align="left">model$C[[1]] is set to quote(classif.glm)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.fdausc.kernel</strong> <br><em>fdausc.kernel</em> <br><br>Kernel classification on FDA</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/fda.usc/" class="external-link">fda.usc</a></td>
@@ -446,7 +434,7 @@
 <td align="left">prob<br>twoclass<br>multiclass<br>single.functional</td>
 <td align="left">Argument draw=FALSE is used as default.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.fdausc.knn</strong> <br><em>fdausc.knn</em> <br><br>fdausc.knn</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/fda.usc/" class="external-link">fda.usc</a></td>
@@ -458,7 +446,7 @@
 <td align="left">prob<br>twoclass<br>multiclass<br>single.functional</td>
 <td align="left">Argument draw=FALSE is used as default.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.fdausc.np</strong> <br><em>fdausc.np</em> <br><br>Nonparametric classification on FDA</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/fda.usc/" class="external-link">fda.usc</a></td>
@@ -470,7 +458,7 @@
 <td align="left">prob<br>twoclass<br>multiclass<br>single.functional</td>
 <td align="left">Argument draw=FALSE is used as default. Additionally, mod$C[[1]] is set to quote(classif.np)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.FDboost</strong> <br><em>FDboost</em> <br><br>Functional linear array classification boosting</td>
 <td align="left">
@@ -484,7 +472,7 @@
 <td align="left">prob<br>twoclass<br>functionals</td>
 <td align="left">Uses only one base learner per functional or scalar covariate. Uses the same hyperparameters for every baselearner. Currently does not support interaction between scalar covariates. Default for family has been set to ‘Binomial’, as ‘Gaussian’ is not applicable.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.featureless</strong> <br><em>featureless</em> <br><br>Featureless classifier</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/" class="external-link">mlr</a></td>
@@ -496,7 +484,7 @@
 <td align="left">prob<br>twoclass<br>multiclass<br>functionals</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.fgam</strong> <br><em>FGAM</em> <br><br>functional general additive model</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/refund/" class="external-link">refund</a></td>
@@ -508,7 +496,7 @@
 <td align="left">prob<br>twoclass<br>functionals<br>single.functional</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.fnn</strong> <br><em>fnn</em> <br><br>Fast k-Nearest Neighbour</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/FNN/" class="external-link">FNN</a></td>
@@ -520,7 +508,7 @@
 <td align="left">twoclass<br>multiclass</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.gamboost</strong> <br><em>gamboost</em> <br><br>Gradient boosting with smooth components</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mboost/" class="external-link">mboost</a></td>
@@ -533,7 +521,7 @@
 <td align="left">
 <code>family</code> has been set to <code><a href="https://rdrr.io/pkg/mboost/man/Family.html" class="external-link">Binomial()</a></code> by default. For ‘family’ ‘AUC’ and ‘AdaExp’ probabilities cannot be predicted.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.gaterSVM</strong> <br><em>gaterSVM</em> <br><br>Mixture of SVMs with Neural Network Gater Function</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/SwarmSVM/" class="external-link">SwarmSVM</a></td>
@@ -546,7 +534,7 @@
 <td align="left">
 <code>m</code> set to <code>3</code> and <code>max.iter</code> set to <code>1</code> by default.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.gausspr</strong> <br><em>gausspr</em> <br><br>Gaussian Processes</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/kernlab/" class="external-link">kernlab</a></td>
@@ -558,7 +546,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left">Kernel parameters have to be passed directly and not by using the <code>kpar</code> list in <code>gausspr</code>. Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.gbm</strong> <br><em>gbm</em> <br><br>Gradient Boosting Machine</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/gbm/" class="external-link">gbm</a></td>
@@ -570,18 +558,6 @@
 <td align="left">prob<br>twoclass<br>multiclass<br>featimp</td>
 <td align="left">
 <code>keep.data</code> is set to FALSE to reduce memory requirements. Param ‘n.cores’ has been to set to ‘1’ by default to suppress parallelization by the package.</td>
-</tr>
-<tr class="odd">
-<td align="left">
-<strong>classif.geoDA</strong> <br><em>geoda</em> <br><br>Geometric Predictive Discriminant Analysis</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/DiscriMiner/" class="external-link">DiscriMiner</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="left">twoclass<br>multiclass</td>
-<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left">
@@ -817,18 +793,6 @@
 </tr>
 <tr class="odd">
 <td align="left">
-<strong>classif.linDA</strong> <br><em>linda</em> <br><br>Linear Discriminant Analysis</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/DiscriMiner/" class="external-link">DiscriMiner</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="left">twoclass<br>multiclass</td>
-<td align="left">Set <code>validation = NULL</code> by default to disable internal test set validation.</td>
-</tr>
-<tr class="even">
-<td align="left">
 <strong>classif.logreg</strong> <br><em>logreg</em> <br><br>Logistic Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/stats/" class="external-link">stats</a></td>
 <td align="center">X</td>
@@ -839,7 +803,7 @@
 <td align="left">prob<br>twoclass</td>
 <td align="left">Delegates to <code>glm</code> with <code>family = binomial(link = 'logit')</code>. We set ‘model’ to FALSE by default to save memory.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.lssvm</strong> <br><em>lssvm</em> <br><br>Least Squares Support Vector Machine</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/kernlab/" class="external-link">kernlab</a></td>
@@ -852,7 +816,7 @@
 <td align="left">
 <code>fitted</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.lvq1</strong> <br><em>lvq1</em> <br><br>Learning Vector Quantization</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/class/" class="external-link">class</a></td>
@@ -864,7 +828,7 @@
 <td align="left">twoclass<br>multiclass</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.mda</strong> <br><em>mda</em> <br><br>Mixture Discriminant Analysis</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mda/" class="external-link">mda</a></td>
@@ -877,7 +841,7 @@
 <td align="left">
 <code>keep.fitted</code> has been set to <code>FALSE</code> by default for speed and we use <code>start.method = "lvq"</code> for more robust behavior / less technical crashes.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.mlp</strong> <br><em>mlp</em> <br><br>Multi-Layer Perceptron</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/RSNNS/" class="external-link">RSNNS</a></td>
@@ -889,7 +853,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.multinom</strong> <br><em>multinom</em> <br><br>Multinomial Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/nnet/" class="external-link">nnet</a></td>
@@ -901,7 +865,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.naiveBayes</strong> <br><em>nbayes</em> <br><br>Naive Bayes</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/e1071/" class="external-link">e1071</a></td>
@@ -913,7 +877,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.neuralnet</strong> <br><em>neuralnet</em> <br><br>Neural Network from neuralnet</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/neuralnet/" class="external-link">neuralnet</a></td>
@@ -926,7 +890,7 @@
 <td align="left">
 <code>err.fct</code> has been set to <code>ce</code> and <code>linear.output</code> to FALSE to do classification.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.nnet</strong> <br><em>nnet</em> <br><br>Neural Network</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/nnet/" class="external-link">nnet</a></td>
@@ -939,7 +903,7 @@
 <td align="left">
 <code>linout=TRUE</code> is hardcoded for regression. <code>size</code> has been set to <code>3</code> by default.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.nnTrain</strong> <br><em>nn.train</em> <br><br>Training Neural Network by Backpropagation</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/deepnet/" class="external-link">deepnet</a></td>
@@ -951,18 +915,6 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left">
 <code>output</code> set to <code>softmax</code> by default. <code>max.number.of.layers</code> can be set to control and tune the maximal number of layers specified via <code>hidden</code>.</td>
-</tr>
-<tr class="even">
-<td align="left">
-<strong>classif.nodeHarvest</strong> <br><em>nodeHarvest</em> <br><br>Node Harvest</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/nodeHarvest/" class="external-link">nodeHarvest</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="left">prob<br>twoclass</td>
-<td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left">
@@ -1064,18 +1016,6 @@
 </tr>
 <tr class="odd">
 <td align="left">
-<strong>classif.quaDA</strong> <br><em>quada</em> <br><br>Quadratic Discriminant Analysis</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/DiscriMiner/" class="external-link">DiscriMiner</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="left">twoclass<br>multiclass</td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="left">
 <strong>classif.randomForest</strong> <br><em>rf</em> <br><br>Random Forest</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/randomForest/" class="external-link">randomForest</a></td>
 <td align="center">X</td>
@@ -1085,19 +1025,6 @@
 <td align="center"></td>
 <td align="left">prob<br>twoclass<br>multiclass<br>class.weights<br>featimp<br>oobpreds</td>
 <td align="left">Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures.</td>
-</tr>
-<tr class="odd">
-<td align="left">
-<strong>classif.randomForestSRC</strong> <br><em>rfsrc</em> <br><br>Random Forest</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/randomForestSRC/" class="external-link">randomForestSRC</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="left">prob<br>twoclass<br>multiclass<br>featimp<br>oobpreds</td>
-<td align="left">
-<code>na.action</code> has been set to <code>"na.impute"</code> by default to allow missing data support.</td>
 </tr>
 <tr class="even">
 <td align="left">
@@ -1138,18 +1065,6 @@
 </tr>
 <tr class="odd">
 <td align="left">
-<strong>classif.rknn</strong> <br><em>rknn</em> <br><br>Random k-Nearest-Neighbors</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/rknn/" class="external-link">rknn</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="left">twoclass<br>multiclass</td>
-<td align="left">k restricted to &lt; 99 as the code allocates arrays of static size</td>
-</tr>
-<tr class="even">
-<td align="left">
 <strong>classif.rotationForest</strong> <br><em>rotationForest</em> <br><br>Rotation Forest</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/rotationForest/" class="external-link">rotationForest</a></td>
 <td align="center">X</td>
@@ -1160,7 +1075,7 @@
 <td align="left">prob<br>twoclass</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.rpart</strong> <br><em>rpart</em> <br><br>Decision Tree</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/rpart/" class="external-link">rpart</a></td>
@@ -1173,7 +1088,7 @@
 <td align="left">
 <code>xval</code> has been set to <code>0</code> by default for speed.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.RRF</strong> <br><em>RRF</em> <br><br>Regularized Random Forests</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/RRF/" class="external-link">RRF</a></td>
@@ -1185,7 +1100,7 @@
 <td align="left">prob<br>twoclass<br>multiclass<br>featimp</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.saeDNN</strong> <br><em>sae.dnn</em> <br><br>Deep neural network with weights initialized by Stacked AutoEncoder</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/deepnet/" class="external-link">deepnet</a></td>
@@ -1198,7 +1113,7 @@
 <td align="left">
 <code>output</code> set to <code>"softmax"</code> by default.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.sda</strong> <br><em>sda</em> <br><br>Shrinkage Discriminant Analysis</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/sda/" class="external-link">sda</a></td>
@@ -1210,7 +1125,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.sparseLDA</strong> <br><em>sparseLDA</em> <br><br>Sparse Discriminant Analysis</td>
 <td align="left">
@@ -1224,7 +1139,7 @@
 <td align="left">prob<br>twoclass<br>multiclass</td>
 <td align="left">Arguments <code>Q</code> and <code>stop</code> are not yet provided as they depend on the task.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>classif.svm</strong> <br><em>svm</em> <br><br>Support Vector Machines (libsvm)</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/e1071/" class="external-link">e1071</a></td>
@@ -1236,7 +1151,7 @@
 <td align="left">prob<br>twoclass<br>multiclass<br>class.weights</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>classif.xgboost</strong> <br><em>xgboost</em> <br><br>eXtreme Gradient Boosting</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/xgboost/" class="external-link">xgboost</a></td>
@@ -1252,7 +1167,7 @@
 </table>
 </div>
 <div class="section level2">
-<h2 id="regression-59">Regression (59)<a class="anchor" aria-label="anchor" href="#regression-59"></a>
+<h2 id="regression-55">Regression (55)<a class="anchor" aria-label="anchor" href="#regression-55"></a>
 </h2>
 <p>Additional learner properties:</p>
 <ul>
@@ -1493,18 +1408,6 @@
 </tr>
 <tr class="even">
 <td align="left">
-<strong>regr.extraTrees</strong> <br><em>extraTrees</em> <br><br>Extremely Randomized Trees</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/extraTrees/" class="external-link">extraTrees</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left">
 <strong>regr.FDboost</strong> <br><em>FDboost</em> <br><br>Functional linear array regression boosting</td>
 <td align="left">
 <a href="http://www.rdocumentation.org/packages/FDboost/" class="external-link">FDboost</a><br><a href="http://www.rdocumentation.org/packages/mboost/" class="external-link">mboost</a>
@@ -1517,7 +1420,7 @@
 <td align="left">functionals</td>
 <td align="left">Only allow one base learner for functional covariate and one base learner for scalar covariate, the parameters for these base learners are the same. Also we currently do not support interaction between scalar covariates</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.featureless</strong> <br><em>featureless</em> <br><br>Featureless regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/" class="external-link">mlr</a></td>
@@ -1529,7 +1432,7 @@
 <td align="left">functionals</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.fgam</strong> <br><em>FGAM</em> <br><br>functional general additive model</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/refund/" class="external-link">refund</a></td>
@@ -1541,7 +1444,7 @@
 <td align="left">functionals<br>single.functional</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.fnn</strong> <br><em>fnn</em> <br><br>Fast k-Nearest Neighbor</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/FNN/" class="external-link">FNN</a></td>
@@ -1553,7 +1456,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.frbs</strong> <br><em>frbs</em> <br><br>Fuzzy Rule-based Systems</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/frbs/" class="external-link">frbs</a></td>
@@ -1565,7 +1468,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.gamboost</strong> <br><em>gamboost</em> <br><br>Gradient Boosting with Smooth Components</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mboost/" class="external-link">mboost</a></td>
@@ -1577,7 +1480,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.gausspr</strong> <br><em>gausspr</em> <br><br>Gaussian Processes</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/kernlab/" class="external-link">kernlab</a></td>
@@ -1589,7 +1492,7 @@
 <td align="left">se</td>
 <td align="left">Kernel parameters have to be passed directly and not by using the <code>kpar</code> list in <code>gausspr</code>. Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.gbm</strong> <br><em>gbm</em> <br><br>Gradient Boosting Machine</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/gbm/" class="external-link">gbm</a></td>
@@ -1602,7 +1505,7 @@
 <td align="left">
 <code>keep.data</code> is set to FALSE to reduce memory requirements, <code>distribution</code> has been set to <code>"gaussian"</code> by default.Param ‘n.cores’ has been to set to ‘1’ by default to suppress parallelization by the package.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.glm</strong> <br><em>glm</em> <br><br>Generalized Linear Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/stats/" class="external-link">stats</a></td>
@@ -1614,7 +1517,7 @@
 <td align="left">se</td>
 <td align="left">‘family’ must be a character and every family has its own link, i.e. family = ‘gaussian’, link.gaussian = ‘identity’, which is also the default. We set ‘model’ to FALSE by default to save memory.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.glmboost</strong> <br><em>glmboost</em> <br><br>Boosting for GLMs</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mboost/" class="external-link">mboost</a></td>
@@ -1626,7 +1529,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.glmnet</strong> <br><em>glmnet</em> <br><br>GLM with Lasso or Elasticnet Regularization</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/" class="external-link">glmnet</a></td>
@@ -1638,7 +1541,7 @@
 <td align="left"></td>
 <td align="left">Factors automatically get converted to dummy columns, ordered factors to integer. Parameter <code>s</code> (value of the regularization parameter used for predictions) is set to <code>0.01</code> by default, but needs to be tuned by the user. glmnet uses a global control object for its parameters. mlr resets all control parameters to their defaults before setting the specified parameters and after training. If you are setting glmnet.control parameters through glmnet.control, you need to save and re-set them after running the glmnet learner.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.GPfit</strong> <br><em>GPfit</em> <br><br>Gaussian Process</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/GPfit/" class="external-link">GPfit</a></td>
@@ -1650,7 +1553,7 @@
 <td align="left">se</td>
 <td align="left">(1) As the optimization routine assumes that the inputs are scaled to the unit hypercube [0,1]^d, the input gets scaled for each variable by default. If this is not wanted, scale = FALSE has to be set. (2) We replace the GPfit parameter ‘corr = list(type = ’exponential’,power = 1.95)’ to be seperate parameters ‘type’ and ‘power’, in the case of corr = list(type = ‘matern’, nu = 0.5), the seperate parameters are ‘type’ and ‘matern_nu_k = 0’, and nu is computed by ‘nu = (2 * matern_nu_k + 1) / 2 = 0.5’</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.h2o.deeplearning</strong> <br><em>h2o.dl</em> <br><br>h2o.deeplearning</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/h2o/" class="external-link">h2o</a></td>
@@ -1662,7 +1565,7 @@
 <td align="left"></td>
 <td align="left">The default value of <code>missing_values_handling</code> is <code>"MeanImputation"</code>, so missing values are automatically mean-imputed.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.h2o.gbm</strong> <br><em>h2o.gbm</em> <br><br>h2o.gbm</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/h2o/" class="external-link">h2o</a></td>
@@ -1674,7 +1577,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.h2o.glm</strong> <br><em>h2o.glm</em> <br><br>h2o.glm</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/h2o/" class="external-link">h2o</a></td>
@@ -1687,7 +1590,7 @@
 <td align="left">
 <code>family</code> is always set to <code>"gaussian"</code>. The default value of <code>missing_values_handling</code> is <code>"MeanImputation"</code>, so missing values are automatically mean-imputed.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.h2o.randomForest</strong> <br><em>h2o.rf</em> <br><br>h2o.randomForest</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/h2o/" class="external-link">h2o</a></td>
@@ -1699,7 +1602,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.IBk</strong> <br><em>ibk</em> <br><br>K-Nearest Neighbours</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/" class="external-link">RWeka</a></td>
@@ -1711,7 +1614,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.kknn</strong> <br><em>kknn</em> <br><br>K-Nearest-Neighbor regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/kknn/" class="external-link">kknn</a></td>
@@ -1723,7 +1626,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.km</strong> <br><em>km</em> <br><br>Kriging</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/DiceKriging/" class="external-link">DiceKriging</a></td>
@@ -1735,7 +1638,7 @@
 <td align="left">se</td>
 <td align="left">In predict, we currently always use <code>type = "SK"</code>. The extra parameter <code>jitter</code> (default is <code>FALSE</code>) enables adding a very small jitter (order 1e-12) to the x-values before prediction, as <code>predict.km</code> reproduces the exact y-values of the training data points, when you pass them in, even if the nugget effect is turned on. We further introduced <code>nugget.stability</code> which sets the <code>nugget</code> to <code>nugget.stability * var(y)</code> before each training to improve numerical stability. We recommend a setting of 10^-8</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.ksvm</strong> <br><em>ksvm</em> <br><br>Support Vector Machines</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/kernlab/" class="external-link">kernlab</a></td>
@@ -1747,7 +1650,7 @@
 <td align="left"></td>
 <td align="left">Kernel parameters have to be passed directly and not by using the <code>kpar</code> list in <code>ksvm</code>. Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.laGP</strong> <br><em>laGP</em> <br><br>Local Approximate Gaussian Process</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/laGP/" class="external-link">laGP</a></td>
@@ -1759,7 +1662,7 @@
 <td align="left">se</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.LiblineaRL2L1SVR</strong> <br><em>liblinl2l1svr</em> <br><br>L2-Regularized L1-Loss Support Vector Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/" class="external-link">LiblineaR</a></td>
@@ -1771,7 +1674,7 @@
 <td align="left"></td>
 <td align="left">Parameter <code>svr_eps</code> has been set to <code>0.1</code> by default.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.LiblineaRL2L2SVR</strong> <br><em>liblinl2l2svr</em> <br><br>L2-Regularized L2-Loss Support Vector Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/" class="external-link">LiblineaR</a></td>
@@ -1784,7 +1687,7 @@
 <td align="left">
 <code>type = 11</code> (the default) is primal and <code>type = 12</code> is dual problem. Parameter <code>svr_eps</code> has been set to <code>0.1</code> by default.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.lm</strong> <br><em>lm</em> <br><br>Simple Linear Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/stats/" class="external-link">stats</a></td>
@@ -1796,7 +1699,7 @@
 <td align="left">se</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.mars</strong> <br><em>mars</em> <br><br>Multivariate Adaptive Regression Splines</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mda/" class="external-link">mda</a></td>
@@ -1808,7 +1711,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>regr.mob</strong> <br><em>mob</em> <br><br>Model-based Recursive Partitioning Yielding a Tree with Fitted Models Associated with each Terminal Node</td>
 <td align="left">
@@ -1822,7 +1725,7 @@
 <td align="left"></td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">
 <strong>regr.nnet</strong> <br><em>nnet</em> <br><br>Neural Network</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/nnet/" class="external-link">nnet</a></td>
@@ -1834,18 +1737,6 @@
 <td align="left"></td>
 <td align="left">
 <code>size</code> has been set to <code>3</code> by default.</td>
-</tr>
-<tr class="even">
-<td align="left">
-<strong>regr.nodeHarvest</strong> <br><em>nodeHarvest</em> <br><br>Node Harvest</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/nodeHarvest/" class="external-link">nodeHarvest</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="left"></td>
-<td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left">
@@ -1897,19 +1788,6 @@
 </tr>
 <tr class="odd">
 <td align="left">
-<strong>regr.randomForestSRC</strong> <br><em>rfsrc</em> <br><br>Random Forest</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/randomForestSRC/" class="external-link">randomForestSRC</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="left">featimp<br>oobpreds</td>
-<td align="left">
-<code>na.action</code> has been set to <code>"na.impute"</code> by default to allow missing data support.</td>
-</tr>
-<tr class="even">
-<td align="left">
 <strong>regr.ranger</strong> <br><em>ranger</em> <br><br>Random Forests</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/ranger/" class="external-link">ranger</a></td>
 <td align="center">X</td>
@@ -1919,18 +1797,6 @@
 <td align="center">X</td>
 <td align="left">featimp<br>oobpreds<br>se</td>
 <td align="left">By default, internal parallelization is switched off (<code>num.threads = 1</code>), <code>verbose</code> output is disabled, <code>respect.unordered.factors</code> is set to <code>order</code> for all splitrules. All settings are changeable. <code>mtry.perc</code> sets <code>mtry</code> to <code>mtry.perc*getTaskNFeats(.task)</code>. Default for <code>mtry</code> is the floor of square root of number of features in task. SE estimation is mc bias-corrected jackknife after bootstrap, see the section about ‘regr.randomForest’ in <code><a href="../../reference/makeLearner.html">?makeLearner</a></code> for more details.</td>
-</tr>
-<tr class="odd">
-<td align="left">
-<strong>regr.rknn</strong> <br><em>rknn</em> <br><br>Random k-Nearest-Neighbors</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/rknn/" class="external-link">rknn</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="left"></td>
-<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left">
@@ -2009,7 +1875,7 @@
 </table>
 </div>
 <div class="section level2">
-<h2 id="survival-analysis-10">Survival analysis (10)<a class="anchor" aria-label="anchor" href="#survival-analysis-10"></a>
+<h2 id="survival-analysis-9">Survival analysis (9)<a class="anchor" aria-label="anchor" href="#survival-analysis-9"></a>
 </h2>
 <p>Additional learner properties:</p>
 <ul>
@@ -2018,17 +1884,17 @@
 <li>
 <em>rcens</em>, <em>lcens</em>, <em>icens</em>: The learner can handle right, left and/or interval censored data.</li>
 </ul>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
 <col width="12%">
-<col width="17%">
+<col width="15%">
 <col width="0%">
 <col width="0%">
 <col width="0%">
 <col width="0%">
 <col width="1%">
-<col width="2%">
-<col width="63%">
+<col width="1%">
+<col width="66%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Class / Short Name / Name</th>
@@ -2137,21 +2003,6 @@
 </tr>
 <tr class="even">
 <td align="left">
-<strong>surv.randomForestSRC</strong> <br><em>rfsrc</em> <br><br>Random Forest</td>
-<td align="left">
-<a href="http://www.rdocumentation.org/packages/survival/" class="external-link">survival</a><br><a href="http://www.rdocumentation.org/packages/randomForestSRC/" class="external-link">randomForestSRC</a>
-</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="left">featimp<br>oobpreds</td>
-<td align="left">
-<code>na.action</code> has been set to <code>"na.impute"</code> by default to allow missing data support.</td>
-</tr>
-<tr class="odd">
-<td align="left">
 <strong>surv.ranger</strong> <br><em>ranger</em> <br><br>Random Forests</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/ranger/" class="external-link">ranger</a></td>
 <td align="center">X</td>
@@ -2162,7 +2013,7 @@
 <td align="left">featimp</td>
 <td align="left">By default, internal parallelization is switched off (<code>num.threads = 1</code>), <code>verbose</code> output is disabled, <code>respect.unordered.factors</code> is set to <code>order</code> for all splitrules. All settings are changeable.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">
 <strong>surv.rpart</strong> <br><em>rpart</em> <br><br>Survival Tree</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/rpart/" class="external-link">rpart</a></td>
@@ -2346,19 +2197,19 @@
 <p>For <em>example-dependent costs</em> there are several ways to generate cost-sensitive learners from ordinary regression and classification learners. See section <a href="cost_sensitive_classif.html" target="_blank">cost-sensitive classification</a> and the documentation of <code><a href="../../reference/makeCostSensClassifWrapper.html">makeCostSensClassifWrapper()</a></code>, <code><a href="../../reference/makeCostSensRegrWrapper.html">makeCostSensRegrWrapper()</a></code> and <code><a href="../../reference/makeCostSensWeightedPairsWrapper.html">makeCostSensWeightedPairsWrapper()</a></code> for details.</p>
 </div>
 <div class="section level2">
-<h2 id="multilabel-classification-3">Multilabel classification (3)<a class="anchor" aria-label="anchor" href="#multilabel-classification-3"></a>
+<h2 id="multilabel-classification-2">Multilabel classification (2)<a class="anchor" aria-label="anchor" href="#multilabel-classification-2"></a>
 </h2>
 <table class="table">
 <colgroup>
-<col width="34%">
-<col width="25%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
-<col width="1%">
+<col width="50%">
+<col width="28%">
 <col width="2%">
 <col width="2%">
-<col width="27%">
+<col width="2%">
+<col width="2%">
+<col width="4%">
+<col width="3%">
+<col width="2%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Class / Short Name / Name</th>
@@ -2385,19 +2236,6 @@
 <td align="left"></td>
 </tr>
 <tr class="even">
-<td align="left">
-<strong>multilabel.randomForestSRC</strong> <br><em>rfsrc</em> <br><br>Random Forest</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/randomForestSRC/" class="external-link">randomForestSRC</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="left">prob</td>
-<td align="left">
-<code>na.action</code> has been set to <code>na.impute</code> by default to allow missing data support.</td>
-</tr>
-<tr class="odd">
 <td align="left">
 <strong>multilabel.rFerns</strong> <br><em>rFerns</em> <br><br>Random ferns</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/rFerns/" class="external-link">rFerns</a></td>
@@ -2426,7 +2264,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

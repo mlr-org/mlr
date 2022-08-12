@@ -5,7 +5,7 @@ parameters (par.vals) and a tunable
 ParamHelpers::ParamSet (par.set), which can be used by
 tuneParams for tuning the learner. Numerical parameters will
 either be specified by their lower and upper bounds or they will be
-discretized into specific values."><title>Get tuning parameters from a learner of the caret R-package. — getCaretParamSet • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Roboto-0.4.0/font.css" rel="stylesheet"><link href="../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet"><link href="../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Get tuning parameters from a learner of the caret R-package. — getCaretParamSet"><meta property="og:description" content="Constructs a grid of tuning parameters from a learner of the caret
+discretized into specific values."><title>Get tuning parameters from a learner of the caret R-package. — getCaretParamSet • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Get tuning parameters from a learner of the caret R-package. — getCaretParamSet"><meta property="og:description" content="Constructs a grid of tuning parameters from a learner of the caret
 R-package. These values are then converted into a list of non-tunable
 parameters (par.vals) and a tunable
 ParamHelpers::ParamSet (par.set), which can be used by
@@ -157,7 +157,7 @@ discretized into specific values.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">getCaretParamSet</span><span class="op">(</span><span class="va">learner</span>, length <span class="op">=</span> <span class="fl">3L</span>, <span class="va">task</span>, discretize <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getCaretParamSet</span><span class="op">(</span><span class="va">learner</span>, length <span class="op">=</span> <span class="fl">3L</span>, <span class="va">task</span>, discretize <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -167,42 +167,51 @@ discretized into specific values.</p>
 The name of the learner from <code>caret</code>
 (cf. <a href="https://topepo.github.io/caret/available-models.html" class="external-link">https://topepo.github.io/caret/available-models.html</a>). Note that the
 names in <code>caret</code> often differ from the ones in <code>mlr</code>.</p></dd>
+
+
 <dt>length</dt>
 <dd><p>(<code>integer(1)</code>)<br>
 A length / precision parameter which is used by <code>caret</code> for
 generating the grid of tuning parameters. <code>caret</code> generates either as
 many values per tuning parameter / dimension as defined by <code>length</code>
 or only a single value (in case of non-tunable <code>par.vals</code>).</p></dd>
+
+
 <dt>task</dt>
 <dd><p>(<a href="Task.html">Task</a>)<br>
 Learning task, which might be requested for creating the tuning grid.</p></dd>
+
+
 <dt>discretize</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Should the numerical parameters be discretized? Alternatively, they will
 be defined by their lower and upper bounds. The default is <code>TRUE</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>(<code>list(2)</code>). A list of parameters:</p><ul><li><p><code>par.vals</code> contains a list of all constant tuning parameters</p></li>
+    
+
+<p>(<code>list(2)</code>). A list of parameters:</p><ul><li><p><code>par.vals</code> contains a list of all constant tuning parameters</p></li>
 <li><p><code>par.set</code> is a <a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::ParamSet</a>, containing all the configurable
 tuning parameters</p></li>
 </ul></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"caret"</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"mlbench"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">classifTask</span> <span class="op">=</span> <span class="fu"><a href="ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, target <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># (1) classification (random forest) with discretized parameters</span></span>
-<span class="r-in">  <span class="fu">getCaretParamSet</span><span class="op">(</span><span class="st">"rf"</span>, length <span class="op">=</span> <span class="fl">9L</span>, task <span class="op">=</span> <span class="va">classifTask</span>, discretize <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># (2) regression (gradient boosting machine) without discretized parameters</span></span>
-<span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mlbench</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">BostonHousing</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">regrTask</span> <span class="op">=</span> <span class="fu"><a href="RegrTask.html">makeRegrTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">BostonHousing</span>, target <span class="op">=</span> <span class="st">"medv"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">getCaretParamSet</span><span class="op">(</span><span class="st">"gbm"</span>, length <span class="op">=</span> <span class="fl">9L</span>, task <span class="op">=</span> <span class="va">regrTask</span>, discretize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"caret"</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"mlbench"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">classifTask</span> <span class="op">=</span> <span class="fu"><a href="ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, target <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># (1) classification (random forest) with discretized parameters</span></span></span>
+<span class="r-in"><span>  <span class="fu">getCaretParamSet</span><span class="op">(</span><span class="st">"rf"</span>, length <span class="op">=</span> <span class="fl">9L</span>, task <span class="op">=</span> <span class="va">classifTask</span>, discretize <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># (2) regression (gradient boosting machine) without discretized parameters</span></span></span>
+<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mlbench</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">BostonHousing</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">regrTask</span> <span class="op">=</span> <span class="fu"><a href="RegrTask.html">makeRegrTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">BostonHousing</span>, target <span class="op">=</span> <span class="st">"medv"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">getCaretParamSet</span><span class="op">(</span><span class="st">"gbm"</span>, length <span class="op">=</span> <span class="fl">9L</span>, task <span class="op">=</span> <span class="va">regrTask</span>, discretize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: caret</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: ggplot2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: lattice</span>
@@ -237,7 +246,7 @@ tuning parameters</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

@@ -8,7 +8,7 @@ For a complete list of implemented algorithms look at the subclasses of
 All algorithms operate on a 0-1-bit encoding of candidate solutions. Per
 default a single bit corresponds to a single feature, but you are able to
 change this by using the arguments bit.names and bits.to.features. Thus
-allowing you to switch on whole groups of features with a single bit."><title>Feature selection by wrapper approach. — selectFeatures • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Roboto-0.4.0/font.css" rel="stylesheet"><link href="../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet"><link href="../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Feature selection by wrapper approach. — selectFeatures"><meta property="og:description" content="Optimizes the features for a classification or regression problem by choosing
+allowing you to switch on whole groups of features with a single bit."><title>Feature selection by wrapper approach. — selectFeatures • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Feature selection by wrapper approach. — selectFeatures"><meta property="og:description" content="Optimizes the features for a classification or regression problem by choosing
 a variable selection wrapper approach. Allows for different optimization
 methods, such as forward search or a genetic algorithm. You can select such
 an algorithm (and its settings) by passing a corresponding control object.
@@ -166,16 +166,16 @@ allowing you to switch on whole groups of features with a single bit.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">selectFeatures</span><span class="op">(</span>
-  <span class="va">learner</span>,
-  <span class="va">task</span>,
-  <span class="va">resampling</span>,
-  <span class="va">measures</span>,
-  <span class="va">bit.names</span>,
-  <span class="va">bits.to.features</span>,
-  <span class="va">control</span>,
-  show.info <span class="op">=</span> <span class="fu">getMlrOption</span><span class="op">(</span><span class="st">"show.info"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">selectFeatures</span><span class="op">(</span></span>
+<span>  <span class="va">learner</span>,</span>
+<span>  <span class="va">task</span>,</span>
+<span>  <span class="va">resampling</span>,</span>
+<span>  <span class="va">measures</span>,</span>
+<span>  <span class="va">bit.names</span>,</span>
+<span>  <span class="va">bits.to.features</span>,</span>
+<span>  <span class="va">control</span>,</span>
+<span>  show.info <span class="op">=</span> <span class="fu">getMlrOption</span><span class="op">(</span><span class="st">"show.info"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -184,43 +184,60 @@ allowing you to switch on whole groups of features with a single bit.</p>
 <dd><p>(<a href="makeLearner.html">Learner</a> | <code>character(1)</code>)<br>
 The learner.
 If you pass a string the learner will be created via <a href="makeLearner.html">makeLearner</a>.</p></dd>
+
+
 <dt>task</dt>
 <dd><p>(<a href="Task.html">Task</a>)<br>
 The task.</p></dd>
+
+
 <dt>resampling</dt>
 <dd><p>(<a href="makeResampleInstance.html">ResampleInstance</a> | <a href="makeResampleDesc.html">ResampleDesc</a>)<br>
 Resampling strategy for feature selection. If you pass a description, it is
 instantiated once at the beginning by default, so all points are evaluated
 on the same training/test sets. If you want to change that behavior, look
 at <a href="FeatSelControl.html">FeatSelControl</a>.</p></dd>
+
+
 <dt>measures</dt>
 <dd><p>(list of <a href="makeMeasure.html">Measure</a> | <a href="makeMeasure.html">Measure</a>)<br>
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 is optimized, others are simply evaluated.
 Default is the default measure for the task, see here <a href="getDefaultMeasure.html">getDefaultMeasure</a>.</p></dd>
+
+
 <dt>bit.names</dt>
 <dd><p><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a><br>
 Names of bits encoding the solutions. Also defines the total number of bits
 in the encoding. Per default these are the feature names of the task. Has
 to be used together with <code>bits.to.features</code>.</p></dd>
+
+
 <dt>bits.to.features</dt>
 <dd><p>(<code>function(x, task)</code>)<br>
 Function which transforms an integer-0-1 vector into a character vector of
 selected features. Per default a value of 1 in the ith bit selects the ith
 feature to be in the candidate solution. The vector <code>x</code> will correspond to
 the <code>bit.names</code> and has to be of the same length.</p></dd>
+
+
 <dt>control</dt>
 <dd><p>[see <a href="FeatSelControl.html">FeatSelControl</a>)
 Control object for search method.
 Also selects the optimization algorithm for feature selection.</p></dd>
+
+
 <dt>show.info</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Print verbose output on console?
 Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>(<a href="FeatSelResult.html">FeatSelResult</a>).</p>
+    
+
+<p>(<a href="FeatSelResult.html">FeatSelResult</a>).</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -233,10 +250,10 @@ Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="FeatSelControl.html">makeFeatSelControlSequential</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"sfs"</span>, maxit <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">=</span> <span class="fu">selectFeatures</span><span class="op">(</span><span class="st">"classif.rpart"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span>, control <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="FeatSelControl.html">makeFeatSelControlSequential</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"sfs"</span>, maxit <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu">selectFeatures</span><span class="op">(</span><span class="st">"classif.rpart"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span>, control <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel] Started selecting features for learner 'classif.rpart'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> With control class: FeatSelControlSequential</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Imputation value: 1</span>
@@ -257,7 +274,7 @@ Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel-x] 3: 0011 (2 bits)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel-y] 3: mmce.test.mean=0.0400000; time: 0.0 min</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [FeatSel] Result: Petal.Length (1 bits)</span>
-<span class="r-in"><span class="fu"><a href="analyzeFeatSelResult.html">analyzeFeatSelResult</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="analyzeFeatSelResult.html">analyzeFeatSelResult</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Features         : 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Performance      : mmce.test.mean=0.0400000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length</span>
@@ -267,7 +284,7 @@ Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Features:    1  Add    : Petal.Length          Perf = 0.04  Diff: 0.64  *</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Stopped, because no improving feature was found.</span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -279,7 +296,7 @@ Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

@@ -14,7 +14,7 @@ For details see ConfusionMatrix.
 Note that for resampling no further aggregation is currently performed.
 All predictions on all test sets are joined to a vector yhat, as are all labels
 joined to a vector y. Then yhat is simply tabulated vs. y, as if both were computed on
-a single test set. This probably mainly makes sense when cross-validation is used for resampling."><title>Confusion matrix. — calculateConfusionMatrix • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Roboto-0.4.0/font.css" rel="stylesheet"><link href="../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet"><link href="../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Confusion matrix. — calculateConfusionMatrix"><meta property="og:description" content="Calculates the confusion matrix for a (possibly resampled) prediction.
+a single test set. This probably mainly makes sense when cross-validation is used for resampling."><title>Confusion matrix. — calculateConfusionMatrix • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Confusion matrix. — calculateConfusionMatrix"><meta property="og:description" content="Calculates the confusion matrix for a (possibly resampled) prediction.
 Rows indicate true classes, columns predicted classes. The marginal elements count the number of
 classification errors for the respective row or column, i.e., the number of errors
 when you condition on the corresponding true (rows) or predicted (columns) class.
@@ -184,10 +184,10 @@ a single test set. This probably mainly makes sense when cross-validation is use
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">calculateConfusionMatrix</span><span class="op">(</span><span class="va">pred</span>, relative <span class="op">=</span> <span class="cn">FALSE</span>, sums <span class="op">=</span> <span class="cn">FALSE</span>, set <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span>
-
-<span class="co"># S3 method for ConfusionMatrix</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, both <span class="op">=</span> <span class="cn">TRUE</span>, digits <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calculateConfusionMatrix</span><span class="op">(</span><span class="va">pred</span>, relative <span class="op">=</span> <span class="cn">FALSE</span>, sums <span class="op">=</span> <span class="cn">FALSE</span>, set <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for ConfusionMatrix</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, both <span class="op">=</span> <span class="cn">TRUE</span>, digits <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -195,40 +195,57 @@ a single test set. This probably mainly makes sense when cross-validation is use
     <dl><dt>pred</dt>
 <dd><p>(<a href="Prediction.html">Prediction</a>)<br>
 Prediction object.</p></dd>
+
+
 <dt>relative</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 If <code>TRUE</code> two additional matrices are calculated. One is normalized by rows and one by
 columns.</p></dd>
+
+
 <dt>sums</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 If <code>TRUE</code> add absolute number of observations in each group.</p></dd>
+
+
 <dt>set</dt>
 <dd><p>(<code>character(1)</code>)<br>
 Specifies which part(s) of the data are used for the calculation.
 If <code>set</code> equals <code>train</code> or <code>test</code>, the <code>pred</code> object must be the result of a
 resampling, otherwise an error is thrown.
 Defaults to “both”. Possible values are “train”, “test”, or “both”.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>(<a href="ConfusionMatrix.html">ConfusionMatrix</a>)<br>
 Object to print.</p></dd>
+
+
 <dt>both</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 If <code>TRUE</code> both the absolute and relative confusion matrices are printed.</p></dd>
+
+
 <dt>digits</dt>
 <dd><p>(<code>integer(1)</code>)<br>
 How many numbers after the decimal point should be printed, only relevant for relative confusion matrices.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>(any)<br>
 Currently not used.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>(<a href="ConfusionMatrix.html">ConfusionMatrix</a>).</p>
+    
+
+<p>(<a href="ConfusionMatrix.html">ConfusionMatrix</a>).</p>
     </div>
     <div class="section level2">
-    <h2 id="methods-by-generic-">Methods (by generic)<a class="anchor" aria-label="anchor" href="#methods-by-generic-"></a></h2>
+    <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
     
-<ul><li><p><code>print</code>:</p></li>
+<ul><li><p><code>print(ConfusionMatrix)</code>:</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -247,60 +264,60 @@ Currently not used.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># get confusion matrix after simple manual prediction</span></span>
-<span class="r-in"><span class="va">allinds</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">150</span></span>
-<span class="r-in"><span class="va">train</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">allinds</span>, <span class="fl">75</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">test</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">allinds</span>, <span class="va">train</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="train.html">train</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">iris.task</span>, subset <span class="op">=</span> <span class="va">train</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">iris.task</span>, subset <span class="op">=</span> <span class="va">test</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">calculateConfusionMatrix</span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># get confusion matrix after simple manual prediction</span></span></span>
+<span class="r-in"><span><span class="va">allinds</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">150</span></span></span>
+<span class="r-in"><span><span class="va">train</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">allinds</span>, <span class="fl">75</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">test</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">allinds</span>, <span class="va">train</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="train.html">train</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">iris.task</span>, subset <span class="op">=</span> <span class="va">train</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">iris.task</span>, subset <span class="op">=</span> <span class="va">test</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">calculateConfusionMatrix</span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             predicted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> true         setosa versicolor virginica -err.-</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   setosa         23          0         0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         23         1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          1        27      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   -err.-          0          1         1      2</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">calculateConfusionMatrix</span><span class="op">(</span><span class="va">pred</span>, sums <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   setosa         31          0         0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         16         0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          4        24      4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -err.-          0          4         0      4</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">calculateConfusionMatrix</span><span class="op">(</span><span class="va">pred</span>, sums <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            setosa versicolor virginica -err.- -n-</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> setosa         23          0         0      0  23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> versicolor      0         23         1      1  24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> virginica       0          1        27      1  28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -err.-          0          1         1      2  NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -n-            23         24        28     NA  75</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">calculateConfusionMatrix</span><span class="op">(</span><span class="va">pred</span>, relative <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> setosa         31          0         0      0  31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> versicolor      0         16         0      0  16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> virginica       0          4        24      4  28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -err.-          0          4         0      4  NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -n-            31         20        24     NA  75</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">calculateConfusionMatrix</span><span class="op">(</span><span class="va">pred</span>, relative <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Relative confusion matrix (normalized by row/column):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             predicted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> true         setosa    versicolor virginica -err.-   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   setosa     1.00/1.00 0.00/0.00  0.00/0.00 0.00     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor 0.00/0.00 0.96/0.96  0.04/0.04 0.04     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica  0.00/0.00 0.04/0.04  0.96/0.96 0.04     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   -err.-          0.00      0.04       0.04 0.03     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor 0.00/0.00 1.00/0.80  0.00/0.00 0.00     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica  0.00/0.00 0.14/0.20  0.86/1.00 0.14     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -err.-          0.00      0.20       0.00 0.05     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Absolute confusion matrix:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             predicted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> true         setosa versicolor virginica -err.-</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   setosa         23          0         0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         23         1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          1        27      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   -err.-          0          1         1      2</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># now after cross-validation</span></span>
-<span class="r-in"><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="resample.html">crossval</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">iris.task</span>, iters <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   setosa         31          0         0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         16         0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          4        24      4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -err.-          0          4         0      4</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># now after cross-validation</span></span></span>
+<span class="r-in"><span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="resample.html">crossval</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">iris.task</span>, iters <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling: cross-validation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Measures:             mmce      </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.0133333 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.0400000 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.0266667 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.0133333 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: mmce.test.mean=0.0266667</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: mmce.test.mean=0.0200000</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">calculateConfusionMatrix</span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">calculateConfusionMatrix</span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             predicted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> true         setosa versicolor virginica -err.-</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   setosa         50          0         0      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   versicolor      0         48         2      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          2        48      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   -err.-          0          2         2      4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   virginica       0          1        49      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -err.-          0          1         2      3</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -312,7 +329,7 @@ Currently not used.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

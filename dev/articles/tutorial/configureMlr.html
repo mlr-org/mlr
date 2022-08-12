@@ -14,10 +14,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
 <script src="../../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../../deps/_Roboto-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet">
+<link href="../../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Configuring mlr">
@@ -163,7 +163,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Configuring mlr</h1>
             
       
@@ -185,190 +185,190 @@
 </h2>
 <p>You are bothered by all the output on the console like in this example?</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span><span class="op">)</span>
-<span class="co">## Resampling: holdout</span>
-<span class="co">## Measures:             mmce</span>
-<span class="co">## # weights:  18 (10 variable)</span>
-<span class="co">## initial  value 109.861229 </span>
-<span class="co">## iter  10 value 8.635871</span>
-<span class="co">## iter  20 value 0.942436</span>
-<span class="co">## iter  30 value 0.225516</span>
-<span class="co">## iter  40 value 0.144303</span>
-<span class="co">## iter  50 value 0.139259</span>
-<span class="co">## iter  60 value 0.123724</span>
-<span class="co">## iter  70 value 0.089635</span>
-<span class="co">## iter  80 value 0.084994</span>
-<span class="co">## iter  90 value 0.058982</span>
-<span class="co">## iter 100 value 0.056564</span>
-<span class="co">## final  value 0.056564 </span>
-<span class="co">## stopped after 100 iterations</span>
-<span class="co">## [Resample] iter 1:    0.0400000</span>
-<span class="co">## </span>
-<span class="co">## Aggregated Result: mmce.test.mean=0.0400000</span>
-<span class="co">## </span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span></span>
+<span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span><span class="op">)</span></span>
+<span><span class="co">## Resampling: holdout</span></span>
+<span><span class="co">## Measures:             mmce</span></span>
+<span><span class="co">## # weights:  18 (10 variable)</span></span>
+<span><span class="co">## initial  value 109.861229 </span></span>
+<span><span class="co">## iter  10 value 8.635871</span></span>
+<span><span class="co">## iter  20 value 0.942436</span></span>
+<span><span class="co">## iter  30 value 0.225516</span></span>
+<span><span class="co">## iter  40 value 0.144303</span></span>
+<span><span class="co">## iter  50 value 0.139259</span></span>
+<span><span class="co">## iter  60 value 0.123724</span></span>
+<span><span class="co">## iter  70 value 0.089635</span></span>
+<span><span class="co">## iter  80 value 0.084994</span></span>
+<span><span class="co">## iter  90 value 0.058982</span></span>
+<span><span class="co">## iter 100 value 0.056564</span></span>
+<span><span class="co">## final  value 0.056564 </span></span>
+<span><span class="co">## stopped after 100 iterations</span></span>
+<span><span class="co">## [Resample] iter 1:    0.0400000</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Aggregated Result: mmce.test.mean=0.0400000</span></span>
+<span><span class="co">## </span></span></code></pre></div>
 <p>You can suppress the output for this Learner <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> and this <code><a href="../../reference/resample.html">resample()</a></code> call as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>show.learner.output <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>show.learner.output <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>(Note that <code><a href="https://rdrr.io/pkg/nnet/man/multinom.html" class="external-link">nnet::multinom()</a></code> has a <code>trace</code> switch that can alternatively be used to turn off the progress messages.)</p>
 <p>To globally suppress the output for all subsequent learners and calls to <code><a href="../../reference/resample.html">resample()</a></code>, <code><a href="../../reference/benchmark.html">benchmark()</a></code> etc. do the following:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span>show.learner.output <span class="op">=</span> <span class="cn">FALSE</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span>show.learner.output <span class="op">=</span> <span class="cn">FALSE</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="accessing-and-resetting-the-configuration">Accessing and resetting the configuration<a class="anchor" aria-label="anchor" href="#accessing-and-resetting-the-configuration"></a>
 </h2>
 <p>Function <code><a href="../../reference/getMlrOptions.html">getMlrOptions()</a></code> returns a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">base::list()</a></code> with the current configuration.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/getMlrOptions.html">getMlrOptions</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## $show.info</span>
-<span class="co">## [1] FALSE</span>
-<span class="co">## </span>
-<span class="co">## $on.learner.error</span>
-<span class="co">## [1] "stop"</span>
-<span class="co">## </span>
-<span class="co">## $on.learner.warning</span>
-<span class="co">## [1] "warn"</span>
-<span class="co">## </span>
-<span class="co">## $on.par.without.desc</span>
-<span class="co">## [1] "stop"</span>
-<span class="co">## </span>
-<span class="co">## $on.par.out.of.bounds</span>
-<span class="co">## [1] "stop"</span>
-<span class="co">## </span>
-<span class="co">## $on.measure.not.applicable</span>
-<span class="co">## [1] "stop"</span>
-<span class="co">## </span>
-<span class="co">## $show.learner.output</span>
-<span class="co">## [1] FALSE</span>
-<span class="co">## </span>
-<span class="co">## $on.error.dump</span>
-<span class="co">## [1] FALSE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/getMlrOptions.html">getMlrOptions</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">## $show.info</span></span>
+<span><span class="co">## [1] FALSE</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $on.learner.error</span></span>
+<span><span class="co">## [1] "stop"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $on.learner.warning</span></span>
+<span><span class="co">## [1] "warn"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $on.par.without.desc</span></span>
+<span><span class="co">## [1] "stop"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $on.par.out.of.bounds</span></span>
+<span><span class="co">## [1] "stop"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $on.measure.not.applicable</span></span>
+<span><span class="co">## [1] "stop"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $show.learner.output</span></span>
+<span><span class="co">## [1] FALSE</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $on.error.dump</span></span>
+<span><span class="co">## [1] FALSE</span></span></code></pre></div>
 <p>To restore the default configuration call <code><a href="../../reference/configureMlr.html">configureMlr()</a></code> with an empty argument list.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/getMlrOptions.html">getMlrOptions</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## $show.info</span>
-<span class="co">## [1] TRUE</span>
-<span class="co">## </span>
-<span class="co">## $on.learner.error</span>
-<span class="co">## [1] "stop"</span>
-<span class="co">## </span>
-<span class="co">## $on.learner.warning</span>
-<span class="co">## [1] "warn"</span>
-<span class="co">## </span>
-<span class="co">## $on.par.without.desc</span>
-<span class="co">## [1] "stop"</span>
-<span class="co">## </span>
-<span class="co">## $on.par.out.of.bounds</span>
-<span class="co">## [1] "stop"</span>
-<span class="co">## </span>
-<span class="co">## $on.measure.not.applicable</span>
-<span class="co">## [1] "stop"</span>
-<span class="co">## </span>
-<span class="co">## $show.learner.output</span>
-<span class="co">## [1] TRUE</span>
-<span class="co">## </span>
-<span class="co">## $on.error.dump</span>
-<span class="co">## [1] FALSE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/getMlrOptions.html">getMlrOptions</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">## $show.info</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $on.learner.error</span></span>
+<span><span class="co">## [1] "stop"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $on.learner.warning</span></span>
+<span><span class="co">## [1] "warn"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $on.par.without.desc</span></span>
+<span><span class="co">## [1] "stop"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $on.par.out.of.bounds</span></span>
+<span><span class="co">## [1] "stop"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $on.measure.not.applicable</span></span>
+<span><span class="co">## [1] "stop"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $show.learner.output</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $on.error.dump</span></span>
+<span><span class="co">## [1] FALSE</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example-turning-off-parameter-checking">Example: Turning off parameter checking<a class="anchor" aria-label="anchor" href="#example-turning-off-parameter-checking"></a>
 </h2>
 <p>It might happen that you want to set a parameter of a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>, but the parameter is not registered in the learner’s parameter set (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::makeParamSet()</a></code>) yet. In this case you might want to <a href="https://github.com/mlr-org/mlr#get-in-touch" class="external-link">contact us</a> or <a href="https://github.com/mlr-org/mlr/issues/new" class="external-link">open an issue</a> as well! But until the problem is fixed you can turn off <code>mlr</code>’s parameter checking. The parameter setting will then be passed to the underlying function without further ado.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Support Vector Machine with linear kernel and new parameter 'newParam'</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, kernel <span class="op">=</span> <span class="st">"vanilladot"</span>, newParam <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="co">## Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newParam without available description object!</span>
-<span class="co">## Did you mean one of these hyperparameters instead: degree scaled kernel</span>
-<span class="co">## You can switch off this check by using configureMlr!</span>
-
-<span class="co"># Turn off parameter checking completely</span>
-<span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span>on.par.without.desc <span class="op">=</span> <span class="st">"quiet"</span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, kernel <span class="op">=</span> <span class="st">"vanilladot"</span>, newParam <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">iris.task</span><span class="op">)</span>
-<span class="co">##  Setting default kernel parameters</span>
-<span class="co">## Model for learner.id=classif.ksvm; learner.class=classif.ksvm</span>
-<span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span>
-<span class="co">## Hyperparameters: fit=FALSE,kernel=vanilladot,newParam=3</span>
-
-<span class="co"># Option "quiet" also masks typos</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, kernl <span class="op">=</span> <span class="st">"vanilladot"</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">iris.task</span><span class="op">)</span>
-<span class="co">## Model for learner.id=classif.ksvm; learner.class=classif.ksvm</span>
-<span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span>
-<span class="co">## Hyperparameters: fit=FALSE,kernl=vanilladot</span>
-
-<span class="co"># Alternatively turn off parameter checking, but still see warnings</span>
-<span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span>on.par.without.desc <span class="op">=</span> <span class="st">"warn"</span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, kernl <span class="op">=</span> <span class="st">"vanilladot"</span>, newParam <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="co">## Warning in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter kernl without available description object!</span>
-<span class="co">## Did you mean one of these hyperparameters instead: kernel nu degree</span>
-<span class="co">## You can switch off this check by using configureMlr!</span>
-<span class="co">## Warning in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newParam without available description object!</span>
-<span class="co">## Did you mean one of these hyperparameters instead: degree scaled kernel</span>
-<span class="co">## You can switch off this check by using configureMlr!</span>
-
-<span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">iris.task</span><span class="op">)</span>
-<span class="co">## Model for learner.id=classif.ksvm; learner.class=classif.ksvm</span>
-<span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span>
-<span class="co">## Hyperparameters: fit=FALSE,kernl=vanilladot,newParam=3</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Support Vector Machine with linear kernel and new parameter 'newParam'</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, kernel <span class="op">=</span> <span class="st">"vanilladot"</span>, newParam <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">## Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newParam without available description object!</span></span>
+<span><span class="co">## Did you mean one of these hyperparameters instead: degree scaled kernel</span></span>
+<span><span class="co">## You can switch off this check by using configureMlr!</span></span>
+<span></span>
+<span><span class="co"># Turn off parameter checking completely</span></span>
+<span><span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span>on.par.without.desc <span class="op">=</span> <span class="st">"quiet"</span><span class="op">)</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, kernel <span class="op">=</span> <span class="st">"vanilladot"</span>, newParam <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">iris.task</span><span class="op">)</span></span>
+<span><span class="co">##  Setting default kernel parameters</span></span>
+<span><span class="co">## Model for learner.id=classif.ksvm; learner.class=classif.ksvm</span></span>
+<span><span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span></span>
+<span><span class="co">## Hyperparameters: fit=FALSE,kernel=vanilladot,newParam=3</span></span>
+<span></span>
+<span><span class="co"># Option "quiet" also masks typos</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, kernl <span class="op">=</span> <span class="st">"vanilladot"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">iris.task</span><span class="op">)</span></span>
+<span><span class="co">## Model for learner.id=classif.ksvm; learner.class=classif.ksvm</span></span>
+<span><span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span></span>
+<span><span class="co">## Hyperparameters: fit=FALSE,kernl=vanilladot</span></span>
+<span></span>
+<span><span class="co"># Alternatively turn off parameter checking, but still see warnings</span></span>
+<span><span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span>on.par.without.desc <span class="op">=</span> <span class="st">"warn"</span><span class="op">)</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, kernl <span class="op">=</span> <span class="st">"vanilladot"</span>, newParam <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">## Warning in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter kernl without available description object!</span></span>
+<span><span class="co">## Did you mean one of these hyperparameters instead: kernel nu degree</span></span>
+<span><span class="co">## You can switch off this check by using configureMlr!</span></span>
+<span><span class="co">## Warning in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newParam without available description object!</span></span>
+<span><span class="co">## Did you mean one of these hyperparameters instead: degree scaled kernel</span></span>
+<span><span class="co">## You can switch off this check by using configureMlr!</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">iris.task</span><span class="op">)</span></span>
+<span><span class="co">## Model for learner.id=classif.ksvm; learner.class=classif.ksvm</span></span>
+<span><span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span></span>
+<span><span class="co">## Hyperparameters: fit=FALSE,kernl=vanilladot,newParam=3</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example-handling-errors-in-a-learning-method">Example: Handling errors in a learning method<a class="anchor" aria-label="anchor" href="#example-handling-errors-in-a-learning-method"></a>
 </h2>
 <p>If a learning method throws an error the default behavior of <code>mlr</code> is to generate an exception as well. However, in some situations, for example if you conduct a larger <a href="benchmark_experiments.html" target="_blank">bechmark experiment</a> with multiple data sets and learners, you usually don’t want the whole experiment stopped due to one error. You can prevent this using the <code>on.learner.error</code> option of <code><a href="../../reference/configureMlr.html">configureMlr()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># This call gives an error caused by the low number of observations in class "virginica"</span>
-<span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, task <span class="op">=</span> <span class="va">iris.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">104</span><span class="op">)</span>
-<span class="co">## Error in qda.default(x, grouping, ...): some group is too small for 'qda'</span>
-
-<span class="co"># Get a warning instead of an error</span>
-<span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span>on.learner.error <span class="op">=</span> <span class="st">"warn"</span><span class="op">)</span>
-<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, task <span class="op">=</span> <span class="va">iris.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">104</span><span class="op">)</span>
-<span class="co">## Warning in train("classif.qda", task = iris.task, subset = 1:104): Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : </span>
-<span class="co">##   some group is too small for 'qda'</span>
-
-<span class="va">mod</span>
-<span class="co">## Model for learner.id=classif.qda; learner.class=classif.qda</span>
-<span class="co">## Trained on: task.id = iris-example; obs = 104; features = 4</span>
-<span class="co">## Hyperparameters: </span>
-<span class="co">## Training failed: Error in qda.default(x, grouping, ...) : </span>
-<span class="co">##   some group is too small for 'qda'</span>
-<span class="co">## </span>
-<span class="co">## Training failed: Error in qda.default(x, grouping, ...) : </span>
-<span class="co">##   some group is too small for 'qda'</span>
-
-<span class="co"># mod is an object of class FailureModel</span>
-<span class="fu"><a href="../../reference/isFailureModel.html">isFailureModel</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
-<span class="co">## [1] TRUE</span>
-
-<span class="co"># Retrieve the error message</span>
-<span class="fu"><a href="../../reference/getFailureModelMsg.html">getFailureModelMsg</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
-<span class="co">## [1] "Error in qda.default(x, grouping, ...) : \n  some group is too small for 'qda'\n"</span>
-
-<span class="co"># predict and performance return NA's</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">iris.task</span><span class="op">)</span>
-<span class="va">pred</span>
-<span class="co">## Prediction: 150 observations</span>
-<span class="co">## predict.type: response</span>
-<span class="co">## threshold: </span>
-<span class="co">## time: NA</span>
-<span class="co">##   id  truth response</span>
-<span class="co">## 1  1 setosa     &lt;NA&gt;</span>
-<span class="co">## 2  2 setosa     &lt;NA&gt;</span>
-<span class="co">## 3  3 setosa     &lt;NA&gt;</span>
-<span class="co">## 4  4 setosa     &lt;NA&gt;</span>
-<span class="co">## 5  5 setosa     &lt;NA&gt;</span>
-<span class="co">## 6  6 setosa     &lt;NA&gt;</span>
-<span class="co">## ... (#rows: 150, #cols: 3)</span>
-
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>
-<span class="co">## mmce </span>
-<span class="co">##   NA</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># This call gives an error caused by the low number of observations in class "virginica"</span></span>
+<span><span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, task <span class="op">=</span> <span class="va">iris.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">104</span><span class="op">)</span></span>
+<span><span class="co">## Error in qda.default(x, grouping, ...): some group is too small for 'qda'</span></span>
+<span></span>
+<span><span class="co"># Get a warning instead of an error</span></span>
+<span><span class="fu"><a href="../../reference/configureMlr.html">configureMlr</a></span><span class="op">(</span>on.learner.error <span class="op">=</span> <span class="st">"warn"</span><span class="op">)</span></span>
+<span><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, task <span class="op">=</span> <span class="va">iris.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">104</span><span class="op">)</span></span>
+<span><span class="co">## Warning in train("classif.qda", task = iris.task, subset = 1:104): Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : </span></span>
+<span><span class="co">##   some group is too small for 'qda'</span></span>
+<span></span>
+<span><span class="va">mod</span></span>
+<span><span class="co">## Model for learner.id=classif.qda; learner.class=classif.qda</span></span>
+<span><span class="co">## Trained on: task.id = iris-example; obs = 104; features = 4</span></span>
+<span><span class="co">## Hyperparameters: </span></span>
+<span><span class="co">## Training failed: Error in qda.default(x, grouping, ...) : </span></span>
+<span><span class="co">##   some group is too small for 'qda'</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Training failed: Error in qda.default(x, grouping, ...) : </span></span>
+<span><span class="co">##   some group is too small for 'qda'</span></span>
+<span></span>
+<span><span class="co"># mod is an object of class FailureModel</span></span>
+<span><span class="fu"><a href="../../reference/isFailureModel.html">isFailureModel</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span></span>
+<span><span class="co"># Retrieve the error message</span></span>
+<span><span class="fu"><a href="../../reference/getFailureModelMsg.html">getFailureModelMsg</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span><span class="co">## [1] "Error in qda.default(x, grouping, ...) : \n  some group is too small for 'qda'\n"</span></span>
+<span></span>
+<span><span class="co"># predict and performance return NA's</span></span>
+<span><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">iris.task</span><span class="op">)</span></span>
+<span><span class="va">pred</span></span>
+<span><span class="co">## Prediction: 150 observations</span></span>
+<span><span class="co">## predict.type: response</span></span>
+<span><span class="co">## threshold: </span></span>
+<span><span class="co">## time: NA</span></span>
+<span><span class="co">##   id  truth response</span></span>
+<span><span class="co">## 1  1 setosa     &lt;NA&gt;</span></span>
+<span><span class="co">## 2  2 setosa     &lt;NA&gt;</span></span>
+<span><span class="co">## 3  3 setosa     &lt;NA&gt;</span></span>
+<span><span class="co">## 4  4 setosa     &lt;NA&gt;</span></span>
+<span><span class="co">## 5  5 setosa     &lt;NA&gt;</span></span>
+<span><span class="co">## 6  6 setosa     &lt;NA&gt;</span></span>
+<span><span class="co">## ... (#rows: 150, #cols: 3)</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span></span>
+<span><span class="co">## mmce </span></span>
+<span><span class="co">##   NA</span></span></code></pre></div>
 <p>If <code>on.learner.error = "warn"</code> a warning is issued instead of an exception and an object of class <code><a href="../../reference/FailureModel.html">FailureModel()</a></code> is created. You can extract the error message using function <code><a href="../../reference/getFailureModelMsg.html">getFailureModelMsg()</a></code>. All further steps like prediction and performance calculation work and return <code>NA's</code>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -384,7 +384,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

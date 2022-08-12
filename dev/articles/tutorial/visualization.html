@@ -14,10 +14,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
 <script src="../../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../../deps/_Roboto-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet">
+<link href="../../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Visualization">
@@ -163,7 +163,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Visualization</h1>
             
       
@@ -190,34 +190,34 @@
 </h3>
 <p>In the example below we create a plot of classifier performance as function of the decision threshold for the binary classification problem <code>sonar.task</code>. The generation function <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code> creates an object of class <code>ThreshVsPerfData</code> which contains the data for the plot in slot <code>$data</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
-<span class="va">n</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span><span class="op">(</span><span class="va">sonar.task</span><span class="op">)</span>
-<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">sonar.task</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">sonar.task</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">fpr</span>, <span class="va">fnr</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>
-<span class="co">## [1] "ThreshVsPerfData"</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
-<span class="co">##         fpr       fnr      mmce  threshold</span>
-<span class="co">## 1 1.0000000 0.0000000 0.4615385 0.00000000</span>
-<span class="co">## 2 0.3541667 0.1964286 0.2692308 0.01010101</span>
-<span class="co">## 3 0.3333333 0.2321429 0.2788462 0.02020202</span>
-<span class="co">## 4 0.3333333 0.2321429 0.2788462 0.03030303</span>
-<span class="co">## 5 0.3333333 0.2321429 0.2788462 0.04040404</span>
-<span class="co">## 6 0.3125000 0.2321429 0.2692308 0.05050505</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span></span>
+<span><span class="va">n</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span><span class="op">(</span><span class="va">sonar.task</span><span class="op">)</span></span>
+<span><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">sonar.task</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">sonar.task</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="va">n</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">fpr</span>, <span class="va">fnr</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span></span>
+<span><span class="co">## [1] "ThreshVsPerfData"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="co">##         fpr       fnr      mmce  threshold</span></span>
+<span><span class="co">## 1 1.0000000 0.0000000 0.4615385 0.00000000</span></span>
+<span><span class="co">## 2 0.3541667 0.1964286 0.2692308 0.01010101</span></span>
+<span><span class="co">## 3 0.3333333 0.2321429 0.2788462 0.02020202</span></span>
+<span><span class="co">## 4 0.3333333 0.2321429 0.2788462 0.03030303</span></span>
+<span><span class="co">## 5 0.3333333 0.2321429 0.2788462 0.04040404</span></span>
+<span><span class="co">## 6 0.3125000 0.2321429 0.2692308 0.05050505</span></span></code></pre></div>
 <p>For plotting we can use the built-in <code>mlr</code> function <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p>Note that by default the <code>Measure</code> <code>name</code>s are used to annotate the panels.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fpr</span><span class="op">$</span><span class="va">name</span>
-<span class="co">## [1] "False positive rate"</span>
-
-<span class="va">fpr</span><span class="op">$</span><span class="va">id</span>
-<span class="co">## [1] "fpr"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fpr</span><span class="op">$</span><span class="va">name</span></span>
+<span><span class="co">## [1] "False positive rate"</span></span>
+<span></span>
+<span><span class="va">fpr</span><span class="op">$</span><span class="va">id</span></span>
+<span><span class="co">## [1] "fpr"</span></span></code></pre></div>
 <p>This does not only apply to <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>, but to other plot functions that show performance measures as well, for example <code><a href="../../reference/plotLearningCurve.html">plotLearningCurve()</a></code>. You can use the <code>id</code>s instead of the names by setting <code>pretty.names = FALSE</code>.</p>
 </div>
 <div class="section level3">
@@ -228,72 +228,72 @@
 <p>Below are two examples of how to alter the axis and panel labels of the above plot.</p>
 <p>Imagine you want to change the order of the panels and also are not satisfied with the panel names, for example you find that “Mean misclassification error” is too long and you prefer “Error rate” instead. Moreover, you want the error rate to be displayed first.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span><span class="op">(</span><span class="va">d</span>, pretty.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># Reshaped version of the underlying data d</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
-<span class="co">##    threshold measure performance</span>
-<span class="co">## 1 0.00000000     fpr   1.0000000</span>
-<span class="co">## 2 0.01010101     fpr   0.3541667</span>
-<span class="co">## 3 0.02020202     fpr   0.3333333</span>
-<span class="co">## 4 0.03030303     fpr   0.3333333</span>
-<span class="co">## 5 0.04040404     fpr   0.3333333</span>
-<span class="co">## 6 0.05050505     fpr   0.3125000</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">measure</span><span class="op">)</span>
-<span class="co">## [1] "fpr"  "fnr"  "mmce"</span>
-
-<span class="co"># Rename and reorder factor levels</span>
-<span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">measure</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">measure</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mmce"</span>, <span class="st">"fpr"</span>, <span class="st">"fnr"</span><span class="op">)</span>,
-  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Error rate"</span>, <span class="st">"False positive rate"</span>, <span class="st">"False negative rate"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">plt</span> <span class="op">=</span> <span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Cutoff"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Performance"</span><span class="op">)</span>
-<span class="va">plt</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span><span class="op">(</span><span class="va">d</span>, pretty.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Reshaped version of the underlying data d</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="co">##    threshold measure performance</span></span>
+<span><span class="co">## 1 0.00000000     fpr   1.0000000</span></span>
+<span><span class="co">## 2 0.01010101     fpr   0.3541667</span></span>
+<span><span class="co">## 3 0.02020202     fpr   0.3333333</span></span>
+<span><span class="co">## 4 0.03030303     fpr   0.3333333</span></span>
+<span><span class="co">## 5 0.04040404     fpr   0.3333333</span></span>
+<span><span class="co">## 6 0.05050505     fpr   0.3125000</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">measure</span><span class="op">)</span></span>
+<span><span class="co">## [1] "fpr"  "fnr"  "mmce"</span></span>
+<span></span>
+<span><span class="co"># Rename and reorder factor levels</span></span>
+<span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">measure</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">measure</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mmce"</span>, <span class="st">"fpr"</span>, <span class="st">"fnr"</span><span class="op">)</span>,</span>
+<span>  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Error rate"</span>, <span class="st">"False positive rate"</span>, <span class="st">"False negative rate"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">plt</span> <span class="op">=</span> <span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Cutoff"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Performance"</span><span class="op">)</span></span>
+<span><span class="va">plt</span></span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>Using the <code><a href="https://ggplot2.tidyverse.org/reference/labeller.html" class="external-link">ggplot2::labeller()</a></code> function requires calling <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">ggplot2::facet_wrap()</a></code> (or <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">ggplot2::facet_grid()</a></code>), which can be useful if you want to change how the panels are positioned (number of rows and columns) or influence the axis limits.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span><span class="op">(</span><span class="va">d</span>, pretty.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="va">measure_names</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-  fpr <span class="op">=</span> <span class="st">"False positive rate"</span>,
-  fnr <span class="op">=</span> <span class="st">"False negative rate"</span>,
-  mmce <span class="op">=</span> <span class="st">"Error rate"</span>
-<span class="op">)</span>
-<span class="co"># Manipulate the measure names via the labeller function and</span>
-<span class="co"># arrange the panels in two columns and choose common axis limits for all panels</span>
-<span class="va">plt</span> <span class="op">=</span> <span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">measure</span>, labeller <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labeller.html" class="external-link">labeller</a></span><span class="op">(</span>measure <span class="op">=</span> <span class="va">measure_names</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">plt</span> <span class="op">=</span> <span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Decision threshold"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Performance"</span><span class="op">)</span>
-<span class="va">plt</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span><span class="op">(</span><span class="va">d</span>, pretty.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">measure_names</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  fpr <span class="op">=</span> <span class="st">"False positive rate"</span>,</span>
+<span>  fnr <span class="op">=</span> <span class="st">"False negative rate"</span>,</span>
+<span>  mmce <span class="op">=</span> <span class="st">"Error rate"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co"># Manipulate the measure names via the labeller function and</span></span>
+<span><span class="co"># arrange the panels in two columns and choose common axis limits for all panels</span></span>
+<span><span class="va">plt</span> <span class="op">=</span> <span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">measure</span>, labeller <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labeller.html" class="external-link">labeller</a></span><span class="op">(</span>measure <span class="op">=</span> <span class="va">measure_names</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">plt</span> <span class="op">=</span> <span class="va">plt</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Decision threshold"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Performance"</span><span class="op">)</span></span>
+<span><span class="va">plt</span></span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>Instead of using the built-in function <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code> we could also manually create the plot based on the output of <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code>: In this case to plot only one measure.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">threshold</span>, <span class="va">fpr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">threshold</span>, <span class="va">fpr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>The decoupling of generation and plotting functions is especially practical if you prefer traditional <code><a href="https://rdrr.io/r/graphics/graphics-package.html" class="external-link">graphics::graphics()</a></code> or <code><a href="https://rdrr.io/pkg/lattice/man/Lattice.html" class="external-link">lattice::lattice()</a></code>. Here is a <code><a href="https://rdrr.io/pkg/lattice/man/Lattice.html" class="external-link">lattice::lattice()</a></code> plot which gives a result similar to that of <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">lattice</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lattice/man/xyplot.html" class="external-link">xyplot</a></span><span class="op">(</span><span class="va">fpr</span> <span class="op">+</span> <span class="va">fnr</span> <span class="op">+</span> <span class="va">mmce</span> <span class="op">~</span> <span class="va">threshold</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">$</span><span class="va">data</span>, type <span class="op">=</span> <span class="st">"l"</span>, ylab <span class="op">=</span> <span class="st">"performance"</span>,
-  outer <span class="op">=</span> <span class="cn">TRUE</span>, scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>relation <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span>,
-  strip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/lattice/man/strip.default.html" class="external-link">strip.custom</a></span><span class="op">(</span>factor.levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">measures</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="va">name</span><span class="op">)</span>,
-    par.strip.text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cex <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">lattice</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lattice/man/xyplot.html" class="external-link">xyplot</a></span><span class="op">(</span><span class="va">fpr</span> <span class="op">+</span> <span class="va">fnr</span> <span class="op">+</span> <span class="va">mmce</span> <span class="op">~</span> <span class="va">threshold</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">$</span><span class="va">data</span>, type <span class="op">=</span> <span class="st">"l"</span>, ylab <span class="op">=</span> <span class="st">"performance"</span>,</span>
+<span>  outer <span class="op">=</span> <span class="cn">TRUE</span>, scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>relation <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span>,</span>
+<span>  strip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/lattice/man/strip.default.html" class="external-link">strip.custom</a></span><span class="op">(</span>factor.levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">measures</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="va">name</span><span class="op">)</span>,</span>
+<span>    par.strip.text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cex <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>Let’s conclude with a brief look on a second example. Here we use <code><a href="../../reference/plotPartialDependence.html">plotPartialDependence()</a></code> but extract the data from the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> object <code>plt</code> and use it to create a traditional <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">graphics::plot()</a></code>, additional to the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> plot.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sonar</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">sonar.task</span><span class="op">)</span>
-<span class="va">pd</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">sonar</span>, <span class="st">"V11"</span><span class="op">)</span>
-<span class="co">## Loading required package: mmpf</span>
-<span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotPartialDependence.html">plotPartialDependence</a></span><span class="op">(</span><span class="va">pd</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
-<span class="co">##           M Feature     Value</span>
-<span class="co">## 1 0.2737158     V11 0.0289000</span>
-<span class="co">## 2 0.3689970     V11 0.1072667</span>
-<span class="co">## 3 0.4765742     V11 0.1856333</span>
-<span class="co">## 4 0.5741233     V11 0.2640000</span>
-<span class="co">## 5 0.6557857     V11 0.3423667</span>
-<span class="co">## 6 0.7387962     V11 0.4207333</span>
-
-<span class="va">plt</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">sonar</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">sonar.task</span><span class="op">)</span></span>
+<span><span class="va">pd</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generatePartialDependenceData.html">generatePartialDependenceData</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">sonar</span>, <span class="st">"V11"</span><span class="op">)</span></span>
+<span><span class="co">## Loading required package: mmpf</span></span>
+<span><span class="va">plt</span> <span class="op">=</span> <span class="fu"><a href="../../reference/plotPartialDependence.html">plotPartialDependence</a></span><span class="op">(</span><span class="va">pd</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="co">##           M Feature     Value</span></span>
+<span><span class="co">## 1 0.2737158     V11 0.0289000</span></span>
+<span><span class="co">## 2 0.3689970     V11 0.1072667</span></span>
+<span><span class="co">## 3 0.4765742     V11 0.1856333</span></span>
+<span><span class="co">## 4 0.5741233     V11 0.2640000</span></span>
+<span><span class="co">## 5 0.6557857     V11 0.3423667</span></span>
+<span><span class="co">## 6 0.7387962     V11 0.4207333</span></span>
+<span></span>
+<span><span class="va">plt</span></span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/mboost/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">M</span> <span class="op">~</span> <span class="va">Value</span>, data <span class="op">=</span> <span class="va">plt</span><span class="op">$</span><span class="va">data</span>, type <span class="op">=</span> <span class="st">"b"</span>, xlab <span class="op">=</span> <span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">Feature</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">M</span> <span class="op">~</span> <span class="va">Value</span>, data <span class="op">=</span> <span class="va">plt</span><span class="op">$</span><span class="va">data</span>, type <span class="op">=</span> <span class="st">"b"</span>, xlab <span class="op">=</span> <span class="va">plt</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">Feature</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualization_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
 </div>
@@ -389,7 +389,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

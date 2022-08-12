@@ -14,10 +14,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
 <script src="../../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../../deps/_Roboto-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet">
+<link href="../../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Multilabel Classification">
@@ -163,7 +163,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Multilabel Classification</h1>
             
       
@@ -180,26 +180,26 @@
 </h2>
 <p>The first thing you have to do for multilabel classification in <code>mlr</code> is to get your data in the right format. You need a <code>data.frame</code> which consists of the features and a logical vector for each label which indicates if the label is present in the observation or not. After that you can create a <code>MultilabelTask</code> (<code><a href="../../reference/Task.html">Task()</a></code>) like a normal <code>ClassifTask</code> (<code><a href="../../reference/Task.html">Task()</a></code>). Instead of one target name you have to specify a vector of targets which correspond to the names of logical variables in the <code>data.frame</code>. In the following example we get the yeast data frame from the already existing <code><a href="../../reference/yeast.task.html">yeast.task()</a></code>, extract the 14 label names and create the task again.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">yeast</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">yeast.task</span><span class="op">)</span>
-<span class="va">labels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">yeast</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">14</span><span class="op">]</span>
-<span class="va">yeast.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/MultilabelTask.html">makeMultilabelTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"multi"</span>, data <span class="op">=</span> <span class="va">yeast</span>, target <span class="op">=</span> <span class="va">labels</span><span class="op">)</span>
-<span class="va">yeast.task</span>
-<span class="co">## Supervised task: multi</span>
-<span class="co">## Type: multilabel</span>
-<span class="co">## Target: label1,label2,label3,label4,label5,label6,label7,label8,label9,label10,label11,label12,label13,label14</span>
-<span class="co">## Observations: 2417</span>
-<span class="co">## Features:</span>
-<span class="co">##    numerics     factors     ordered functionals </span>
-<span class="co">##         103           0           0           0 </span>
-<span class="co">## Missings: FALSE</span>
-<span class="co">## Has weights: FALSE</span>
-<span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span>
-<span class="co">## Classes: 14</span>
-<span class="co">##  label1  label2  label3  label4  label5  label6  label7  label8  label9 label10 </span>
-<span class="co">##     762    1038     983     862     722     597     428     480     178     253 </span>
-<span class="co">## label11 label12 label13 label14 </span>
-<span class="co">##     289    1816    1799      34</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">yeast</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">yeast.task</span><span class="op">)</span></span>
+<span><span class="va">labels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">yeast</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">14</span><span class="op">]</span></span>
+<span><span class="va">yeast.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/MultilabelTask.html">makeMultilabelTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"multi"</span>, data <span class="op">=</span> <span class="va">yeast</span>, target <span class="op">=</span> <span class="va">labels</span><span class="op">)</span></span>
+<span><span class="va">yeast.task</span></span>
+<span><span class="co">## Supervised task: multi</span></span>
+<span><span class="co">## Type: multilabel</span></span>
+<span><span class="co">## Target: label1,label2,label3,label4,label5,label6,label7,label8,label9,label10,label11,label12,label13,label14</span></span>
+<span><span class="co">## Observations: 2417</span></span>
+<span><span class="co">## Features:</span></span>
+<span><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span><span class="co">##         103           0           0           0 </span></span>
+<span><span class="co">## Missings: FALSE</span></span>
+<span><span class="co">## Has weights: FALSE</span></span>
+<span><span class="co">## Has blocking: FALSE</span></span>
+<span><span class="co">## Has coordinates: FALSE</span></span>
+<span><span class="co">## Classes: 14</span></span>
+<span><span class="co">##  label1  label2  label3  label4  label5  label6  label7  label8  label9 label10 </span></span>
+<span><span class="co">##     762    1038     983     862     722     597     428     480     178     253 </span></span>
+<span><span class="co">## label11 label12 label13 label14 </span></span>
+<span><span class="co">##     289    1816    1799      34</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="constructing-a-learner">Constructing a learner<a class="anchor" aria-label="anchor" href="#constructing-a-learner"></a>
@@ -212,18 +212,18 @@
 <div class="section level3">
 <h3 id="algorithm-adaptation-methods">Algorithm adaptation methods<a class="anchor" aria-label="anchor" href="#algorithm-adaptation-methods"></a>
 </h3>
-<p>Currently the available algorithm adaptation methods in <strong>R</strong> are the multivariate random forest in the [%randomForestSRC] package and the random ferns multilabel algorithm in the [%rFerns] package. You can create the learner for these algorithms like in multiclass classification problems.</p>
+<p>Currently only the random ferns multilabel algorithm in the [%rFerns] package is available for multilabel classification tasks.</p>
+<p>You can create the learner for these algorithms like in multiclass classification problems.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn.rfsrc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"multilabel.randomForestSRC"</span><span class="op">)</span>
-<span class="va">lrn.rFerns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"multilabel.rFerns"</span><span class="op">)</span>
-<span class="va">lrn.rFerns</span>
-<span class="co">## Learner multilabel.rFerns from package rFerns</span>
-<span class="co">## Type: multilabel</span>
-<span class="co">## Name: Random ferns; Short name: rFerns</span>
-<span class="co">## Class: multilabel.rFerns</span>
-<span class="co">## Properties: numerics,factors,ordered</span>
-<span class="co">## Predict-Type: response</span>
-<span class="co">## Hyperparameters:</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn.rFerns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"multilabel.rFerns"</span><span class="op">)</span></span>
+<span><span class="va">lrn.rFerns</span></span>
+<span><span class="co">## Learner multilabel.rFerns from package rFerns</span></span>
+<span><span class="co">## Type: multilabel</span></span>
+<span><span class="co">## Name: Random ferns; Short name: rFerns</span></span>
+<span><span class="co">## Class: multilabel.rFerns</span></span>
+<span><span class="co">## Properties: numerics,factors,ordered</span></span>
+<span><span class="co">## Predict-Type: response</span></span>
+<span><span class="co">## Hyperparameters:</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="problem-transformation-methods">Problem transformation methods<a class="anchor" aria-label="anchor" href="#problem-transformation-methods"></a>
@@ -231,26 +231,26 @@
 <p>For generating a wrapped multilabel learner first create a binary (or multiclass) classification learner with <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>. Afterwards apply a function like <code><a href="../../reference/makeMultilabelBinaryRelevanceWrapper.html">makeMultilabelBinaryRelevanceWrapper()</a></code>, <code><a href="../../reference/makeMultilabelClassifierChainsWrapper.html">makeMultilabelClassifierChainsWrapper()</a></code>, <code><a href="../../reference/makeMultilabelNestedStackingWrapper.html">makeMultilabelNestedStackingWrapper()</a></code>, <code><a href="../../reference/makeMultilabelDBRWrapper.html">makeMultilabelDBRWrapper()</a></code> or <code><a href="../../reference/makeMultilabelStackingWrapper.html">makeMultilabelStackingWrapper()</a></code> on the learner to convert it to a learner that uses the respective problem transformation method.</p>
 <p>You can also generate a binary relevance learner directly, as you can see in the example.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn.br</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
-<span class="va">lrn.br</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeMultilabelBinaryRelevanceWrapper.html">makeMultilabelBinaryRelevanceWrapper</a></span><span class="op">(</span><span class="va">lrn.br</span><span class="op">)</span>
-<span class="va">lrn.br</span>
-<span class="co">## Learner multilabel.binaryRelevance.classif.rpart from package rpart</span>
-<span class="co">## Type: multilabel</span>
-<span class="co">## Name: ; Short name: </span>
-<span class="co">## Class: MultilabelBinaryRelevanceWrapper</span>
-<span class="co">## Properties: numerics,factors,ordered,missings,weights,prob,twoclass,multiclass</span>
-<span class="co">## Predict-Type: prob</span>
-<span class="co">## Hyperparameters: xval=0</span>
-
-<span class="va">lrn.br2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeMultilabelBinaryRelevanceWrapper.html">makeMultilabelBinaryRelevanceWrapper</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span>
-<span class="va">lrn.br2</span>
-<span class="co">## Learner multilabel.binaryRelevance.classif.rpart from package rpart</span>
-<span class="co">## Type: multilabel</span>
-<span class="co">## Name: ; Short name: </span>
-<span class="co">## Class: MultilabelBinaryRelevanceWrapper</span>
-<span class="co">## Properties: numerics,factors,ordered,missings,weights,prob,twoclass,multiclass</span>
-<span class="co">## Predict-Type: response</span>
-<span class="co">## Hyperparameters: xval=0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn.br</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span></span>
+<span><span class="va">lrn.br</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeMultilabelBinaryRelevanceWrapper.html">makeMultilabelBinaryRelevanceWrapper</a></span><span class="op">(</span><span class="va">lrn.br</span><span class="op">)</span></span>
+<span><span class="va">lrn.br</span></span>
+<span><span class="co">## Learner multilabel.binaryRelevance.classif.rpart from package rpart</span></span>
+<span><span class="co">## Type: multilabel</span></span>
+<span><span class="co">## Name: ; Short name: </span></span>
+<span><span class="co">## Class: MultilabelBinaryRelevanceWrapper</span></span>
+<span><span class="co">## Properties: numerics,factors,ordered,missings,weights,prob,twoclass,multiclass</span></span>
+<span><span class="co">## Predict-Type: prob</span></span>
+<span><span class="co">## Hyperparameters: xval=0</span></span>
+<span></span>
+<span><span class="va">lrn.br2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeMultilabelBinaryRelevanceWrapper.html">makeMultilabelBinaryRelevanceWrapper</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span></span>
+<span><span class="va">lrn.br2</span></span>
+<span><span class="co">## Learner multilabel.binaryRelevance.classif.rpart from package rpart</span></span>
+<span><span class="co">## Type: multilabel</span></span>
+<span><span class="co">## Name: ; Short name: </span></span>
+<span><span class="co">## Class: MultilabelBinaryRelevanceWrapper</span></span>
+<span><span class="co">## Properties: numerics,factors,ordered,missings,weights,prob,twoclass,multiclass</span></span>
+<span><span class="co">## Predict-Type: response</span></span>
+<span><span class="co">## Hyperparameters: xval=0</span></span></code></pre></div>
 <p>The different methods are shortly described in the following.</p>
 <div class="section level4">
 <h4 id="binary-relevance">Binary relevance<a class="anchor" aria-label="anchor" href="#binary-relevance"></a>
@@ -284,49 +284,49 @@
 </h2>
 <p>You can <code><a href="../../reference/train.html">train()</a></code> a model as usual with a multilabel learner and a multilabel task as input. You can also pass <code>subset</code> and <code>weights</code> arguments if the learner supports this.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.br</span>, <span class="va">yeast.task</span><span class="op">)</span>
-<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.br</span>, <span class="va">yeast.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1500</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fl">1500</span>, <span class="fl">1500</span><span class="op">)</span><span class="op">)</span>
-<span class="va">mod</span>
-<span class="co">## Model for learner.id=multilabel.binaryRelevance.classif.rpart; learner.class=MultilabelBinaryRelevanceWrapper</span>
-<span class="co">## Trained on: task.id = multi; obs = 1500; features = 103</span>
-<span class="co">## Hyperparameters: xval=0</span>
-
-<span class="va">mod2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.rfsrc</span>, <span class="va">yeast.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span>
-<span class="va">mod2</span>
-<span class="co">## Model for learner.id=multilabel.randomForestSRC; learner.class=multilabel.randomForestSRC</span>
-<span class="co">## Trained on: task.id = multi; obs = 100; features = 103</span>
-<span class="co">## Hyperparameters: na.action=na.impute</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.br</span>, <span class="va">yeast.task</span><span class="op">)</span></span>
+<span><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.br</span>, <span class="va">yeast.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">1500</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fl">1500</span>, <span class="fl">1500</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">mod</span></span>
+<span><span class="co">## Model for learner.id=multilabel.binaryRelevance.classif.rpart; learner.class=MultilabelBinaryRelevanceWrapper</span></span>
+<span><span class="co">## Trained on: task.id = multi; obs = 1500; features = 103</span></span>
+<span><span class="co">## Hyperparameters: xval=0</span></span>
+<span></span>
+<span><span class="va">mod2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn.rFerns</span>, <span class="va">yeast.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">mod2</span></span>
+<span><span class="co">## Model for learner.id=multilabel.rFerns; learner.class=multilabel.rFerns</span></span>
+<span><span class="co">## Trained on: task.id = multi; obs = 100; features = 103</span></span>
+<span><span class="co">## Hyperparameters:</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="predict">Predict<a class="anchor" aria-label="anchor" href="#predict"></a>
 </h2>
 <p>Prediction can be done as usual in <code>mlr</code> with <code>predict</code> (<code><a href="../../reference/predict.WrappedModel.html">predict.WrappedModel()</a></code>) and by passing a trained model and either the task to the <code>task</code> argument or some new data to the <code>newdata</code> argument. As always you can specify a <code>subset</code> of the data which should be predicted.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">yeast.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">yeast</span><span class="op">[</span><span class="fl">1501</span><span class="op">:</span><span class="fl">1600</span>, <span class="op">]</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span>
-<span class="co">##  [1] "truth.label1"     "truth.label2"     "truth.label3"     "truth.label4"    </span>
-<span class="co">##  [5] "truth.label5"     "truth.label6"     "truth.label7"     "truth.label8"    </span>
-<span class="co">##  [9] "truth.label9"     "truth.label10"    "truth.label11"    "truth.label12"   </span>
-<span class="co">## [13] "truth.label13"    "truth.label14"    "prob.label1"      "prob.label2"     </span>
-<span class="co">## [17] "prob.label3"      "prob.label4"      "prob.label5"      "prob.label6"     </span>
-<span class="co">## [21] "prob.label7"      "prob.label8"      "prob.label9"      "prob.label10"    </span>
-<span class="co">## [25] "prob.label11"     "prob.label12"     "prob.label13"     "prob.label14"    </span>
-<span class="co">## [29] "response.label1"  "response.label2"  "response.label3"  "response.label4" </span>
-<span class="co">## [33] "response.label5"  "response.label6"  "response.label7"  "response.label8" </span>
-<span class="co">## [37] "response.label9"  "response.label10" "response.label11" "response.label12"</span>
-<span class="co">## [41] "response.label13" "response.label14"</span>
-
-<span class="va">pred2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod2</span>, task <span class="op">=</span> <span class="va">yeast.task</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">pred2</span><span class="op">)</span><span class="op">)</span>
-<span class="co">##  [1] "id"               "truth.label1"     "truth.label2"     "truth.label3"    </span>
-<span class="co">##  [5] "truth.label4"     "truth.label5"     "truth.label6"     "truth.label7"    </span>
-<span class="co">##  [9] "truth.label8"     "truth.label9"     "truth.label10"    "truth.label11"   </span>
-<span class="co">## [13] "truth.label12"    "truth.label13"    "truth.label14"    "response.label1" </span>
-<span class="co">## [17] "response.label2"  "response.label3"  "response.label4"  "response.label5" </span>
-<span class="co">## [21] "response.label6"  "response.label7"  "response.label8"  "response.label9" </span>
-<span class="co">## [25] "response.label10" "response.label11" "response.label12" "response.label13"</span>
-<span class="co">## [29] "response.label14"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">yeast.task</span>, subset <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">yeast</span><span class="op">[</span><span class="fl">1501</span><span class="op">:</span><span class="fl">1600</span>, <span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">##  [1] "truth.label1"     "truth.label2"     "truth.label3"     "truth.label4"    </span></span>
+<span><span class="co">##  [5] "truth.label5"     "truth.label6"     "truth.label7"     "truth.label8"    </span></span>
+<span><span class="co">##  [9] "truth.label9"     "truth.label10"    "truth.label11"    "truth.label12"   </span></span>
+<span><span class="co">## [13] "truth.label13"    "truth.label14"    "prob.label1"      "prob.label2"     </span></span>
+<span><span class="co">## [17] "prob.label3"      "prob.label4"      "prob.label5"      "prob.label6"     </span></span>
+<span><span class="co">## [21] "prob.label7"      "prob.label8"      "prob.label9"      "prob.label10"    </span></span>
+<span><span class="co">## [25] "prob.label11"     "prob.label12"     "prob.label13"     "prob.label14"    </span></span>
+<span><span class="co">## [29] "response.label1"  "response.label2"  "response.label3"  "response.label4" </span></span>
+<span><span class="co">## [33] "response.label5"  "response.label6"  "response.label7"  "response.label8" </span></span>
+<span><span class="co">## [37] "response.label9"  "response.label10" "response.label11" "response.label12"</span></span>
+<span><span class="co">## [41] "response.label13" "response.label14"</span></span>
+<span></span>
+<span><span class="va">pred2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod2</span>, task <span class="op">=</span> <span class="va">yeast.task</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">pred2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">##  [1] "id"               "truth.label1"     "truth.label2"     "truth.label3"    </span></span>
+<span><span class="co">##  [5] "truth.label4"     "truth.label5"     "truth.label6"     "truth.label7"    </span></span>
+<span><span class="co">##  [9] "truth.label8"     "truth.label9"     "truth.label10"    "truth.label11"   </span></span>
+<span><span class="co">## [13] "truth.label12"    "truth.label13"    "truth.label14"    "response.label1" </span></span>
+<span><span class="co">## [17] "response.label2"  "response.label3"  "response.label4"  "response.label5" </span></span>
+<span><span class="co">## [21] "response.label6"  "response.label7"  "response.label8"  "response.label9" </span></span>
+<span><span class="co">## [25] "response.label10" "response.label11" "response.label12" "response.label13"</span></span>
+<span><span class="co">## [29] "response.label14"</span></span></code></pre></div>
 <p>Depending on the chosen <code>predict.type</code> of the learner you get true and predicted values and possibly probabilities for each class label. These can be extracted by the usual accessor functions <code><a href="../../reference/getPredictionResponse.html">getPredictionTruth()</a></code>, <code><a href="../../reference/getPredictionResponse.html">getPredictionResponse()</a></code> and <code><a href="../../reference/getPredictionProbabilities.html">getPredictionProbabilities()</a></code>.</p>
 </div>
 <div class="section level2">
@@ -334,80 +334,80 @@
 </h2>
 <p>The performance of your prediction can be assessed via function <code><a href="../../reference/performance.html">performance()</a></code>. You can specify via the <code>measures</code> argument which <a href="measures.html" target="_blank">measure(s)</a> to calculate. The default measure for multilabel classification is the Hamming loss <a href="measures.html" target="_blank">multilabel.hamloss</a>. All available measures for multilabel classification can be shown by <code><a href="../../reference/listMeasures.html">listMeasures()</a></code> and found in the table of performance <a href="measures.html" target="_blank">measures</a> and the <code>?measures()</code> documentation page.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>
-
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred2</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">multilabel.subset01</span>, <span class="va">multilabel.hamloss</span>, <span class="va">multilabel.acc</span>,
-  <span class="va">multilabel.f1</span>, <span class="va">timepredict</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co">## multilabel.subset01  multilabel.hamloss      multilabel.acc</span>
-<span class="co">##           0.8721556           0.2047402           0.4611732</span>
-<span class="co">##       multilabel.f1         timepredict</span>
-<span class="co">##           0.5715320           0.9210000</span>
-
-<span class="fu"><a href="../../reference/listMeasures.html">listMeasures</a></span><span class="op">(</span><span class="st">"multilabel"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred2</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">multilabel.subset01</span>, <span class="va">multilabel.hamloss</span>, <span class="va">multilabel.acc</span>,</span>
+<span>  <span class="va">multilabel.f1</span>, <span class="va">timepredict</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## multilabel.subset01  multilabel.hamloss      multilabel.acc</span></span>
+<span><span class="co">##           0.8721556           0.2047402           0.4611732</span></span>
+<span><span class="co">##       multilabel.f1         timepredict</span></span>
+<span><span class="co">##           0.5715320           0.9210000</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/listMeasures.html">listMeasures</a></span><span class="op">(</span><span class="st">"multilabel"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="resampling">Resampling<a class="anchor" aria-label="anchor" href="#resampling"></a>
 </h2>
 <p>For evaluating the overall performance of the learning algorithm you can do some <a href="resample.html" target="_blank">resampling</a>. As usual you have to define a resampling strategy, either via <code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code> or <code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>. After that you can run the <code><a href="../../reference/resample.html">resample()</a></code> function. Below the default measure Hamming loss is calculated.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"CV"</span>, stratify <span class="op">=</span> <span class="cn">FALSE</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">lrn.br</span>, task <span class="op">=</span> <span class="va">yeast.task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">r</span>
-
-<span class="co">## Resample Result</span>
-<span class="co">## Task: multi</span>
-<span class="co">## Learner: multilabel.binaryRelevance.classif.rpart</span>
-<span class="co">## Aggr perf: multilabel.hamloss.test.mean=0.2200186</span>
-<span class="co">## Runtime: 6.67501</span>
-
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">lrn.rFerns</span>, task <span class="op">=</span> <span class="va">yeast.task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">r</span>
-
-<span class="co">## Resample Result</span>
-<span class="co">## Task: multi</span>
-<span class="co">## Learner: multilabel.rFerns</span>
-<span class="co">## Aggr perf: multilabel.hamloss.test.mean=0.4762392</span>
-<span class="co">## Runtime: 0.320362</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"CV"</span>, stratify <span class="op">=</span> <span class="cn">FALSE</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">lrn.br</span>, task <span class="op">=</span> <span class="va">yeast.task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">r</span></span>
+<span></span>
+<span><span class="co">## Resample Result</span></span>
+<span><span class="co">## Task: multi</span></span>
+<span><span class="co">## Learner: multilabel.binaryRelevance.classif.rpart</span></span>
+<span><span class="co">## Aggr perf: multilabel.hamloss.test.mean=0.2200186</span></span>
+<span><span class="co">## Runtime: 6.67501</span></span>
+<span></span>
+<span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span>learner <span class="op">=</span> <span class="va">lrn.rFerns</span>, task <span class="op">=</span> <span class="va">yeast.task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">r</span></span>
+<span></span>
+<span><span class="co">## Resample Result</span></span>
+<span><span class="co">## Task: multi</span></span>
+<span><span class="co">## Learner: multilabel.rFerns</span></span>
+<span><span class="co">## Aggr perf: multilabel.hamloss.test.mean=0.4762392</span></span>
+<span><span class="co">## Runtime: 0.320362</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="binary-performance">Binary performance<a class="anchor" aria-label="anchor" href="#binary-performance"></a>
 </h2>
 <p>If you want to calculate a binary performance measure like, e.g., the <a href="measures.html" target="_blank">accuracy</a>, the <a href="measures.html" target="_blank">mmce</a> or the <a href="measures.html" target="_blank">auc</a> for each label, you can use function <code><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances()</a></code>. You can apply this function to any multilabel prediction, e.g., also on the resample multilabel prediction. For calculating the <a href="measures.html" target="_blank">auc</a> you need predicted probabilities.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span>
-<span class="co">##         acc.test.mean mmce.test.mean auc.test.mean</span>
-<span class="co">## label1           0.75           0.25     0.6321925</span>
-<span class="co">## label2           0.64           0.36     0.6547917</span>
-<span class="co">## label3           0.68           0.32     0.7118227</span>
-<span class="co">## label4           0.69           0.31     0.6764835</span>
-<span class="co">## label5           0.73           0.27     0.6676923</span>
-<span class="co">## label6           0.70           0.30     0.6417739</span>
-<span class="co">## label7           0.81           0.19     0.5968750</span>
-<span class="co">## label8           0.73           0.27     0.5164474</span>
-<span class="co">## label9           0.89           0.11     0.4688458</span>
-<span class="co">## label10          0.86           0.14     0.3996463</span>
-<span class="co">## label11          0.85           0.15     0.5000000</span>
-<span class="co">## label12          0.76           0.24     0.5330667</span>
-<span class="co">## label13          0.75           0.25     0.5938610</span>
-<span class="co">## label14          1.00           0.00            NA</span>
-
-<span class="fu"><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
-<span class="co">##         acc.test.mean mmce.test.mean</span>
-<span class="co">## label1     0.70459247      0.2954075</span>
-<span class="co">## label2     0.58874638      0.4112536</span>
-<span class="co">## label3     0.70045511      0.2995449</span>
-<span class="co">## label4     0.70955730      0.2904427</span>
-<span class="co">## label5     0.70707489      0.2929251</span>
-<span class="co">## label6     0.58295408      0.4170459</span>
-<span class="co">## label7     0.54075300      0.4592470</span>
-<span class="co">## label8     0.52420356      0.4757964</span>
-<span class="co">## label9     0.30326851      0.6967315</span>
-<span class="co">## label10    0.44890360      0.5510964</span>
-<span class="co">## label11    0.45966074      0.5403393</span>
-<span class="co">## label12    0.53537443      0.4646256</span>
-<span class="co">## label13    0.53620190      0.4637981</span>
-<span class="co">## label14    0.02275548      0.9772445</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span>, <span class="va">auc</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">##         acc.test.mean mmce.test.mean auc.test.mean</span></span>
+<span><span class="co">## label1           0.75           0.25     0.6321925</span></span>
+<span><span class="co">## label2           0.64           0.36     0.6547917</span></span>
+<span><span class="co">## label3           0.68           0.32     0.7118227</span></span>
+<span><span class="co">## label4           0.69           0.31     0.6764835</span></span>
+<span><span class="co">## label5           0.73           0.27     0.6676923</span></span>
+<span><span class="co">## label6           0.70           0.30     0.6417739</span></span>
+<span><span class="co">## label7           0.81           0.19     0.5968750</span></span>
+<span><span class="co">## label8           0.73           0.27     0.5164474</span></span>
+<span><span class="co">## label9           0.89           0.11     0.4688458</span></span>
+<span><span class="co">## label10          0.86           0.14     0.3996463</span></span>
+<span><span class="co">## label11          0.85           0.15     0.5000000</span></span>
+<span><span class="co">## label12          0.76           0.24     0.5330667</span></span>
+<span><span class="co">## label13          0.75           0.25     0.5938610</span></span>
+<span><span class="co">## label14          1.00           0.00            NA</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">##         acc.test.mean mmce.test.mean</span></span>
+<span><span class="co">## label1     0.69590401      0.3040960</span></span>
+<span><span class="co">## label2     0.58750517      0.4124948</span></span>
+<span><span class="co">## label3     0.70541994      0.2945801</span></span>
+<span><span class="co">## label4     0.71245345      0.2875465</span></span>
+<span><span class="co">## label5     0.70086885      0.2991312</span></span>
+<span><span class="co">## label6     0.58750517      0.4124948</span></span>
+<span><span class="co">## label7     0.55026893      0.4497311</span></span>
+<span><span class="co">## label8     0.52834092      0.4716591</span></span>
+<span><span class="co">## label9     0.31402565      0.6859743</span></span>
+<span><span class="co">## label10    0.44931734      0.5506827</span></span>
+<span><span class="co">## label11    0.46172942      0.5382706</span></span>
+<span><span class="co">## label12    0.52378982      0.4762102</span></span>
+<span><span class="co">## label13    0.53289201      0.4671080</span></span>
+<span><span class="co">## label14    0.01406703      0.9859330</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -422,7 +422,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

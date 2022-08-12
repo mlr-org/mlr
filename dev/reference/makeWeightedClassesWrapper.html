@@ -14,7 +14,7 @@ b) The learner does not have a direct parameter to support class weighting, but
 supports observation weights, so hasLearnerProperties(learner, 'weights') is TRUE.
 This means that an individual, arbitrary weight can be set per observation during training.
 We set this weight depending on the class internally in the wrapper. Basically we introduce
-something like a new &amp;#8220;class.weights&amp;#8221; parameter for the learner via observation weights."><title>Wraps a classifier for weighted fitting where each class receives a weight. — makeWeightedClassesWrapper • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Roboto-0.4.0/font.css" rel="stylesheet"><link href="../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet"><link href="../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Wraps a classifier for weighted fitting where each class receives a weight. — makeWeightedClassesWrapper"><meta property="og:description" content="Creates a wrapper, which can be used like any other learner object.
+something like a new &amp;#8220;class.weights&amp;#8221; parameter for the learner via observation weights."><title>Wraps a classifier for weighted fitting where each class receives a weight. — makeWeightedClassesWrapper • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Wraps a classifier for weighted fitting where each class receives a weight. — makeWeightedClassesWrapper"><meta property="og:description" content="Creates a wrapper, which can be used like any other learner object.
 Fitting is performed in a weighted fashion where each observation receives a weight,
 depending on the class it belongs to, see wcw.weight.
 This might help to mitigate problems caused by imbalanced class distributions.
@@ -184,7 +184,7 @@ something like a new “class.weights” parameter for the learner via observati
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">makeWeightedClassesWrapper</span><span class="op">(</span><span class="va">learner</span>, wcw.param <span class="op">=</span> <span class="cn">NULL</span>, wcw.weight <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">makeWeightedClassesWrapper</span><span class="op">(</span><span class="va">learner</span>, wcw.param <span class="op">=</span> <span class="cn">NULL</span>, wcw.weight <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -193,6 +193,8 @@ something like a new “class.weights” parameter for the learner via observati
 <dd><p>(<a href="makeLearner.html">Learner</a> | <code>character(1)</code>)<br>
 The classification learner.
 If you pass a string the learner will be created via <a href="makeLearner.html">makeLearner</a>.</p></dd>
+
+
 <dt>wcw.param</dt>
 <dd><p>(<code>character(1)</code>)<br>
 Name of already existing learner parameter, which allows class weighting.
@@ -200,6 +202,8 @@ The default (<code>wcw.param = NULL</code>) will use the parameter defined in
 the learner (<code>class.weights.param</code>). During training, the parameter
 must accept a named vector of class weights, where length equals the
 number of classes.</p></dd>
+
+
 <dt>wcw.weight</dt>
 <dd><p>(<a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a>)<br>
 Weight for each class.
@@ -210,10 +214,13 @@ For convenience, one must pass a single number in case of binary classification,
 is then taken as the weight of the positive class, while the negative class receives a weight
 of 1.
 Default is 1.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><a href="makeLearner.html">Learner</a>.</p>
+    
+
+<p><a href="makeLearner.html">Learner</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -246,27 +253,27 @@ Default is 1.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># using the direct parameter of the SVM (which is already defined in the learner)</span></span>
-<span class="r-in"><span class="va">lrn</span> <span class="op">=</span> <span class="fu">makeWeightedClassesWrapper</span><span class="op">(</span><span class="st">"classif.ksvm"</span>, wcw.weight <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="resample.html">holdout</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># using the direct parameter of the SVM (which is already defined in the learner)</span></span></span>
+<span class="r-in"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu">makeWeightedClassesWrapper</span><span class="op">(</span><span class="st">"classif.ksvm"</span>, wcw.weight <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="resample.html">holdout</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling: holdout</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Measures:             mmce      </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.5428571 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: mmce.test.mean=0.5428571</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="calculateConfusionMatrix.html">calculateConfusionMatrix</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="calculateConfusionMatrix.html">calculateConfusionMatrix</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         predicted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> true     M  R -err.-</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   M      0 38     38</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   R      0 32      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -err.- 0 38     38</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># using the observation weights of logreg</span></span>
-<span class="r-in"><span class="va">lrn</span> <span class="op">=</span> <span class="fu">makeWeightedClassesWrapper</span><span class="op">(</span><span class="st">"classif.logreg"</span>, wcw.weight <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="resample.html">holdout</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># using the observation weights of logreg</span></span></span>
+<span class="r-in"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu">makeWeightedClassesWrapper</span><span class="op">(</span><span class="st">"classif.logreg"</span>, wcw.weight <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="resample.html">holdout</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling: holdout</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Measures:             mmce      </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>glm.fit: algorithm did not converge</span>
@@ -275,23 +282,23 @@ Default is 1.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: mmce.test.mean=0.3285714</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="calculateConfusionMatrix.html">calculateConfusionMatrix</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="calculateConfusionMatrix.html">calculateConfusionMatrix</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         predicted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> true      M  R -err.-</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   M      28  7      7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   R      16 19     16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -err.- 16  7     23</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># tuning the imbalancy param and the SVM param in one go</span></span>
-<span class="r-in"><span class="va">lrn</span> <span class="op">=</span> <span class="fu">makeWeightedClassesWrapper</span><span class="op">(</span><span class="st">"classif.ksvm"</span>, wcw.param <span class="op">=</span> <span class="st">"class.weights"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"wcw.weight"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, upper <span class="op">=</span> <span class="fl">12</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, upper <span class="op">=</span> <span class="fl">12</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">3L</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">2L</span>, stratify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span>, <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># tuning the imbalancy param and the SVM param in one go</span></span></span>
+<span class="r-in"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu">makeWeightedClassesWrapper</span><span class="op">(</span><span class="st">"classif.ksvm"</span>, wcw.param <span class="op">=</span> <span class="st">"class.weights"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"wcw.weight"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, upper <span class="op">=</span> <span class="fl">12</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, upper <span class="op">=</span> <span class="fl">12</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span>maxit <span class="op">=</span> <span class="fl">3L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">2L</span>, stratify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span>, <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune] Started tuning learner weightedclasses.classif.ksvm for parameter set:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>               Type len Def    Constr Req Tunable Trafo</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> wcw.weight numeric   -   -   1 to 10   -    TRUE     -</span>
@@ -306,12 +313,12 @@ Default is 1.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-x] 3: wcw.weight=4.05; C=3.78; sigma=241</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 3: mmce.test.mean=0.4663462; time: 0.0 min</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune] Result: wcw.weight=1.11; C=441; sigma=0.0013 : mmce.test.mean=0.2644231</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tune result:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Op. pars: wcw.weight=1.11; C=441; sigma=0.0013</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mmce.test.mean=0.2644231</span>
-<span class="r-in"><span class="co"># print(res$opt.path)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span><span class="co"># print(res$opt.path)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -323,7 +330,7 @@ Default is 1.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

@@ -14,10 +14,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
 <script src="../../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../../deps/_Roboto-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet">
+<link href="../../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Learning Tasks">
@@ -163,7 +163,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Learning Tasks</h1>
             
       
@@ -198,20 +198,20 @@
 </h3>
 <p>For supervised learning like regression (as well as classification and survival analysis) we, in addition to <code>data</code>, have to specify the name of the <code>target</code> variable.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">BostonHousing</span>, package <span class="op">=</span> <span class="st">"mlbench"</span><span class="op">)</span>
-<span class="va">regr.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/RegrTask.html">makeRegrTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"bh"</span>, data <span class="op">=</span> <span class="va">BostonHousing</span>, target <span class="op">=</span> <span class="st">"medv"</span><span class="op">)</span>
-<span class="va">regr.task</span>
-<span class="co">## Supervised task: bh</span>
-<span class="co">## Type: regr</span>
-<span class="co">## Target: medv</span>
-<span class="co">## Observations: 506</span>
-<span class="co">## Features:</span>
-<span class="co">##    numerics     factors     ordered functionals </span>
-<span class="co">##          12           1           0           0 </span>
-<span class="co">## Missings: FALSE</span>
-<span class="co">## Has weights: FALSE</span>
-<span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">BostonHousing</span>, package <span class="op">=</span> <span class="st">"mlbench"</span><span class="op">)</span></span>
+<span><span class="va">regr.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/RegrTask.html">makeRegrTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"bh"</span>, data <span class="op">=</span> <span class="va">BostonHousing</span>, target <span class="op">=</span> <span class="st">"medv"</span><span class="op">)</span></span>
+<span><span class="va">regr.task</span></span>
+<span><span class="co">## Supervised task: bh</span></span>
+<span><span class="co">## Type: regr</span></span>
+<span><span class="co">## Target: medv</span></span>
+<span><span class="co">## Observations: 506</span></span>
+<span><span class="co">## Features:</span></span>
+<span><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span><span class="co">##          12           1           0           0 </span></span>
+<span><span class="co">## Missings: FALSE</span></span>
+<span><span class="co">## Has weights: FALSE</span></span>
+<span><span class="co">## Has blocking: FALSE</span></span>
+<span><span class="co">## Has coordinates: FALSE</span></span></code></pre></div>
 <p>As you can see, the <code><a href="../../reference/Task.html">Task()</a></code> records the type of the learning problem and basic information about the data set, e.g., the types of the features (<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">base::numeric()</a></code> vectors, <code>base::factors()</code> or ordered factors), the number of observations, or whether missing values are present.</p>
 <p>Creating tasks for classification and survival analysis follows the same scheme, the data type of the target variables included in <code>data</code> is simply different. For each of these learning problems some specifics are described below.</p>
 </div>
@@ -221,52 +221,52 @@
 <p>For classification the target column has to be a <code>factor</code>.</p>
 <p>In the following example we define a classification task for the <code><a href="https://rdrr.io/pkg/mlbench/man/BreastCancer.html" class="external-link">mlbench::BreastCancer()</a></code> data set and exclude the variable <code>Id</code> from all further model fitting and evaluation.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">BreastCancer</span>, package <span class="op">=</span> <span class="st">"mlbench"</span><span class="op">)</span>
-<span class="va">df</span> <span class="op">=</span> <span class="va">BreastCancer</span>
-<span class="va">df</span><span class="op">$</span><span class="va">Id</span> <span class="op">=</span> <span class="cn">NULL</span>
-<span class="va">classif.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"BreastCancer"</span>, data <span class="op">=</span> <span class="va">df</span>, target <span class="op">=</span> <span class="st">"Class"</span><span class="op">)</span>
-<span class="va">classif.task</span>
-<span class="co">## Supervised task: BreastCancer</span>
-<span class="co">## Type: classif</span>
-<span class="co">## Target: Class</span>
-<span class="co">## Observations: 699</span>
-<span class="co">## Features:</span>
-<span class="co">##    numerics     factors     ordered functionals </span>
-<span class="co">##           0           4           5           0 </span>
-<span class="co">## Missings: TRUE</span>
-<span class="co">## Has weights: FALSE</span>
-<span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span>
-<span class="co">## Classes: 2</span>
-<span class="co">##    benign malignant </span>
-<span class="co">##       458       241 </span>
-<span class="co">## Positive class: benign</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">BreastCancer</span>, package <span class="op">=</span> <span class="st">"mlbench"</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">=</span> <span class="va">BreastCancer</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">Id</span> <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="va">classif.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"BreastCancer"</span>, data <span class="op">=</span> <span class="va">df</span>, target <span class="op">=</span> <span class="st">"Class"</span><span class="op">)</span></span>
+<span><span class="va">classif.task</span></span>
+<span><span class="co">## Supervised task: BreastCancer</span></span>
+<span><span class="co">## Type: classif</span></span>
+<span><span class="co">## Target: Class</span></span>
+<span><span class="co">## Observations: 699</span></span>
+<span><span class="co">## Features:</span></span>
+<span><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span><span class="co">##           0           4           5           0 </span></span>
+<span><span class="co">## Missings: TRUE</span></span>
+<span><span class="co">## Has weights: FALSE</span></span>
+<span><span class="co">## Has blocking: FALSE</span></span>
+<span><span class="co">## Has coordinates: FALSE</span></span>
+<span><span class="co">## Classes: 2</span></span>
+<span><span class="co">##    benign malignant </span></span>
+<span><span class="co">##       458       241 </span></span>
+<span><span class="co">## Positive class: benign</span></span></code></pre></div>
 <p>In binary classification the two classes are usually referred to as <em>positive</em> and <em>negative</em> class with the positive class being the category of greater interest. This is relevant for many <a href="performance.html" target="_blank">performance measures</a> like the <em>true positive rate</em> or <a href="roc_analysis.html" target="_blank">ROC analysis</a>. Moreover, <code>mlr</code>, where possible, permits to set options (like the <code><a href="../../reference/setThreshold.html">setThreshold()</a></code> or <code><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper()</a></code>) and returns and plots results (like class posterior probabilities) for the positive class only.</p>
 <p><code><a href="../../reference/ClassifTask.html">makeClassifTask()</a></code> by default selects the first factor level of the target variable as the positive class, in the above example <code>benign</code>. Class <code>malignant</code> can be manually selected as follows:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">classif.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"BreastCancer"</span>, data <span class="op">=</span> <span class="va">df</span>, target <span class="op">=</span> <span class="st">"Class"</span>, positive <span class="op">=</span> <span class="st">"malignant"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">classif.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"BreastCancer"</span>, data <span class="op">=</span> <span class="va">df</span>, target <span class="op">=</span> <span class="st">"Class"</span>, positive <span class="op">=</span> <span class="st">"malignant"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="survival-analysis">Survival analysis<a class="anchor" aria-label="anchor" href="#survival-analysis"></a>
 </h3>
 <p>Survival tasks use two target columns. For left and right censored problems these consist of the survival time and a binary event indicator. For interval censored data the two target columns must be specified in the <code>"interval2"</code> format (see <code><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">survival::Surv()</a></code>).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">cancer</span>, package <span class="op">=</span> <span class="st">"survival"</span><span class="op">)</span>
-<span class="va">lung</span><span class="op">$</span><span class="va">status</span> <span class="op">=</span> <span class="op">(</span><span class="va">lung</span><span class="op">$</span><span class="va">status</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># convert to logical</span>
-<span class="va">surv.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/SurvTask.html">makeSurvTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">lung</span>, target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"time"</span>, <span class="st">"status"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">surv.task</span>
-<span class="co">## Supervised task: lung</span>
-<span class="co">## Type: surv</span>
-<span class="co">## Target: time,status</span>
-<span class="co">## Events: 165</span>
-<span class="co">## Observations: 228</span>
-<span class="co">## Features:</span>
-<span class="co">##    numerics     factors     ordered functionals </span>
-<span class="co">##           8           0           0           0 </span>
-<span class="co">## Missings: TRUE</span>
-<span class="co">## Has weights: FALSE</span>
-<span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">cancer</span>, package <span class="op">=</span> <span class="st">"survival"</span><span class="op">)</span></span>
+<span><span class="va">lung</span><span class="op">$</span><span class="va">status</span> <span class="op">=</span> <span class="op">(</span><span class="va">lung</span><span class="op">$</span><span class="va">status</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># convert to logical</span></span>
+<span><span class="va">surv.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/SurvTask.html">makeSurvTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">lung</span>, target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"time"</span>, <span class="st">"status"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">surv.task</span></span>
+<span><span class="co">## Supervised task: lung</span></span>
+<span><span class="co">## Type: surv</span></span>
+<span><span class="co">## Target: time,status</span></span>
+<span><span class="co">## Events: 165</span></span>
+<span><span class="co">## Observations: 228</span></span>
+<span><span class="co">## Features:</span></span>
+<span><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span><span class="co">##           8           0           0           0 </span></span>
+<span><span class="co">## Missings: TRUE</span></span>
+<span><span class="co">## Has weights: FALSE</span></span>
+<span><span class="co">## Has blocking: FALSE</span></span>
+<span><span class="co">## Has coordinates: FALSE</span></span></code></pre></div>
 <p>The type of censoring can be specified via the argument <code>censoring</code>, which defaults to <code>"rcens"</code> for right censored data.</p>
 </div>
 <div class="section level3">
@@ -276,27 +276,27 @@
 <p>The <code>data</code> are expected to contain as many target columns as there are class labels. The target columns should be logical vectors that indicate which class labels are present. The names of the target columns are taken as class labels and need to be passed to the <code>target</code> argument of <code><a href="../../reference/MultilabelTask.html">makeMultilabelTask()</a></code>.</p>
 <p>In the following example we get the data of the yeast data set, extract the label names, and pass them to the <code>target</code> argument in <code><a href="../../reference/MultilabelTask.html">makeMultilabelTask()</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">yeast</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">yeast.task</span><span class="op">)</span>
-
-<span class="va">labels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">yeast</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">14</span><span class="op">]</span>
-<span class="va">yeast.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/MultilabelTask.html">makeMultilabelTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"multi"</span>, data <span class="op">=</span> <span class="va">yeast</span>, target <span class="op">=</span> <span class="va">labels</span><span class="op">)</span>
-<span class="va">yeast.task</span>
-<span class="co">## Supervised task: multi</span>
-<span class="co">## Type: multilabel</span>
-<span class="co">## Target: label1,label2,label3,label4,label5,label6,label7,label8,label9,label10,label11,label12,label13,label14</span>
-<span class="co">## Observations: 2417</span>
-<span class="co">## Features:</span>
-<span class="co">##    numerics     factors     ordered functionals </span>
-<span class="co">##         103           0           0           0 </span>
-<span class="co">## Missings: FALSE</span>
-<span class="co">## Has weights: FALSE</span>
-<span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span>
-<span class="co">## Classes: 14</span>
-<span class="co">##  label1  label2  label3  label4  label5  label6  label7  label8  label9 label10 </span>
-<span class="co">##     762    1038     983     862     722     597     428     480     178     253 </span>
-<span class="co">## label11 label12 label13 label14 </span>
-<span class="co">##     289    1816    1799      34</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">yeast</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">yeast.task</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">labels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">yeast</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">14</span><span class="op">]</span></span>
+<span><span class="va">yeast.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/MultilabelTask.html">makeMultilabelTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"multi"</span>, data <span class="op">=</span> <span class="va">yeast</span>, target <span class="op">=</span> <span class="va">labels</span><span class="op">)</span></span>
+<span><span class="va">yeast.task</span></span>
+<span><span class="co">## Supervised task: multi</span></span>
+<span><span class="co">## Type: multilabel</span></span>
+<span><span class="co">## Target: label1,label2,label3,label4,label5,label6,label7,label8,label9,label10,label11,label12,label13,label14</span></span>
+<span><span class="co">## Observations: 2417</span></span>
+<span><span class="co">## Features:</span></span>
+<span><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span><span class="co">##         103           0           0           0 </span></span>
+<span><span class="co">## Missings: FALSE</span></span>
+<span><span class="co">## Has weights: FALSE</span></span>
+<span><span class="co">## Has blocking: FALSE</span></span>
+<span><span class="co">## Has coordinates: FALSE</span></span>
+<span><span class="co">## Classes: 14</span></span>
+<span><span class="co">##  label1  label2  label3  label4  label5  label6  label7  label8  label9 label10 </span></span>
+<span><span class="co">##     762    1038     983     862     722     597     428     480     178     253 </span></span>
+<span><span class="co">## label11 label12 label13 label14 </span></span>
+<span><span class="co">##     289    1816    1799      34</span></span></code></pre></div>
 <p>See also the tutorial page <a href="multilabel.html" target="_blank">multilabel</a>.</p>
 </div>
 <div class="section level3">
@@ -304,19 +304,19 @@
 </h3>
 <p>As cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the <code>data</code>. Below we create a learning task from the data set <code><a href="https://rdrr.io/r/datasets/mtcars.html" class="external-link">datasets::mtcars()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mtcars</span>, package <span class="op">=</span> <span class="st">"datasets"</span><span class="op">)</span>
-<span class="va">cluster.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClusterTask.html">makeClusterTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
-<span class="va">cluster.task</span>
-<span class="co">## Unsupervised task: mtcars</span>
-<span class="co">## Type: cluster</span>
-<span class="co">## Observations: 32</span>
-<span class="co">## Features:</span>
-<span class="co">##    numerics     factors     ordered functionals </span>
-<span class="co">##          11           0           0           0 </span>
-<span class="co">## Missings: FALSE</span>
-<span class="co">## Has weights: FALSE</span>
-<span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mtcars</span>, package <span class="op">=</span> <span class="st">"datasets"</span><span class="op">)</span></span>
+<span><span class="va">cluster.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClusterTask.html">makeClusterTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span><span class="va">cluster.task</span></span>
+<span><span class="co">## Unsupervised task: mtcars</span></span>
+<span><span class="co">## Type: cluster</span></span>
+<span><span class="co">## Observations: 32</span></span>
+<span><span class="co">## Features:</span></span>
+<span><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span><span class="co">##          11           0           0           0 </span></span>
+<span><span class="co">## Missings: FALSE</span></span>
+<span><span class="co">## Has weights: FALSE</span></span>
+<span><span class="co">## Has blocking: FALSE</span></span>
+<span><span class="co">## Has coordinates: FALSE</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="cost-sensitive-classification">Cost-sensitive classification<a class="anchor" aria-label="anchor" href="#cost-sensitive-classification"></a>
@@ -327,23 +327,23 @@
 <p>As the cost vector contains all relevant information about the intended class <span class="math inline">\(y\)</span>, only the feature values <span class="math inline">\(x\)</span> and a <code>cost</code> matrix, which contains the cost vectors for all examples in the data set, are required to create the <code><a href="../../reference/CostSensTask.html">CostSensTask()</a></code>.</p>
 <p>In the following example we use the <code><a href="https://rdrr.io/r/datasets/iris.html" class="external-link">datasets::iris()</a></code> data and an artificial cost matrix (which is generated as proposed by <a href="https://doi.org/10.1145/1102351.1102358" class="external-link">Beygelzimer et al., 2005</a>):</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">=</span> <span class="va">iris</span>
-<span class="va">cost</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">150</span> <span class="op">*</span> <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">2000</span><span class="op">)</span>, <span class="fl">150</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span>, <span class="op">]</span>
-<span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">=</span> <span class="cn">NULL</span>
-
-<span class="va">costsens.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/CostSensTask.html">makeCostSensTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">df</span>, cost <span class="op">=</span> <span class="va">cost</span><span class="op">)</span>
-<span class="va">costsens.task</span>
-<span class="co">## Supervised task: df</span>
-<span class="co">## Type: costsens</span>
-<span class="co">## Observations: 150</span>
-<span class="co">## Features:</span>
-<span class="co">##    numerics     factors     ordered functionals </span>
-<span class="co">##           4           0           0           0 </span>
-<span class="co">## Missings: FALSE</span>
-<span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span>
-<span class="co">## Classes: 3</span>
-<span class="co">## y1, y2, y3</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">=</span> <span class="va">iris</span></span>
+<span><span class="va">cost</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">150</span> <span class="op">*</span> <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">2000</span><span class="op">)</span>, <span class="fl">150</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span>, <span class="op">]</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">=</span> <span class="cn">NULL</span></span>
+<span></span>
+<span><span class="va">costsens.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/CostSensTask.html">makeCostSensTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">df</span>, cost <span class="op">=</span> <span class="va">cost</span><span class="op">)</span></span>
+<span><span class="va">costsens.task</span></span>
+<span><span class="co">## Supervised task: df</span></span>
+<span><span class="co">## Type: costsens</span></span>
+<span><span class="co">## Observations: 150</span></span>
+<span><span class="co">## Features:</span></span>
+<span><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span><span class="co">##           4           0           0           0 </span></span>
+<span><span class="co">## Missings: FALSE</span></span>
+<span><span class="co">## Has blocking: FALSE</span></span>
+<span><span class="co">## Has coordinates: FALSE</span></span>
+<span><span class="co">## Classes: 3</span></span>
+<span><span class="co">## y1, y2, y3</span></span></code></pre></div>
 <p>For more details see the page on <a href="cost_sensitive_classif.html" target="_blank">cost sensitive classification</a>.</p>
 </div>
 </div>
@@ -360,116 +360,116 @@
 <p>We provide many operators to access the elements stored in a <code><a href="../../reference/Task.html">Task()</a></code>. The most important ones are listed in the documentation of <code><a href="../../reference/Task.html">Task()</a></code> and <code><a href="../../reference/getTaskData.html">getTaskData()</a></code>.</p>
 <p>To access the <code><a href="../../reference/TaskDesc.html">TaskDesc()</a></code> that contains basic information about the task you can use:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/getTaskDesc.html">getTaskDesc</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span>
-<span class="co">## $id</span>
-<span class="co">## [1] "BreastCancer"</span>
-<span class="co">## </span>
-<span class="co">## $type</span>
-<span class="co">## [1] "classif"</span>
-<span class="co">## </span>
-<span class="co">## $target</span>
-<span class="co">## [1] "Class"</span>
-<span class="co">## </span>
-<span class="co">## $size</span>
-<span class="co">## [1] 699</span>
-<span class="co">## </span>
-<span class="co">## $n.feat</span>
-<span class="co">##    numerics     factors     ordered functionals </span>
-<span class="co">##           0           4           5           0 </span>
-<span class="co">## </span>
-<span class="co">## $has.missings</span>
-<span class="co">## [1] TRUE</span>
-<span class="co">## </span>
-<span class="co">## $has.weights</span>
-<span class="co">## [1] FALSE</span>
-<span class="co">## </span>
-<span class="co">## $has.blocking</span>
-<span class="co">## [1] FALSE</span>
-<span class="co">## </span>
-<span class="co">## $has.coordinates</span>
-<span class="co">## [1] FALSE</span>
-<span class="co">## </span>
-<span class="co">## $class.levels</span>
-<span class="co">## [1] "benign"    "malignant"</span>
-<span class="co">## </span>
-<span class="co">## $positive</span>
-<span class="co">## [1] "malignant"</span>
-<span class="co">## </span>
-<span class="co">## $negative</span>
-<span class="co">## [1] "benign"</span>
-<span class="co">## </span>
-<span class="co">## $class.distribution</span>
-<span class="co">## </span>
-<span class="co">##    benign malignant </span>
-<span class="co">##       458       241 </span>
-<span class="co">## </span>
-<span class="co">## attr(,"class")</span>
-<span class="co">## [1] "ClassifTaskDesc"    "SupervisedTaskDesc" "TaskDesc"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/getTaskDesc.html">getTaskDesc</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span></span>
+<span><span class="co">## $id</span></span>
+<span><span class="co">## [1] "BreastCancer"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $type</span></span>
+<span><span class="co">## [1] "classif"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $target</span></span>
+<span><span class="co">## [1] "Class"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $size</span></span>
+<span><span class="co">## [1] 699</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $n.feat</span></span>
+<span><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span><span class="co">##           0           4           5           0 </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $has.missings</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $has.weights</span></span>
+<span><span class="co">## [1] FALSE</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $has.blocking</span></span>
+<span><span class="co">## [1] FALSE</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $has.coordinates</span></span>
+<span><span class="co">## [1] FALSE</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $class.levels</span></span>
+<span><span class="co">## [1] "benign"    "malignant"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $positive</span></span>
+<span><span class="co">## [1] "malignant"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $negative</span></span>
+<span><span class="co">## [1] "benign"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $class.distribution</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##    benign malignant </span></span>
+<span><span class="co">##       458       241 </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attr(,"class")</span></span>
+<span><span class="co">## [1] "ClassifTaskDesc"    "SupervisedTaskDesc" "TaskDesc"</span></span></code></pre></div>
 <p>Note that <code><a href="../../reference/TaskDesc.html">TaskDesc()</a></code> have slightly different elements for different types of <code><a href="../../reference/Task.html">Task()</a></code>s. Frequently required elements can also be accessed directly.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Get the ID</span>
-<span class="fu"><a href="../../reference/getTaskId.html">getTaskId</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span>
-<span class="co">## [1] "BreastCancer"</span>
-
-<span class="co"># Get the type of task</span>
-<span class="fu"><a href="../../reference/getTaskType.html">getTaskType</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span>
-<span class="co">## [1] "classif"</span>
-
-<span class="co"># Get the names of the target columns</span>
-<span class="fu"><a href="../../reference/getTaskTargetNames.html">getTaskTargetNames</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span>
-<span class="co">## [1] "Class"</span>
-
-<span class="co"># Get the number of observations</span>
-<span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span>
-<span class="co">## [1] 699</span>
-
-<span class="co"># Get the number of input variables</span>
-<span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span>
-<span class="co">## [1] 9</span>
-
-<span class="co"># Get the class levels in classif.task</span>
-<span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span>
-<span class="co">## [1] "benign"    "malignant"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Get the ID</span></span>
+<span><span class="fu"><a href="../../reference/getTaskId.html">getTaskId</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span></span>
+<span><span class="co">## [1] "BreastCancer"</span></span>
+<span></span>
+<span><span class="co"># Get the type of task</span></span>
+<span><span class="fu"><a href="../../reference/getTaskType.html">getTaskType</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span></span>
+<span><span class="co">## [1] "classif"</span></span>
+<span></span>
+<span><span class="co"># Get the names of the target columns</span></span>
+<span><span class="fu"><a href="../../reference/getTaskTargetNames.html">getTaskTargetNames</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span></span>
+<span><span class="co">## [1] "Class"</span></span>
+<span></span>
+<span><span class="co"># Get the number of observations</span></span>
+<span><span class="fu"><a href="../../reference/getTaskSize.html">getTaskSize</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span></span>
+<span><span class="co">## [1] 699</span></span>
+<span></span>
+<span><span class="co"># Get the number of input variables</span></span>
+<span><span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span></span>
+<span><span class="co">## [1] 9</span></span>
+<span></span>
+<span><span class="co"># Get the class levels in classif.task</span></span>
+<span><span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span></span>
+<span><span class="co">## [1] "benign"    "malignant"</span></span></code></pre></div>
 <p>Moreover, <code>mlr</code> provides several functions to extract data from a <code><a href="../../reference/Task.html">Task()</a></code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Accessing the data set in classif.task</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## 'data.frame':    699 obs. of  10 variables:</span>
-<span class="co">##  $ Cl.thickness   : Ord.factor w/ 10 levels "1"&lt;"2"&lt;"3"&lt;"4"&lt;..: 5 5 3 6 4 8 1 2 2 4 ...</span>
-<span class="co">##  $ Cell.size      : Ord.factor w/ 10 levels "1"&lt;"2"&lt;"3"&lt;"4"&lt;..: 1 4 1 8 1 10 1 1 1 2 ...</span>
-<span class="co">##  $ Cell.shape     : Ord.factor w/ 10 levels "1"&lt;"2"&lt;"3"&lt;"4"&lt;..: 1 4 1 8 1 10 1 2 1 1 ...</span>
-<span class="co">##  $ Marg.adhesion  : Ord.factor w/ 10 levels "1"&lt;"2"&lt;"3"&lt;"4"&lt;..: 1 5 1 1 3 8 1 1 1 1 ...</span>
-<span class="co">##  $ Epith.c.size   : Ord.factor w/ 10 levels "1"&lt;"2"&lt;"3"&lt;"4"&lt;..: 2 7 2 3 2 7 2 2 2 2 ...</span>
-<span class="co">##  $ Bare.nuclei    : Factor w/ 10 levels "1","2","3","4",..: 1 10 2 4 1 10 10 1 1 1 ...</span>
-<span class="co">##  $ Bl.cromatin    : Factor w/ 10 levels "1","2","3","4",..: 3 3 3 3 3 9 3 3 1 2 ...</span>
-<span class="co">##  $ Normal.nucleoli: Factor w/ 10 levels "1","2","3","4",..: 1 2 1 7 1 7 1 1 1 1 ...</span>
-<span class="co">##  $ Mitoses        : Factor w/ 9 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 5 1 ...</span>
-<span class="co">##  $ Class          : Factor w/ 2 levels "benign","malignant": 1 1 1 1 1 2 1 1 1 1 ...</span>
-
-<span class="co"># Get the names of the input variables in cluster.task</span>
-<span class="fu"><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames</a></span><span class="op">(</span><span class="va">cluster.task</span><span class="op">)</span>
-<span class="co">##  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear"</span>
-<span class="co">## [11] "carb"</span>
-
-<span class="co"># Get the values of the target variables in surv.task</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">surv.task</span><span class="op">)</span><span class="op">)</span>
-<span class="co">##   time status</span>
-<span class="co">## 1  306   TRUE</span>
-<span class="co">## 2  455   TRUE</span>
-<span class="co">## 3 1010  FALSE</span>
-<span class="co">## 4  210   TRUE</span>
-<span class="co">## 5  883   TRUE</span>
-<span class="co">## 6 1022  FALSE</span>
-
-<span class="co"># Get the cost matrix in costsens.task</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskCosts.html">getTaskCosts</a></span><span class="op">(</span><span class="va">costsens.task</span><span class="op">)</span><span class="op">)</span>
-<span class="co">##      y1        y2         y3</span>
-<span class="co">## [1,]  0 1694.9063 1569.15053</span>
-<span class="co">## [2,]  0  995.0545   18.85981</span>
-<span class="co">## [3,]  0  775.8181 1558.13177</span>
-<span class="co">## [4,]  0  492.8980 1458.78130</span>
-<span class="co">## [5,]  0  222.1929 1260.26371</span>
-<span class="co">## [6,]  0  779.9889  961.82166</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Accessing the data set in classif.task</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">classif.task</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## 'data.frame':    699 obs. of  10 variables:</span></span>
+<span><span class="co">##  $ Cl.thickness   : Ord.factor w/ 10 levels "1"&lt;"2"&lt;"3"&lt;"4"&lt;..: 5 5 3 6 4 8 1 2 2 4 ...</span></span>
+<span><span class="co">##  $ Cell.size      : Ord.factor w/ 10 levels "1"&lt;"2"&lt;"3"&lt;"4"&lt;..: 1 4 1 8 1 10 1 1 1 2 ...</span></span>
+<span><span class="co">##  $ Cell.shape     : Ord.factor w/ 10 levels "1"&lt;"2"&lt;"3"&lt;"4"&lt;..: 1 4 1 8 1 10 1 2 1 1 ...</span></span>
+<span><span class="co">##  $ Marg.adhesion  : Ord.factor w/ 10 levels "1"&lt;"2"&lt;"3"&lt;"4"&lt;..: 1 5 1 1 3 8 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ Epith.c.size   : Ord.factor w/ 10 levels "1"&lt;"2"&lt;"3"&lt;"4"&lt;..: 2 7 2 3 2 7 2 2 2 2 ...</span></span>
+<span><span class="co">##  $ Bare.nuclei    : Factor w/ 10 levels "1","2","3","4",..: 1 10 2 4 1 10 10 1 1 1 ...</span></span>
+<span><span class="co">##  $ Bl.cromatin    : Factor w/ 10 levels "1","2","3","4",..: 3 3 3 3 3 9 3 3 1 2 ...</span></span>
+<span><span class="co">##  $ Normal.nucleoli: Factor w/ 10 levels "1","2","3","4",..: 1 2 1 7 1 7 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ Mitoses        : Factor w/ 9 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 5 1 ...</span></span>
+<span><span class="co">##  $ Class          : Factor w/ 2 levels "benign","malignant": 1 1 1 1 1 2 1 1 1 1 ...</span></span>
+<span></span>
+<span><span class="co"># Get the names of the input variables in cluster.task</span></span>
+<span><span class="fu"><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames</a></span><span class="op">(</span><span class="va">cluster.task</span><span class="op">)</span></span>
+<span><span class="co">##  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear"</span></span>
+<span><span class="co">## [11] "carb"</span></span>
+<span></span>
+<span><span class="co"># Get the values of the target variables in surv.task</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskTargets.html">getTaskTargets</a></span><span class="op">(</span><span class="va">surv.task</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">##   time status</span></span>
+<span><span class="co">## 1  306   TRUE</span></span>
+<span><span class="co">## 2  455   TRUE</span></span>
+<span><span class="co">## 3 1010  FALSE</span></span>
+<span><span class="co">## 4  210   TRUE</span></span>
+<span><span class="co">## 5  883   TRUE</span></span>
+<span><span class="co">## 6 1022  FALSE</span></span>
+<span></span>
+<span><span class="co"># Get the cost matrix in costsens.task</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskCosts.html">getTaskCosts</a></span><span class="op">(</span><span class="va">costsens.task</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">##      y1        y2         y3</span></span>
+<span><span class="co">## [1,]  0 1694.9063 1569.15053</span></span>
+<span><span class="co">## [2,]  0  995.0545   18.85981</span></span>
+<span><span class="co">## [3,]  0  775.8181 1558.13177</span></span>
+<span><span class="co">## [4,]  0  492.8980 1458.78130</span></span>
+<span><span class="co">## [5,]  0  222.1929 1260.26371</span></span>
+<span><span class="co">## [6,]  0  779.9889  961.82166</span></span></code></pre></div>
 <p>Note that <code><a href="../../reference/getTaskData.html">getTaskData()</a></code> offers many options for converting the data set into a convenient format. This especially comes in handy when you <a href="create_learner.html" target="_blank">integrate a new learner</a> from another <strong>R</strong> package into <code>mlr</code>. In this regard function <code><a href="../../reference/getTaskFormula.html">getTaskFormula()</a></code> is also useful.</p>
 </div>
 <div class="section level2">
@@ -477,63 +477,63 @@
 </h2>
 <p><code>mlr</code> provides several functions to alter an existing <code><a href="../../reference/Task.html">Task()</a></code>, which is often more convenient than creating a new <code><a href="../../reference/Task.html">Task()</a></code> from scratch. Here are some examples.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Select observations and/or features</span>
-<span class="va">cluster.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/subsetTask.html">subsetTask</a></span><span class="op">(</span><span class="va">cluster.task</span>, subset <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">17</span><span class="op">)</span>
-
-<span class="co"># It may happen, especially after selecting observations, that features are constant.</span>
-<span class="co"># These should be removed.</span>
-<span class="fu"><a href="../../reference/removeConstantFeatures.html">removeConstantFeatures</a></span><span class="op">(</span><span class="va">cluster.task</span><span class="op">)</span>
-<span class="co">## Removing 1 columns: am</span>
-<span class="co">## Unsupervised task: mtcars</span>
-<span class="co">## Type: cluster</span>
-<span class="co">## Observations: 14</span>
-<span class="co">## Features:</span>
-<span class="co">##    numerics     factors     ordered functionals </span>
-<span class="co">##          10           0           0           0 </span>
-<span class="co">## Missings: FALSE</span>
-<span class="co">## Has weights: FALSE</span>
-<span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span>
-
-<span class="co"># Remove selected features</span>
-<span class="fu"><a href="../../reference/dropFeatures.html">dropFeatures</a></span><span class="op">(</span><span class="va">surv.task</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"meal.cal"</span>, <span class="st">"wt.loss"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## Supervised task: lung</span>
-<span class="co">## Type: surv</span>
-<span class="co">## Target: time,status</span>
-<span class="co">## Events: 165</span>
-<span class="co">## Observations: 228</span>
-<span class="co">## Features:</span>
-<span class="co">##    numerics     factors     ordered functionals </span>
-<span class="co">##           6           0           0           0 </span>
-<span class="co">## Missings: TRUE</span>
-<span class="co">## Has weights: FALSE</span>
-<span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span>
-
-<span class="co"># Standardize numerical features</span>
-<span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/normalizeFeatures.html">normalizeFeatures</a></span><span class="op">(</span><span class="va">cluster.task</span>, method <span class="op">=</span> <span class="st">"range"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span><span class="op">)</span>
-<span class="co">##       mpg              cyl              disp              hp        </span>
-<span class="co">##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  </span>
-<span class="co">##  1st Qu.:0.3161   1st Qu.:0.5000   1st Qu.:0.1242   1st Qu.:0.2801  </span>
-<span class="co">##  Median :0.5107   Median :1.0000   Median :0.4076   Median :0.6311  </span>
-<span class="co">##  Mean   :0.4872   Mean   :0.7143   Mean   :0.4430   Mean   :0.5308  </span>
-<span class="co">##  3rd Qu.:0.6196   3rd Qu.:1.0000   3rd Qu.:0.6618   3rd Qu.:0.7473  </span>
-<span class="co">##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  </span>
-<span class="co">##       drat              wt              qsec              vs        </span>
-<span class="co">##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  </span>
-<span class="co">##  1st Qu.:0.2672   1st Qu.:0.1275   1st Qu.:0.2302   1st Qu.:0.0000  </span>
-<span class="co">##  Median :0.3060   Median :0.1605   Median :0.3045   Median :0.0000  </span>
-<span class="co">##  Mean   :0.4544   Mean   :0.3268   Mean   :0.3752   Mean   :0.4286  </span>
-<span class="co">##  3rd Qu.:0.7026   3rd Qu.:0.3727   3rd Qu.:0.4908   3rd Qu.:1.0000  </span>
-<span class="co">##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  </span>
-<span class="co">##        am           gear             carb       </span>
-<span class="co">##  Min.   :0.5   Min.   :0.0000   Min.   :0.0000  </span>
-<span class="co">##  1st Qu.:0.5   1st Qu.:0.0000   1st Qu.:0.3333  </span>
-<span class="co">##  Median :0.5   Median :0.0000   Median :0.6667  </span>
-<span class="co">##  Mean   :0.5   Mean   :0.2857   Mean   :0.6429  </span>
-<span class="co">##  3rd Qu.:0.5   3rd Qu.:0.7500   3rd Qu.:1.0000  </span>
-<span class="co">##  Max.   :0.5   Max.   :1.0000   Max.   :1.0000</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Select observations and/or features</span></span>
+<span><span class="va">cluster.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/subsetTask.html">subsetTask</a></span><span class="op">(</span><span class="va">cluster.task</span>, subset <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">17</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># It may happen, especially after selecting observations, that features are constant.</span></span>
+<span><span class="co"># These should be removed.</span></span>
+<span><span class="fu"><a href="../../reference/removeConstantFeatures.html">removeConstantFeatures</a></span><span class="op">(</span><span class="va">cluster.task</span><span class="op">)</span></span>
+<span><span class="co">## Removing 1 columns: am</span></span>
+<span><span class="co">## Unsupervised task: mtcars</span></span>
+<span><span class="co">## Type: cluster</span></span>
+<span><span class="co">## Observations: 14</span></span>
+<span><span class="co">## Features:</span></span>
+<span><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span><span class="co">##          10           0           0           0 </span></span>
+<span><span class="co">## Missings: FALSE</span></span>
+<span><span class="co">## Has weights: FALSE</span></span>
+<span><span class="co">## Has blocking: FALSE</span></span>
+<span><span class="co">## Has coordinates: FALSE</span></span>
+<span></span>
+<span><span class="co"># Remove selected features</span></span>
+<span><span class="fu"><a href="../../reference/dropFeatures.html">dropFeatures</a></span><span class="op">(</span><span class="va">surv.task</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"meal.cal"</span>, <span class="st">"wt.loss"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## Supervised task: lung</span></span>
+<span><span class="co">## Type: surv</span></span>
+<span><span class="co">## Target: time,status</span></span>
+<span><span class="co">## Events: 165</span></span>
+<span><span class="co">## Observations: 228</span></span>
+<span><span class="co">## Features:</span></span>
+<span><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span><span class="co">##           6           0           0           0 </span></span>
+<span><span class="co">## Missings: TRUE</span></span>
+<span><span class="co">## Has weights: FALSE</span></span>
+<span><span class="co">## Has blocking: FALSE</span></span>
+<span><span class="co">## Has coordinates: FALSE</span></span>
+<span></span>
+<span><span class="co"># Standardize numerical features</span></span>
+<span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/normalizeFeatures.html">normalizeFeatures</a></span><span class="op">(</span><span class="va">cluster.task</span>, method <span class="op">=</span> <span class="st">"range"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getTaskData.html">getTaskData</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">##       mpg              cyl              disp              hp        </span></span>
+<span><span class="co">##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  </span></span>
+<span><span class="co">##  1st Qu.:0.3161   1st Qu.:0.5000   1st Qu.:0.1242   1st Qu.:0.2801  </span></span>
+<span><span class="co">##  Median :0.5107   Median :1.0000   Median :0.4076   Median :0.6311  </span></span>
+<span><span class="co">##  Mean   :0.4872   Mean   :0.7143   Mean   :0.4430   Mean   :0.5308  </span></span>
+<span><span class="co">##  3rd Qu.:0.6196   3rd Qu.:1.0000   3rd Qu.:0.6618   3rd Qu.:0.7473  </span></span>
+<span><span class="co">##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  </span></span>
+<span><span class="co">##       drat              wt              qsec              vs        </span></span>
+<span><span class="co">##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  </span></span>
+<span><span class="co">##  1st Qu.:0.2672   1st Qu.:0.1275   1st Qu.:0.2302   1st Qu.:0.0000  </span></span>
+<span><span class="co">##  Median :0.3060   Median :0.1605   Median :0.3045   Median :0.0000  </span></span>
+<span><span class="co">##  Mean   :0.4544   Mean   :0.3268   Mean   :0.3752   Mean   :0.4286  </span></span>
+<span><span class="co">##  3rd Qu.:0.7026   3rd Qu.:0.3727   3rd Qu.:0.4908   3rd Qu.:1.0000  </span></span>
+<span><span class="co">##  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  </span></span>
+<span><span class="co">##        am           gear             carb       </span></span>
+<span><span class="co">##  Min.   :0.5   Min.   :0.0000   Min.   :0.0000  </span></span>
+<span><span class="co">##  1st Qu.:0.5   1st Qu.:0.0000   1st Qu.:0.3333  </span></span>
+<span><span class="co">##  Median :0.5   Median :0.0000   Median :0.6667  </span></span>
+<span><span class="co">##  Mean   :0.5   Mean   :0.2857   Mean   :0.6429  </span></span>
+<span><span class="co">##  3rd Qu.:0.5   3rd Qu.:0.7500   3rd Qu.:1.0000  </span></span>
+<span><span class="co">##  Max.   :0.5   Max.   :1.0000   Max.   :1.0000</span></span></code></pre></div>
 <p>For more functions and more detailed explanations have a look at the <a href="preproc.html" target="_blank">data preprocessing</a> page.</p>
 </div>
 <div class="section level2">
@@ -555,7 +555,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

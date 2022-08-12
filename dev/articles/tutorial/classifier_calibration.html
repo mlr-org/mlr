@@ -14,10 +14,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
 <script src="../../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../../deps/_Roboto-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet">
+<link href="../../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Classifier Calibration">
@@ -163,7 +163,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Classifier Calibration</h1>
             
       
@@ -176,50 +176,50 @@
 <p>A classifier is “calibrated” when the predicted probability of a class matches the expected frequency of that class. <code>mlr</code> can visualize this by plotting estimated class probabilities (which are discretized) against the observed frequency of said class in the data using <code><a href="../../reference/generateCalibrationData.html">generateCalibrationData()</a></code> and <code><a href="../../reference/plotCalibration.html">plotCalibration()</a></code>.</p>
 <p><code><a href="../../reference/generateCalibrationData.html">generateCalibrationData()</a></code> takes as input <code><a href="../../reference/Prediction.html">Prediction()</a></code>, <code><a href="../../reference/ResampleResult.html">ResampleResult()</a></code>, <code><a href="../../reference/BenchmarkResult.html">BenchmarkResult()</a></code>, or a named list of <code><a href="../../reference/Prediction.html">Prediction()</a></code> or <code><a href="../../reference/ResampleResult.html">ResampleResult()</a></code> objects on a classification (multiclass or binary) task with learner(s) that are capable of outputting probabiliites (i.e., learners must be constructed with <code>predict.type = "prob"</code>). The result is an object of class <code>CalibrationData</code> (<code><a href="../../reference/generateCalibrationData.html">generateCalibrationData()</a></code>) which has elements <code>proportion</code>, <code>data</code>, and <code>task</code>. <code>proportion</code> gives the proportion of observations labelled with a given class for each predicted probability bin (e.g., for observations which are predicted to have class “A” with probability <span class="math inline">\((0, 0.1]\)</span>, what is the proportion of said observations which have class “A”?).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
-<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">sonar.task</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">sonar.task</span><span class="op">)</span>
-<span class="va">cal</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>
-<span class="va">cal</span><span class="op">$</span><span class="va">proportion</span>
-<span class="co">##      Learner       bin Class Proportion</span>
-<span class="co">## 1 prediction (0.1,0.2]     M  0.1060606</span>
-<span class="co">## 2 prediction (0.7,0.8]     M  0.7333333</span>
-<span class="co">## 3 prediction   [0,0.1]     M  0.0000000</span>
-<span class="co">## 4 prediction   (0.9,1]     M  0.9333333</span>
-<span class="co">## 5 prediction (0.2,0.3]     M  0.2727273</span>
-<span class="co">## 6 prediction (0.4,0.5]     M  0.4615385</span>
-<span class="co">## 7 prediction (0.8,0.9]     M  0.0000000</span>
-<span class="co">## 8 prediction (0.5,0.6]     M  0.0000000</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span></span>
+<span><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, task <span class="op">=</span> <span class="va">sonar.task</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">sonar.task</span><span class="op">)</span></span>
+<span><span class="va">cal</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span></span>
+<span><span class="va">cal</span><span class="op">$</span><span class="va">proportion</span></span>
+<span><span class="co">##      Learner       bin Class Proportion</span></span>
+<span><span class="co">## 1 prediction (0.1,0.2]     M  0.1060606</span></span>
+<span><span class="co">## 2 prediction (0.7,0.8]     M  0.7333333</span></span>
+<span><span class="co">## 3 prediction   [0,0.1]     M  0.0000000</span></span>
+<span><span class="co">## 4 prediction   (0.9,1]     M  0.9333333</span></span>
+<span><span class="co">## 5 prediction (0.2,0.3]     M  0.2727273</span></span>
+<span><span class="co">## 6 prediction (0.4,0.5]     M  0.4615385</span></span>
+<span><span class="co">## 7 prediction (0.8,0.9]     M  0.0000000</span></span>
+<span><span class="co">## 8 prediction (0.5,0.6]     M  0.0000000</span></span></code></pre></div>
 <p>The manner in which the predicted probabilities are discretized is controlled by two arguments: <code>breaks</code> and <code>groups</code>. By default <code>breaks = "Sturges"</code> which uses the Sturges algorithm in <code><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">graphics::hist()</a></code>. This argument can specify other algorithms available in <code><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">graphics::hist()</a></code>, it can be a numeric vector specifying breakpoints for <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">base::cut()</a></code>, or a single integer specifying the number of bins to create (which are evenly spaced). Alternatively, <code>groups</code> can be set to a positive integer value (by default <code>groups = NULL</code>) in which case <code><a href="https://rdrr.io/pkg/Hmisc/man/cut2.html" class="external-link">Hmisc::cut2()</a></code> is used to create bins with an approximately equal number of observations in each bin.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cal</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span><span class="op">(</span><span class="va">pred</span>, groups <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="va">cal</span><span class="op">$</span><span class="va">proportion</span>
-<span class="co">##      Learner           bin Class Proportion</span>
-<span class="co">## 1 prediction [0.000,0.267)     M 0.08860759</span>
-<span class="co">## 2 prediction [0.267,0.925)     M 0.51282051</span>
-<span class="co">## 3 prediction [0.925,1.000]     M 0.93333333</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cal</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span><span class="op">(</span><span class="va">pred</span>, groups <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">cal</span><span class="op">$</span><span class="va">proportion</span></span>
+<span><span class="co">##      Learner           bin Class Proportion</span></span>
+<span><span class="co">## 1 prediction [0.000,0.267)     M 0.08860759</span></span>
+<span><span class="co">## 2 prediction [0.267,0.925)     M 0.51282051</span></span>
+<span><span class="co">## 3 prediction [0.925,1.000]     M 0.93333333</span></span></code></pre></div>
 <p><code><a href="../../reference/generateCalibrationData.html">generateCalibrationData()</a></code> objects can be plotted using <code><a href="../../reference/plotCalibration.html">plotCalibration()</a></code>. <code><a href="../../reference/plotCalibration.html">plotCalibration()</a></code> by default plots a reference line which shows perfect calibration and a “rag” plot, which is a rug plot on the top and bottom of the graph, where the top pertains to “positive” cases, where the predicted class matches the observed class, and the bottom pertains to “negative” cases, where the predicted class does not match the observed class. Perfect classifier performance would result in all the positive cases clustering in the top right (i.e., the correct classes are predicted with high probability) and the negative cases clustering in the bottom left.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/plotCalibration.html">plotCalibration</a></span><span class="op">(</span><span class="va">cal</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/plotCalibration.html">plotCalibration</a></span><span class="op">(</span><span class="va">cal</span><span class="op">)</span></span></code></pre></div>
 <p><img src="classifier_calibration_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>Because of the discretization of the probabilities, sometimes it is advantageous to smooth the calibration plot. Though <code>smooth = FALSE</code> by default, setting this option to <code>TRUE</code> replaces the estimated proportions with a loess smoother.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">cal</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotCalibration.html">plotCalibration</a></span><span class="op">(</span><span class="va">cal</span>, smooth <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">## `geom_smooth()` using formula 'y ~ x'</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="va">cal</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotCalibration.html">plotCalibration</a></span><span class="op">(</span><span class="va">cal</span>, smooth <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">## `geom_smooth()` using formula 'y ~ x'</span></span></code></pre></div>
 <p><img src="classifier_calibration_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>All of the above functionality works with multi-class classification as well.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-  <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.randomForest"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>,
-  <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.nnet"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">lrns</span>, <span class="va">train</span>, task <span class="op">=</span> <span class="va">iris.task</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">predict</span>, task <span class="op">=</span> <span class="va">iris.task</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"randomForest"</span>, <span class="st">"nnet"</span><span class="op">)</span>
-<span class="va">cal</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span><span class="op">(</span><span class="va">pred</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">.3</span>, <span class="fl">.6</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotCalibration.html">plotCalibration</a></span><span class="op">(</span><span class="va">cal</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.randomForest"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.nnet"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">lrns</span>, <span class="va">train</span>, task <span class="op">=</span> <span class="va">iris.task</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">predict</span>, task <span class="op">=</span> <span class="va">iris.task</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"randomForest"</span>, <span class="st">"nnet"</span><span class="op">)</span></span>
+<span><span class="va">cal</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateCalibrationData.html">generateCalibrationData</a></span><span class="op">(</span><span class="va">pred</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">.3</span>, <span class="fl">.6</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotCalibration.html">plotCalibration</a></span><span class="op">(</span><span class="va">cal</span><span class="op">)</span></span></code></pre></div>
 <p><img src="classifier_calibration_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
   </main>
 </div>
@@ -233,7 +233,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

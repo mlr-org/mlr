@@ -7,7 +7,7 @@ For regression, 1D and 2D plots are supported. 1D shows the data, the estimated 
 the estimated standard error. 2D does not show estimated standard error,
 but only the estimated mean via background color.
 The plot title displays the model id, its parameters, the training performance
-and the cross-validation performance."><title>Visualizes a learning algorithm on a 1D or 2D data set. — plotLearnerPrediction • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Roboto-0.4.0/font.css" rel="stylesheet"><link href="../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet"><link href="../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Visualizes a learning algorithm on a 1D or 2D data set. — plotLearnerPrediction"><meta property="og:description" content="Trains the model for 1 or 2 selected features, then displays it via ggplot2::ggplot.
+and the cross-validation performance."><title>Visualizes a learning algorithm on a 1D or 2D data set. — plotLearnerPrediction • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Visualizes a learning algorithm on a 1D or 2D data set. — plotLearnerPrediction"><meta property="og:description" content="Trains the model for 1 or 2 selected features, then displays it via ggplot2::ggplot.
 Good for teaching or exploring models.
 For classification and clustering, only 2D plots are supported. The data points, the classification and
 potentially through color alpha blending the posterior probabilities are shown.
@@ -163,24 +163,24 @@ and the cross-validation performance.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotLearnerPrediction</span><span class="op">(</span>
-  <span class="va">learner</span>,
-  <span class="va">task</span>,
-  features <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">measures</span>,
-  cv <span class="op">=</span> <span class="fl">10L</span>,
-  <span class="va">...</span>,
-  <span class="va">gridsize</span>,
-  pointsize <span class="op">=</span> <span class="fl">2</span>,
-  prob.alpha <span class="op">=</span> <span class="cn">TRUE</span>,
-  se.band <span class="op">=</span> <span class="cn">TRUE</span>,
-  err.mark <span class="op">=</span> <span class="st">"train"</span>,
-  bg.cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkblue"</span>, <span class="st">"green"</span>, <span class="st">"darkred"</span><span class="op">)</span>,
-  err.col <span class="op">=</span> <span class="st">"white"</span>,
-  err.size <span class="op">=</span> <span class="va">pointsize</span>,
-  greyscale <span class="op">=</span> <span class="cn">FALSE</span>,
-  pretty.names <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotLearnerPrediction</span><span class="op">(</span></span>
+<span>  <span class="va">learner</span>,</span>
+<span>  <span class="va">task</span>,</span>
+<span>  features <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">measures</span>,</span>
+<span>  cv <span class="op">=</span> <span class="fl">10L</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  <span class="va">gridsize</span>,</span>
+<span>  pointsize <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  prob.alpha <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  se.band <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  err.mark <span class="op">=</span> <span class="st">"train"</span>,</span>
+<span>  bg.cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkblue"</span>, <span class="st">"green"</span>, <span class="st">"darkred"</span><span class="op">)</span>,</span>
+<span>  err.col <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>  err.size <span class="op">=</span> <span class="va">pointsize</span>,</span>
+<span>  greyscale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  pretty.names <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -189,72 +189,105 @@ and the cross-validation performance.</p>
 <dd><p>(<a href="makeLearner.html">Learner</a> | <code>character(1)</code>)<br>
 The learner.
 If you pass a string the learner will be created via <a href="makeLearner.html">makeLearner</a>.</p></dd>
+
+
 <dt>task</dt>
 <dd><p>(<a href="Task.html">Task</a>)<br>
 The task.</p></dd>
+
+
 <dt>features</dt>
 <dd><p>(<a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>)<br>
 Selected features for model.
 By default the first 2 features are used.</p></dd>
+
+
 <dt>measures</dt>
 <dd><p>(<a href="makeMeasure.html">Measure</a> | list of <a href="makeMeasure.html">Measure</a>)<br>
 Performance measure(s) to evaluate.
 Default is the default measure for the task, see here <a href="getDefaultMeasure.html">getDefaultMeasure</a>.</p></dd>
+
+
 <dt>cv</dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Do cross-validation and display in plot title?
 Number of folds. 0 means no CV.
 Default is 10.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>(any)<br>
 Parameters for <code>learner</code>.</p></dd>
+
+
 <dt>gridsize</dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Grid resolution per axis for background predictions.
 Default is 500 for 1D and 100 for 2D.</p></dd>
+
+
 <dt>pointsize</dt>
 <dd><p>(<code>numeric(1)</code>)<br>
 Pointsize for ggplot2 <a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">ggplot2::geom_point</a> for data points.
 Default is 2.</p></dd>
+
+
 <dt>prob.alpha</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 For classification: Set alpha value of background to probability for
 predicted class? Allows visualization of “confidence” for prediction.
 If not, only a constant color is displayed in the background for the predicted label.
 Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>se.band</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 For regression in 1D: Show band for standard error estimation?
 Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>err.mark</dt>
 <dd><p>(<code>character(1)</code>):
 For classification: Either mark error of the model on the training data (“train”) or
 during cross-validation (“cv”) or not at all with “none”.
 Default is “train”.</p></dd>
+
+
 <dt>bg.cols</dt>
 <dd><p>(<code>character(3)</code>)<br>
 Background colors for classification and regression.
 Sorted from low, medium to high.
 Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>err.col</dt>
 <dd><p>(<code>character(1)</code>)<br>
 For classification: Color of misclassified data points.
 Default is “white”</p></dd>
+
+
 <dt>err.size</dt>
 <dd><p>(<code>integer(1)</code>)<br>
 For classification: Size of misclassified data points.
 Default is <code>pointsize</code>.</p></dd>
+
+
 <dt>greyscale</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Should the plot be greyscale completely?
 Default is <code>FALSE</code>.</p></dd>
+
+
 <dt>pretty.names</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Whether to use the short name of the learner instead of its ID in labels. Defaults to <code>TRUE</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>The ggplot2 object.</p>
+    
+
+<p>The ggplot2 object.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -266,7 +299,7 @@ Whether to use the short name of the learner instead of its ID in labels. Defaul
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

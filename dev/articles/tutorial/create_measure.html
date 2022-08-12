@@ -14,10 +14,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
 <script src="../../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../../deps/_Roboto-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet">
+<link href="../../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Integrating Another Measure">
@@ -163,7 +163,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Integrating Another Measure</h1>
             
       
@@ -179,68 +179,68 @@
 </h2>
 <p>Performance measures in <code>mlr</code> are objects of class <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>). For example the <a href="measures.html" target="_blank">mse</a> (mean squared error) looks as follows.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mse</span><span class="op">)</span>
-<span class="co">## List of 10</span>
-<span class="co">##  $ id        : chr "mse"</span>
-<span class="co">##  $ minimize  : logi TRUE</span>
-<span class="co">##  $ properties: chr [1:3] "regr" "req.pred" "req.truth"</span>
-<span class="co">##  $ fun       :function (task, model, pred, feats, extra.args)</span>
-<span class="co">##   ..- attr(*, "srcref")= 'srcref' int [1:8] 118 9 120 3 9 3 26476 26478</span>
-<span class="co">##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x5596902b5300&gt;</span>
-<span class="co">##  $ extra.args: list()</span>
-<span class="co">##  $ best      : num 0</span>
-<span class="co">##  $ worst     : num Inf</span>
-<span class="co">##  $ name      : chr "Mean of squared errors"</span>
-<span class="co">##  $ note      : chr "Defined as: mean((response - truth)^2)"</span>
-<span class="co">##  $ aggr      :List of 4</span>
-<span class="co">##   ..$ id        : chr "test.mean"</span>
-<span class="co">##   ..$ name      : chr "Test mean"</span>
-<span class="co">##   ..$ fun       :function (task, perf.test, perf.train, measure, group, pred)</span>
-<span class="co">##   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 43 9 43 83 9 83 19157 19157</span>
-<span class="co">##   .. .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x55969028dc98&gt;</span>
-<span class="co">##   ..$ properties: chr "req.test"</span>
-<span class="co">##   ..- attr(*, "class")= chr "Aggregation"</span>
-<span class="co">##  - attr(*, "class")= chr "Measure"</span>
-
-<span class="va">mse</span><span class="op">$</span><span class="va">fun</span>
-<span class="co">## function(task, model, pred, feats, extra.args) {</span>
-<span class="co">##     measureMSE(pred$data$truth, pred$data$response)</span>
-<span class="co">##   }</span>
-<span class="co">## &lt;bytecode: 0x55968f621870&gt;</span>
-<span class="co">## &lt;environment: namespace:mlr&gt;</span>
-
-<span class="va">measureMSE</span>
-<span class="co">## function(truth, response) {</span>
-<span class="co">##   mean((response - truth)^2)</span>
-<span class="co">## }</span>
-<span class="co">## &lt;bytecode: 0x559691533288&gt;</span>
-<span class="co">## &lt;environment: namespace:mlr&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mse</span><span class="op">)</span></span>
+<span><span class="co">## List of 10</span></span>
+<span><span class="co">##  $ id        : chr "mse"</span></span>
+<span><span class="co">##  $ minimize  : logi TRUE</span></span>
+<span><span class="co">##  $ properties: chr [1:3] "regr" "req.pred" "req.truth"</span></span>
+<span><span class="co">##  $ fun       :function (task, model, pred, feats, extra.args)</span></span>
+<span><span class="co">##   ..- attr(*, "srcref")= 'srcref' int [1:8] 118 9 120 3 9 3 26476 26478</span></span>
+<span><span class="co">##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x5596902b5300&gt;</span></span>
+<span><span class="co">##  $ extra.args: list()</span></span>
+<span><span class="co">##  $ best      : num 0</span></span>
+<span><span class="co">##  $ worst     : num Inf</span></span>
+<span><span class="co">##  $ name      : chr "Mean of squared errors"</span></span>
+<span><span class="co">##  $ note      : chr "Defined as: mean((response - truth)^2)"</span></span>
+<span><span class="co">##  $ aggr      :List of 4</span></span>
+<span><span class="co">##   ..$ id        : chr "test.mean"</span></span>
+<span><span class="co">##   ..$ name      : chr "Test mean"</span></span>
+<span><span class="co">##   ..$ fun       :function (task, perf.test, perf.train, measure, group, pred)</span></span>
+<span><span class="co">##   .. ..- attr(*, "srcref")= 'srcref' int [1:8] 43 9 43 83 9 83 19157 19157</span></span>
+<span><span class="co">##   .. .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x55969028dc98&gt;</span></span>
+<span><span class="co">##   ..$ properties: chr "req.test"</span></span>
+<span><span class="co">##   ..- attr(*, "class")= chr "Aggregation"</span></span>
+<span><span class="co">##  - attr(*, "class")= chr "Measure"</span></span>
+<span></span>
+<span><span class="va">mse</span><span class="op">$</span><span class="va">fun</span></span>
+<span><span class="co">## function(task, model, pred, feats, extra.args) {</span></span>
+<span><span class="co">##     measureMSE(pred$data$truth, pred$data$response)</span></span>
+<span><span class="co">##   }</span></span>
+<span><span class="co">## &lt;bytecode: 0x55968f621870&gt;</span></span>
+<span><span class="co">## &lt;environment: namespace:mlr&gt;</span></span>
+<span></span>
+<span><span class="va">measureMSE</span></span>
+<span><span class="co">## function(truth, response) {</span></span>
+<span><span class="co">##   mean((response - truth)^2)</span></span>
+<span><span class="co">## }</span></span>
+<span><span class="co">## &lt;bytecode: 0x559691533288&gt;</span></span>
+<span><span class="co">## &lt;environment: namespace:mlr&gt;</span></span></code></pre></div>
 <p>See the <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) documentation page for a detailed description of the object slots.</p>
 <p>At the core is slot <code>$fun</code> which contains the function that calculates the performance value. The actual work is done by function <code>measureMSE</code> (<code><a href="../../reference/measures.html">measures()</a></code>). Similar functions, generally adhering to the naming scheme <code>measure</code> followed by the capitalized measure ID, exist for most performance measures. See the [<code><a href="../../reference/measures.html">measures()</a></code>] help page for a complete list.</p>
 <p>Just as <code><a href="../../reference/Task.html">Task()</a></code> and Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) objects each <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) has an identifier <code>$id</code> which is for example used to annotate results and plots. For plots there is also the option to use the longer measure <code>$name</code> instead. See the tutorial page on <a href="visualization.html" target="_blank">visualization</a> for more information.</p>
 <p>Moreover, a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) includes a number of <code>$properties</code> that indicate for which types of learning problems it is suitable and what information is required to calculate it. Obviously, most measures need the <code><a href="../../reference/Prediction.html">Prediction()</a></code> object (<code>"req.pred"</code>) and, for supervised problems, the true values of the target variable(s) (<code>"req.truth"</code>). You can use functions <code>getMeasureProperties</code> (<code><a href="../../reference/MeasureProperties.html">MeasureProperties()</a></code>) and <code>hasMeasureProperties</code> (<code><a href="../../reference/MeasureProperties.html">MeasureProperties()</a></code>) to determine the properties of a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>). Moreover, <code><a href="../../reference/listMeasureProperties.html">listMeasureProperties()</a></code> shows all measure properties currently available in <code>mlr</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/listMeasureProperties.html">listMeasureProperties</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">##  [1] "classif"       "classif.multi" "multilabel"    "regr"         </span>
-<span class="co">##  [5] "surv"          "cluster"       "costsens"      "req.pred"     </span>
-<span class="co">##  [9] "req.truth"     "req.task"      "req.feats"     "req.model"    </span>
-<span class="co">## [13] "req.prob"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/listMeasureProperties.html">listMeasureProperties</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">##  [1] "classif"       "classif.multi" "multilabel"    "regr"         </span></span>
+<span><span class="co">##  [5] "surv"          "cluster"       "costsens"      "req.pred"     </span></span>
+<span><span class="co">##  [9] "req.truth"     "req.task"      "req.feats"     "req.model"    </span></span>
+<span><span class="co">## [13] "req.prob"</span></span></code></pre></div>
 <p>Additional to its properties, each <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) knows its extreme values <code>$best</code> and <code>$worst</code> and if it wants to be minimized or maximized (<code>$minimize</code>) during <a href="tune.html" target="_blank">tuning</a> or <a href="feature_selection.html" target="_blank">feature selection</a>.</p>
 <p>For resampling slot <code>$aggr</code> specifies how the overall performance across all resampling iterations is calculated. Typically, this is just a matter of aggregating the performance values obtained on the test sets <code>perf.test</code> or the training sets <code>perf.train</code> by a simple function. The by far most common scheme is <code>test.mean</code> (<code><a href="../../reference/aggregations.html">aggregations()</a></code>), i.e., the unweighted mean of the performances on the test sets.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">test.mean</span><span class="op">)</span>
-<span class="co">## List of 4</span>
-<span class="co">##  $ id        : chr "test.mean"</span>
-<span class="co">##  $ name      : chr "Test mean"</span>
-<span class="co">##  $ fun       :function (task, perf.test, perf.train, measure, group, pred)</span>
-<span class="co">##  $ properties: chr "req.test"</span>
-<span class="co">##  - attr(*, "class")= chr "Aggregation"</span>
-
-<span class="va">test.mean</span><span class="op">$</span><span class="va">fun</span>
-<span class="co">## function (task, perf.test, perf.train, measure, group, pred)</span>
-<span class="co">## mean(perf.test)</span>
-<span class="co">## &lt;bytecode: 0xc0a82e8&gt;</span>
-<span class="co">## &lt;environment: namespace:mlr&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">test.mean</span><span class="op">)</span></span>
+<span><span class="co">## List of 4</span></span>
+<span><span class="co">##  $ id        : chr "test.mean"</span></span>
+<span><span class="co">##  $ name      : chr "Test mean"</span></span>
+<span><span class="co">##  $ fun       :function (task, perf.test, perf.train, measure, group, pred)</span></span>
+<span><span class="co">##  $ properties: chr "req.test"</span></span>
+<span><span class="co">##  - attr(*, "class")= chr "Aggregation"</span></span>
+<span></span>
+<span><span class="va">test.mean</span><span class="op">$</span><span class="va">fun</span></span>
+<span><span class="co">## function (task, perf.test, perf.train, measure, group, pred)</span></span>
+<span><span class="co">## mean(perf.test)</span></span>
+<span><span class="co">## &lt;bytecode: 0xc0a82e8&gt;</span></span>
+<span><span class="co">## &lt;environment: namespace:mlr&gt;</span></span></code></pre></div>
 <p>All aggregation schemes are objects of class <code><a href="../../reference/Aggregation.html">Aggregation()</a></code> with the function in slot <code>$fun</code> doing the actual work. The <code>$properties</code> member indicates if predictions (or performance values) on the training or test data sets are required to calculate the aggregation.</p>
 <p>You can change the aggregation scheme of a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) via function <code><a href="../../reference/setAggregation.html">setAggregation()</a></code>. See the tutorial page on <a href="resample.html" target="_blank">resampling</a> for some examples and the <code>?aggregations()</code> help page for all available aggregation schemes.</p>
 <p>You can construct your own <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) and <code><a href="../../reference/Aggregation.html">Aggregation()</a></code> objects via functions <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>, <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code>, <code><a href="../../reference/makeCustomResampledMeasure.html">makeCustomResampledMeasure()</a></code> and <code><a href="../../reference/makeAggregation.html">makeAggregation()</a></code>. Some examples are shown in the following.</p>
@@ -252,33 +252,33 @@
 <p>Below this is exemplified by re-implementing the mean misclassification error <a href="measures.html" target="_blank">mmce</a>. We first write a function that computes the measure on the basis of the true and predicted class labels. Note that this function must have certain formal arguments listed in the documentation of <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>. Then the <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) object is created and we work with it as usual with the <code><a href="../../reference/performance.html">performance()</a></code> function.</p>
 <p>See the <strong>R</strong> documentation of <code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code> for more details on the various parameters.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Define a function that calculates the misclassification rate</span>
-<span class="va">my.mmce.fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">task</span>, <span class="va">model</span>, <span class="va">pred</span>, <span class="va">feats</span>, <span class="va">extra.args</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">tb</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>, <span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span>
-  <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">tb</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">tb</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="co"># Generate the Measure object</span>
-<span class="va">my.mmce</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeMeasure.html">makeMeasure</a></span><span class="op">(</span>
-  id <span class="op">=</span> <span class="st">"my.mmce"</span>, name <span class="op">=</span> <span class="st">"My Mean Misclassification Error"</span>,
-  properties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classif"</span>, <span class="st">"classif.multi"</span>, <span class="st">"req.pred"</span>, <span class="st">"req.truth"</span><span class="op">)</span>,
-  minimize <span class="op">=</span> <span class="cn">TRUE</span>, best <span class="op">=</span> <span class="fl">0</span>, worst <span class="op">=</span> <span class="fl">1</span>,
-  fun <span class="op">=</span> <span class="va">my.mmce.fun</span>
-<span class="op">)</span>
-
-<span class="co"># Train a learner and make predictions</span>
-<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">iris.task</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">iris.task</span><span class="op">)</span>
-
-<span class="co"># Calculate the performance using the new measure</span>
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="va">my.mmce</span><span class="op">)</span>
-<span class="co">## my.mmce </span>
-<span class="co">##    0.02</span>
-
-<span class="co"># Apparently the result coincides with the mlr implementation</span>
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="va">mmce</span><span class="op">)</span>
-<span class="co">## mmce </span>
-<span class="co">## 0.02</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Define a function that calculates the misclassification rate</span></span>
+<span><span class="va">my.mmce.fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">task</span>, <span class="va">model</span>, <span class="va">pred</span>, <span class="va">feats</span>, <span class="va">extra.args</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">tb</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span>, <span class="fu"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">tb</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">tb</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Generate the Measure object</span></span>
+<span><span class="va">my.mmce</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeMeasure.html">makeMeasure</a></span><span class="op">(</span></span>
+<span>  id <span class="op">=</span> <span class="st">"my.mmce"</span>, name <span class="op">=</span> <span class="st">"My Mean Misclassification Error"</span>,</span>
+<span>  properties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classif"</span>, <span class="st">"classif.multi"</span>, <span class="st">"req.pred"</span>, <span class="st">"req.truth"</span><span class="op">)</span>,</span>
+<span>  minimize <span class="op">=</span> <span class="cn">TRUE</span>, best <span class="op">=</span> <span class="fl">0</span>, worst <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  fun <span class="op">=</span> <span class="va">my.mmce.fun</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Train a learner and make predictions</span></span>
+<span><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">iris.task</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">iris.task</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Calculate the performance using the new measure</span></span>
+<span><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="va">my.mmce</span><span class="op">)</span></span>
+<span><span class="co">## my.mmce </span></span>
+<span><span class="co">##    0.02</span></span>
+<span></span>
+<span><span class="co"># Apparently the result coincides with the mlr implementation</span></span>
+<span><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="va">mmce</span><span class="op">)</span></span>
+<span><span class="co">## mmce </span></span>
+<span><span class="co">## 0.02</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="constructing-a-measure-for-ordinary-misclassification-costs">Constructing a measure for ordinary misclassification costs<a class="anchor" aria-label="anchor" href="#constructing-a-measure-for-ordinary-misclassification-costs"></a>
@@ -287,25 +287,25 @@
 <p>To create a measure that involves ordinary, i.e., class-dependent misclassification costs you can use function <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code>. You first need to define the cost matrix. The rows indicate true and the columns predicted classes and the rows and columns have to be named by the class labels. The cost matrix can then be wrapped in a <code>Measure</code> (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>) object and predictions can be evaluated as usual with the <code><a href="../../reference/performance.html">performance()</a></code> function.</p>
 <p>See the <strong>R</strong> documentation of function <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code> for details on the various parameters.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Create the cost matrix</span>
-<span class="va">costs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span><span class="op">(</span><span class="va">iris.task</span><span class="op">)</span>
-
-<span class="co"># Encapsulate the cost matrix in a Measure object</span>
-<span class="va">my.costs</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeCostMeasure.html">makeCostMeasure</a></span><span class="op">(</span>
-  id <span class="op">=</span> <span class="st">"my.costs"</span>, name <span class="op">=</span> <span class="st">"My Costs"</span>,
-  costs <span class="op">=</span> <span class="va">costs</span>,
-  minimize <span class="op">=</span> <span class="cn">TRUE</span>, best <span class="op">=</span> <span class="fl">0</span>, worst <span class="op">=</span> <span class="fl">3</span>
-<span class="op">)</span>
-
-<span class="co"># Train a learner and make a prediction</span>
-<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">iris.task</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
-
-<span class="co"># Calculate the average costs</span>
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="va">my.costs</span><span class="op">)</span>
-<span class="co">##   my.costs </span>
-<span class="co">## 0.02666667</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Create the cost matrix</span></span>
+<span><span class="va">costs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span><span class="op">(</span><span class="va">iris.task</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Encapsulate the cost matrix in a Measure object</span></span>
+<span><span class="va">my.costs</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeCostMeasure.html">makeCostMeasure</a></span><span class="op">(</span></span>
+<span>  id <span class="op">=</span> <span class="st">"my.costs"</span>, name <span class="op">=</span> <span class="st">"My Costs"</span>,</span>
+<span>  costs <span class="op">=</span> <span class="va">costs</span>,</span>
+<span>  minimize <span class="op">=</span> <span class="cn">TRUE</span>, best <span class="op">=</span> <span class="fl">0</span>, worst <span class="op">=</span> <span class="fl">3</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Train a learner and make a prediction</span></span>
+<span><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="st">"classif.lda"</span>, <span class="va">iris.task</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Calculate the average costs</span></span>
+<span><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="va">my.costs</span><span class="op">)</span></span>
+<span><span class="co">##   my.costs </span></span>
+<span><span class="co">## 0.02666667</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="creating-an-aggregation-scheme">Creating an aggregation scheme<a class="anchor" aria-label="anchor" href="#creating-an-aggregation-scheme"></a>
@@ -319,54 +319,54 @@
 </h2>
 <p>Let’s say you are interested in the range of the performance values obtained on individual test sets.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my.range.aggr</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeAggregation.html">makeAggregation</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"test.range"</span>, name <span class="op">=</span> <span class="st">"Test Range"</span>,
-  properties <span class="op">=</span> <span class="st">"req.test"</span>,
-  fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">task</span>, <span class="va">perf.test</span>, <span class="va">perf.train</span>, <span class="va">measure</span>, <span class="va">group</span>, <span class="va">pred</span><span class="op">)</span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">perf.test</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">}</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">my.range.aggr</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeAggregation.html">makeAggregation</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"test.range"</span>, name <span class="op">=</span> <span class="st">"Test Range"</span>,</span>
+<span>  properties <span class="op">=</span> <span class="st">"req.test"</span>,</span>
+<span>  fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">task</span>, <span class="va">perf.test</span>, <span class="va">perf.train</span>, <span class="va">measure</span>, <span class="va">group</span>, <span class="va">pred</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">perf.test</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><code>perf.train</code> and <code>perf.test</code> are both numerical vectors containing the performances on the train and test data sets. In most cases (unless you are using bootstrap as resampling strategy or have set <code>predict = "both"</code> in <code><a href="../../reference/makeResampleDesc.html">makeResampleDesc()</a></code>) the <code>perf.train</code> vector is empty.</p>
 <p>Now we can run a feature selection based on the first measure in the provided list and see how the other measures turn out.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># mmce with default aggregation scheme test.mean</span>
-<span class="va">ms1</span> <span class="op">=</span> <span class="va">mmce</span>
-
-<span class="co"># mmce with new aggregation scheme my.range.aggr</span>
-<span class="va">ms2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">ms1</span>, <span class="va">my.range.aggr</span><span class="op">)</span>
-
-<span class="co"># Minimum and maximum of the mmce over test sets</span>
-<span class="va">ms1min</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">ms1</span>, <span class="va">test.min</span><span class="op">)</span>
-<span class="va">ms1max</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">ms1</span>, <span class="va">test.max</span><span class="op">)</span>
-
-<span class="co"># Feature selection</span>
-<span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/selectFeatures.html">selectFeatures</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ms1</span>, <span class="va">ms2</span>, <span class="va">ms1min</span>, <span class="va">ms1max</span><span class="op">)</span>,
-  control <span class="op">=</span> <span class="fu"><a href="../../reference/FeatSelControl.html">makeFeatSelControlExhaustive</a></span><span class="op">(</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># Optimization path, i.e., performances for the 16 possible feature subsets</span>
-<span class="va">perf.data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">perf.data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span>
-<span class="co">##   Sepal.Length Sepal.Width Petal.Length Petal.Width mmce.test.mean</span>
-<span class="co">## 1            0           0            0           0     0.68000000</span>
-<span class="co">## 2            1           0            0           0     0.34000000</span>
-<span class="co">## 3            0           1            0           0     0.48666667</span>
-<span class="co">## 4            0           0            1           0     0.06666667</span>
-<span class="co">## 5            0           0            0           1     0.04666667</span>
-<span class="co">## 6            1           1            0           0     0.36000000</span>
-<span class="co">##   mmce.test.range mmce.test.min mmce.test.max</span>
-<span class="co">## 1            0.20          0.56          0.76</span>
-<span class="co">## 2            0.32          0.18          0.50</span>
-<span class="co">## 3            0.18          0.42          0.60</span>
-<span class="co">## 4            0.06          0.04          0.10</span>
-<span class="co">## 5            0.06          0.02          0.08</span>
-<span class="co">## 6            0.22          0.28          0.50</span>
-
-<span class="va">pd</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_jitter.html" class="external-link">position_jitter</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.005</span>, height <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-<span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mmce.test.range</span>, y <span class="op">=</span> <span class="va">mmce.test.mean</span>, ymax <span class="op">=</span> <span class="va">mmce.test.max</span>, ymin <span class="op">=</span> <span class="va">mmce.test.min</span>,
-  color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">Sepal.Width</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">Petal.Width</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">perf.data</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_pointrange</a></span><span class="op">(</span>position <span class="op">=</span> <span class="va">pd</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># mmce with default aggregation scheme test.mean</span></span>
+<span><span class="va">ms1</span> <span class="op">=</span> <span class="va">mmce</span></span>
+<span></span>
+<span><span class="co"># mmce with new aggregation scheme my.range.aggr</span></span>
+<span><span class="va">ms2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">ms1</span>, <span class="va">my.range.aggr</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Minimum and maximum of the mmce over test sets</span></span>
+<span><span class="va">ms1min</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">ms1</span>, <span class="va">test.min</span><span class="op">)</span></span>
+<span><span class="va">ms1max</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setAggregation.html">setAggregation</a></span><span class="op">(</span><span class="va">ms1</span>, <span class="va">test.max</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Feature selection</span></span>
+<span><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/selectFeatures.html">selectFeatures</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, <span class="va">iris.task</span>, <span class="va">rdesc</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ms1</span>, <span class="va">ms2</span>, <span class="va">ms1min</span>, <span class="va">ms1max</span><span class="op">)</span>,</span>
+<span>  control <span class="op">=</span> <span class="fu"><a href="../../reference/FeatSelControl.html">makeFeatSelControlExhaustive</a></span><span class="op">(</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Optimization path, i.e., performances for the 16 possible feature subsets</span></span>
+<span><span class="va">perf.data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">perf.data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">##   Sepal.Length Sepal.Width Petal.Length Petal.Width mmce.test.mean</span></span>
+<span><span class="co">## 1            0           0            0           0     0.68000000</span></span>
+<span><span class="co">## 2            1           0            0           0     0.34000000</span></span>
+<span><span class="co">## 3            0           1            0           0     0.48666667</span></span>
+<span><span class="co">## 4            0           0            1           0     0.06666667</span></span>
+<span><span class="co">## 5            0           0            0           1     0.04666667</span></span>
+<span><span class="co">## 6            1           1            0           0     0.36000000</span></span>
+<span><span class="co">##   mmce.test.range mmce.test.min mmce.test.max</span></span>
+<span><span class="co">## 1            0.20          0.56          0.76</span></span>
+<span><span class="co">## 2            0.32          0.18          0.50</span></span>
+<span><span class="co">## 3            0.18          0.42          0.60</span></span>
+<span><span class="co">## 4            0.06          0.04          0.10</span></span>
+<span><span class="co">## 5            0.06          0.02          0.08</span></span>
+<span><span class="co">## 6            0.22          0.28          0.50</span></span>
+<span></span>
+<span><span class="va">pd</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_jitter.html" class="external-link">position_jitter</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.005</span>, height <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mmce.test.range</span>, y <span class="op">=</span> <span class="va">mmce.test.mean</span>, ymax <span class="op">=</span> <span class="va">mmce.test.max</span>, ymin <span class="op">=</span> <span class="va">mmce.test.min</span>,</span>
+<span>  color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">Sepal.Width</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">Petal.Width</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">perf.data</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_pointrange</a></span><span class="op">(</span>position <span class="op">=</span> <span class="va">pd</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></code></pre></div>
 <p><img src="create_measure_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>The plot shows the range versus the mean misclassification error. The value on the y-axis thus corresponds to the length of the error bars. (Note that the points and error bars are jittered in y-direction.)</p>
 </div>
@@ -383,7 +383,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

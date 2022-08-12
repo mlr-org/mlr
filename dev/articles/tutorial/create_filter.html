@@ -14,10 +14,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
 <script src="../../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../../deps/_Roboto-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet">
+<link href="../../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Integrating Another Filter Method">
@@ -163,7 +163,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Integrating Another Filter Method</h1>
             
       
@@ -179,32 +179,32 @@
 </h2>
 <p>In <code>mlr</code> all filter methods are objects of class Filter (<code><a href="../../reference/makeFilter.html">makeFilter()</a></code>) and are registered in an environment called <code>.FilterRegister</code> (where <code><a href="../../reference/listFilterMethods.html">listFilterMethods()</a></code> looks them up to compile the list of available methods). To get to know their structure let’s have a closer look at the <code>"rank.correlation"</code> filter.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">filters</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fu">mlr</span><span class="fu">:::</span><span class="va">.FilterRegister</span><span class="op">)</span>
-<span class="va">filters</span><span class="op">$</span><span class="va">rank.correlation</span>
-<span class="co">## Filter: 'rank.correlation'</span>
-<span class="co">## Packages: ''</span>
-<span class="co">## Supported tasks: regr</span>
-<span class="co">## Supported features: numerics</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">filters</span><span class="op">$</span><span class="va">rank.correlation</span><span class="op">)</span>
-<span class="co">## List of 6</span>
-<span class="co">##  $ name              : chr "rank.correlation"</span>
-<span class="co">##  $ desc              : chr "Spearman's correlation between feature and target"</span>
-<span class="co">##  $ pkg               : chr(0)</span>
-<span class="co">##  $ supported.tasks   : chr "regr"</span>
-<span class="co">##  $ supported.features: chr "numerics"</span>
-<span class="co">##  $ fun               :function (task, nselect, ...)</span>
-<span class="co">##   ..- attr(*, "srcref")= 'srcref' int [1:8] 325 9 328 3 9 3 2308 2311</span>
-<span class="co">##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x55db8ddf6dc0&gt;</span>
-<span class="co">##  - attr(*, "class")= chr "Filter"</span>
-
-<span class="va">filters</span><span class="op">$</span><span class="va">rank.correlation</span><span class="op">$</span><span class="va">fun</span>
-<span class="co">## function(task, nselect, ...) {</span>
-<span class="co">##     data = getTaskData(task, target.extra = TRUE)</span>
-<span class="co">##     abs(cor(as.matrix(data$data), data$target, use = "pairwise.complete.obs", method = "spearman")[, 1L])</span>
-<span class="co">##   }</span>
-<span class="co">## &lt;bytecode: 0x55db8dc9fe00&gt;</span>
-<span class="co">## &lt;environment: namespace:mlr&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">filters</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fu">mlr</span><span class="fu">:::</span><span class="va">.FilterRegister</span><span class="op">)</span></span>
+<span><span class="va">filters</span><span class="op">$</span><span class="va">rank.correlation</span></span>
+<span><span class="co">## Filter: 'rank.correlation'</span></span>
+<span><span class="co">## Packages: ''</span></span>
+<span><span class="co">## Supported tasks: regr</span></span>
+<span><span class="co">## Supported features: numerics</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">filters</span><span class="op">$</span><span class="va">rank.correlation</span><span class="op">)</span></span>
+<span><span class="co">## List of 6</span></span>
+<span><span class="co">##  $ name              : chr "rank.correlation"</span></span>
+<span><span class="co">##  $ desc              : chr "Spearman's correlation between feature and target"</span></span>
+<span><span class="co">##  $ pkg               : chr(0)</span></span>
+<span><span class="co">##  $ supported.tasks   : chr "regr"</span></span>
+<span><span class="co">##  $ supported.features: chr "numerics"</span></span>
+<span><span class="co">##  $ fun               :function (task, nselect, ...)</span></span>
+<span><span class="co">##   ..- attr(*, "srcref")= 'srcref' int [1:8] 325 9 328 3 9 3 2308 2311</span></span>
+<span><span class="co">##   .. ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' &lt;environment: 0x55db8ddf6dc0&gt;</span></span>
+<span><span class="co">##  - attr(*, "class")= chr "Filter"</span></span>
+<span></span>
+<span><span class="va">filters</span><span class="op">$</span><span class="va">rank.correlation</span><span class="op">$</span><span class="va">fun</span></span>
+<span><span class="co">## function(task, nselect, ...) {</span></span>
+<span><span class="co">##     data = getTaskData(task, target.extra = TRUE)</span></span>
+<span><span class="co">##     abs(cor(as.matrix(data$data), data$target, use = "pairwise.complete.obs", method = "spearman")[, 1L])</span></span>
+<span><span class="co">##   }</span></span>
+<span><span class="co">## &lt;bytecode: 0x55db8dc9fe00&gt;</span></span>
+<span><span class="co">## &lt;environment: namespace:mlr&gt;</span></span></code></pre></div>
 <p>The core element is <code>$fun</code> which calculates the feature importance. For the <code>"rank.correlation"</code> filter it just extracts the data and formula from the <code>task</code> and passes them on to the <code>base::cor()</code> function.</p>
 <p>Additionally, each Filter (<code><a href="../../reference/makeFilter.html">makeFilter()</a></code>) object has a <code>$name</code>, which should be short and is for example used to annotate graphics (cp. <code><a href="../../reference/plotFilterValues.html">plotFilterValues()</a></code>), and a slightly more detailed description in slot <code>$desc</code>. If the filter method is implemented by another package its name is given in the <code>$pkg</code> member. Moreover, the supported task types and feature types are listed.</p>
 </div>
@@ -227,99 +227,97 @@
 <p>When writing <code>fun</code> many of the getter functions for <code><a href="../../reference/Task.html">Task()</a></code>s come in handy, particularly <code><a href="../../reference/getTaskData.html">getTaskData()</a></code>, <code><a href="../../reference/getTaskFormula.html">getTaskFormula()</a></code> and <code><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames()</a></code>. It’s worth having a closer look at <code><a href="../../reference/getTaskData.html">getTaskData()</a></code> which provides many options for formatting the data and recoding the target variable.</p>
 <p>As a short demonstration we write a totally meaningless filter that determines the importance of features according to alphabetical order, i.e., giving highest scores to features with names that come first (<code>decreasing = TRUE</code>) or last (<code>decreasing = FALSE</code>) in the alphabet.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/makeFilter.html">makeFilter</a></span><span class="op">(</span>
-  name <span class="op">=</span> <span class="st">"nonsense.filter"</span>,
-  desc <span class="op">=</span> <span class="st">"Calculates scores according to alphabetical order of features"</span>,
-  pkg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,
-  supported.tasks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classif"</span>, <span class="st">"regr"</span>, <span class="st">"surv"</span><span class="op">)</span>,
-  supported.features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"ordered"</span><span class="op">)</span>,
-  fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">task</span>, <span class="va">nselect</span>, <span class="va">decreasing</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">feats</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span>
-    <span class="va">imp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">feats</span>, decreasing <span class="op">=</span> <span class="va">decreasing</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span> <span class="op">=</span> <span class="va">feats</span>
-    <span class="va">imp</span>
-  <span class="op">}</span>
-<span class="op">)</span>
-<span class="co">## Filter: 'nonsense.filter'</span>
-<span class="co">## Packages: ''</span>
-<span class="co">## Supported tasks: classif,regr,surv</span>
-<span class="co">## Supported features: numerics,factors,ordered</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/makeFilter.html">makeFilter</a></span><span class="op">(</span></span>
+<span>  name <span class="op">=</span> <span class="st">"nonsense.filter"</span>,</span>
+<span>  desc <span class="op">=</span> <span class="st">"Calculates scores according to alphabetical order of features"</span>,</span>
+<span>  pkg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
+<span>  supported.tasks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classif"</span>, <span class="st">"regr"</span>, <span class="st">"surv"</span><span class="op">)</span>,</span>
+<span>  supported.features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"numerics"</span>, <span class="st">"factors"</span>, <span class="st">"ordered"</span><span class="op">)</span>,</span>
+<span>  fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">task</span>, <span class="va">nselect</span>, <span class="va">decreasing</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">feats</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames</a></span><span class="op">(</span><span class="va">task</span><span class="op">)</span></span>
+<span>    <span class="va">imp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">feats</span>, decreasing <span class="op">=</span> <span class="va">decreasing</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span> <span class="op">=</span> <span class="va">feats</span></span>
+<span>    <span class="va">imp</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">## Filter: 'nonsense.filter'</span></span>
+<span><span class="co">## Packages: ''</span></span>
+<span><span class="co">## Supported tasks: classif,regr,surv</span></span>
+<span><span class="co">## Supported features: numerics,factors,ordered</span></span></code></pre></div>
 <p>The <code>nonsense.filter</code> is now registered in <code>mlr</code> and shown by <code><a href="../../reference/listFilterMethods.html">listFilterMethods()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/listFilterMethods.html">listFilterMethods</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">id</span>
-<span class="co">##  [1] "anova.test"                           </span>
-<span class="co">##  [2] "auc"                                  </span>
-<span class="co">##  [3] "carscore"                             </span>
-<span class="co">##  [4] "FSelector_chi.squared"                </span>
-<span class="co">##  [5] "FSelector_gain.ratio"                 </span>
-<span class="co">##  [6] "FSelector_information.gain"           </span>
-<span class="co">##  [7] "FSelector_oneR"                       </span>
-<span class="co">##  [8] "FSelector_relief"                     </span>
-<span class="co">##  [9] "FSelector_symmetrical.uncertainty"    </span>
-<span class="co">## [10] "FSelectorRcpp_gain.ratio"             </span>
-<span class="co">## [11] "FSelectorRcpp_information.gain"       </span>
-<span class="co">## [12] "FSelectorRcpp_relief"                 </span>
-<span class="co">## [13] "FSelectorRcpp_symmetrical.uncertainty"</span>
-<span class="co">## [14] "kruskal.test"                         </span>
-<span class="co">## [15] "linear.correlation"                   </span>
-<span class="co">## [16] "mrmr"                                 </span>
-<span class="co">## [17] "nonsense.filter"                      </span>
-<span class="co">## [18] "party_cforest.importance"             </span>
-<span class="co">## [19] "permutation.importance"               </span>
-<span class="co">## [20] "praznik_CMIM"                         </span>
-<span class="co">## [21] "praznik_DISR"                         </span>
-<span class="co">## [22] "praznik_JMI"                          </span>
-<span class="co">## [23] "praznik_JMIM"                         </span>
-<span class="co">## [24] "praznik_MIM"                          </span>
-<span class="co">## [25] "praznik_MRMR"                         </span>
-<span class="co">## [26] "praznik_NJMIM"                        </span>
-<span class="co">## [27] "randomForest_importance"              </span>
-<span class="co">## [28] "randomForestSRC_importance"           </span>
-<span class="co">## [29] "randomForestSRC_var.select"           </span>
-<span class="co">## [30] "ranger_impurity"                      </span>
-<span class="co">## [31] "ranger_permutation"                   </span>
-<span class="co">## [32] "rank.correlation"                     </span>
-<span class="co">## [33] "univariate.model.score"               </span>
-<span class="co">## [34] "variance"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/listFilterMethods.html">listFilterMethods</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">id</span></span>
+<span><span class="co">##  [1] "anova.test"                           </span></span>
+<span><span class="co">##  [2] "auc"                                  </span></span>
+<span><span class="co">##  [3] "carscore"                             </span></span>
+<span><span class="co">##  [4] "FSelector_chi.squared"                </span></span>
+<span><span class="co">##  [5] "FSelector_gain.ratio"                 </span></span>
+<span><span class="co">##  [6] "FSelector_information.gain"           </span></span>
+<span><span class="co">##  [7] "FSelector_oneR"                       </span></span>
+<span><span class="co">##  [8] "FSelector_relief"                     </span></span>
+<span><span class="co">##  [9] "FSelector_symmetrical.uncertainty"    </span></span>
+<span><span class="co">## [10] "FSelectorRcpp_gain.ratio"             </span></span>
+<span><span class="co">## [11] "FSelectorRcpp_information.gain"       </span></span>
+<span><span class="co">## [12] "FSelectorRcpp_relief"                 </span></span>
+<span><span class="co">## [13] "FSelectorRcpp_symmetrical.uncertainty"</span></span>
+<span><span class="co">## [14] "kruskal.test"                         </span></span>
+<span><span class="co">## [15] "linear.correlation"                   </span></span>
+<span><span class="co">## [16] "mrmr"                                 </span></span>
+<span><span class="co">## [17] "nonsense.filter"                      </span></span>
+<span><span class="co">## [18] "party_cforest.importance"             </span></span>
+<span><span class="co">## [19] "permutation.importance"               </span></span>
+<span><span class="co">## [20] "praznik_CMIM"                         </span></span>
+<span><span class="co">## [21] "praznik_DISR"                         </span></span>
+<span><span class="co">## [22] "praznik_JMI"                          </span></span>
+<span><span class="co">## [23] "praznik_JMIM"                         </span></span>
+<span><span class="co">## [24] "praznik_MIM"                          </span></span>
+<span><span class="co">## [25] "praznik_MRMR"                         </span></span>
+<span><span class="co">## [26] "praznik_NJMIM"                        </span></span>
+<span><span class="co">## [27] "randomForest_importance"              </span></span>
+<span><span class="co">## [28] "ranger_impurity"                      </span></span>
+<span><span class="co">## [29] "ranger_permutation"                   </span></span>
+<span><span class="co">## [30] "rank.correlation"                     </span></span>
+<span><span class="co">## [31] "univariate.model.score"               </span></span>
+<span><span class="co">## [32] "variance"</span></span></code></pre></div>
 <p>You can use it like any other filter method already integrated in <code>mlr</code> (i.e., via the <code>method</code> argument of <code><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData()</a></code> or the <code>fw.method</code> argument of <code><a href="../../reference/makeFilterWrapper.html">makeFilterWrapper()</a></code>; see also the page on <a href="feature_selection.html" target="_blank">feature selection</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span><span class="op">(</span><span class="va">iris.task</span>, method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nonsense.filter"</span>, <span class="st">"anova.test"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">d</span>
-<span class="co">## FilterValues:</span>
-<span class="co">## Task: iris-example</span>
-<span class="co">##            name    type          filter      value</span>
-<span class="co">## 1: Petal.Length numeric nonsense.filter    4.00000</span>
-<span class="co">## 2:  Petal.Width numeric nonsense.filter    3.00000</span>
-<span class="co">## 3: Sepal.Length numeric nonsense.filter    2.00000</span>
-<span class="co">## 4:  Sepal.Width numeric nonsense.filter    1.00000</span>
-<span class="co">## 5: Petal.Length numeric      anova.test 1180.16118</span>
-<span class="co">## 6:  Petal.Width numeric      anova.test  960.00715</span>
-<span class="co">## 7: Sepal.Length numeric      anova.test  119.26450</span>
-<span class="co">## 8:  Sepal.Width numeric      anova.test   49.16004</span>
-
-<span class="fu"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span><span class="op">(</span><span class="va">d</span>, filter <span class="op">=</span> <span class="st">"anova.test"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateFilterValuesData.html">generateFilterValuesData</a></span><span class="op">(</span><span class="va">iris.task</span>, method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nonsense.filter"</span>, <span class="st">"anova.test"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">d</span></span>
+<span><span class="co">## FilterValues:</span></span>
+<span><span class="co">## Task: iris-example</span></span>
+<span><span class="co">##            name    type          filter      value</span></span>
+<span><span class="co">## 1: Petal.Length numeric nonsense.filter    4.00000</span></span>
+<span><span class="co">## 2:  Petal.Width numeric nonsense.filter    3.00000</span></span>
+<span><span class="co">## 3: Sepal.Length numeric nonsense.filter    2.00000</span></span>
+<span><span class="co">## 4:  Sepal.Width numeric nonsense.filter    1.00000</span></span>
+<span><span class="co">## 5: Petal.Length numeric      anova.test 1180.16118</span></span>
+<span><span class="co">## 6:  Petal.Width numeric      anova.test  960.00715</span></span>
+<span><span class="co">## 7: Sepal.Length numeric      anova.test  119.26450</span></span>
+<span><span class="co">## 8:  Sepal.Width numeric      anova.test   49.16004</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/plotFilterValues.html">plotFilterValues</a></span><span class="op">(</span><span class="va">d</span>, filter <span class="op">=</span> <span class="st">"anova.test"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="create_filter_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris.task.filtered</span> <span class="op">=</span> <span class="fu"><a href="../../reference/filterFeatures.html">filterFeatures</a></span><span class="op">(</span><span class="va">iris.task</span>, method <span class="op">=</span> <span class="st">"nonsense.filter"</span>, abs <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">iris.task.filtered</span>
-<span class="co">## Supervised task: iris-example</span>
-<span class="co">## Type: classif</span>
-<span class="co">## Target: Species</span>
-<span class="co">## Observations: 150</span>
-<span class="co">## Features:</span>
-<span class="co">##    numerics     factors     ordered functionals </span>
-<span class="co">##           2           0           0           0 </span>
-<span class="co">## Missings: FALSE</span>
-<span class="co">## Has weights: FALSE</span>
-<span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span>
-<span class="co">## Classes: 3</span>
-<span class="co">##     setosa versicolor  virginica </span>
-<span class="co">##         50         50         50 </span>
-<span class="co">## Positive class: NA</span>
-
-<span class="fu"><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames</a></span><span class="op">(</span><span class="va">iris.task.filtered</span><span class="op">)</span>
-<span class="co">## [1] "Petal.Length" "Petal.Width"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris.task.filtered</span> <span class="op">=</span> <span class="fu"><a href="../../reference/filterFeatures.html">filterFeatures</a></span><span class="op">(</span><span class="va">iris.task</span>, method <span class="op">=</span> <span class="st">"nonsense.filter"</span>, abs <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">iris.task.filtered</span></span>
+<span><span class="co">## Supervised task: iris-example</span></span>
+<span><span class="co">## Type: classif</span></span>
+<span><span class="co">## Target: Species</span></span>
+<span><span class="co">## Observations: 150</span></span>
+<span><span class="co">## Features:</span></span>
+<span><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span><span class="co">##           2           0           0           0 </span></span>
+<span><span class="co">## Missings: FALSE</span></span>
+<span><span class="co">## Has weights: FALSE</span></span>
+<span><span class="co">## Has blocking: FALSE</span></span>
+<span><span class="co">## Has coordinates: FALSE</span></span>
+<span><span class="co">## Classes: 3</span></span>
+<span><span class="co">##     setosa versicolor  virginica </span></span>
+<span><span class="co">##         50         50         50 </span></span>
+<span><span class="co">## Positive class: NA</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/getTaskFeatureNames.html">getTaskFeatureNames</a></span><span class="op">(</span><span class="va">iris.task.filtered</span><span class="op">)</span></span>
+<span><span class="co">## [1] "Petal.Length" "Petal.Width"</span></span></code></pre></div>
 <p>You might also want to have a look at the <a href="https://github.com/mlr-org/mlr/blob/main/R/Filter.R#L95" class="external-link">source code</a> of the filter methods already integrated in <code>mlr</code> for some more complex and meaningful examples.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -335,7 +333,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

@@ -14,10 +14,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
 <script src="../../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../../deps/_Roboto-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet">
+<link href="../../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Cost-Sensitive Classification">
@@ -163,7 +163,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Cost-Sensitive Classification</h1>
             
       
@@ -237,56 +237,56 @@
 <p>As in the table above, the rows indicate true and the columns predicted classes.</p>
 <p>In case of class-dependent costs it is sufficient to generate an ordinary <code>ClassifTask</code> (<code><a href="../../reference/Task.html">Task()</a></code>). A <code>CostSensTask</code> (<code><a href="../../reference/Task.html">Task()</a></code>) is only needed if the costs are example-dependent. In the <strong>R</strong> code below we create the <code>ClassifTask</code> (<code><a href="../../reference/Task.html">Task()</a></code>), remove two constant features from the data set and generate the cost matrix. Per default, Bad is the positive class.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">GermanCredit</span>, package <span class="op">=</span> <span class="st">"caret"</span><span class="op">)</span>
-<span class="va">credit.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GermanCredit</span>, target <span class="op">=</span> <span class="st">"Class"</span><span class="op">)</span>
-<span class="va">credit.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/removeConstantFeatures.html">removeConstantFeatures</a></span><span class="op">(</span><span class="va">credit.task</span><span class="op">)</span>
-<span class="co">## Removing 2 columns: Purpose.Vacation,Personal.Female.Single</span>
-
-<span class="va">credit.task</span>
-<span class="co">## Supervised task: GermanCredit</span>
-<span class="co">## Type: classif</span>
-<span class="co">## Target: Class</span>
-<span class="co">## Observations: 1000</span>
-<span class="co">## Features:</span>
-<span class="co">##    numerics     factors     ordered functionals </span>
-<span class="co">##          59           0           0           0 </span>
-<span class="co">## Missings: FALSE</span>
-<span class="co">## Has weights: FALSE</span>
-<span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span>
-<span class="co">## Classes: 2</span>
-<span class="co">##  Bad Good </span>
-<span class="co">##  300  700 </span>
-<span class="co">## Positive class: Bad</span>
-
-<span class="va">costs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">0</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span><span class="op">(</span><span class="va">credit.task</span><span class="op">)</span>
-<span class="va">costs</span>
-<span class="co">##      Bad Good</span>
-<span class="co">## Bad    0    5</span>
-<span class="co">## Good   1    0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">GermanCredit</span>, package <span class="op">=</span> <span class="st">"caret"</span><span class="op">)</span></span>
+<span><span class="va">credit.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GermanCredit</span>, target <span class="op">=</span> <span class="st">"Class"</span><span class="op">)</span></span>
+<span><span class="va">credit.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/removeConstantFeatures.html">removeConstantFeatures</a></span><span class="op">(</span><span class="va">credit.task</span><span class="op">)</span></span>
+<span><span class="co">## Removing 2 columns: Purpose.Vacation,Personal.Female.Single</span></span>
+<span></span>
+<span><span class="va">credit.task</span></span>
+<span><span class="co">## Supervised task: GermanCredit</span></span>
+<span><span class="co">## Type: classif</span></span>
+<span><span class="co">## Target: Class</span></span>
+<span><span class="co">## Observations: 1000</span></span>
+<span><span class="co">## Features:</span></span>
+<span><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span><span class="co">##          59           0           0           0 </span></span>
+<span><span class="co">## Missings: FALSE</span></span>
+<span><span class="co">## Has weights: FALSE</span></span>
+<span><span class="co">## Has blocking: FALSE</span></span>
+<span><span class="co">## Has coordinates: FALSE</span></span>
+<span><span class="co">## Classes: 2</span></span>
+<span><span class="co">##  Bad Good </span></span>
+<span><span class="co">##  300  700 </span></span>
+<span><span class="co">## Positive class: Bad</span></span>
+<span></span>
+<span><span class="va">costs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">0</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span><span class="op">(</span><span class="va">credit.task</span><span class="op">)</span></span>
+<span><span class="va">costs</span></span>
+<span><span class="co">##      Bad Good</span></span>
+<span><span class="co">## Bad    0    5</span></span>
+<span><span class="co">## Good   1    0</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="thresholding">1. Thresholding<a class="anchor" aria-label="anchor" href="#thresholding"></a>
 </h4>
 <p>We start by fitting a logistic regression model (<code><a href="https://rdrr.io/pkg/nnet/man/multinom.html" class="external-link">nnet::multinom()</a></code>) to the German Credit data set (<code><a href="https://rdrr.io/pkg/caret/man/GermanCredit.html" class="external-link">caret::GermanCredit()</a></code>) and predict posterior probabilities.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Train and predict posterior probabilities</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">credit.task</span><span class="op">)</span>
-<span class="va">pred</span>
-<span class="co">## Prediction: 1000 observations</span>
-<span class="co">## predict.type: prob</span>
-<span class="co">## threshold: Bad=0.50,Good=0.50</span>
-<span class="co">## time: 0.01</span>
-<span class="co">##   id truth   prob.Bad prob.Good response</span>
-<span class="co">## 1  1  Good 0.03525092 0.9647491     Good</span>
-<span class="co">## 2  2   Bad 0.63222363 0.3677764      Bad</span>
-<span class="co">## 3  3  Good 0.02807414 0.9719259     Good</span>
-<span class="co">## 4  4  Good 0.25182703 0.7481730     Good</span>
-<span class="co">## 5  5   Bad 0.75193275 0.2480673      Bad</span>
-<span class="co">## 6  6  Good 0.26230149 0.7376985     Good</span>
-<span class="co">## ... (#rows: 1000, #cols: 5)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Train and predict posterior probabilities</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">credit.task</span><span class="op">)</span></span>
+<span><span class="va">pred</span></span>
+<span><span class="co">## Prediction: 1000 observations</span></span>
+<span><span class="co">## predict.type: prob</span></span>
+<span><span class="co">## threshold: Bad=0.50,Good=0.50</span></span>
+<span><span class="co">## time: 0.01</span></span>
+<span><span class="co">##   id truth   prob.Bad prob.Good response</span></span>
+<span><span class="co">## 1  1  Good 0.03525092 0.9647491     Good</span></span>
+<span><span class="co">## 2  2   Bad 0.63222363 0.3677764      Bad</span></span>
+<span><span class="co">## 3  3  Good 0.02807414 0.9719259     Good</span></span>
+<span><span class="co">## 4  4  Good 0.25182703 0.7481730     Good</span></span>
+<span><span class="co">## 5  5   Bad 0.75193275 0.2480673      Bad</span></span>
+<span><span class="co">## 6  6  Good 0.26230149 0.7376985     Good</span></span>
+<span><span class="co">## ... (#rows: 1000, #cols: 5)</span></span></code></pre></div>
 <p>The default thresholds for both classes are 0.5. But according to the cost matrix we should predict class Good only if we are very sure that Good is indeed the correct label. Therefore we should increase the threshold for class Good and decrease the threshold for class Bad.</p>
 <div class="section level5">
 <h5 id="i--theoretical-thresholding">i. Theoretical thresholding<a class="anchor" aria-label="anchor" href="#i--theoretical-thresholding"></a>
@@ -294,71 +294,71 @@
 <p>The theoretical threshold for the <em>positive</em> class can be calculated from the cost matrix as <span class="math display">\[t^* = \frac{c(+1,-1) - c(-1,-1)}{c(+1,-1) - c(+1,+1) + c(-1,+1) - c(-1,-1)}.\]</span> For more details see <a href="http://www.cs.iastate.edu/~honavar/elkan.pdf" class="external-link">Elkan (2001)</a>.</p>
 <p>Below the theoretical threshold for the German Credit data set (<code><a href="https://rdrr.io/pkg/caret/man/GermanCredit.html" class="external-link">caret::GermanCredit()</a></code>) is calculated and used to predict class labels. Since the diagonal of the cost matrix is zero the formula given above simplifies accordingly.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Calculate the theoretical threshold for the positive class</span>
-<span class="va">th</span> <span class="op">=</span> <span class="va">costs</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">/</span> <span class="op">(</span><span class="va">costs</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">costs</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span>
-<span class="va">th</span>
-<span class="co">## [1] 0.1666667</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Calculate the theoretical threshold for the positive class</span></span>
+<span><span class="va">th</span> <span class="op">=</span> <span class="va">costs</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">/</span> <span class="op">(</span><span class="va">costs</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">costs</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">th</span></span>
+<span><span class="co">## [1] 0.1666667</span></span></code></pre></div>
 <p>As you may recall you can change thresholds in <code>mlr</code> either before training by using the <code>predict.threshold</code> option of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> or after prediction by calling <code><a href="../../reference/setThreshold.html">setThreshold()</a></code> on the <code><a href="../../reference/Prediction.html">Prediction()</a></code> object.</p>
 <p>As we already have a prediction we use the <code><a href="../../reference/setThreshold.html">setThreshold()</a></code> function. It returns an altered <code><a href="../../reference/Prediction.html">Prediction()</a></code> object with class predictions for the theoretical threshold.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Predict class labels according to the theoretical threshold</span>
-<span class="va">pred.th</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setThreshold.html">setThreshold</a></span><span class="op">(</span><span class="va">pred</span>, <span class="va">th</span><span class="op">)</span>
-<span class="va">pred.th</span>
-<span class="co">## Prediction: 1000 observations</span>
-<span class="co">## predict.type: prob</span>
-<span class="co">## threshold: Bad=0.17,Good=0.83</span>
-<span class="co">## time: 0.01</span>
-<span class="co">##   id truth   prob.Bad prob.Good response</span>
-<span class="co">## 1  1  Good 0.03525092 0.9647491     Good</span>
-<span class="co">## 2  2   Bad 0.63222363 0.3677764      Bad</span>
-<span class="co">## 3  3  Good 0.02807414 0.9719259     Good</span>
-<span class="co">## 4  4  Good 0.25182703 0.7481730      Bad</span>
-<span class="co">## 5  5   Bad 0.75193275 0.2480673      Bad</span>
-<span class="co">## 6  6  Good 0.26230149 0.7376985      Bad</span>
-<span class="co">## ... (#rows: 1000, #cols: 5)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Predict class labels according to the theoretical threshold</span></span>
+<span><span class="va">pred.th</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setThreshold.html">setThreshold</a></span><span class="op">(</span><span class="va">pred</span>, <span class="va">th</span><span class="op">)</span></span>
+<span><span class="va">pred.th</span></span>
+<span><span class="co">## Prediction: 1000 observations</span></span>
+<span><span class="co">## predict.type: prob</span></span>
+<span><span class="co">## threshold: Bad=0.17,Good=0.83</span></span>
+<span><span class="co">## time: 0.01</span></span>
+<span><span class="co">##   id truth   prob.Bad prob.Good response</span></span>
+<span><span class="co">## 1  1  Good 0.03525092 0.9647491     Good</span></span>
+<span><span class="co">## 2  2   Bad 0.63222363 0.3677764      Bad</span></span>
+<span><span class="co">## 3  3  Good 0.02807414 0.9719259     Good</span></span>
+<span><span class="co">## 4  4  Good 0.25182703 0.7481730      Bad</span></span>
+<span><span class="co">## 5  5   Bad 0.75193275 0.2480673      Bad</span></span>
+<span><span class="co">## 6  6  Good 0.26230149 0.7376985      Bad</span></span>
+<span><span class="co">## ... (#rows: 1000, #cols: 5)</span></span></code></pre></div>
 <p>In order to calculate the average costs over the entire data set we first need to create a new performance Measure (<code><a href="../../reference/makeMeasure.html">makeMeasure()</a></code>). This can be done through function <code><a href="../../reference/makeCostMeasure.html">makeCostMeasure()</a></code>. It is expected that the rows of the cost matrix indicate true and the columns predicted class labels.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">credit.costs</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeCostMeasure.html">makeCostMeasure</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"credit.costs"</span>, name <span class="op">=</span> <span class="st">"Credit costs"</span>, costs <span class="op">=</span> <span class="va">costs</span>,
-  best <span class="op">=</span> <span class="fl">0</span>, worst <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-<span class="va">credit.costs</span>
-<span class="co">## Name: Credit costs</span>
-<span class="co">## Performance measure: credit.costs</span>
-<span class="co">## Properties: classif,classif.multi,req.pred,req.truth,predtype.response,predtype.prob</span>
-<span class="co">## Minimize: TRUE</span>
-<span class="co">## Best: 0; Worst: 5</span>
-<span class="co">## Aggregated by: test.mean</span>
-<span class="co">## Arguments: costs=&lt;matrix&gt;, combine=&lt;function&gt;</span>
-<span class="co">## Note:</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">credit.costs</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeCostMeasure.html">makeCostMeasure</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"credit.costs"</span>, name <span class="op">=</span> <span class="st">"Credit costs"</span>, costs <span class="op">=</span> <span class="va">costs</span>,</span>
+<span>  best <span class="op">=</span> <span class="fl">0</span>, worst <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">credit.costs</span></span>
+<span><span class="co">## Name: Credit costs</span></span>
+<span><span class="co">## Performance measure: credit.costs</span></span>
+<span><span class="co">## Properties: classif,classif.multi,req.pred,req.truth,predtype.response,predtype.prob</span></span>
+<span><span class="co">## Minimize: TRUE</span></span>
+<span><span class="co">## Best: 0; Worst: 5</span></span>
+<span><span class="co">## Aggregated by: test.mean</span></span>
+<span><span class="co">## Arguments: costs=&lt;matrix&gt;, combine=&lt;function&gt;</span></span>
+<span><span class="co">## Note:</span></span></code></pre></div>
 <p>Then the average costs can be computed by function <code><a href="../../reference/performance.html">performance()</a></code>. Below we compare the average costs and the error rate (<a href="measures.html" target="_blank">mmce</a>) of the learning algorithm with both default thresholds 0.5 and theoretical thresholds.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Performance with default thresholds 0.5</span>
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## credit.costs         mmce </span>
-<span class="co">##        0.774        0.214</span>
-
-<span class="co"># Performance with theoretical thresholds</span>
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred.th</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## credit.costs         mmce </span>
-<span class="co">##        0.478        0.346</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Performance with default thresholds 0.5</span></span>
+<span><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## credit.costs         mmce </span></span>
+<span><span class="co">##        0.774        0.214</span></span>
+<span></span>
+<span><span class="co"># Performance with theoretical thresholds</span></span>
+<span><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred.th</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## credit.costs         mmce </span></span>
+<span><span class="co">##        0.478        0.346</span></span></code></pre></div>
 <p>These performance values may be overly optimistic as we used the same data set for training and prediction, and resampling strategies should be preferred. In the <strong>R</strong> code below we make use of the <code>predict.threshold</code> argument of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code> to set the threshold before doing a 3-fold cross-validation on the <code>credit.task()</code>. Note that we create a <code>ResampleInstance</code> (<code><a href="../../reference/makeResampleInstance.html">makeResampleInstance()</a></code>) (<code>rin</code>) that is used throughout the next several code chunks to get comparable performance values.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Cross-validated performance with theoretical thresholds</span>
-<span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span>, task <span class="op">=</span> <span class="va">credit.task</span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, predict.threshold <span class="op">=</span> <span class="va">th</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span>, resampling <span class="op">=</span> <span class="va">rin</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">r</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Cross-validated performance with theoretical thresholds</span></span>
+<span><span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span>, task <span class="op">=</span> <span class="va">credit.task</span><span class="op">)</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, predict.threshold <span class="op">=</span> <span class="va">th</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span>, resampling <span class="op">=</span> <span class="va">rin</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">r</span></span></code></pre></div>
 <p>If we are also interested in the cross-validated performance for the default threshold values we can call <code><a href="../../reference/setThreshold.html">setThreshold()</a></code> on the resample prediction (<code><a href="../../reference/ResamplePrediction.html">ResamplePrediction()</a></code>) <code>r$pred</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Cross-validated performance with default thresholds</span>
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="../../reference/setThreshold.html">setThreshold</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">pred</span>, <span class="fl">0.5</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## credit.costs         mmce </span>
-<span class="co">##    0.8599378    0.2519885</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Cross-validated performance with default thresholds</span></span>
+<span><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="fu"><a href="../../reference/setThreshold.html">setThreshold</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">pred</span>, <span class="fl">0.5</span><span class="op">)</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## credit.costs         mmce </span></span>
+<span><span class="co">##    0.8599378    0.2519885</span></span></code></pre></div>
 <p>Theoretical thresholding is only reliable if the predicted posterior probabilities are correct. If there is bias the thresholds have to be shifted accordingly.</p>
 <p>Useful in this regard is function <code><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf()</a></code> that you can use to plot the average costs as well as any other performance measure versus possible threshold values for the positive class in <span class="math inline">\([0,1]\)</span>. The underlying data is generated by <code><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData()</a></code>.</p>
 <p>The following plots show the cross-validated costs and error rate (<a href="measures.html" target="_blank">mmce</a>). The theoretical threshold <code>th</code> calculated above is indicated by the vertical line. As you can see from the left-hand plot the theoretical threshold seems a bit large.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData</a></span><span class="op">(</span><span class="va">r</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span><span class="op">(</span><span class="va">d</span>, mark.th <span class="op">=</span> <span class="va">th</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="../../reference/generateThreshVsPerfData.html">generateThreshVsPerfData</a></span><span class="op">(</span><span class="va">r</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/plotThreshVsPerf.html">plotThreshVsPerf</a></span><span class="op">(</span><span class="va">d</span>, mark.th <span class="op">=</span> <span class="va">th</span><span class="op">)</span></span></code></pre></div>
 <p><img src="cost_sensitive_classif_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 </div>
 <div class="section level5">
@@ -367,28 +367,28 @@
 <p>The idea of <em>empirical thresholding</em> (see <a href="http://sun0.cs.uca.edu/~ssheng/papers/AAAI06a.pdf" class="external-link">Sheng and Ling, 2006</a>) is to select cost-optimal threshold values for a given learning method based on the training data. In contrast to <em>theoretical thresholding</em> it suffices if the estimated posterior probabilities are order-correct.</p>
 <p>In order to determine optimal threshold values you can use <code>mlr</code>’s function <code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code>. As tuning the threshold on the complete training data set can lead to overfitting, you should use resampling strategies. Below we perform 3-fold cross-validation and use <code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code> to calculate threshold values with lowest average costs over the 3 test data sets.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># 3-fold cross-validation</span>
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span>, resampling <span class="op">=</span> <span class="va">rin</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">r</span>
-
-<span class="co">## Resample Result</span>
-<span class="co">## Task: GermanCredit</span>
-<span class="co">## Learner: classif.multinom</span>
-<span class="co">## Aggr perf: credit.costs.test.mean=0.8461036,mmce.test.mean=0.2539905</span>
-<span class="co">## Runtime: 0.285521</span>
-
-<span class="co"># Tune the threshold based on the predicted probabilities on the 3 test data sets</span>
-<span class="va">tune.res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneThreshold.html">tuneThreshold</a></span><span class="op">(</span>pred <span class="op">=</span> <span class="va">r</span><span class="op">$</span><span class="va">pred</span>, measure <span class="op">=</span> <span class="va">credit.costs</span><span class="op">)</span>
-<span class="va">tune.res</span>
-
-<span class="co">## $th</span>
-<span class="co">## [1] 0.1062593</span>
-<span class="co">##</span>
-<span class="co">## $perf</span>
-<span class="co">## credit.costs</span>
-<span class="co">##     0.527033</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 3-fold cross-validation</span></span>
+<span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span>, resampling <span class="op">=</span> <span class="va">rin</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">r</span></span>
+<span></span>
+<span><span class="co">## Resample Result</span></span>
+<span><span class="co">## Task: GermanCredit</span></span>
+<span><span class="co">## Learner: classif.multinom</span></span>
+<span><span class="co">## Aggr perf: credit.costs.test.mean=0.8461036,mmce.test.mean=0.2539905</span></span>
+<span><span class="co">## Runtime: 0.285521</span></span>
+<span></span>
+<span><span class="co"># Tune the threshold based on the predicted probabilities on the 3 test data sets</span></span>
+<span><span class="va">tune.res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneThreshold.html">tuneThreshold</a></span><span class="op">(</span>pred <span class="op">=</span> <span class="va">r</span><span class="op">$</span><span class="va">pred</span>, measure <span class="op">=</span> <span class="va">credit.costs</span><span class="op">)</span></span>
+<span><span class="va">tune.res</span></span>
+<span></span>
+<span><span class="co">## $th</span></span>
+<span><span class="co">## [1] 0.1062593</span></span>
+<span><span class="co">##</span></span>
+<span><span class="co">## $perf</span></span>
+<span><span class="co">## credit.costs</span></span>
+<span><span class="co">##     0.527033</span></span></code></pre></div>
 <p><code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code> returns the optimal threshold value for the positive class and the corresponding performance. As expected the tuned threshold is smaller than the theoretical threshold.</p>
 </div>
 </div>
@@ -397,46 +397,44 @@
 </h4>
 <p>In order to minimize the average costs, observations from the less costly class should be given higher importance during training. This can be achieved by <em>weighting</em> the classes, provided that the learner under consideration has a ‘class weights’ or an ‘observation weights’ argument. To find out which learning methods support either type of weights have a look at the list of <a href="integrated_learners.html" target="_blank">integrated learners</a> in the Appendix or use <code><a href="../../reference/listLearners.html">listLearners()</a></code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Learners that accept observation weights</span>
-<span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"classif"</span>, properties <span class="op">=</span> <span class="st">"weights"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span>
-<span class="co">##                       class         package</span>
-<span class="co">## 1          classif.binomial           stats</span>
-<span class="co">## 2               classif.C50             C50</span>
-<span class="co">## 3           classif.cforest           party</span>
-<span class="co">## 4             classif.ctree           party</span>
-<span class="co">## 5          classif.cvglmnet          glmnet</span>
-<span class="co">## 6             classif.earth     earth,stats</span>
-<span class="co">## 7            classif.evtree          evtree</span>
-<span class="co">## 8        classif.extraTrees      extraTrees</span>
-<span class="co">## 9        classif.fdausc.knn         fda.usc</span>
-<span class="co">## 10         classif.gamboost          mboost</span>
-<span class="co">## 11              classif.gbm             gbm</span>
-<span class="co">## 12         classif.glmboost          mboost</span>
-<span class="co">## 13           classif.glmnet          glmnet</span>
-<span class="co">## 14 classif.h2o.deeplearning             h2o</span>
-<span class="co">## 15          classif.h2o.glm             h2o</span>
-<span class="co">## 16           classif.logreg           stats</span>
-<span class="co">## 17         classif.multinom            nnet</span>
-<span class="co">## 18             classif.nnet            nnet</span>
-<span class="co">## 19              classif.plr         stepPlr</span>
-<span class="co">## 20           classif.probit           stats</span>
-<span class="co">## 21  classif.randomForestSRC randomForestSRC</span>
-<span class="co">## 22           classif.ranger          ranger</span>
-<span class="co">## 23            classif.rpart           rpart</span>
-<span class="co">## 24          classif.xgboost         xgboost</span>
-
-<span class="co"># Learners that can deal with class weights</span>
-<span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"classif"</span>, properties <span class="op">=</span> <span class="st">"class.weights"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span>
-<span class="co">##                            class      package</span>
-<span class="co">## 1                   classif.ksvm      kernlab</span>
-<span class="co">## 2       classif.LiblineaRL1L2SVC    LiblineaR</span>
-<span class="co">## 3      classif.LiblineaRL1LogReg    LiblineaR</span>
-<span class="co">## 4       classif.LiblineaRL2L1SVC    LiblineaR</span>
-<span class="co">## 5      classif.LiblineaRL2LogReg    LiblineaR</span>
-<span class="co">## 6         classif.LiblineaRL2SVC    LiblineaR</span>
-<span class="co">## 7 classif.LiblineaRMultiClassSVC    LiblineaR</span>
-<span class="co">## 8           classif.randomForest randomForest</span>
-<span class="co">## 9                    classif.svm        e1071</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Learners that accept observation weights</span></span>
+<span><span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"classif"</span>, properties <span class="op">=</span> <span class="st">"weights"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">##                       class     package</span></span>
+<span><span class="co">## 1          classif.binomial       stats</span></span>
+<span><span class="co">## 2               classif.C50         C50</span></span>
+<span><span class="co">## 3           classif.cforest       party</span></span>
+<span><span class="co">## 4             classif.ctree       party</span></span>
+<span><span class="co">## 5          classif.cvglmnet      glmnet</span></span>
+<span><span class="co">## 6             classif.earth earth,stats</span></span>
+<span><span class="co">## 7            classif.evtree      evtree</span></span>
+<span><span class="co">## 8        classif.fdausc.knn     fda.usc</span></span>
+<span><span class="co">## 9          classif.gamboost      mboost</span></span>
+<span><span class="co">## 10              classif.gbm         gbm</span></span>
+<span><span class="co">## 11         classif.glmboost      mboost</span></span>
+<span><span class="co">## 12           classif.glmnet      glmnet</span></span>
+<span><span class="co">## 13 classif.h2o.deeplearning         h2o</span></span>
+<span><span class="co">## 14          classif.h2o.glm         h2o</span></span>
+<span><span class="co">## 15           classif.logreg       stats</span></span>
+<span><span class="co">## 16         classif.multinom        nnet</span></span>
+<span><span class="co">## 17             classif.nnet        nnet</span></span>
+<span><span class="co">## 18              classif.plr     stepPlr</span></span>
+<span><span class="co">## 19           classif.probit       stats</span></span>
+<span><span class="co">## 20           classif.ranger      ranger</span></span>
+<span><span class="co">## 21            classif.rpart       rpart</span></span>
+<span><span class="co">## 22          classif.xgboost     xgboost</span></span>
+<span></span>
+<span><span class="co"># Learners that can deal with class weights</span></span>
+<span><span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"classif"</span>, properties <span class="op">=</span> <span class="st">"class.weights"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">##                            class      package</span></span>
+<span><span class="co">## 1                   classif.ksvm      kernlab</span></span>
+<span><span class="co">## 2       classif.LiblineaRL1L2SVC    LiblineaR</span></span>
+<span><span class="co">## 3      classif.LiblineaRL1LogReg    LiblineaR</span></span>
+<span><span class="co">## 4       classif.LiblineaRL2L1SVC    LiblineaR</span></span>
+<span><span class="co">## 5      classif.LiblineaRL2LogReg    LiblineaR</span></span>
+<span><span class="co">## 6         classif.LiblineaRL2SVC    LiblineaR</span></span>
+<span><span class="co">## 7 classif.LiblineaRMultiClassSVC    LiblineaR</span></span>
+<span><span class="co">## 8           classif.randomForest randomForest</span></span>
+<span><span class="co">## 9                    classif.svm        e1071</span></span></code></pre></div>
 <p>Alternatively, <em>over- and undersampling</em> techniques can be used.</p>
 <div class="section level5">
 <h5 id="i--weighting">i. Weighting<a class="anchor" aria-label="anchor" href="#i--weighting"></a>
@@ -445,72 +443,72 @@
 <p>In most cases, the original threshold is <span class="math inline">\(t_0 = 0.5\)</span> and thus the second factor vanishes. If additionally the target threshold <span class="math inline">\(t\)</span> equals the theoretical threshold <span class="math inline">\(t^*\)</span> the proportion of observations in the positive class has to be multiplied by <span class="math display">\[\frac{1-t^*}{t^*} = \frac{c(-1,+1) - c(+1,+1)}{c(+1,-1) - c(-1,-1)}.\]</span></p>
 <p>For the credit example (<code>caret:GermanCredit()</code>) the theoretical threshold corresponds to a weight of 5 for the positive class.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Weight for positive class corresponding to theoretical treshold</span>
-<span class="va">w</span> <span class="op">=</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">th</span><span class="op">)</span> <span class="op">/</span> <span class="va">th</span>
-<span class="va">w</span>
-<span class="co">## [1] 5</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Weight for positive class corresponding to theoretical treshold</span></span>
+<span><span class="va">w</span> <span class="op">=</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">th</span><span class="op">)</span> <span class="op">/</span> <span class="va">th</span></span>
+<span><span class="va">w</span></span>
+<span><span class="co">## [1] 5</span></span></code></pre></div>
 <p>A unified and convenient way to assign class weights to a Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) (and tune them) is provided by function <code><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper()</a></code>. The class weights are specified using argument <code>wcw.weight</code>. For learners that support observation weights a suitable weight vector is then generated internally during training or resampling. If the learner can deal with class weights, the weights are basically passed on to the appropriate learner parameter. The advantage of using the wrapper in this case is the unified way to specify the class weights.</p>
 <p>Below is an example using learner <code>"classif.multinom"</code> (<code><a href="https://rdrr.io/pkg/nnet/man/multinom.html" class="external-link">nnet::multinom()</a></code>) from package <code>nnet</code>) which accepts observation weights. For binary classification problems it is sufficient to specify the weight <code>w</code> for the positive class. The negative class then automatically receives weight 1.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Weighted learner</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, wcw.weight <span class="op">=</span> <span class="va">w</span><span class="op">)</span>
-<span class="va">lrn</span>
-
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span>, <span class="va">rin</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">r</span>
-
-<span class="co">## Resample Result</span>
-<span class="co">## Task: GermanCredit</span>
-<span class="co">## Learner: weightedclasses.classif.multinom</span>
-<span class="co">## Aggr perf: credit.costs.test.mean=0.5680531,mmce.test.mean=0.3599887</span>
-<span class="co">## Runtime: 0.20412</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Weighted learner</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, wcw.weight <span class="op">=</span> <span class="va">w</span><span class="op">)</span></span>
+<span><span class="va">lrn</span></span>
+<span></span>
+<span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span>, <span class="va">rin</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">r</span></span>
+<span></span>
+<span><span class="co">## Resample Result</span></span>
+<span><span class="co">## Task: GermanCredit</span></span>
+<span><span class="co">## Learner: weightedclasses.classif.multinom</span></span>
+<span><span class="co">## Aggr perf: credit.costs.test.mean=0.5680531,mmce.test.mean=0.3599887</span></span>
+<span><span class="co">## Runtime: 0.20412</span></span></code></pre></div>
 <p>For classification methods like <code>"classif.ksvm"</code> (the support vector machine <code><a href="https://rdrr.io/pkg/kernlab/man/ksvm.html" class="external-link">kernlab::ksvm()</a></code> in package <code>kernlab</code>) that support class weights you can pass them directly.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, class.weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Bad <span class="op">=</span> <span class="va">w</span>, Good <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, class.weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Bad <span class="op">=</span> <span class="va">w</span>, Good <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Or, more conveniently, you can again use <code><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper()</a></code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, wcw.weight <span class="op">=</span> <span class="va">w</span><span class="op">)</span>
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span>, <span class="va">rin</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">r</span>
-
-<span class="co">## Resample Result</span>
-<span class="co">## Task: GermanCredit</span>
-<span class="co">## Learner: weightedclasses.classif.ksvm</span>
-<span class="co">## Aggr perf: credit.costs.test.mean=0.6070861,mmce.test.mean=0.3349817</span>
-<span class="co">## Runtime: 1.69427</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span>, wcw.weight <span class="op">=</span> <span class="va">w</span><span class="op">)</span></span>
+<span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span>, <span class="va">rin</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">r</span></span>
+<span></span>
+<span><span class="co">## Resample Result</span></span>
+<span><span class="co">## Task: GermanCredit</span></span>
+<span><span class="co">## Learner: weightedclasses.classif.ksvm</span></span>
+<span><span class="co">## Aggr perf: credit.costs.test.mean=0.6070861,mmce.test.mean=0.3349817</span></span>
+<span><span class="co">## Runtime: 1.69427</span></span></code></pre></div>
 <p>Just like the theoretical threshold, the theoretical weights may not always be suitable, therefore you can tune the weight for the positive class as shown in the following example. Calculating the theoretical weight beforehand may help to narrow down the search interval.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span>
-<span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span><span class="fu">makeDiscreteParam</span><span class="op">(</span><span class="st">"wcw.weight"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">12</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">tune.res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span>, resampling <span class="op">=</span> <span class="va">rin</span>, par.set <span class="op">=</span> <span class="va">ps</span>,
-  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">tune.res</span>
-<span class="co">## Tune result:</span>
-<span class="co">## Op. pars: wcw.weight=8</span>
-<span class="co">## credit.costs.test.mean=0.5139601,mmce.test.mean=0.4020038</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">tune.res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
-<span class="co">##    wcw.weight credit.costs.test.mean mmce.test.mean</span>
-<span class="co">## 1           4              0.5439032      0.3279867</span>
-<span class="co">## 2         4.5              0.5598982      0.3439817</span>
-<span class="co">## 3           5              0.5589242      0.3589877</span>
-<span class="co">## 4         5.5              0.5539162      0.3699838</span>
-<span class="co">## 5           6              0.5369202      0.3769878</span>
-<span class="co">## 6         6.5              0.5249201      0.3809918</span>
-<span class="co">## 7           7              0.5289331      0.3889968</span>
-<span class="co">## 8         7.5              0.5159561      0.3960038</span>
-<span class="co">## 9           8              0.5139601      0.4020038</span>
-<span class="co">## 10        8.5              0.5219621      0.4100058</span>
-<span class="co">## 11          9              0.5299551      0.4179988</span>
-<span class="co">## 12        9.5              0.5369561      0.4249999</span>
-<span class="co">## 13         10              0.5439571      0.4320009</span>
-<span class="co">## 14       10.5              0.5439481      0.4359959</span>
-<span class="co">## 15         11              0.5409631      0.4409949</span>
-<span class="co">## 16       11.5              0.5439601      0.4439919</span>
-<span class="co">## 17         12              0.5499661      0.4499979</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span></span>
+<span><span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span><span class="fu">makeDiscreteParam</span><span class="op">(</span><span class="st">"wcw.weight"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">12</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">tune.res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span>, resampling <span class="op">=</span> <span class="va">rin</span>, par.set <span class="op">=</span> <span class="va">ps</span>,</span>
+<span>  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">tune.res</span></span>
+<span><span class="co">## Tune result:</span></span>
+<span><span class="co">## Op. pars: wcw.weight=8</span></span>
+<span><span class="co">## credit.costs.test.mean=0.5139601,mmce.test.mean=0.4020038</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">tune.res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="co">##    wcw.weight credit.costs.test.mean mmce.test.mean</span></span>
+<span><span class="co">## 1           4              0.5439032      0.3279867</span></span>
+<span><span class="co">## 2         4.5              0.5598982      0.3439817</span></span>
+<span><span class="co">## 3           5              0.5589242      0.3589877</span></span>
+<span><span class="co">## 4         5.5              0.5539162      0.3699838</span></span>
+<span><span class="co">## 5           6              0.5369202      0.3769878</span></span>
+<span><span class="co">## 6         6.5              0.5249201      0.3809918</span></span>
+<span><span class="co">## 7           7              0.5289331      0.3889968</span></span>
+<span><span class="co">## 8         7.5              0.5159561      0.3960038</span></span>
+<span><span class="co">## 9           8              0.5139601      0.4020038</span></span>
+<span><span class="co">## 10        8.5              0.5219621      0.4100058</span></span>
+<span><span class="co">## 11          9              0.5299551      0.4179988</span></span>
+<span><span class="co">## 12        9.5              0.5369561      0.4249999</span></span>
+<span><span class="co">## 13         10              0.5439571      0.4320009</span></span>
+<span><span class="co">## 14       10.5              0.5439481      0.4359959</span></span>
+<span><span class="co">## 15         11              0.5409631      0.4409949</span></span>
+<span><span class="co">## 16       11.5              0.5439601      0.4439919</span></span>
+<span><span class="co">## 17         12              0.5499661      0.4499979</span></span></code></pre></div>
 </div>
 <div class="section level5">
 <h5 id="ii--over--and-undersampling">ii. Over- and undersampling<a class="anchor" aria-label="anchor" href="#ii--over--and-undersampling"></a>
@@ -518,48 +516,48 @@
 <p>If the Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) supports neither observation nor class weights the proportions of the classes in the training data can be changed by over- or undersampling.</p>
 <p>In the GermanCredit data set (<code><a href="https://rdrr.io/pkg/caret/man/GermanCredit.html" class="external-link">caret::GermanCredit()</a></code>) the positive class Bad should receive a theoretical weight of <code>w = (1 - th)/th = 5</code>. This can be achieved by oversampling class Bad with a <code>rate</code> of 5 or by undersampling class Good with a <code>rate</code> of 1/5 (using functions <code><a href="../../reference/oversample.html">oversample()</a></code> or undersample (<code><a href="../../reference/oversample.html">undersample()</a></code>).</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">credit.task.over</span> <span class="op">=</span> <span class="fu"><a href="../../reference/oversample.html">oversample</a></span><span class="op">(</span><span class="va">credit.task</span>, rate <span class="op">=</span> <span class="va">w</span>, cl <span class="op">=</span> <span class="st">"Bad"</span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task.over</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">credit.task</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## credit.costs         mmce </span>
-<span class="co">##        0.441        0.337</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">credit.task.over</span> <span class="op">=</span> <span class="fu"><a href="../../reference/oversample.html">oversample</a></span><span class="op">(</span><span class="va">credit.task</span>, rate <span class="op">=</span> <span class="va">w</span>, cl <span class="op">=</span> <span class="st">"Bad"</span><span class="op">)</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task.over</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">credit.task</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## credit.costs         mmce </span></span>
+<span><span class="co">##        0.441        0.337</span></span></code></pre></div>
 <p>Note that in the above example the learner was trained on the oversampled task <code>credit.task.over</code>. In order to get the training performance on the original task predictions were calculated for <code>credit.task</code>.</p>
 <p>We usually prefer resampled performance values, but simply calling <code><a href="../../reference/resample.html">resample()</a></code> on the oversampled task does not work since predictions have to be based on the original task. The solution is to create a wrapped Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) via function <code><a href="../../reference/makeUndersampleWrapper.html">makeUndersampleWrapper()</a></code>. Internally, <code><a href="../../reference/oversample.html">oversample()</a></code> is called before training, but predictions are done on the original data.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeUndersampleWrapper.html">makeOversampleWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, osw.rate <span class="op">=</span> <span class="va">w</span>, osw.cl <span class="op">=</span> <span class="st">"Bad"</span><span class="op">)</span>
-<span class="va">lrn</span>
-
-<span class="co">## Learner classif.multinom.oversampled from package mlr,nnet</span>
-<span class="co">## Type: classif</span>
-<span class="co">## Name: ; Short name:</span>
-<span class="co">## Class: OversampleWrapper</span>
-<span class="co">## Properties: numerics,factors,weights,prob,twoclass,multiclass</span>
-<span class="co">## Predict-Type: response</span>
-<span class="co">## Hyperparameters: trace=FALSE,osw.rate=5,osw.cl=Bad</span>
-
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span>, <span class="va">rin</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">r</span>
-
-<span class="co">## Resample Result</span>
-<span class="co">## Task: GermanCredit</span>
-<span class="co">## Learner: classif.multinom.oversampled</span>
-<span class="co">## Aggr perf: credit.costs.test.mean=0.5530710,mmce.test.mean=0.3570067</span>
-<span class="co">## Runtime: 0.418571</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeUndersampleWrapper.html">makeOversampleWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, osw.rate <span class="op">=</span> <span class="va">w</span>, osw.cl <span class="op">=</span> <span class="st">"Bad"</span><span class="op">)</span></span>
+<span><span class="va">lrn</span></span>
+<span></span>
+<span><span class="co">## Learner classif.multinom.oversampled from package mlr,nnet</span></span>
+<span><span class="co">## Type: classif</span></span>
+<span><span class="co">## Name: ; Short name:</span></span>
+<span><span class="co">## Class: OversampleWrapper</span></span>
+<span><span class="co">## Properties: numerics,factors,weights,prob,twoclass,multiclass</span></span>
+<span><span class="co">## Predict-Type: response</span></span>
+<span><span class="co">## Hyperparameters: trace=FALSE,osw.rate=5,osw.cl=Bad</span></span>
+<span></span>
+<span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span>, <span class="va">rin</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">r</span></span>
+<span></span>
+<span><span class="co">## Resample Result</span></span>
+<span><span class="co">## Task: GermanCredit</span></span>
+<span><span class="co">## Learner: classif.multinom.oversampled</span></span>
+<span><span class="co">## Aggr perf: credit.costs.test.mean=0.5530710,mmce.test.mean=0.3570067</span></span>
+<span><span class="co">## Runtime: 0.418571</span></span></code></pre></div>
 <p>Of course, we can also tune the oversampling rate. For this purpose we again have to create an OversampleWrapper (<code><a href="../../reference/makeUndersampleWrapper.html">makeUndersampleWrapper()</a></code>). Optimal values for parameter <code>osw.rate</code> can be obtained using function <code><a href="../../reference/tuneParams.html">tuneParams()</a></code>.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeUndersampleWrapper.html">makeOversampleWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, osw.cl <span class="op">=</span> <span class="st">"Bad"</span><span class="op">)</span>
-<span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span><span class="fu">makeDiscreteParam</span><span class="op">(</span><span class="st">"osw.rate"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">7</span>, <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">tune.res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span>, <span class="va">rin</span>, par.set <span class="op">=</span> <span class="va">ps</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span>,
-  control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">tune.res</span>
-<span class="co">## Tune result:</span>
-<span class="co">## Op. pars: osw.rate=7</span>
-<span class="co">## credit.costs.test.mean=0.5219171,mmce.test.mean=0.3819928</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeUndersampleWrapper.html">makeOversampleWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, osw.cl <span class="op">=</span> <span class="st">"Bad"</span><span class="op">)</span></span>
+<span><span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span><span class="fu">makeDiscreteParam</span><span class="op">(</span><span class="st">"osw.rate"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">7</span>, <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">tune.res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">credit.task</span>, <span class="va">rin</span>, par.set <span class="op">=</span> <span class="va">ps</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">credit.costs</span>, <span class="va">mmce</span><span class="op">)</span>,</span>
+<span>  control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">tune.res</span></span>
+<span><span class="co">## Tune result:</span></span>
+<span><span class="co">## Op. pars: osw.rate=7</span></span>
+<span><span class="co">## credit.costs.test.mean=0.5219171,mmce.test.mean=0.3819928</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -595,17 +593,17 @@
 </tbody></table>
 <p>We start by creating the <code><a href="../../reference/Task.html">Task()</a></code>, the cost matrix and the corresponding performance measure.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Task</span>
-<span class="va">df</span> <span class="op">=</span> <span class="fu">mlbench</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mlbench/man/mlbench.waveform.html" class="external-link">mlbench.waveform</a></span><span class="op">(</span><span class="fl">500</span><span class="op">)</span>
-<span class="va">wf.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"waveform"</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, target <span class="op">=</span> <span class="st">"classes"</span><span class="op">)</span>
-
-<span class="co"># Cost matrix</span>
-<span class="va">costs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">30</span>, <span class="fl">0</span>, <span class="fl">8</span>, <span class="fl">80</span>, <span class="fl">4</span>, <span class="fl">0</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span><span class="op">(</span><span class="va">wf.task</span><span class="op">)</span>
-
-<span class="co"># Performance measure</span>
-<span class="va">wf.costs</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeCostMeasure.html">makeCostMeasure</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"wf.costs"</span>, name <span class="op">=</span> <span class="st">"Waveform costs"</span>, costs <span class="op">=</span> <span class="va">costs</span>,
-  best <span class="op">=</span> <span class="fl">0</span>, worst <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Task</span></span>
+<span><span class="va">df</span> <span class="op">=</span> <span class="fu">mlbench</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mlbench/man/mlbench.waveform.html" class="external-link">mlbench.waveform</a></span><span class="op">(</span><span class="fl">500</span><span class="op">)</span></span>
+<span><span class="va">wf.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"waveform"</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, target <span class="op">=</span> <span class="st">"classes"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Cost matrix</span></span>
+<span><span class="va">costs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">30</span>, <span class="fl">0</span>, <span class="fl">8</span>, <span class="fl">80</span>, <span class="fl">4</span>, <span class="fl">0</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span><span class="op">(</span><span class="va">wf.task</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Performance measure</span></span>
+<span><span class="va">wf.costs</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeCostMeasure.html">makeCostMeasure</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"wf.costs"</span>, name <span class="op">=</span> <span class="st">"Waveform costs"</span>, costs <span class="op">=</span> <span class="va">costs</span>,</span>
+<span>  best <span class="op">=</span> <span class="fl">0</span>, worst <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <p>In the multi-class case, both, <em>thresholding</em> and <em>rebalancing</em> correspond to cost matrices of a certain structure where <span class="math inline">\(c(k,l) = c(l)\)</span> for <span class="math inline">\(k\)</span>, <span class="math inline">\(l = 1, \ldots, K\)</span>, <span class="math inline">\(k \neq l\)</span>. This condition means that the cost of misclassifying an observation is independent of the predicted class label (see <a href="http://homes.cs.washington.edu/~pedrod/papers/kdd99.pdf" class="external-link">Domingos, 1999</a>). Given a cost matrix of this type, theoretical thresholds and weights can be derived in a similar manner as in the binary case. Obviously, the cost matrix given above does not have this special structure.</p>
 <div class="section level4">
 <h4 id="thresholding-1">1. Thresholding<a class="anchor" aria-label="anchor" href="#thresholding-1"></a>
@@ -613,49 +611,49 @@
 <p>Given a vector of positive threshold values as long as the number of classes <span class="math inline">\(K\)</span>, the predicted probabilities for all classes are adjusted by dividing them by the corresponding threshold value. Then the class with the highest adjusted probability is predicted. This way, as in the binary case, classes with a low threshold are preferred to classes with a larger threshold.</p>
 <p>Again this can be done by function <code><a href="../../reference/setThreshold.html">setThreshold()</a></code> as shown in the following example (or alternatively by the <code>predict.threshold</code> option of <code><a href="../../reference/makeLearner.html">makeLearner()</a></code>). Note that the threshold vector needs to have names that correspond to the class labels.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span>
-<span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span>, task <span class="op">=</span> <span class="va">wf.task</span><span class="op">)</span>
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">wf.task</span>, <span class="va">rin</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">wf.costs</span>, <span class="va">mmce</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">r</span>
-
-<span class="co">## Resample Result</span>
-<span class="co">## Task: waveform</span>
-<span class="co">## Learner: classif.rpart</span>
-<span class="co">## Aggr perf: wf.costs.test.mean=5.9764447,mmce.test.mean=0.2460020</span>
-<span class="co">## Runtime: 0.0586474</span>
-
-<span class="co"># Calculate thresholds as 1/(average costs of true classes)</span>
-<span class="va">th</span> <span class="op">=</span> <span class="fl">2</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">th</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span><span class="op">(</span><span class="va">wf.task</span><span class="op">)</span>
-<span class="va">th</span>
-
-<span class="co">##          1          2          3</span>
-<span class="co">## 0.01818182 0.22222222 0.11111111</span>
-
-<span class="va">pred.th</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setThreshold.html">setThreshold</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">pred</span>, threshold <span class="op">=</span> <span class="va">th</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred.th</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">wf.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co">##  wf.costs      mmce</span>
-<span class="co">## 4.6863021 0.2919823</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span></span>
+<span><span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span>, task <span class="op">=</span> <span class="va">wf.task</span><span class="op">)</span></span>
+<span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">wf.task</span>, <span class="va">rin</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">wf.costs</span>, <span class="va">mmce</span><span class="op">)</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">r</span></span>
+<span></span>
+<span><span class="co">## Resample Result</span></span>
+<span><span class="co">## Task: waveform</span></span>
+<span><span class="co">## Learner: classif.rpart</span></span>
+<span><span class="co">## Aggr perf: wf.costs.test.mean=5.9764447,mmce.test.mean=0.2460020</span></span>
+<span><span class="co">## Runtime: 0.0586474</span></span>
+<span></span>
+<span><span class="co"># Calculate thresholds as 1/(average costs of true classes)</span></span>
+<span><span class="va">th</span> <span class="op">=</span> <span class="fl">2</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">costs</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">th</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskClassLevels.html">getTaskClassLevels</a></span><span class="op">(</span><span class="va">wf.task</span><span class="op">)</span></span>
+<span><span class="va">th</span></span>
+<span></span>
+<span><span class="co">##          1          2          3</span></span>
+<span><span class="co">## 0.01818182 0.22222222 0.11111111</span></span>
+<span></span>
+<span><span class="va">pred.th</span> <span class="op">=</span> <span class="fu"><a href="../../reference/setThreshold.html">setThreshold</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">pred</span>, threshold <span class="op">=</span> <span class="va">th</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred.th</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">wf.costs</span>, <span class="va">mmce</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">##  wf.costs      mmce</span></span>
+<span><span class="co">## 4.6863021 0.2919823</span></span></code></pre></div>
 <p>The threshold vector <code>th</code> in the above example is chosen according to the average costs of the true classes 55, 4.5 and 9. More exactly, <code>th</code> corresponds to an artificial cost matrix of the structure mentioned above with off-diagonal elements <span class="math inline">\(c(2,1) = c(3,1) = 55\)</span>, <span class="math inline">\(c(1,2) = c(3,2) = 4.5\)</span> and <span class="math inline">\(c(1,3) = c(2,3) = 9\)</span>. This threshold vector may be not optimal but leads to smaller total costs on the data set than the default.</p>
 <div class="section level5">
 <h5 id="ii--empirical-thresholding-1">ii. Empirical thresholding<a class="anchor" aria-label="anchor" href="#ii--empirical-thresholding-1"></a>
 </h5>
 <p>As in the binary case it is possible to tune the threshold vector using function <code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code>. Since the scaling of the threshold vector does not change the predicted class labels <code><a href="../../reference/tuneThreshold.html">tuneThreshold()</a></code> returns threshold values that lie in [0,1] and sum to unity.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tune.res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneThreshold.html">tuneThreshold</a></span><span class="op">(</span>pred <span class="op">=</span> <span class="va">r</span><span class="op">$</span><span class="va">pred</span>, measure <span class="op">=</span> <span class="va">wf.costs</span><span class="op">)</span>
-<span class="va">tune.res</span>
-<span class="co">## $th</span>
-<span class="co">##          1          2          3 </span>
-<span class="co">## 0.04206368 0.47912405 0.47881227 </span>
-<span class="co">## </span>
-<span class="co">## $perf</span>
-<span class="co">## [1] 4.594</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">tune.res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneThreshold.html">tuneThreshold</a></span><span class="op">(</span>pred <span class="op">=</span> <span class="va">r</span><span class="op">$</span><span class="va">pred</span>, measure <span class="op">=</span> <span class="va">wf.costs</span><span class="op">)</span></span>
+<span><span class="va">tune.res</span></span>
+<span><span class="co">## $th</span></span>
+<span><span class="co">##          1          2          3 </span></span>
+<span><span class="co">## 0.04206368 0.47912405 0.47881227 </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $perf</span></span>
+<span><span class="co">## [1] 4.594</span></span></code></pre></div>
 <p>For comparison we show the standardized version of the theoretically motivated threshold vector chosen above.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">th</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">th</span><span class="op">)</span>
-<span class="co">##          1          2          3 </span>
-<span class="co">## 0.05172414 0.63218391 0.31609195</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">th</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">th</span><span class="op">)</span></span>
+<span><span class="co">##          1          2          3 </span></span>
+<span><span class="co">## 0.05172414 0.63218391 0.31609195</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level4">
@@ -666,18 +664,18 @@
 </h5>
 <p>In the multi-class case you have to pass a vector of weights as long as the number of classes <span class="math inline">\(K\)</span> to function <code><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper()</a></code>. The weight vector can be tuned using function <code><a href="../../reference/tuneParams.html">tuneParams()</a></code>.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span>
-
-<span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span><span class="fu">makeNumericVectorParam</span><span class="op">(</span><span class="st">"wcw.weight"</span>, len <span class="op">=</span> <span class="fl">3</span>, lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">tune.res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">wf.task</span>, resampling <span class="op">=</span> <span class="va">rin</span>, par.set <span class="op">=</span> <span class="va">ps</span>,
-  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">wf.costs</span>, <span class="va">mmce</span><span class="op">)</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">tune.res</span>
-<span class="co">## Tune result:</span>
-<span class="co">## Op. pars: wcw.weight=0.544,0.0852...</span>
-<span class="co">## wf.costs.test.mean=2.5099079,mmce.test.mean=0.2340379</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span><span class="fu">makeNumericVectorParam</span><span class="op">(</span><span class="st">"wcw.weight"</span>, len <span class="op">=</span> <span class="fl">3</span>, lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlRandom.html">makeTuneControlRandom</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tune.res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">wf.task</span>, resampling <span class="op">=</span> <span class="va">rin</span>, par.set <span class="op">=</span> <span class="va">ps</span>,</span>
+<span>  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">wf.costs</span>, <span class="va">mmce</span><span class="op">)</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">tune.res</span></span>
+<span><span class="co">## Tune result:</span></span>
+<span><span class="co">## Op. pars: wcw.weight=0.544,0.0852...</span></span>
+<span><span class="co">## wf.costs.test.mean=2.5099079,mmce.test.mean=0.2340379</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -687,25 +685,25 @@
 <p>In case of example-dependent costs we have to create a special <code><a href="../../reference/Task.html">Task()</a></code> via function <code><a href="../../reference/CostSensTask.html">makeCostSensTask()</a></code>. For this purpose the feature values <span class="math inline">\(x\)</span> and an <span class="math inline">\(n \times K\)</span> <code>cost</code> matrix that contains the cost vectors for all <span class="math inline">\(n\)</span> examples in the data set are required.</p>
 <p>We use the iris (<code><a href="https://rdrr.io/r/datasets/iris.html" class="external-link">datasets::iris()</a></code>) data and generate an artificial cost matrix (see <a href="https://doi.org/10.1145/1102351.1102358" class="external-link">Beygelzimer et al., 2005</a>).</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">=</span> <span class="va">iris</span>
-<span class="va">cost</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">150</span> <span class="op">*</span> <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">2000</span><span class="op">)</span>, <span class="fl">150</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span>, <span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">150</span>, <span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">cost</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">cost</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
-<span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">=</span> <span class="cn">NULL</span>
-
-<span class="va">costsens.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/CostSensTask.html">makeCostSensTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"iris"</span>, data <span class="op">=</span> <span class="va">df</span>, cost <span class="op">=</span> <span class="va">cost</span><span class="op">)</span>
-<span class="va">costsens.task</span>
-<span class="co">## Supervised task: iris</span>
-<span class="co">## Type: costsens</span>
-<span class="co">## Observations: 150</span>
-<span class="co">## Features:</span>
-<span class="co">##    numerics     factors     ordered functionals </span>
-<span class="co">##           4           0           0           0 </span>
-<span class="co">## Missings: FALSE</span>
-<span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span>
-<span class="co">## Classes: 3</span>
-<span class="co">## setosa, versicolor, virginica</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">=</span> <span class="va">iris</span></span>
+<span><span class="va">cost</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">150</span> <span class="op">*</span> <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">2000</span><span class="op">)</span>, <span class="fl">150</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span>, <span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">150</span>, <span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">cost</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">cost</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">=</span> <span class="cn">NULL</span></span>
+<span></span>
+<span><span class="va">costsens.task</span> <span class="op">=</span> <span class="fu"><a href="../../reference/CostSensTask.html">makeCostSensTask</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"iris"</span>, data <span class="op">=</span> <span class="va">df</span>, cost <span class="op">=</span> <span class="va">cost</span><span class="op">)</span></span>
+<span><span class="va">costsens.task</span></span>
+<span><span class="co">## Supervised task: iris</span></span>
+<span><span class="co">## Type: costsens</span></span>
+<span><span class="co">## Observations: 150</span></span>
+<span><span class="co">## Features:</span></span>
+<span><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span><span class="co">##           4           0           0           0 </span></span>
+<span><span class="co">## Missings: FALSE</span></span>
+<span><span class="co">## Has blocking: FALSE</span></span>
+<span><span class="co">## Has coordinates: FALSE</span></span>
+<span><span class="co">## Classes: 3</span></span>
+<span><span class="co">## setosa, versicolor, virginica</span></span></code></pre></div>
 <p><code>mlr</code> provides several <a href="wrapper.html" target="_blank">wrappers</a> to turn regular classification or regression methods into Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>)s that can deal with example-dependent costs.</p>
 <ul>
 <li>
@@ -717,61 +715,61 @@
 </ul>
 <p>In the following example we use the third method. We create the wrapped Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) and train it on the <code>CostSensTask</code>(<code><a href="../../reference/Task.html">Task()</a></code>) defined above.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeCostSensWeightedPairsWrapper.html">makeCostSensWeightedPairsWrapper</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span>
-<span class="va">lrn</span>
-<span class="co">## Learner costsens.classif.multinom from package nnet</span>
-<span class="co">## Type: costsens</span>
-<span class="co">## Name: ; Short name: </span>
-<span class="co">## Class: CostSensWeightedPairsWrapper</span>
-<span class="co">## Properties: twoclass,multiclass,numerics,factors</span>
-<span class="co">## Predict-Type: response</span>
-<span class="co">## Hyperparameters: trace=FALSE</span>
-
-<span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">costsens.task</span><span class="op">)</span>
-<span class="va">mod</span>
-<span class="co">## Model for learner.id=costsens.classif.multinom; learner.class=CostSensWeightedPairsWrapper</span>
-<span class="co">## Trained on: task.id = iris; obs = 150; features = 4</span>
-<span class="co">## Hyperparameters: trace=FALSE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.multinom"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeCostSensWeightedPairsWrapper.html">makeCostSensWeightedPairsWrapper</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span></span>
+<span><span class="va">lrn</span></span>
+<span><span class="co">## Learner costsens.classif.multinom from package nnet</span></span>
+<span><span class="co">## Type: costsens</span></span>
+<span><span class="co">## Name: ; Short name: </span></span>
+<span><span class="co">## Class: CostSensWeightedPairsWrapper</span></span>
+<span><span class="co">## Properties: twoclass,multiclass,numerics,factors</span></span>
+<span><span class="co">## Predict-Type: response</span></span>
+<span><span class="co">## Hyperparameters: trace=FALSE</span></span>
+<span></span>
+<span><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">costsens.task</span><span class="op">)</span></span>
+<span><span class="va">mod</span></span>
+<span><span class="co">## Model for learner.id=costsens.classif.multinom; learner.class=CostSensWeightedPairsWrapper</span></span>
+<span><span class="co">## Trained on: task.id = iris; obs = 150; features = 4</span></span>
+<span><span class="co">## Hyperparameters: trace=FALSE</span></span></code></pre></div>
 <p>The models corresponding to the individual pairs can be accessed by function <code><a href="../../reference/getLearnerModel.html">getLearnerModel()</a></code>.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
-<span class="co">## [[1]]</span>
-<span class="co">## Model for learner.id=classif.multinom; learner.class=classif.multinom</span>
-<span class="co">## Trained on: task.id = feats; obs = 150; features = 4</span>
-<span class="co">## Hyperparameters: trace=FALSE</span>
-<span class="co">## </span>
-<span class="co">## [[2]]</span>
-<span class="co">## Model for learner.id=classif.multinom; learner.class=classif.multinom</span>
-<span class="co">## Trained on: task.id = feats; obs = 150; features = 4</span>
-<span class="co">## Hyperparameters: trace=FALSE</span>
-<span class="co">## </span>
-<span class="co">## [[3]]</span>
-<span class="co">## Model for learner.id=classif.multinom; learner.class=classif.multinom</span>
-<span class="co">## Trained on: task.id = feats; obs = 150; features = 4</span>
-<span class="co">## Hyperparameters: trace=FALSE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span><span class="co">## [[1]]</span></span>
+<span><span class="co">## Model for learner.id=classif.multinom; learner.class=classif.multinom</span></span>
+<span><span class="co">## Trained on: task.id = feats; obs = 150; features = 4</span></span>
+<span><span class="co">## Hyperparameters: trace=FALSE</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## [[2]]</span></span>
+<span><span class="co">## Model for learner.id=classif.multinom; learner.class=classif.multinom</span></span>
+<span><span class="co">## Trained on: task.id = feats; obs = 150; features = 4</span></span>
+<span><span class="co">## Hyperparameters: trace=FALSE</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## [[3]]</span></span>
+<span><span class="co">## Model for learner.id=classif.multinom; learner.class=classif.multinom</span></span>
+<span><span class="co">## Trained on: task.id = feats; obs = 150; features = 4</span></span>
+<span><span class="co">## Hyperparameters: trace=FALSE</span></span></code></pre></div>
 <p><code>mlr</code> provides some performance measures for example-specific cost-sensitive classification. In the following example we calculate the mean costs of the predicted class labels (<a href="measures.html" target="_blank">meancosts</a>) and the misclassification penalty (<a href="measures.html" target="_blank">mcp</a>). The latter measure is the average difference between the costs caused by the predicted class labels, i.e., <a href="measures.html" target="_blank">meancosts</a>, and the costs resulting from choosing the class with lowest cost for each observation. In order to compute these measures the costs for the test observations are required and therefore the <code><a href="../../reference/Task.html">Task()</a></code> has to be passed to <code><a href="../../reference/performance.html">performance()</a></code>.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">costsens.task</span><span class="op">)</span>
-<span class="va">pred</span>
-
-<span class="co">## Prediction: 150 observations</span>
-<span class="co">## predict.type: response</span>
-<span class="co">## threshold:</span>
-<span class="co">## time: 0.04</span>
-<span class="co">##   id response</span>
-<span class="co">## 1  1   setosa</span>
-<span class="co">## 2  2   setosa</span>
-<span class="co">## 3  3   setosa</span>
-<span class="co">## 4  4   setosa</span>
-<span class="co">## 5  5   setosa</span>
-<span class="co">## 6  6   setosa</span>
-<span class="co">## ... (#rows: 150, #cols: 2)</span>
-
-<span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">meancosts</span>, <span class="va">mcp</span><span class="op">)</span>, task <span class="op">=</span> <span class="va">costsens.task</span><span class="op">)</span>
-
-<span class="co">## meancosts       mcp</span>
-<span class="co">##  129.5971  124.8077</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pred</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, task <span class="op">=</span> <span class="va">costsens.task</span><span class="op">)</span></span>
+<span><span class="va">pred</span></span>
+<span></span>
+<span><span class="co">## Prediction: 150 observations</span></span>
+<span><span class="co">## predict.type: response</span></span>
+<span><span class="co">## threshold:</span></span>
+<span><span class="co">## time: 0.04</span></span>
+<span><span class="co">##   id response</span></span>
+<span><span class="co">## 1  1   setosa</span></span>
+<span><span class="co">## 2  2   setosa</span></span>
+<span><span class="co">## 3  3   setosa</span></span>
+<span><span class="co">## 4  4   setosa</span></span>
+<span><span class="co">## 5  5   setosa</span></span>
+<span><span class="co">## 6  6   setosa</span></span>
+<span><span class="co">## ... (#rows: 150, #cols: 2)</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/performance.html">performance</a></span><span class="op">(</span><span class="va">pred</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">meancosts</span>, <span class="va">mcp</span><span class="op">)</span>, task <span class="op">=</span> <span class="va">costsens.task</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## meancosts       mcp</span></span>
+<span><span class="co">##  129.5971  124.8077</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -786,7 +784,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

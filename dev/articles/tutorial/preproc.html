@@ -14,10 +14,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
 <script src="../../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../../deps/_Roboto-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
-<link href="../../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet">
+<link href="../../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="../../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Data Preprocessing">
@@ -163,7 +163,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../../logo.png" class="logo" alt=""><h1>Data Preprocessing</h1>
             
       
@@ -235,84 +235,84 @@
 </ul>
 <p>For example the following call to <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">preProcess</a></span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"knnImpute"</span>, <span class="st">"pca"</span><span class="op">)</span>, pcaComp <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">preProcess</a></span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"knnImpute"</span>, <span class="st">"pca"</span><span class="op">)</span>, pcaComp <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <p>with <code>x</code> being a <code>matrix</code> or <code>data.frame</code> would thus translate into</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span><span class="op">(</span><span class="va">learner</span>, ppc.knnImpute <span class="op">=</span> <span class="cn">TRUE</span>, ppc.pca <span class="op">=</span> <span class="cn">TRUE</span>, ppc.pcaComp <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span><span class="op">(</span><span class="va">learner</span>, ppc.knnImpute <span class="op">=</span> <span class="cn">TRUE</span>, ppc.pca <span class="op">=</span> <span class="cn">TRUE</span>, ppc.pcaComp <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <p>where <code>learner</code> is a <code>mlr</code> Learner (<code><a href="../../reference/makeLearner.html">makeLearner()</a></code>) or the name of a learner class like <code>"classif.lda"</code>.</p>
 <p>If you enable multiple preprocessing options (like knn imputation and principal component analysis above) these are executed in a certain order detailed on the help page of function <code><a href="https://rdrr.io/pkg/caret/man/preProcess.html" class="external-link">caret::preProcess()</a></code>.</p>
 <p>In the following we show an example where principal components analysis (PCA) is used for dimensionality reduction. This should never be applied blindly, but can be beneficial with learners that get problems with high dimensionality or those that can profit from rotating the data.</p>
 <p>We consider the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>, which poses a binary classification problem with 208 observations and 60 features.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sonar.task</span>
-<span class="co">## Supervised task: Sonar-example</span>
-<span class="co">## Type: classif</span>
-<span class="co">## Target: Class</span>
-<span class="co">## Observations: 208</span>
-<span class="co">## Features:</span>
-<span class="co">##    numerics     factors     ordered functionals </span>
-<span class="co">##          60           0           0           0 </span>
-<span class="co">## Missings: FALSE</span>
-<span class="co">## Has weights: FALSE</span>
-<span class="co">## Has blocking: FALSE</span>
-<span class="co">## Has coordinates: FALSE</span>
-<span class="co">## Classes: 2</span>
-<span class="co">##   M   R </span>
-<span class="co">## 111  97 </span>
-<span class="co">## Positive class: M</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">sonar.task</span></span>
+<span><span class="co">## Supervised task: Sonar-example</span></span>
+<span><span class="co">## Type: classif</span></span>
+<span><span class="co">## Target: Class</span></span>
+<span><span class="co">## Observations: 208</span></span>
+<span><span class="co">## Features:</span></span>
+<span><span class="co">##    numerics     factors     ordered functionals </span></span>
+<span><span class="co">##          60           0           0           0 </span></span>
+<span><span class="co">## Missings: FALSE</span></span>
+<span><span class="co">## Has weights: FALSE</span></span>
+<span><span class="co">## Has blocking: FALSE</span></span>
+<span><span class="co">## Has coordinates: FALSE</span></span>
+<span><span class="co">## Classes: 2</span></span>
+<span><span class="co">##   M   R </span></span>
+<span><span class="co">## 111  97 </span></span>
+<span><span class="co">## Positive class: M</span></span></code></pre></div>
 <p>Below we fuse quadratic discriminant analysis (<code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code>) from package <code>MASS</code> with a principal components preprocessing step. The threshold is set to 0.9, i.e., the principal components necessary to explain a cumulative percentage of 90% of the total variance are kept. The data are automatically standardized prior to PCA.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, ppc.pca <span class="op">=</span> <span class="cn">TRUE</span>, ppc.thresh <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span>
-<span class="va">lrn</span>
-<span class="co">## Learner classif.qda.preproc from package MASS</span>
-<span class="co">## Type: classif</span>
-<span class="co">## Name: ; Short name: </span>
-<span class="co">## Class: PreprocWrapperCaret</span>
-<span class="co">## Properties: twoclass,multiclass,numerics,factors,prob</span>
-<span class="co">## Predict-Type: response</span>
-<span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapperCaret.html">makePreprocWrapperCaret</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, ppc.pca <span class="op">=</span> <span class="cn">TRUE</span>, ppc.thresh <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span>
+<span><span class="va">lrn</span></span>
+<span><span class="co">## Learner classif.qda.preproc from package MASS</span></span>
+<span><span class="co">## Type: classif</span></span>
+<span><span class="co">## Name: ; Short name: </span></span>
+<span><span class="co">## Class: PreprocWrapperCaret</span></span>
+<span><span class="co">## Properties: twoclass,multiclass,numerics,factors,prob</span></span>
+<span><span class="co">## Predict-Type: response</span></span>
+<span><span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span></span></code></pre></div>
 <p>The wrapped learner is trained on the <code><a href="../../reference/sonar.task.html">sonar.task()</a></code>. By inspecting the underlying <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> model, we see that the first 22 principal components have been used for training.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span><span class="op">)</span>
-<span class="va">mod</span>
-<span class="co">## Model for learner.id=classif.qda.preproc; learner.class=PreprocWrapperCaret</span>
-<span class="co">## Trained on: task.id = Sonar-example; obs = 208; features = 60</span>
-<span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span>
-
-<span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
-<span class="co">## Model for learner.id=classif.qda; learner.class=classif.qda</span>
-<span class="co">## Trained on: task.id = Sonar-example; obs = 208; features = 22</span>
-<span class="co">## Hyperparameters:</span>
-
-<span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">mod</span>, more.unwrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">## Call:</span>
-<span class="co">## qda(f, data = getTaskData(.task, .subset, recode.target = "drop.levels"))</span>
-<span class="co">## </span>
-<span class="co">## Prior probabilities of groups:</span>
-<span class="co">##         M         R </span>
-<span class="co">## 0.5336538 0.4663462 </span>
-<span class="co">## </span>
-<span class="co">## Group means:</span>
-<span class="co">##          PC1        PC2        PC3         PC4         PC5         PC6</span>
-<span class="co">## M  0.5976122 -0.8058235  0.9773518  0.03794232 -0.04568166 -0.06721702</span>
-<span class="co">## R -0.6838655  0.9221279 -1.1184128 -0.04341853  0.05227489  0.07691845</span>
-<span class="co">##          PC7         PC8        PC9       PC10        PC11          PC12</span>
-<span class="co">## M  0.2278162 -0.01034406 -0.2530606 -0.1793157 -0.04084466 -0.0004789888</span>
-<span class="co">## R -0.2606969  0.01183702  0.2895848  0.2051963  0.04673977  0.0005481212</span>
-<span class="co">##          PC13       PC14        PC15        PC16        PC17        PC18</span>
-<span class="co">## M -0.06138758 -0.1057137  0.02808048  0.05215865 -0.07453265  0.03869042</span>
-<span class="co">## R  0.07024765  0.1209713 -0.03213333 -0.05968671  0.08528994 -0.04427460</span>
-<span class="co">##          PC19         PC20        PC21         PC22</span>
-<span class="co">## M -0.01192247  0.006098658  0.01263492 -0.001224809</span>
-<span class="co">## R  0.01364323 -0.006978877 -0.01445851  0.001401586</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span><span class="op">)</span></span>
+<span><span class="va">mod</span></span>
+<span><span class="co">## Model for learner.id=classif.qda.preproc; learner.class=PreprocWrapperCaret</span></span>
+<span><span class="co">## Trained on: task.id = Sonar-example; obs = 208; features = 60</span></span>
+<span><span class="co">## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=FALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut=19,ppc.uniqueCut=10</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+<span><span class="co">## Model for learner.id=classif.qda; learner.class=classif.qda</span></span>
+<span><span class="co">## Trained on: task.id = Sonar-example; obs = 208; features = 22</span></span>
+<span><span class="co">## Hyperparameters:</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/getLearnerModel.html">getLearnerModel</a></span><span class="op">(</span><span class="va">mod</span>, more.unwrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">## Call:</span></span>
+<span><span class="co">## qda(f, data = getTaskData(.task, .subset, recode.target = "drop.levels"))</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Prior probabilities of groups:</span></span>
+<span><span class="co">##         M         R </span></span>
+<span><span class="co">## 0.5336538 0.4663462 </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Group means:</span></span>
+<span><span class="co">##          PC1        PC2        PC3         PC4         PC5         PC6</span></span>
+<span><span class="co">## M  0.5976122 -0.8058235  0.9773518  0.03794232 -0.04568166 -0.06721702</span></span>
+<span><span class="co">## R -0.6838655  0.9221279 -1.1184128 -0.04341853  0.05227489  0.07691845</span></span>
+<span><span class="co">##          PC7         PC8        PC9       PC10        PC11          PC12</span></span>
+<span><span class="co">## M  0.2278162 -0.01034406 -0.2530606 -0.1793157 -0.04084466 -0.0004789888</span></span>
+<span><span class="co">## R -0.2606969  0.01183702  0.2895848  0.2051963  0.04673977  0.0005481212</span></span>
+<span><span class="co">##          PC13       PC14        PC15        PC16        PC17        PC18</span></span>
+<span><span class="co">## M -0.06138758 -0.1057137  0.02808048  0.05215865 -0.07453265  0.03869042</span></span>
+<span><span class="co">## R  0.07024765  0.1209713 -0.03213333 -0.05968671  0.08528994 -0.04427460</span></span>
+<span><span class="co">##          PC19         PC20        PC21         PC22</span></span>
+<span><span class="co">## M -0.01192247  0.006098658  0.01263492 -0.001224809</span></span>
+<span><span class="co">## R  0.01364323 -0.006978877 -0.01445851  0.001401586</span></span></code></pre></div>
 <p>Below the performances of <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> with and without PCA preprocessing are compared in a <a href="benchmark_experiments.html" target="_blank">benchmark experiment</a>. Note that we use stratified resampling to prevent errors in <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> due to a too small number of observations from either class.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span>, stratify <span class="op">=</span> <span class="cn">TRUE</span>, task <span class="op">=</span> <span class="va">sonar.task</span><span class="op">)</span>
-<span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, <span class="va">lrn</span><span class="op">)</span>, <span class="va">sonar.task</span>, <span class="va">rin</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">res</span>
-<span class="co">##         task.id          learner.id mmce.test.mean</span>
-<span class="co">## 1 Sonar-example         classif.qda      0.2932367</span>
-<span class="co">## 2 Sonar-example classif.qda.preproc      0.1779848</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rin</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleInstance.html">makeResampleInstance</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span>, stratify <span class="op">=</span> <span class="cn">TRUE</span>, task <span class="op">=</span> <span class="va">sonar.task</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/benchmark.html">benchmark</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"classif.qda"</span>, <span class="va">lrn</span><span class="op">)</span>, <span class="va">sonar.task</span>, <span class="va">rin</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">res</span></span>
+<span><span class="co">##         task.id          learner.id mmce.test.mean</span></span>
+<span><span class="co">## 1 Sonar-example         classif.qda      0.2932367</span></span>
+<span><span class="co">## 2 Sonar-example classif.qda.preproc      0.1779848</span></span></code></pre></div>
 <p>PCA preprocessing in this case turns out to be really beneficial for the performance of Quadratic Discriminant Analysis.</p>
 <div class="section level3">
 <h3 id="joint-tuning-of-preprocessing-options-and-learner-parameters">Joint tuning of preprocessing options and learner parameters<a class="anchor" aria-label="anchor" href="#joint-tuning-of-preprocessing-options-and-learner-parameters"></a>
@@ -320,102 +320,102 @@
 <p>Let’s see if we can optimize this a bit. The threshold value of 0.9 above was chosen arbitrarily and led to 22 out of 60 principal components. But maybe a lower or higher number of principal components should be used. Moreover, <code>qda</code> (<code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code>) has several options that control how the class covariance matrices or class probabilities are estimated.</p>
 <p>Those preprocessing and learner parameters can be <a href="tune.html" target="_blank">tuned</a> jointly. Before doing this let’s first get an overview of all the parameters of the wrapped learner using function <code><a href="../../reference/getParamSet.html">getParamSet()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span>
-<span class="co">##                      Type len     Def                      Constr Req Tunable</span>
-<span class="co">## ppc.BoxCox        logical   -   FALSE                           -   -    TRUE</span>
-<span class="co">## ppc.YeoJohnson    logical   -   FALSE                           -   -    TRUE</span>
-<span class="co">## ppc.expoTrans     logical   -   FALSE                           -   -    TRUE</span>
-<span class="co">## ppc.center        logical   -    TRUE                           -   -    TRUE</span>
-<span class="co">## ppc.scale         logical   -    TRUE                           -   -    TRUE</span>
-<span class="co">## ppc.range         logical   -   FALSE                           -   -    TRUE</span>
-<span class="co">## ppc.knnImpute     logical   -   FALSE                           -   -    TRUE</span>
-<span class="co">## ppc.bagImpute     logical   -   FALSE                           -   -    TRUE</span>
-<span class="co">## ppc.medianImpute  logical   -   FALSE                           -   -    TRUE</span>
-<span class="co">## ppc.pca           logical   -   FALSE                           -   -    TRUE</span>
-<span class="co">## ppc.ica           logical   -   FALSE                           -   -    TRUE</span>
-<span class="co">## ppc.spatialSign   logical   -   FALSE                           -   -    TRUE</span>
-<span class="co">## ppc.corr          logical   -   FALSE                           -   -    TRUE</span>
-<span class="co">## ppc.zv            logical   -   FALSE                           -   -    TRUE</span>
-<span class="co">## ppc.nzv           logical   -   FALSE                           -   -    TRUE</span>
-<span class="co">## ppc.thresh        numeric   -    0.95                    0 to Inf   -    TRUE</span>
-<span class="co">## ppc.pcaComp       integer   -       -                    1 to Inf   -    TRUE</span>
-<span class="co">## ppc.na.remove     logical   -    TRUE                           -   -    TRUE</span>
-<span class="co">## ppc.k             integer   -       5                    1 to Inf   -    TRUE</span>
-<span class="co">## ppc.fudge         numeric   -     0.2                    0 to Inf   -    TRUE</span>
-<span class="co">## ppc.numUnique     integer   -       3                    1 to Inf   -    TRUE</span>
-<span class="co">## ppc.n.comp        integer   -       -                    1 to Inf   -    TRUE</span>
-<span class="co">## ppc.cutoff        numeric   -     0.9                      0 to 1   -    TRUE</span>
-<span class="co">## ppc.freqCut       numeric   -      19                    1 to Inf   -    TRUE</span>
-<span class="co">## ppc.uniqueCut     numeric   -      10                    0 to Inf   -    TRUE</span>
-<span class="co">## method           discrete   -  moment            moment,mle,mve,t   -    TRUE</span>
-<span class="co">## nu                numeric   -       5                    2 to Inf   Y    TRUE</span>
-<span class="co">## predict.method   discrete   - plug-in plug-in,predictive,debiased   -    TRUE</span>
-<span class="co">##                  Trafo</span>
-<span class="co">## ppc.BoxCox           -</span>
-<span class="co">## ppc.YeoJohnson       -</span>
-<span class="co">## ppc.expoTrans        -</span>
-<span class="co">## ppc.center           -</span>
-<span class="co">## ppc.scale            -</span>
-<span class="co">## ppc.range            -</span>
-<span class="co">## ppc.knnImpute        -</span>
-<span class="co">## ppc.bagImpute        -</span>
-<span class="co">## ppc.medianImpute     -</span>
-<span class="co">## ppc.pca              -</span>
-<span class="co">## ppc.ica              -</span>
-<span class="co">## ppc.spatialSign      -</span>
-<span class="co">## ppc.corr             -</span>
-<span class="co">## ppc.zv               -</span>
-<span class="co">## ppc.nzv              -</span>
-<span class="co">## ppc.thresh           -</span>
-<span class="co">## ppc.pcaComp          -</span>
-<span class="co">## ppc.na.remove        -</span>
-<span class="co">## ppc.k                -</span>
-<span class="co">## ppc.fudge            -</span>
-<span class="co">## ppc.numUnique        -</span>
-<span class="co">## ppc.n.comp           -</span>
-<span class="co">## ppc.cutoff           -</span>
-<span class="co">## ppc.freqCut          -</span>
-<span class="co">## ppc.uniqueCut        -</span>
-<span class="co">## method               -</span>
-<span class="co">## nu                   -</span>
-<span class="co">## predict.method       -</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span></span>
+<span><span class="co">##                      Type len     Def                      Constr Req Tunable</span></span>
+<span><span class="co">## ppc.BoxCox        logical   -   FALSE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.YeoJohnson    logical   -   FALSE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.expoTrans     logical   -   FALSE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.center        logical   -    TRUE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.scale         logical   -    TRUE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.range         logical   -   FALSE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.knnImpute     logical   -   FALSE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.bagImpute     logical   -   FALSE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.medianImpute  logical   -   FALSE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.pca           logical   -   FALSE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.ica           logical   -   FALSE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.spatialSign   logical   -   FALSE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.corr          logical   -   FALSE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.zv            logical   -   FALSE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.nzv           logical   -   FALSE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.thresh        numeric   -    0.95                    0 to Inf   -    TRUE</span></span>
+<span><span class="co">## ppc.pcaComp       integer   -       -                    1 to Inf   -    TRUE</span></span>
+<span><span class="co">## ppc.na.remove     logical   -    TRUE                           -   -    TRUE</span></span>
+<span><span class="co">## ppc.k             integer   -       5                    1 to Inf   -    TRUE</span></span>
+<span><span class="co">## ppc.fudge         numeric   -     0.2                    0 to Inf   -    TRUE</span></span>
+<span><span class="co">## ppc.numUnique     integer   -       3                    1 to Inf   -    TRUE</span></span>
+<span><span class="co">## ppc.n.comp        integer   -       -                    1 to Inf   -    TRUE</span></span>
+<span><span class="co">## ppc.cutoff        numeric   -     0.9                      0 to 1   -    TRUE</span></span>
+<span><span class="co">## ppc.freqCut       numeric   -      19                    1 to Inf   -    TRUE</span></span>
+<span><span class="co">## ppc.uniqueCut     numeric   -      10                    0 to Inf   -    TRUE</span></span>
+<span><span class="co">## method           discrete   -  moment            moment,mle,mve,t   -    TRUE</span></span>
+<span><span class="co">## nu                numeric   -       5                    2 to Inf   Y    TRUE</span></span>
+<span><span class="co">## predict.method   discrete   - plug-in plug-in,predictive,debiased   -    TRUE</span></span>
+<span><span class="co">##                  Trafo</span></span>
+<span><span class="co">## ppc.BoxCox           -</span></span>
+<span><span class="co">## ppc.YeoJohnson       -</span></span>
+<span><span class="co">## ppc.expoTrans        -</span></span>
+<span><span class="co">## ppc.center           -</span></span>
+<span><span class="co">## ppc.scale            -</span></span>
+<span><span class="co">## ppc.range            -</span></span>
+<span><span class="co">## ppc.knnImpute        -</span></span>
+<span><span class="co">## ppc.bagImpute        -</span></span>
+<span><span class="co">## ppc.medianImpute     -</span></span>
+<span><span class="co">## ppc.pca              -</span></span>
+<span><span class="co">## ppc.ica              -</span></span>
+<span><span class="co">## ppc.spatialSign      -</span></span>
+<span><span class="co">## ppc.corr             -</span></span>
+<span><span class="co">## ppc.zv               -</span></span>
+<span><span class="co">## ppc.nzv              -</span></span>
+<span><span class="co">## ppc.thresh           -</span></span>
+<span><span class="co">## ppc.pcaComp          -</span></span>
+<span><span class="co">## ppc.na.remove        -</span></span>
+<span><span class="co">## ppc.k                -</span></span>
+<span><span class="co">## ppc.fudge            -</span></span>
+<span><span class="co">## ppc.numUnique        -</span></span>
+<span><span class="co">## ppc.n.comp           -</span></span>
+<span><span class="co">## ppc.cutoff           -</span></span>
+<span><span class="co">## ppc.freqCut          -</span></span>
+<span><span class="co">## ppc.uniqueCut        -</span></span>
+<span><span class="co">## method               -</span></span>
+<span><span class="co">## nu                   -</span></span>
+<span><span class="co">## predict.method       -</span></span></code></pre></div>
 <p>The parameters prefixed by <code>ppc.</code> belong to preprocessing. <code>method</code>, <code>nu</code> and <code>predict.method</code> are <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> parameters.</p>
 <p>Instead of tuning the PCA threshold (<code>ppc.thresh</code>) we tune the number of principal components (<code>ppc.pcaComp</code>) directly. Moreover, for <code><a href="https://rdrr.io/pkg/MASS/man/qda.html" class="external-link">MASS::qda()</a></code> we try two different ways to estimate the posterior probabilities (parameter <code>predict.method</code>): the usual plug-in estimates and unbiased estimates.</p>
 <p>We perform a grid search and set the resolution to 10. This is for demonstration. You might want to use a finer resolution.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeIntegerParam</a></span><span class="op">(</span><span class="st">"ppc.pcaComp"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span><span class="op">(</span><span class="va">sonar.task</span><span class="op">)</span><span class="op">)</span>,
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"predict.method"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plug-in"</span>, <span class="st">"debiased"</span><span class="op">)</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span>resolution <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-<span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span>, <span class="va">rin</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">res</span>
-<span class="co">## Tune result:</span>
-<span class="co">## Op. pars: ppc.pcaComp=21; predict.method=plug-in</span>
-<span class="co">## mmce.test.mean=0.1779848</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
-<span class="co">##    ppc.pcaComp predict.method mmce.test.mean</span>
-<span class="co">## 1            1        plug-in      0.4518288</span>
-<span class="co">## 2            8        plug-in      0.2449275</span>
-<span class="co">## 3           14        plug-in      0.2021394</span>
-<span class="co">## 4           21        plug-in      0.1779848</span>
-<span class="co">## 5           27        plug-in      0.2212560</span>
-<span class="co">## 6           34        plug-in      0.2452726</span>
-<span class="co">## 7           40        plug-in      0.2500345</span>
-<span class="co">## 8           47        plug-in      0.2452726</span>
-<span class="co">## 9           53        plug-in      0.2549344</span>
-<span class="co">## 10          60        plug-in      0.2932367</span>
-<span class="co">## 11           1       debiased      0.4375431</span>
-<span class="co">## 12           8       debiased      0.2833678</span>
-<span class="co">## 13          14       debiased      0.2453416</span>
-<span class="co">## 14          21       debiased      0.2837129</span>
-<span class="co">## 15          27       debiased      0.2547274</span>
-<span class="co">## 16          34       debiased      0.2886128</span>
-<span class="co">## 17          40       debiased      0.2741891</span>
-<span class="co">## 18          47       debiased      0.3075914</span>
-<span class="co">## 19          53       debiased      0.2642512</span>
-<span class="co">## 20          60       debiased      0.2830918</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeIntegerParam</a></span><span class="op">(</span><span class="st">"ppc.pcaComp"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fu"><a href="../../reference/getTaskNFeats.html">getTaskNFeats</a></span><span class="op">(</span><span class="va">sonar.task</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"predict.method"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plug-in"</span>, <span class="st">"debiased"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span>resolution <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span>, <span class="va">rin</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">res</span></span>
+<span><span class="co">## Tune result:</span></span>
+<span><span class="co">## Op. pars: ppc.pcaComp=21; predict.method=plug-in</span></span>
+<span><span class="co">## mmce.test.mean=0.1779848</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span><span class="co">##    ppc.pcaComp predict.method mmce.test.mean</span></span>
+<span><span class="co">## 1            1        plug-in      0.4518288</span></span>
+<span><span class="co">## 2            8        plug-in      0.2449275</span></span>
+<span><span class="co">## 3           14        plug-in      0.2021394</span></span>
+<span><span class="co">## 4           21        plug-in      0.1779848</span></span>
+<span><span class="co">## 5           27        plug-in      0.2212560</span></span>
+<span><span class="co">## 6           34        plug-in      0.2452726</span></span>
+<span><span class="co">## 7           40        plug-in      0.2500345</span></span>
+<span><span class="co">## 8           47        plug-in      0.2452726</span></span>
+<span><span class="co">## 9           53        plug-in      0.2549344</span></span>
+<span><span class="co">## 10          60        plug-in      0.2932367</span></span>
+<span><span class="co">## 11           1       debiased      0.4375431</span></span>
+<span><span class="co">## 12           8       debiased      0.2833678</span></span>
+<span><span class="co">## 13          14       debiased      0.2453416</span></span>
+<span><span class="co">## 14          21       debiased      0.2837129</span></span>
+<span><span class="co">## 15          27       debiased      0.2547274</span></span>
+<span><span class="co">## 16          34       debiased      0.2886128</span></span>
+<span><span class="co">## 17          40       debiased      0.2741891</span></span>
+<span><span class="co">## 18          47       debiased      0.3075914</span></span>
+<span><span class="co">## 19          53       debiased      0.2642512</span></span>
+<span><span class="co">## 20          60       debiased      0.2830918</span></span></code></pre></div>
 <p>There seems to be a preference for a lower number of principal components (&lt;27) for both <code>"plug-in"</code> and <code>"debiased"</code> with <code>"plug-in"</code> achieving slightly lower error rates.</p>
 </div>
 </div>
@@ -443,27 +443,27 @@
 <p><code>args</code> contains the <code>center</code> and <code>scale</code> arguments of function <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">base::scale()</a></code> and slot <code>$control</code> stores the scaling parameters to be used in the prediction stage.</p>
 <p>Regarding the latter note that the <code>center</code> and <code>scale</code> arguments of <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">base::scale()</a></code> can be either a logical value or a numeric vector of length equal to the number of the numeric columns in <code>data</code>, respectively. If a logical value was passed to <code>args</code> we store the column means and standard deviations/root mean squares in the <code>$center</code> and <code>$scale</code> slots of the returned <code>$control</code> object.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">trainfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">center</span>, <span class="va">scale</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="co"># Identify numerical features</span>
-  <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-  <span class="va">nums</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span>, <span class="va">target</span><span class="op">)</span>
-  <span class="co"># Extract numerical features from the data set and call scale</span>
-  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
-  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
-  <span class="co"># Store the scaling parameters in control</span>
-  <span class="co"># These are needed to preprocess the data before prediction</span>
-  <span class="va">control</span> <span class="op">=</span> <span class="va">args</span>
-  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">control</span><span class="op">$</span><span class="va">center</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:center"</span><span class="op">)</span>
-  <span class="op">}</span>
-  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">control</span><span class="op">$</span><span class="va">scale</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:scale"</span><span class="op">)</span>
-  <span class="op">}</span>
-  <span class="co"># Recombine the data</span>
-  <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
-  <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span>, control <span class="op">=</span> <span class="va">control</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">trainfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">center</span>, <span class="va">scale</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># Identify numerical features</span></span>
+<span>  <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span>  <span class="va">nums</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span>, <span class="va">target</span><span class="op">)</span></span>
+<span>  <span class="co"># Extract numerical features from the data set and call scale</span></span>
+<span>  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span></span>
+<span>  <span class="co"># Store the scaling parameters in control</span></span>
+<span>  <span class="co"># These are needed to preprocess the data before prediction</span></span>
+<span>  <span class="va">control</span> <span class="op">=</span> <span class="va">args</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">control</span><span class="op">$</span><span class="va">center</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:center"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">control</span><span class="op">$</span><span class="va">scale</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:scale"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="co"># Recombine the data</span></span>
+<span>  <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
+<span>  <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span>, control <span class="op">=</span> <span class="va">control</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="specifying-the-predict-function">Specifying the predict function<a class="anchor" aria-label="anchor" href="#specifying-the-predict-function"></a>
@@ -482,18 +482,18 @@
 <p>It returns the preprocessed data.</p>
 <p>In our scaling example the <em>predict</em> function scales the numerical features using the parameters from the training stage stored in <code>control</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">predictfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span>, <span class="va">control</span><span class="op">)</span> <span class="op">{</span>
-  <span class="co"># Identify numerical features</span>
-  <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-  <span class="va">nums</span> <span class="op">=</span> <span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span>
-  <span class="co"># Extract numerical features from the data set and call scale</span>
-  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
-  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
-  <span class="co"># Recombine the data</span>
-  <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
-  <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">predictfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span>, <span class="va">control</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># Identify numerical features</span></span>
+<span>  <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span>  <span class="va">nums</span> <span class="op">=</span> <span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span></span>
+<span>  <span class="co"># Extract numerical features from the data set and call scale</span></span>
+<span>  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span></span>
+<span>  <span class="co"># Recombine the data</span></span>
+<span>  <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
+<span>  <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="creating-the-preprocessing-wrapper">Creating the preprocessing wrapper<a class="anchor" aria-label="anchor" href="#creating-the-preprocessing-wrapper"></a>
@@ -501,39 +501,39 @@
 <p>Below we create a preprocessing wrapper with a regression neural network (<code><a href="https://rdrr.io/pkg/nnet/man/nnet.html" class="external-link">nnet::nnet()</a></code>) (which itself does not have a scaling option) as base learner.</p>
 <p>The <em>train</em> and <em>predict</em> functions defined above are passed to <code><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper()</a></code> via the <code>train</code> and <code>predict</code> arguments. <code>par.vals</code> is a <code>list</code> of parameter values that is relayed to the <code>args</code> argument of the <em>train</em> function.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.nnet"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span>, decay <span class="op">=</span> <span class="fl">1e-02</span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, train <span class="op">=</span> <span class="va">trainfun</span>, predict <span class="op">=</span> <span class="va">predictfun</span>,
-  par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-<span class="va">lrn</span>
-<span class="co">## Learner regr.nnet.preproc from package nnet</span>
-<span class="co">## Type: regr</span>
-<span class="co">## Name: ; Short name: </span>
-<span class="co">## Class: PreprocWrapper</span>
-<span class="co">## Properties: numerics,factors,weights</span>
-<span class="co">## Predict-Type: response</span>
-<span class="co">## Hyperparameters: size=3,trace=FALSE,decay=0.01</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.nnet"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span>, decay <span class="op">=</span> <span class="fl">1e-02</span><span class="op">)</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, train <span class="op">=</span> <span class="va">trainfun</span>, predict <span class="op">=</span> <span class="va">predictfun</span>,</span>
+<span>  par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">lrn</span></span>
+<span><span class="co">## Learner regr.nnet.preproc from package nnet</span></span>
+<span><span class="co">## Type: regr</span></span>
+<span><span class="co">## Name: ; Short name: </span></span>
+<span><span class="co">## Class: PreprocWrapper</span></span>
+<span><span class="co">## Properties: numerics,factors,weights</span></span>
+<span><span class="co">## Predict-Type: response</span></span>
+<span><span class="co">## Hyperparameters: size=3,trace=FALSE,decay=0.01</span></span></code></pre></div>
 <p>Let’s compare the cross-validated mean squared error (<a href="measures.html" target="_blank">mse</a>) on the Boston Housing data set (<code><a href="https://rdrr.io/pkg/mlbench/man/BostonHousing.html" class="external-link">mlbench::BostonHousing()</a></code>) with and without scaling.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">bh.task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">r</span>
-
-<span class="co">## Resample Result</span>
-<span class="co">## Task: BostonHousing-example</span>
-<span class="co">## Learner: regr.nnet.preproc</span>
-<span class="co">## Aggr perf: mse.test.mean=26.6997095</span>
-<span class="co">## Runtime: 0.083282</span>
-
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.nnet"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span>, decay <span class="op">=</span> <span class="fl">1e-02</span><span class="op">)</span>
-<span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">bh.task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">r</span>
-
-<span class="co">## Resample Result</span>
-<span class="co">## Task: BostonHousing-example</span>
-<span class="co">## Learner: regr.nnet</span>
-<span class="co">## Aggr perf: mse.test.mean=56.8645496</span>
-<span class="co">## Runtime: 0.0463462</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">bh.task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">r</span></span>
+<span></span>
+<span><span class="co">## Resample Result</span></span>
+<span><span class="co">## Task: BostonHousing-example</span></span>
+<span><span class="co">## Learner: regr.nnet.preproc</span></span>
+<span><span class="co">## Aggr perf: mse.test.mean=26.6997095</span></span>
+<span><span class="co">## Runtime: 0.083282</span></span>
+<span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.nnet"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span>, decay <span class="op">=</span> <span class="fl">1e-02</span><span class="op">)</span></span>
+<span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="../../reference/resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">bh.task</span>, resampling <span class="op">=</span> <span class="va">rdesc</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">r</span></span>
+<span></span>
+<span><span class="co">## Resample Result</span></span>
+<span><span class="co">## Task: BostonHousing-example</span></span>
+<span><span class="co">## Learner: regr.nnet</span></span>
+<span><span class="co">## Aggr perf: mse.test.mean=56.8645496</span></span>
+<span><span class="co">## Runtime: 0.0463462</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="joint-tuning-of-preprocessing-and-learner-parameters">Joint tuning of preprocessing and learner parameters<a class="anchor" aria-label="anchor" href="#joint-tuning-of-preprocessing-and-learner-parameters"></a>
@@ -542,117 +542,117 @@
 <p>In our scaling example we can try if <code><a href="https://rdrr.io/pkg/nnet/man/nnet.html" class="external-link">nnet::nnet()</a></code> works best with both centering and scaling the data or if it’s better to omit one of the two operations or do no preprocessing at all. In order to tune <code>center</code> and <code>scale</code> we have to add appropriate <code>LearnerParam</code> (<code><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">ParamHelpers::LearnerParam()</a></code>)s to the parameter set (<code><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::ParamSet()</a></code>) of the wrapped learner.</p>
 <p>As mentioned above <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">base::scale()</a></code> allows for numeric and logical <code>center</code> and <code>scale</code> arguments. As we want to use the latter option we declare <code>center</code> and <code>scale</code> as logical learner parameters.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.nnet"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, train <span class="op">=</span> <span class="va">trainfun</span>, predict <span class="op">=</span> <span class="va">predictfun</span>,
-  par.set <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
-    <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
-  <span class="op">)</span>,
-  par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">lrn</span>
-<span class="co">## Learner regr.nnet.preproc from package nnet</span>
-<span class="co">## Type: regr</span>
-<span class="co">## Name: ; Short name: </span>
-<span class="co">## Class: PreprocWrapper</span>
-<span class="co">## Properties: numerics,factors,weights</span>
-<span class="co">## Predict-Type: response</span>
-<span class="co">## Hyperparameters: size=3,trace=FALSE,center=TRUE,scale=TRUE</span>
-
-<span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span>
-<span class="co">##            Type len    Def      Constr Req Tunable Trafo</span>
-<span class="co">## center  logical   -      -           -   -    TRUE     -</span>
-<span class="co">## scale   logical   -      -           -   -    TRUE     -</span>
-<span class="co">## size    integer   -      3    0 to Inf   -    TRUE     -</span>
-<span class="co">## maxit   integer   -    100    1 to Inf   -    TRUE     -</span>
-<span class="co">## skip    logical   -  FALSE           -   -    TRUE     -</span>
-<span class="co">## rang    numeric   -    0.7 -Inf to Inf   -    TRUE     -</span>
-<span class="co">## decay   numeric   -      0    0 to Inf   -    TRUE     -</span>
-<span class="co">## Hess    logical   -  FALSE           -   -    TRUE     -</span>
-<span class="co">## trace   logical   -   TRUE           -   -   FALSE     -</span>
-<span class="co">## MaxNWts integer   -   1000    1 to Inf   -   FALSE     -</span>
-<span class="co">## abstol  numeric   - 0.0001 -Inf to Inf   -    TRUE     -</span>
-<span class="co">## reltol  numeric   -  1e-08 -Inf to Inf   -    TRUE     -</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"regr.nnet"</span>, trace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span><span class="op">(</span><span class="va">lrn</span>, train <span class="op">=</span> <span class="va">trainfun</span>, predict <span class="op">=</span> <span class="va">predictfun</span>,</span>
+<span>  par.set <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">lrn</span></span>
+<span><span class="co">## Learner regr.nnet.preproc from package nnet</span></span>
+<span><span class="co">## Type: regr</span></span>
+<span><span class="co">## Name: ; Short name: </span></span>
+<span><span class="co">## Class: PreprocWrapper</span></span>
+<span><span class="co">## Properties: numerics,factors,weights</span></span>
+<span><span class="co">## Predict-Type: response</span></span>
+<span><span class="co">## Hyperparameters: size=3,trace=FALSE,center=TRUE,scale=TRUE</span></span>
+<span></span>
+<span><span class="fu"><a href="../../reference/getParamSet.html">getParamSet</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span></span>
+<span><span class="co">##            Type len    Def      Constr Req Tunable Trafo</span></span>
+<span><span class="co">## center  logical   -      -           -   -    TRUE     -</span></span>
+<span><span class="co">## scale   logical   -      -           -   -    TRUE     -</span></span>
+<span><span class="co">## size    integer   -      3    0 to Inf   -    TRUE     -</span></span>
+<span><span class="co">## maxit   integer   -    100    1 to Inf   -    TRUE     -</span></span>
+<span><span class="co">## skip    logical   -  FALSE           -   -    TRUE     -</span></span>
+<span><span class="co">## rang    numeric   -    0.7 -Inf to Inf   -    TRUE     -</span></span>
+<span><span class="co">## decay   numeric   -      0    0 to Inf   -    TRUE     -</span></span>
+<span><span class="co">## Hess    logical   -  FALSE           -   -    TRUE     -</span></span>
+<span><span class="co">## trace   logical   -   TRUE           -   -   FALSE     -</span></span>
+<span><span class="co">## MaxNWts integer   -   1000    1 to Inf   -   FALSE     -</span></span>
+<span><span class="co">## abstol  numeric   - 0.0001 -Inf to Inf   -    TRUE     -</span></span>
+<span><span class="co">## reltol  numeric   -  1e-08 -Inf to Inf   -    TRUE     -</span></span></code></pre></div>
 <p>Now we do a simple grid search for the <code>decay</code> parameter of <code><a href="https://rdrr.io/pkg/nnet/man/nnet.html" class="external-link">nnet::nnet()</a></code> and the <code>center</code> and <code>scale</code> parameters.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span>
-<span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"decay"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>,
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeLogicalParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
-  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeLogicalParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">bh.task</span>, <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="va">res</span>
-<span class="co">## Tune result:</span>
-<span class="co">## Op. pars: decay=0; center=FALSE; scale=TRUE</span>
-<span class="co">## mse.test.mean=15.3770780</span>
-
-<span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span>
-<span class="va">df</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">]</span>
-<span class="co">##    decay center scale mse.test.mean dob eol error.message</span>
-<span class="co">## 1      0   TRUE  TRUE      23.87357   1  NA          &lt;NA&gt;</span>
-<span class="co">## 2   0.05   TRUE  TRUE      20.76474   2  NA          &lt;NA&gt;</span>
-<span class="co">## 3    0.1   TRUE  TRUE      21.80929   3  NA          &lt;NA&gt;</span>
-<span class="co">## 4      0  FALSE  TRUE      15.37708   4  NA          &lt;NA&gt;</span>
-<span class="co">## 5   0.05  FALSE  TRUE      18.07821   5  NA          &lt;NA&gt;</span>
-<span class="co">## 6    0.1  FALSE  TRUE      17.91147   6  NA          &lt;NA&gt;</span>
-<span class="co">## 7      0   TRUE FALSE      46.35254   7  NA          &lt;NA&gt;</span>
-<span class="co">## 8   0.05   TRUE FALSE      44.92389   8  NA          &lt;NA&gt;</span>
-<span class="co">## 9    0.1   TRUE FALSE      24.37692   9  NA          &lt;NA&gt;</span>
-<span class="co">## 10     0  FALSE FALSE      74.10216  10  NA          &lt;NA&gt;</span>
-<span class="co">## 11  0.05  FALSE FALSE      38.53006  11  NA          &lt;NA&gt;</span>
-<span class="co">## 12   0.1  FALSE FALSE      32.56318  12  NA          &lt;NA&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span></span>
+<span><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"decay"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeLogicalParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/Param.html" class="external-link">makeLogicalParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="../../reference/makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">=</span> <span class="fu"><a href="../../reference/tuneParams.html">tuneParams</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">bh.task</span>, <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span>, show.info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res</span></span>
+<span><span class="co">## Tune result:</span></span>
+<span><span class="co">## Op. pars: decay=0; center=FALSE; scale=TRUE</span></span>
+<span><span class="co">## mse.test.mean=15.3770780</span></span>
+<span></span>
+<span><span class="va">df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">opt.path</span><span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">##    decay center scale mse.test.mean dob eol error.message</span></span>
+<span><span class="co">## 1      0   TRUE  TRUE      23.87357   1  NA          &lt;NA&gt;</span></span>
+<span><span class="co">## 2   0.05   TRUE  TRUE      20.76474   2  NA          &lt;NA&gt;</span></span>
+<span><span class="co">## 3    0.1   TRUE  TRUE      21.80929   3  NA          &lt;NA&gt;</span></span>
+<span><span class="co">## 4      0  FALSE  TRUE      15.37708   4  NA          &lt;NA&gt;</span></span>
+<span><span class="co">## 5   0.05  FALSE  TRUE      18.07821   5  NA          &lt;NA&gt;</span></span>
+<span><span class="co">## 6    0.1  FALSE  TRUE      17.91147   6  NA          &lt;NA&gt;</span></span>
+<span><span class="co">## 7      0   TRUE FALSE      46.35254   7  NA          &lt;NA&gt;</span></span>
+<span><span class="co">## 8   0.05   TRUE FALSE      44.92389   8  NA          &lt;NA&gt;</span></span>
+<span><span class="co">## 9    0.1   TRUE FALSE      24.37692   9  NA          &lt;NA&gt;</span></span>
+<span><span class="co">## 10     0  FALSE FALSE      74.10216  10  NA          &lt;NA&gt;</span></span>
+<span><span class="co">## 11  0.05  FALSE FALSE      38.53006  11  NA          &lt;NA&gt;</span></span>
+<span><span class="co">## 12   0.1  FALSE FALSE      32.56318  12  NA          &lt;NA&gt;</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="preprocessing-wrapper-functions">Preprocessing wrapper functions<a class="anchor" aria-label="anchor" href="#preprocessing-wrapper-functions"></a>
 </h3>
 <p>If you have written a preprocessing wrapper that you might want to use from time to time it’s a good idea to encapsulate it in an own function as shown below. If you think your preprocessing method is something others might want to use as well and should be integrated into <code>mlr</code> just <a href="https://github.com/mlr-org/mlr/issues" class="external-link">contact us</a>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">makePreprocWrapperScale</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">learner</span>, <span class="va">center</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">scale</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">trainfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">center</span>, <span class="va">scale</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-    <span class="va">nums</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span>, <span class="va">target</span><span class="op">)</span>
-    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
-    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
-    <span class="va">control</span> <span class="op">=</span> <span class="va">args</span>
-    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span> <span class="op">{</span>
-      <span class="va">control</span><span class="op">$</span><span class="va">center</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:center"</span><span class="op">)</span>
-    <span class="op">}</span>
-    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span> <span class="op">{</span>
-      <span class="va">control</span><span class="op">$</span><span class="va">scale</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:scale"</span><span class="op">)</span>
-    <span class="op">}</span>
-    <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
-    <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span>, control <span class="op">=</span> <span class="va">control</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">}</span>
-  <span class="va">predictfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span>, <span class="va">control</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-    <span class="va">nums</span> <span class="op">=</span> <span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span>
-    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
-    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span>
-    <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>
-    <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
-  <span class="op">}</span>
-  <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span><span class="op">(</span>
-    <span class="va">learner</span>,
-    train <span class="op">=</span> <span class="va">trainfun</span>,
-    predict <span class="op">=</span> <span class="va">predictfun</span>,
-    par.set <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span>
-      <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,
-      <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span>
-    <span class="op">)</span>,
-    par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="va">center</span>, scale <span class="op">=</span> <span class="va">scale</span><span class="op">)</span>
-  <span class="op">)</span>
-<span class="op">}</span>
-
-<span class="va">lrn</span> <span class="op">=</span> <span class="fu">makePreprocWrapperScale</span><span class="op">(</span><span class="st">"classif.lda"</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">iris.task</span><span class="op">)</span>
-<span class="co">## Model for learner.id=classif.lda.preproc; learner.class=PreprocWrapper</span>
-<span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span>
-<span class="co">## Hyperparameters: center=TRUE,scale=TRUE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">makePreprocWrapperScale</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">learner</span>, <span class="va">center</span> <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">scale</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">trainfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">center</span>, <span class="va">scale</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span>    <span class="va">nums</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span>, <span class="va">target</span><span class="op">)</span></span>
+<span>    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">args</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span></span>
+<span>    <span class="va">control</span> <span class="op">=</span> <span class="va">args</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">control</span><span class="op">$</span><span class="va">center</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:center"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">is.logical</a></span><span class="op">(</span><span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">control</span><span class="op">$</span><span class="va">scale</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"scaled:scale"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
+<span>    <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data</span>, control <span class="op">=</span> <span class="va">control</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">predictfun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">target</span>, <span class="va">args</span>, <span class="va">control</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">cns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span>    <span class="va">nums</span> <span class="op">=</span> <span class="va">cns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span></span>
+<span>    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span>, <span class="va">nums</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">x</span>, center <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">center</span>, scale <span class="op">=</span> <span class="va">control</span><span class="op">$</span><span class="va">scale</span><span class="op">)</span></span>
+<span>    <span class="va">data</span> <span class="op">=</span> <span class="va">data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">cns</span>, <span class="va">nums</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
+<span>    <span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="fu"><a href="../../reference/makePreprocWrapper.html">makePreprocWrapper</a></span><span class="op">(</span></span>
+<span>    <span class="va">learner</span>,</span>
+<span>    train <span class="op">=</span> <span class="va">trainfun</span>,</span>
+<span>    predict <span class="op">=</span> <span class="va">predictfun</span>,</span>
+<span>    par.set <span class="op">=</span> <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">makeParamSet</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"center"</span><span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://paramhelpers.mlr-org.com/reference/LearnerParam.html" class="external-link">makeLogicalLearnerParam</a></span><span class="op">(</span><span class="st">"scale"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>center <span class="op">=</span> <span class="va">center</span>, scale <span class="op">=</span> <span class="va">scale</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">lrn</span> <span class="op">=</span> <span class="fu">makePreprocWrapperScale</span><span class="op">(</span><span class="st">"classif.lda"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">iris.task</span><span class="op">)</span></span>
+<span><span class="co">## Model for learner.id=classif.lda.preproc; learner.class=PreprocWrapper</span></span>
+<span><span class="co">## Trained on: task.id = iris-example; obs = 150; features = 4</span></span>
+<span><span class="co">## Hyperparameters: center=TRUE,scale=TRUE</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -668,7 +668,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

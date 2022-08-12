@@ -8,7 +8,7 @@ to select an optimal set of hyperparameter values. Finally, a model is fitted on
 complete training data with these optimal hyperparameters and returned.
 See tuneParams for more details.
 After training, the optimal hyperparameters (and other related information) can be retrieved with
-getTuneResult."><title>Fuse learner with tuning. — makeTuneWrapper • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Roboto-0.4.0/font.css" rel="stylesheet"><link href="../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet"><link href="../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Fuse learner with tuning. — makeTuneWrapper"><meta property="og:description" content="Fuses a base learner with a search strategy to select its hyperparameters.
+getTuneResult."><title>Fuse learner with tuning. — makeTuneWrapper • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Fuse learner with tuning. — makeTuneWrapper"><meta property="og:description" content="Fuses a base learner with a search strategy to select its hyperparameters.
 Creates a learner object, which can be used like any other learner object,
 but which internally uses tuneParams.
 If the train function is called on it,
@@ -166,14 +166,14 @@ See <a href="tuneParams.html">tuneParams</a> for more details.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">makeTuneWrapper</span><span class="op">(</span>
-  <span class="va">learner</span>,
-  <span class="va">resampling</span>,
-  <span class="va">measures</span>,
-  <span class="va">par.set</span>,
-  <span class="va">control</span>,
-  show.info <span class="op">=</span> <span class="fu">getMlrOption</span><span class="op">(</span><span class="st">"show.info"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">makeTuneWrapper</span><span class="op">(</span></span>
+<span>  <span class="va">learner</span>,</span>
+<span>  <span class="va">resampling</span>,</span>
+<span>  <span class="va">measures</span>,</span>
+<span>  <span class="va">par.set</span>,</span>
+<span>  <span class="va">control</span>,</span>
+<span>  show.info <span class="op">=</span> <span class="fu">getMlrOption</span><span class="op">(</span><span class="st">"show.info"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -182,33 +182,46 @@ See <a href="tuneParams.html">tuneParams</a> for more details.</p>
 <dd><p>(<a href="makeLearner.html">Learner</a> | <code>character(1)</code>)<br>
 The learner.
 If you pass a string the learner will be created via <a href="makeLearner.html">makeLearner</a>.</p></dd>
+
+
 <dt>resampling</dt>
 <dd><p>(<a href="makeResampleInstance.html">ResampleInstance</a> | <a href="makeResampleDesc.html">ResampleDesc</a>)<br>
 Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
 it is instantiated once at the beginning by default, so all points are
 evaluated on the same training/test sets.
 If you want to change that behavior, look at <a href="TuneControl.html">TuneControl</a>.</p></dd>
+
+
 <dt>measures</dt>
 <dd><p>(list of <a href="makeMeasure.html">Measure</a> | <a href="makeMeasure.html">Measure</a>)<br>
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 is optimized, others are simply evaluated.
 Default is the default measure for the task, see here <a href="getDefaultMeasure.html">getDefaultMeasure</a>.</p></dd>
+
+
 <dt>par.set</dt>
 <dd><p>(<a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::ParamSet</a>)<br>
 Collection of parameters and their constraints for optimization.
 Dependent parameters with a <code>requires</code> field must use <code>quote</code> and not
 <code>expression</code> to define it.</p></dd>
+
+
 <dt>control</dt>
 <dd><p>(<a href="TuneControl.html">TuneControl</a>)<br>
 Control object for search method. Also selects the optimization algorithm for tuning.</p></dd>
+
+
 <dt>show.info</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Print verbose output on console?
 Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><a href="makeLearner.html">Learner</a>.</p>
+    
+
+<p><a href="makeLearner.html">Learner</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -258,25 +271,25 @@ Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, target <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># stupid mini grid</span></span>
-<span class="r-in"><span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu">makeDiscreteParam</span><span class="op">(</span><span class="st">"cp"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu">makeDiscreteParam</span><span class="op">(</span><span class="st">"minsplit"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">inner</span> <span class="op">=</span> <span class="fu"><a href="makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">outer</span> <span class="op">=</span> <span class="fu"><a href="makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lrn</span> <span class="op">=</span> <span class="fu">makeTuneWrapper</span><span class="op">(</span><span class="va">lrn</span>, resampling <span class="op">=</span> <span class="va">inner</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">task</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="ClassifTask.html">makeClassifTask</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, target <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># stupid mini grid</span></span></span>
+<span class="r-in"><span><span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu">makeDiscreteParam</span><span class="op">(</span><span class="st">"cp"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">makeDiscreteParam</span><span class="op">(</span><span class="st">"minsplit"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="makeTuneControlGrid.html">makeTuneControlGrid</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">inner</span> <span class="op">=</span> <span class="fu"><a href="makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">outer</span> <span class="op">=</span> <span class="fu"><a href="makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu">makeTuneWrapper</span><span class="op">(</span><span class="va">lrn</span>, resampling <span class="op">=</span> <span class="va">inner</span>, par.set <span class="op">=</span> <span class="va">ps</span>, control <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">=</span> <span class="fu"><a href="train.html">train</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">task</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in x[0, , drop = FALSE]:</span> incorrect number of dimensions</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="getTuneResult.html">getTuneResult</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="getTuneResult.html">getTuneResult</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in checkClass(x, classes, ordered, null.ok):</span> object 'mod' not found</span>
-<span class="r-in"><span class="co"># nested resampling for evaluation</span></span>
-<span class="r-in"><span class="co"># we also extract tuned hyper pars in each iteration</span></span>
-<span class="r-in"><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">task</span>, <span class="va">outer</span>, extract <span class="op">=</span> <span class="va">getTuneResult</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># nested resampling for evaluation</span></span></span>
+<span class="r-in"><span><span class="co"># we also extract tuned hyper pars in each iteration</span></span></span>
+<span class="r-in"><span><span class="va">r</span> <span class="op">=</span> <span class="fu"><a href="resample.html">resample</a></span><span class="op">(</span><span class="va">lrn</span>, <span class="va">task</span>, <span class="va">outer</span>, extract <span class="op">=</span> <span class="va">getTuneResult</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling: cross-validation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Measures:             mmce      </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune] Started tuning learner classif.rpart for parameter set:</span>
@@ -314,7 +327,7 @@ Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: mmce.test.mean=0.0666667</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">extract</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">extract</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tune result:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Op. pars: cp=0.05; minsplit=20</span>
@@ -325,21 +338,21 @@ Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Op. pars: cp=0.1; minsplit=10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mmce.test.mean=0.0800000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="getNestedTuneResultsOptPathDf.html">getNestedTuneResultsOptPathDf</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="getNestedTuneResultsOptPathDf.html">getNestedTuneResultsOptPathDf</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     cp minsplit mmce.test.mean dob eol error.message exec.time iter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.05       10           0.04   1  NA          &lt;NA&gt;     0.012    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  0.1       10           0.04   2  NA          &lt;NA&gt;     0.012    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.05       20           0.04   3  NA          &lt;NA&gt;     0.012    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  0.1       20           0.04   4  NA          &lt;NA&gt;     0.012    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.05       10           0.08   1  NA          &lt;NA&gt;     0.011    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  0.1       10           0.08   2  NA          &lt;NA&gt;     0.012    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 0.05       20           0.08   3  NA          &lt;NA&gt;     0.012    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  0.1       20           0.08   4  NA          &lt;NA&gt;     0.012    2</span>
-<span class="r-in"><span class="fu"><a href="getNestedTuneResultsX.html">getNestedTuneResultsX</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.05       10           0.04   1  NA          &lt;NA&gt;     0.033    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  0.1       10           0.04   2  NA          &lt;NA&gt;     0.019    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.05       20           0.04   3  NA          &lt;NA&gt;     0.020    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  0.1       20           0.04   4  NA          &lt;NA&gt;     0.019    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.05       10           0.08   1  NA          &lt;NA&gt;     0.019    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  0.1       10           0.08   2  NA          &lt;NA&gt;     0.019    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 0.05       20           0.08   3  NA          &lt;NA&gt;     0.019    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  0.1       20           0.08   4  NA          &lt;NA&gt;     0.020    2</span>
+<span class="r-in"><span><span class="fu"><a href="getNestedTuneResultsX.html">getNestedTuneResultsX</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     cp minsplit</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.05       20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.10       10</span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -351,7 +364,7 @@ Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

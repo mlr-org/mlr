@@ -3,7 +3,7 @@
 &amp;#8220;prob&amp;#8221; to predict probabilities and the maximum value selects the
 label. The threshold used to assign the label can later be changed using the
 setThreshold function.
-To see all possible properties of a learner, go to: LearnerProperties."><title>Create learner object. — makeLearner • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Roboto-0.4.0/font.css" rel="stylesheet"><link href="../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet"><link href="../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Create learner object. — makeLearner"><meta property="og:description" content="For a classification learner the predict.type can be set to
+To see all possible properties of a learner, go to: LearnerProperties."><title>Create learner object. — makeLearner • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Create learner object. — makeLearner"><meta property="og:description" content="For a classification learner the predict.type can be set to
 &amp;#8220;prob&amp;#8221; to predict probabilities and the maximum value selects the
 label. The threshold used to assign the label can later be changed using the
 setThreshold function.
@@ -151,16 +151,16 @@ label. The threshold used to assign the label can later be changed using the
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">makeLearner</span><span class="op">(</span>
-  <span class="va">cl</span>,
-  id <span class="op">=</span> <span class="va">cl</span>,
-  predict.type <span class="op">=</span> <span class="st">"response"</span>,
-  predict.threshold <span class="op">=</span> <span class="cn">NULL</span>,
-  fix.factors.prediction <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>,
-  par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">makeLearner</span><span class="op">(</span></span>
+<span>  <span class="va">cl</span>,</span>
+<span>  id <span class="op">=</span> <span class="va">cl</span>,</span>
+<span>  predict.type <span class="op">=</span> <span class="st">"response"</span>,</span>
+<span>  predict.threshold <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fix.factors.prediction <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  par.vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  config <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -174,9 +174,13 @@ all clustering learners with “cluster.” and all multilabel
 classification learners start with “multilabel.”.
 A list of all integrated learners is available on the
 <a href="learners.html">learners</a> help page.</p></dd>
+
+
 <dt>id</dt>
 <dd><p>(<code>character(1)</code>)<br> Id string for object. Used to display object.
 Default is <code>cl</code>.</p></dd>
+
+
 <dt>predict.type</dt>
 <dd><p>(<code>character(1)</code>)<br> Classification: “response” (=
 labels) or “prob” (= probabilities and labels by selecting the ones
@@ -188,12 +192,16 @@ dependent probabilities). Clustering: “response” (= cluster IDS) or
 “response” (= logical matrix indicating the predicted class labels)
 or “prob” (= probabilities and corresponding logical matrix
 indicating class labels). Default is “response”.</p></dd>
+
+
 <dt>predict.threshold</dt>
 <dd><p>(<a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a>)<br>
 Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
 Only for binary classification it can be a single numerical threshold for the positive class.
 See <a href="setThreshold.html">setThreshold</a> for details on how it is applied.
 Default is <code>NULL</code> which means 0.5 / an equal threshold for each class.</p></dd>
+
+
 <dt>fix.factors.prediction</dt>
 <dd><p>(<code>logical(1)</code>)<br> In some cases, problems occur
 in underlying learners for factor features during prediction. If the new
@@ -203,23 +211,32 @@ data do not match that of the training data”. In this case one can repair
 this problem by setting this option to <code>TRUE</code>. We will simply add the
 missing factor levels missing from the test feature (but present in
 training) to that feature. Default is <code>FALSE</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>(any)<br> Optional named (hyper)parameters. If you want to set
 specific hyperparameters for a learner during model creation, these should
 go here. You can get a list of available hyperparameters using
 <code>getParamSet(&lt;learner&gt;)</code>. Alternatively hyperparameters can be given using
 the <code>par.vals</code> argument but <code>...</code> should be preferred!</p></dd>
+
+
 <dt>par.vals</dt>
 <dd><p>(<a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>)<br> Optional list of named (hyper)parameters. The
 arguments in <code>...</code> take precedence over values in this list. We strongly
 encourage you to use <code>...</code> for passing hyperparameters.</p></dd>
+
+
 <dt>config</dt>
 <dd><p>(named <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>)<br> Named list of config option to overwrite
 global settings set via <a href="configureMlr.html">configureMlr</a> for this specific learner.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>(Learner).</p>
+    
+
+<p>(Learner).</p>
     </div>
     <div class="section level2">
     <h2 id="par-vals-vs-"><code>par.vals</code> vs. <code>...</code><a class="anchor" aria-label="anchor" href="#par-vals-vs-"></a></h2>
@@ -334,7 +351,7 @@ correspond to the prior probabilities observed in the training data.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">makeLearner</span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">makeLearner</span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Learner classif.rpart from package rpart</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Type: classif</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Name: Decision Tree; Short name: rpart</span>
@@ -343,7 +360,7 @@ correspond to the prior probabilities observed in the training data.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Predict-Type: response</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hyperparameters: xval=0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">makeLearner</span><span class="op">(</span><span class="st">"classif.lda"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">makeLearner</span><span class="op">(</span><span class="st">"classif.lda"</span>, predict.type <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Learner classif.lda from package MASS</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Type: classif</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Name: Linear Discriminant Analysis; Short name: lda</span>
@@ -352,8 +369,8 @@ correspond to the prior probabilities observed in the training data.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Predict-Type: prob</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hyperparameters: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="va">lrn</span> <span class="op">=</span> <span class="fu">makeLearner</span><span class="op">(</span><span class="st">"classif.lda"</span>, method <span class="op">=</span> <span class="st">"t"</span>, nu <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="getHyperPars.html">getHyperPars</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu">makeLearner</span><span class="op">(</span><span class="st">"classif.lda"</span>, method <span class="op">=</span> <span class="st">"t"</span>, nu <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="getHyperPars.html">getHyperPars</a></span><span class="op">(</span><span class="va">lrn</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $method</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "t"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -371,7 +388,7 @@ correspond to the prior probabilities observed in the training data.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

@@ -23,10 +23,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="deps/_Roboto-0.4.0/font.css" rel="stylesheet">
-<link href="deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
-<link href="deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet">
+<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Machine Learning in R">
@@ -177,20 +177,13 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="mlr-">mlr <a class="anchor" aria-label="anchor" href="#mlr-"></a>
-</h1>
-</div>
+  <main id="main" class="col-md-9"><p>mlr <img src="reference/figures/logo.png" align="right"></p>
 <p>Package website: <a href="https://mlr.mlr-org.com/">release</a> | <a href="https://mlr.mlr-org.com/dev/">dev</a></p>
 <p>Machine learning in R.</p>
 <!-- badges: start -->
-
-<!-- badges: end -->
-<ul>
+<!-- badges: end --><ul>
 <li><p><a href="https://CRAN.R-project.org/package=mlr" class="external-link">CRAN release site</a></p></li>
 <li><p><a href="https://mlr.mlr-org.com/index.html">Online tutorial</a></p></li>
-<li><p><a href="https://cheatsheets.mlr-org.com/mlr.pdf" class="external-link">Cheatsheet</a></p></li>
 <li><p><a href="https://mlr.mlr-org.com/news/index.html">Changelog</a></p></li>
 <li><p><a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link">Stackoverflow</a>: <code>#mlr</code></p></li>
 <li><p><a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link">Mattermost</a></p></li>
@@ -207,10 +200,10 @@
 </h2>
 <p><strong>Release</strong></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"mlr"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"mlr"</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Development</strong></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"mlr-org/mlr"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"mlr-org/mlr"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="citing-mlr-in-publications">Citing {mlr} in publications<a class="anchor" aria-label="anchor" href="#citing-mlr-in-publications"></a>
@@ -244,8 +237,7 @@
 </li>
 <li>Extensive visualizations (e.g. ROC curves, predictions and partial predictions)</li>
 <li>Simplified benchmarking across data sets and learners</li>
-<li>Easy hyperparameter tuning using different optimization strategies, including potent configurators like
-<ul>
+<li>Easy hyperparameter tuning using different optimization strategies, including potent configurators like<ul>
 <li><strong>iterated F-racing (irace)</strong></li>
 <li><strong>sequential model-based optimization</strong></li>
 </ul>
@@ -274,7 +266,7 @@
 </h2>
 <p><a href="https://github.com/mlr-org/mlr-outreach" class="external-link">mlr-outreach</a> holds all outreach activities related to {mlr} and {mlr3}.</p>
 </div>
-</div>
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
@@ -327,7 +319,7 @@
 <li><a href="https://cran.r-project.org/package=mlr" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/mlr" alt="CRAN Downloads"></a></li>
 <li><a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link"><img src="https://img.shields.io/badge/stackoverflow-mlr-blue.svg" alt="StackOverflow"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-retired-orange.svg" alt="lifecycle"></a></li>
-<li><a href="https://codecov.io/gh/mlr-org/mlr" class="external-link"><img src="https://codecov.io/gh/mlr-org/mlr/branch/main/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://app.codecov.io/gh/mlr-org/mlr" class="external-link"><img src="https://codecov.io/gh/mlr-org/mlr/branch/main/graph/badge.svg" alt="codecov"></a></li>
 </ul>
 </div>
 
@@ -342,7 +334,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

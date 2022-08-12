@@ -3,7 +3,7 @@
 Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
 You can select such an algorithm (and its settings)
 by passing a corresponding control object. For a complete list of implemented algorithms look at
-TuneMultiCritControl."><title>Hyperparameter tuning for multiple measures at once. — tuneParamsMultiCrit • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Roboto-0.4.0/font.css" rel="stylesheet"><link href="../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet"><link href="../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Hyperparameter tuning for multiple measures at once. — tuneParamsMultiCrit"><meta property="og:description" content="Optimizes the hyperparameters of a learner in a multi-criteria fashion.
+TuneMultiCritControl."><title>Hyperparameter tuning for multiple measures at once. — tuneParamsMultiCrit • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Hyperparameter tuning for multiple measures at once. — tuneParamsMultiCrit"><meta property="og:description" content="Optimizes the hyperparameters of a learner in a multi-criteria fashion.
 Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
 You can select such an algorithm (and its settings)
 by passing a corresponding control object. For a complete list of implemented algorithms look at
@@ -151,16 +151,16 @@ by passing a corresponding control object. For a complete list of implemented al
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">tuneParamsMultiCrit</span><span class="op">(</span>
-  <span class="va">learner</span>,
-  <span class="va">task</span>,
-  <span class="va">resampling</span>,
-  <span class="va">measures</span>,
-  <span class="va">par.set</span>,
-  <span class="va">control</span>,
-  show.info <span class="op">=</span> <span class="fu">getMlrOption</span><span class="op">(</span><span class="st">"show.info"</span><span class="op">)</span>,
-  resample.fun <span class="op">=</span> <span class="va">resample</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tuneParamsMultiCrit</span><span class="op">(</span></span>
+<span>  <span class="va">learner</span>,</span>
+<span>  <span class="va">task</span>,</span>
+<span>  <span class="va">resampling</span>,</span>
+<span>  <span class="va">measures</span>,</span>
+<span>  <span class="va">par.set</span>,</span>
+<span>  <span class="va">control</span>,</span>
+<span>  show.info <span class="op">=</span> <span class="fu">getMlrOption</span><span class="op">(</span><span class="st">"show.info"</span><span class="op">)</span>,</span>
+<span>  resample.fun <span class="op">=</span> <span class="va">resample</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -169,38 +169,55 @@ by passing a corresponding control object. For a complete list of implemented al
 <dd><p>(<a href="makeLearner.html">Learner</a> | <code>character(1)</code>)<br>
 The learner.
 If you pass a string the learner will be created via <a href="makeLearner.html">makeLearner</a>.</p></dd>
+
+
 <dt>task</dt>
 <dd><p>(<a href="Task.html">Task</a>)<br>
 The task.</p></dd>
+
+
 <dt>resampling</dt>
 <dd><p>(<a href="makeResampleInstance.html">ResampleInstance</a> | <a href="makeResampleDesc.html">ResampleDesc</a>)<br>
 Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
 it is instantiated once at the beginning by default, so all points are
 evaluated on the same training/test sets.
 If you want to change that behavior, look at <a href="TuneMultiCritControl.html">TuneMultiCritControl</a>.</p></dd>
+
+
 <dt>measures</dt>
 <dd><p>[list of <a href="makeMeasure.html">Measure</a>)<br>
 Performance measures to optimize simultaneously.</p></dd>
+
+
 <dt>par.set</dt>
 <dd><p>(<a href="https://paramhelpers.mlr-org.com/reference/makeParamSet.html" class="external-link">ParamHelpers::ParamSet</a>)<br>
 Collection of parameters and their constraints for optimization.
 Dependent parameters with a <code>requires</code> field must use <code>quote</code> and not
 <code>expression</code> to define it.</p></dd>
+
+
 <dt>control</dt>
 <dd><p>(<a href="TuneMultiCritControl.html">TuneMultiCritControl</a>)<br>
 Control object for search method. Also selects the optimization algorithm for tuning.</p></dd>
+
+
 <dt>show.info</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Print verbose output on console?
 Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
+
+
 <dt>resample.fun</dt>
 <dd><p>(<a href="https://rdrr.io/r/base/function.html" class="external-link">closure</a>)<br>
 The function to use for resampling. Defaults to <a href="resample.html">resample</a> and should take the
 same arguments as, and return the same result type as, <a href="resample.html">resample</a>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>(<a href="TuneMultiCritResult.html">TuneMultiCritResult</a>).</p>
+    
+
+<p>(<a href="TuneMultiCritResult.html">TuneMultiCritResult</a>).</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -211,17 +228,17 @@ same arguments as, and return the same result type as, <a href="resample.html">r
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co"># multi-criteria optimization of (tpr, fpr) with NGSA-II</span></span>
-<span class="r-in"><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, upper <span class="op">=</span> <span class="fl">12</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, upper <span class="op">=</span> <span class="fl">12</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="TuneMultiCritControl.html">makeTuneMultiCritControlNSGA2</a></span><span class="op">(</span>popsize <span class="op">=</span> <span class="fl">4L</span>, generations <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">=</span> <span class="fu">tuneParamsMultiCrit</span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span>, <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>,</span>
-<span class="r-in">  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">tpr</span>, <span class="va">fpr</span><span class="op">)</span>, control <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># multi-criteria optimization of (tpr, fpr) with NGSA-II</span></span></span>
+<span class="r-in"><span><span class="va">lrn</span> <span class="op">=</span> <span class="fu"><a href="makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.ksvm"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"Holdout"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ps</span> <span class="op">=</span> <span class="fu">makeParamSet</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"C"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, upper <span class="op">=</span> <span class="fl">12</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">makeNumericParam</span><span class="op">(</span><span class="st">"sigma"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">12</span>, upper <span class="op">=</span> <span class="fl">12</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">2</span><span class="op">^</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ctrl</span> <span class="op">=</span> <span class="fu"><a href="TuneMultiCritControl.html">makeTuneMultiCritControlNSGA2</a></span><span class="op">(</span>popsize <span class="op">=</span> <span class="fl">4L</span>, generations <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu">tuneParamsMultiCrit</span><span class="op">(</span><span class="va">lrn</span>, <span class="va">sonar.task</span>, <span class="va">rdesc</span>, par.set <span class="op">=</span> <span class="va">ps</span>,</span></span>
+<span class="r-in"><span>  measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">tpr</span>, <span class="va">fpr</span><span class="op">)</span>, control <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune] Started tuning learner classif.ksvm for parameter set:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>          Type len Def    Constr Req Tunable Trafo</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> C     numeric   -   - -12 to 12   -    TRUE     Y</span>
@@ -245,9 +262,9 @@ same arguments as, and return the same result type as, <a href="resample.html">r
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-x] 8: C=0.00267; sigma=1.99e+03</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune-y] 8: tpr.test.mean=1.0000000,fpr.test.mean=1.0000000; time: 0.0 min</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Tune] Result: Points on front : 8</span>
-<span class="r-in"><span class="fu"><a href="plotTuneMultiCritResult.html">plotTuneMultiCritResult</a></span><span class="op">(</span><span class="va">res</span>, path <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="plotTuneMultiCritResult.html">plotTuneMultiCritResult</a></span><span class="op">(</span><span class="va">res</span>, path <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="tuneParamsMultiCrit-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -259,7 +276,7 @@ same arguments as, and return the same result type as, <a href="resample.html">r
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

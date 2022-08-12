@@ -3,7 +3,7 @@
 w.r.t. a given resampling strategy. Experiments are paired, meaning always the same
 training / test sets are used for the different learners.
 Furthermore, you can of course pass &amp;#8220;enhanced&amp;#8221; learners via wrappers, e.g., a
-learner can be automatically tuned using makeTuneWrapper."><title>Benchmark experiment for multiple learners and tasks. — benchmark • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Roboto-0.4.0/font.css" rel="stylesheet"><link href="../deps/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet"><link href="../deps/_Roboto%20Slab-0.4.0/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Benchmark experiment for multiple learners and tasks. — benchmark"><meta property="og:description" content="Complete benchmark experiment to compare different learning algorithms across one or more tasks
+learner can be automatically tuned using makeTuneWrapper."><title>Benchmark experiment for multiple learners and tasks. — benchmark • mlr</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet"><link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet"><link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Benchmark experiment for multiple learners and tasks. — benchmark"><meta property="og:description" content="Complete benchmark experiment to compare different learning algorithms across one or more tasks
 w.r.t. a given resampling strategy. Experiments are paired, meaning always the same
 training / test sets are used for the different learners.
 Furthermore, you can of course pass &amp;#8220;enhanced&amp;#8221; learners via wrappers, e.g., a
@@ -151,16 +151,16 @@ learner can be automatically tuned using <a href="makeTuneWrapper.html">makeTune
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">benchmark</span><span class="op">(</span>
-  <span class="va">learners</span>,
-  <span class="va">tasks</span>,
-  <span class="va">resamplings</span>,
-  <span class="va">measures</span>,
-  keep.pred <span class="op">=</span> <span class="cn">TRUE</span>,
-  keep.extract <span class="op">=</span> <span class="cn">FALSE</span>,
-  models <span class="op">=</span> <span class="cn">FALSE</span>,
-  show.info <span class="op">=</span> <span class="fu">getMlrOption</span><span class="op">(</span><span class="st">"show.info"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">benchmark</span><span class="op">(</span></span>
+<span>  <span class="va">learners</span>,</span>
+<span>  <span class="va">tasks</span>,</span>
+<span>  <span class="va">resamplings</span>,</span>
+<span>  <span class="va">measures</span>,</span>
+<span>  keep.pred <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  keep.extract <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  models <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  show.info <span class="op">=</span> <span class="fu">getMlrOption</span><span class="op">(</span><span class="st">"show.info"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -169,24 +169,34 @@ learner can be automatically tuned using <a href="makeTuneWrapper.html">makeTune
 <dd><p>(list of <a href="makeLearner.html">Learner</a> | <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>)<br>
 Learning algorithms which should be compared, can also be a single learner.
 If you pass strings the learners will be created via <a href="makeLearner.html">makeLearner</a>.</p></dd>
+
+
 <dt>tasks</dt>
 <dd><p>list of <a href="Task.html">Task</a><br>
 Tasks that learners should be run on.</p></dd>
+
+
 <dt>resamplings</dt>
 <dd><p>(list of <a href="makeResampleDesc.html">ResampleDesc</a> | <a href="makeResampleInstance.html">ResampleInstance</a>)<br>
 Resampling strategy for each tasks.
 If only one is provided, it will be replicated to match the number of tasks.
 If missing, a 10-fold cross validation is used.</p></dd>
+
+
 <dt>measures</dt>
 <dd><p>(list of <a href="makeMeasure.html">Measure</a>)<br>
 Performance measures for all tasks.
 If missing, the default measure of the first task is used.</p></dd>
+
+
 <dt>keep.pred</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Keep the prediction data in the <code>pred</code> slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
 The default is set to <code>TRUE</code>.</p></dd>
+
+
 <dt>keep.extract</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Keep the <code>extract</code> slot of the result object. When creating a lot of
@@ -195,18 +205,25 @@ very large in size. That is why the tuning results stored in the <code>extract</
 slot are removed by default (<code>keep.extract = FALSE</code>). Note that when
 <code>keep.extract = FALSE</code> you will not be able to conduct analysis in the
 tuning results.</p></dd>
+
+
 <dt>models</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Should all fitted models be stored in the <a href="ResampleResult.html">ResampleResult</a>?
 Default is <code>FALSE</code>.</p></dd>
+
+
 <dt>show.info</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Print verbose output on console?
 Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><a href="BenchmarkResult.html">BenchmarkResult</a>.</p>
+    
+
+<p><a href="BenchmarkResult.html">BenchmarkResult</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -240,65 +257,65 @@ Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.lda"</span><span class="op">)</span>, <span class="fu"><a href="makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">tasks</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">iris.task</span>, <span class="va">sonar.task</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">meas</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">ber</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">bmr</span> <span class="op">=</span> <span class="fu">benchmark</span><span class="op">(</span><span class="va">lrns</span>, <span class="va">tasks</span>, <span class="va">rdesc</span>, measures <span class="op">=</span> <span class="va">meas</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.lda"</span><span class="op">)</span>, <span class="fu"><a href="makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tasks</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">iris.task</span>, <span class="va">sonar.task</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">meas</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">acc</span>, <span class="va">ber</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bmr</span> <span class="op">=</span> <span class="fu">benchmark</span><span class="op">(</span><span class="va">lrns</span>, <span class="va">tasks</span>, <span class="va">rdesc</span>, measures <span class="op">=</span> <span class="va">meas</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Task: iris-example, Learner: classif.lda</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling: cross-validation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Measures:             acc       ber       </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.9866667 0.0144928 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.9866667 0.0138889 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.9733333 0.0238095 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.9733333 0.0246914 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: acc.test.mean=0.9866667,ber.test.mean=0.0141908</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: acc.test.mean=0.9733333,ber.test.mean=0.0242504</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Task: Sonar-example, Learner: classif.lda</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling: cross-validation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Measures:             acc       ber       </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.7980769 0.2042672 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.6057692 0.3958333 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.7788462 0.2269017 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.6826923 0.3184524 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: acc.test.mean=0.7019231,ber.test.mean=0.3000502</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: acc.test.mean=0.7307692,ber.test.mean=0.2726770</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Task: iris-example, Learner: classif.rpart</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling: cross-validation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Measures:             acc       ber       </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.9333333 0.0674470 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.9466667 0.0555556 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.9333333 0.0595238 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.9200000 0.0740741 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: acc.test.mean=0.9400000,ber.test.mean=0.0615013</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: acc.test.mean=0.9266667,ber.test.mean=0.0667989</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Task: Sonar-example, Learner: classif.rpart</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling: cross-validation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Measures:             acc       ber       </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.6826923 0.3178108 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.6923077 0.3095238 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.6057692 0.4005566 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.6538462 0.3571429 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: acc.test.mean=0.6875000,ber.test.mean=0.3136673</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: acc.test.mean=0.6298077,ber.test.mean=0.3788497</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="va">rmat</span> <span class="op">=</span> <span class="fu"><a href="convertBMRToRankMatrix.html">convertBMRToRankMatrix</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">rmat</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">rmat</span> <span class="op">=</span> <span class="fu"><a href="convertBMRToRankMatrix.html">convertBMRToRankMatrix</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">rmat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Sonar-example iris-example</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> classif.lda               1            1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> classif.rpart             2            2</span>
-<span class="r-in"><span class="fu"><a href="plotBMRSummary.html">plotBMRSummary</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="plotBMRSummary.html">plotBMRSummary</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="benchmark-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="plotBMRBoxplots.html">plotBMRBoxplots</a></span><span class="op">(</span><span class="va">bmr</span>, <span class="va">ber</span>, style <span class="op">=</span> <span class="st">"violin"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="plotBMRBoxplots.html">plotBMRBoxplots</a></span><span class="op">(</span><span class="va">bmr</span>, <span class="va">ber</span>, style <span class="op">=</span> <span class="st">"violin"</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`fun.y` is deprecated. Use `fun` instead.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`fun.ymin` is deprecated. Use `fun.min` instead.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`fun.ymax` is deprecated. Use `fun.max` instead.</span>
 <span class="r-plt img"><img src="benchmark-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></span><span class="op">(</span><span class="va">bmr</span>, pos <span class="op">=</span> <span class="st">"stack"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></span><span class="op">(</span><span class="va">bmr</span>, pos <span class="op">=</span> <span class="st">"stack"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="benchmark-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="friedmanTestBMR.html">friedmanTestBMR</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="friedmanTestBMR.html">friedmanTestBMR</a></span><span class="op">(</span><span class="va">bmr</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Friedman rank sum test</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> data:  acc.test.mean and learner.id and task.id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Friedman chi-squared = 2, df = 1, p-value = 0.1573</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="friedmanPostHocTestBMR.html">friedmanPostHocTestBMR</a></span><span class="op">(</span><span class="va">bmr</span>, p.value <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="friedmanPostHocTestBMR.html">friedmanPostHocTestBMR</a></span><span class="op">(</span><span class="va">bmr</span>, p.value <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: PMCMRplus</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Cannot reject null hypothesis of overall Friedman test,</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>              returning overall Friedman test.</span>
@@ -319,7 +336,7 @@ Default is set via <a href="configureMlr.html">configureMlr</a>.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>
