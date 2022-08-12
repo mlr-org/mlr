@@ -19,16 +19,16 @@ set.seed(123)
 
 Multilabel classification is a classification problem where multiple target labels can be assigned to each observation instead of only one like in multiclass classification.
 
-Two different approaches exist for multilabel classification. 
-*Problem transformation methods* try to transform the multilabel classification into binary or multiclass classification problems. 
+Two different approaches exist for multilabel classification.
+*Problem transformation methods* try to transform the multilabel classification into binary or multiclass classification problems.
 *Algorithm adaptation methods* adapt multiclass algorithms so they can be applied directly to the problem.
 
 # Creating a task
 
 The first thing you have to do for multilabel classification in `mlr` is to
-get your data in the right format. 
-You need a `data.frame` which consists of the features and a logical vector for each label which indicates if the label is present in the observation or not. After that you can create a `MultilabelTask` (`Task()`) like a normal `ClassifTask` (`Task()`). 
-Instead of one target name you have to specify a vector of targets which correspond to the names of logical variables in the `data.frame`. 
+get your data in the right format.
+You need a `data.frame` which consists of the features and a logical vector for each label which indicates if the label is present in the observation or not. After that you can create a `MultilabelTask` (`Task()`) like a normal `ClassifTask` (`Task()`).
+Instead of one target name you have to specify a vector of targets which correspond to the names of logical variables in the `data.frame`.
 In the following example we get the yeast data frame from the already existing `yeast.task()`, extract the 14 label names and create the task again.
 
 ```{r}
@@ -48,18 +48,18 @@ Multilabel classification in `mlr` can currently be done in two ways:
 
 ## Algorithm adaptation methods
 
-Currently the available algorithm adaptation methods in **R** are the multivariate random forest in the [%randomForestSRC] package and the random ferns multilabel algorithm in the [%rFerns] package. 
+Currently only the random ferns multilabel algorithm in the [%rFerns] package is available for multilabel classification tasks.
+
 You can create the learner for these algorithms like in multiclass classification problems.
 
 ```{r}
-lrn.rfsrc = makeLearner("multilabel.randomForestSRC")
 lrn.rFerns = makeLearner("multilabel.rFerns")
 lrn.rFerns
 ```
 
 ## Problem transformation methods
 
-For generating a wrapped multilabel learner first create a binary (or multiclass) classification learner with `makeLearner()`. 
+For generating a wrapped multilabel learner first create a binary (or multiclass) classification learner with `makeLearner()`.
 Afterwards apply a function like `makeMultilabelBinaryRelevanceWrapper()`, `makeMultilabelClassifierChainsWrapper()`, `makeMultilabelNestedStackingWrapper()`, `makeMultilabelDBRWrapper()` or `makeMultilabelStackingWrapper()` on the learner to convert it to a learner that uses the respective problem transformation method.
 
 You can also generate a binary relevance learner directly, as you can see in the example.
@@ -73,20 +73,20 @@ lrn.br2 = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
 lrn.br2
 ```
 
-The different methods are shortly described in the following. 
+The different methods are shortly described in the following.
 
 ### Binary relevance
 
 This problem transformation method converts the multilabel problem to binary
-classification problems for each label and applies a simple binary classificator on these. 
+classification problems for each label and applies a simple binary classificator on these.
 In `mlr` this can be done by converting your binary learner to a wrapped binary relevance multilabel learner.
 
 ### Classifier chains
 
-Trains consecutively the labels with the input data. 
+Trains consecutively the labels with the input data.
 The input data in each step is augmented by the already trained labels (with the real observed values).
-Therefore an order of the labels has to be specified. 
-At prediction time the labels are predicted in the same order as while training. 
+Therefore an order of the labels has to be specified.
+At prediction time the labels are predicted in the same order as while training.
 The required labels in the input data are given by the previous done prediction of the respective label.
 
 ### Nested stacking
@@ -95,7 +95,7 @@ Same as classifier chains, but the labels in the input data are not the real one
 
 ### Dependent binary relevance
 
-Each label is trained with the real observed values of all other labels. 
+Each label is trained with the real observed values of all other labels.
 In prediction phase for a label the other necessary labels are obtained in a previous step by a base learner like the binary relevance method.
 
 ### Stacking
@@ -104,7 +104,7 @@ Same as the dependent binary relevance method, but in the training phase the lab
 
 # Train
 
-You can `train()` a model as usual with a multilabel learner and a multilabel task as input. 
+You can `train()` a model as usual with a multilabel learner and a multilabel task as input.
 You can also pass ``subset`` and ``weights`` arguments if the
 learner supports this.
 
@@ -113,13 +113,13 @@ mod = train(lrn.br, yeast.task)
 mod = train(lrn.br, yeast.task, subset = 1:1500, weights = rep(1 / 1500, 1500))
 mod
 
-mod2 = train(lrn.rfsrc, yeast.task, subset = 1:100)
+mod2 = train(lrn.rFerns, yeast.task, subset = 1:100)
 mod2
 ```
 
 # Predict
 
-Prediction can be done as usual in `mlr` with `predict` (`predict.WrappedModel()`) and by passing a trained model and either the task to the ``task`` argument or some new data to the ``newdata`` argument. 
+Prediction can be done as usual in `mlr` with `predict` (`predict.WrappedModel()`) and by passing a trained model and either the task to the ``task`` argument or some new data to the ``newdata`` argument.
 As always you can specify a ``subset`` of the data which should be predicted.
 
 ```{r}
@@ -166,9 +166,9 @@ listMeasures("multilabel")
 
 # Resampling
 
-For evaluating the overall performance of the learning algorithm you can do some [resampling](resample.html){target="_blank"}. 
-As usual you have to define a resampling strategy, either via `makeResampleDesc()` or `makeResampleInstance()`. 
-After that you can run the `resample()` function. 
+For evaluating the overall performance of the learning algorithm you can do some [resampling](resample.html){target="_blank"}.
+As usual you have to define a resampling strategy, either via `makeResampleDesc()` or `makeResampleInstance()`.
+After that you can run the `resample()` function.
 Below the default measure Hamming loss is calculated.
 
 ```{r echo = FALSE, results='hide'}
@@ -204,7 +204,7 @@ r
 # Binary performance
 
 If you want to calculate a binary performance measure like, e.g., the  [accuracy](measures.html){target="_blank"}, the [mmce](measures.html){target="_blank"} or the [auc](measures.html){target="_blank"} for each label, you can use function `getMultilabelBinaryPerformances()`.
-You can apply this function to any multilabel prediction, e.g., also on the resample multilabel prediction. 
+You can apply this function to any multilabel prediction, e.g., also on the resample multilabel prediction.
 For calculating the [auc](measures.html){target="_blank"} you need predicted probabilities.
 
 ```{r}
