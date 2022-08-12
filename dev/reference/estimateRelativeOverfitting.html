@@ -221,24 +221,24 @@ Iteration number. Default 1, usually you don't need to specify this. Only needed
 <span class="r-in"><span><span class="va">rdesc</span> <span class="op">=</span> <span class="fu"><a href="makeResampleDesc.html">makeResampleDesc</a></span><span class="op">(</span><span class="st">"CV"</span>, iters <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">estimateRelativeOverfitting</span><span class="op">(</span><span class="va">rdesc</span>, <span class="va">acc</span>, <span class="va">task</span>, <span class="fu"><a href="makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.knn"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    iter relative.overfit.acc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:    1          -0.02127660</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:    2           0.02083333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:    1          -0.04347826</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:    2           0.04166667</span>
 <span class="r-in"><span><span class="fu">estimateRelativeOverfitting</span><span class="op">(</span><span class="va">rdesc</span>, <span class="va">acc</span>, <span class="va">task</span>, <span class="fu"><a href="makeLearner.html">makeLearner</a></span><span class="op">(</span><span class="st">"classif.lda"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    iter relative.overfit.acc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:    1          -0.08695652</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:    2           0.08000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:    1          -0.02083333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:    2           0.02040816</span>
 <span class="r-in"><span><span class="va">rpred</span> <span class="op">=</span> <span class="fu"><a href="resample.html">resample</a></span><span class="op">(</span><span class="st">"classif.knn"</span>, <span class="va">task</span>, <span class="va">rdesc</span><span class="op">)</span><span class="op">$</span><span class="va">pred</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Resampling: cross-validation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Measures:             mmce      </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.0400000 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 1:    0.0666667 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [Resample] iter 2:    0.0533333 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: mmce.test.mean=0.0466667</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Aggregated Result: mmce.test.mean=0.0600000</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">estimateRelativeOverfitting</span><span class="op">(</span><span class="va">rpred</span>, <span class="va">acc</span>, <span class="va">task</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    iter relative.overfit.acc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:    1          -0.02173913</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:    2           0.02127660</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:    1           0.02173913</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:    2          -0.02222222</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
