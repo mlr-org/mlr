@@ -234,37 +234,37 @@ Nested Spatial and Non-Spatial Cross-Validation
 <span>  resampling <span class="op">=</span> <span class="va">resampling</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">auc</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## Resampling: repeated spatial cross-validation</span></span>
 <span><span class="co">## Measures:             auc</span></span>
-<span><span class="co">## [Resample] iter 1:    0.5398810</span></span>
-<span><span class="co">## [Resample] iter 2:    0.7046371</span></span>
-<span><span class="co">## [Resample] iter 3:    0.6703070</span></span>
-<span><span class="co">## [Resample] iter 4:    0.7350827</span></span>
-<span><span class="co">## [Resample] iter 5:    0.4451993</span></span>
-<span><span class="co">## [Resample] iter 6:    0.7221774</span></span>
-<span><span class="co">## [Resample] iter 7:    0.7232207</span></span>
-<span><span class="co">## [Resample] iter 8:    0.6615998</span></span>
-<span><span class="co">## [Resample] iter 9:    0.4508605</span></span>
-<span><span class="co">## [Resample] iter 10:   0.5366071</span></span>
-<span><span class="co">## [Resample] iter 11:   0.6672078</span></span>
-<span><span class="co">## [Resample] iter 12:   0.7108196</span></span>
-<span><span class="co">## [Resample] iter 13:   0.7040323</span></span>
-<span><span class="co">## [Resample] iter 14:   0.4429348</span></span>
-<span><span class="co">## [Resample] iter 15:   0.5380952</span></span>
-<span><span class="co">## [Resample] iter 16:   0.7224771</span></span>
-<span><span class="co">## [Resample] iter 17:   0.4468864</span></span>
-<span><span class="co">## [Resample] iter 18:   0.7132179</span></span>
-<span><span class="co">## [Resample] iter 19:   0.5254868</span></span>
-<span><span class="co">## [Resample] iter 20:   0.6689787</span></span>
-<span><span class="co">## [Resample] iter 21:   0.7235356</span></span>
-<span><span class="co">## [Resample] iter 22:   0.7069237</span></span>
-<span><span class="co">## [Resample] iter 23:   0.4537241</span></span>
-<span><span class="co">## [Resample] iter 24:   0.5137457</span></span>
-<span><span class="co">## [Resample] iter 25:   0.6664699</span></span>
+<span><span class="co">## [Resample] iter 1:    0.5392857</span></span>
+<span><span class="co">## [Resample] iter 2:    0.7000000</span></span>
+<span><span class="co">## [Resample] iter 3:    0.6744392</span></span>
+<span><span class="co">## [Resample] iter 4:    0.7329260</span></span>
+<span><span class="co">## [Resample] iter 5:    0.4515399</span></span>
+<span><span class="co">## [Resample] iter 6:    0.6945565</span></span>
+<span><span class="co">## [Resample] iter 7:    0.7149533</span></span>
+<span><span class="co">## [Resample] iter 8:    0.6719303</span></span>
+<span><span class="co">## [Resample] iter 9:    0.4397645</span></span>
+<span><span class="co">## [Resample] iter 10:   0.5276786</span></span>
+<span><span class="co">## [Resample] iter 11:   0.6710449</span></span>
+<span><span class="co">## [Resample] iter 12:   0.7147735</span></span>
+<span><span class="co">## [Resample] iter 13:   0.7139113</span></span>
+<span><span class="co">## [Resample] iter 14:   0.4413496</span></span>
+<span><span class="co">## [Resample] iter 15:   0.5345238</span></span>
+<span><span class="co">## [Resample] iter 16:   0.7166549</span></span>
+<span><span class="co">## [Resample] iter 17:   0.4527473</span></span>
+<span><span class="co">## [Resample] iter 18:   0.7090873</span></span>
+<span><span class="co">## [Resample] iter 19:   0.5315006</span></span>
+<span><span class="co">## [Resample] iter 20:   0.6731110</span></span>
+<span><span class="co">## [Resample] iter 21:   0.7293578</span></span>
+<span><span class="co">## [Resample] iter 22:   0.7102675</span></span>
+<span><span class="co">## [Resample] iter 23:   0.4459096</span></span>
+<span><span class="co">## [Resample] iter 24:   0.5300687</span></span>
+<span><span class="co">## [Resample] iter 25:   0.6655844</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Aggregated Result: auc.test.mean=0.6157643</span></span>
+<span><span class="co">## Aggregated Result: auc.test.mean=0.6154786</span></span>
 <span><span class="co">## </span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">measures.test</span><span class="op">$</span><span class="va">auc</span><span class="op">)</span></span>
-<span><span class="co">## [1] 0.6157643</span></span></code></pre></div>
+<span><span class="co">## [1] 0.6154786</span></span></code></pre></div>
 <p>We can check for the introduced spatial autocorrelation bias here by performing the same modeling task using a non-spatial partitioning setting. To do so, we simply choose <code>RepCV</code> instead of <code>SpRepCV</code>. There is no need to remove <code>coordinates</code> from the task as it is only used if <code>SpCV</code> or <code>SpRepCV</code> is selected as the resampling strategy.</p>
 </div>
 <div class="section level3">
@@ -280,37 +280,37 @@ Nested Spatial and Non-Spatial Cross-Validation
 <span>  resampling <span class="op">=</span> <span class="va">resampling</span>, measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">auc</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## Resampling: repeated cross-validation</span></span>
 <span><span class="co">## Measures:             auc</span></span>
-<span><span class="co">## [Resample] iter 1:    0.7525173</span></span>
-<span><span class="co">## [Resample] iter 2:    0.7893519</span></span>
-<span><span class="co">## [Resample] iter 3:    0.7368117</span></span>
-<span><span class="co">## [Resample] iter 4:    0.7832925</span></span>
-<span><span class="co">## [Resample] iter 5:    0.7351196</span></span>
-<span><span class="co">## [Resample] iter 6:    0.7983069</span></span>
-<span><span class="co">## [Resample] iter 7:    0.7962963</span></span>
-<span><span class="co">## [Resample] iter 8:    0.7596154</span></span>
-<span><span class="co">## [Resample] iter 9:    0.6641679</span></span>
-<span><span class="co">## [Resample] iter 10:   0.8370274</span></span>
-<span><span class="co">## [Resample] iter 11:   0.7772298</span></span>
-<span><span class="co">## [Resample] iter 12:   0.7561364</span></span>
-<span><span class="co">## [Resample] iter 13:   0.7850379</span></span>
-<span><span class="co">## [Resample] iter 14:   0.7368225</span></span>
-<span><span class="co">## [Resample] iter 15:   0.7632756</span></span>
-<span><span class="co">## [Resample] iter 16:   0.7820844</span></span>
-<span><span class="co">## [Resample] iter 17:   0.7316300</span></span>
-<span><span class="co">## [Resample] iter 18:   0.7466029</span></span>
-<span><span class="co">## [Resample] iter 19:   0.8049018</span></span>
-<span><span class="co">## [Resample] iter 20:   0.7146898</span></span>
-<span><span class="co">## [Resample] iter 21:   0.7245908</span></span>
-<span><span class="co">## [Resample] iter 22:   0.7309942</span></span>
-<span><span class="co">## [Resample] iter 23:   0.7865146</span></span>
-<span><span class="co">## [Resample] iter 24:   0.7500000</span></span>
-<span><span class="co">## [Resample] iter 25:   0.8117284</span></span>
+<span><span class="co">## [Resample] iter 1:    0.7549787</span></span>
+<span><span class="co">## [Resample] iter 2:    0.7895448</span></span>
+<span><span class="co">## [Resample] iter 3:    0.7285329</span></span>
+<span><span class="co">## [Resample] iter 4:    0.8018791</span></span>
+<span><span class="co">## [Resample] iter 5:    0.7414354</span></span>
+<span><span class="co">## [Resample] iter 6:    0.7957672</span></span>
+<span><span class="co">## [Resample] iter 7:    0.7939276</span></span>
+<span><span class="co">## [Resample] iter 8:    0.7583612</span></span>
+<span><span class="co">## [Resample] iter 9:    0.6615442</span></span>
+<span><span class="co">## [Resample] iter 10:   0.8353511</span></span>
+<span><span class="co">## [Resample] iter 11:   0.7787307</span></span>
+<span><span class="co">## [Resample] iter 12:   0.7515909</span></span>
+<span><span class="co">## [Resample] iter 13:   0.7812500</span></span>
+<span><span class="co">## [Resample] iter 14:   0.7398026</span></span>
+<span><span class="co">## [Resample] iter 15:   0.7712507</span></span>
+<span><span class="co">## [Resample] iter 16:   0.7807924</span></span>
+<span><span class="co">## [Resample] iter 17:   0.7427213</span></span>
+<span><span class="co">## [Resample] iter 18:   0.7523445</span></span>
+<span><span class="co">## [Resample] iter 19:   0.7982883</span></span>
+<span><span class="co">## [Resample] iter 20:   0.6993332</span></span>
+<span><span class="co">## [Resample] iter 21:   0.7247929</span></span>
+<span><span class="co">## [Resample] iter 22:   0.7368421</span></span>
+<span><span class="co">## [Resample] iter 23:   0.7767107</span></span>
+<span><span class="co">## [Resample] iter 24:   0.7428627</span></span>
+<span><span class="co">## [Resample] iter 25:   0.8179012</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Aggregated Result: auc.test.mean=0.7621898</span></span>
+<span><span class="co">## Aggregated Result: auc.test.mean=0.7622615</span></span>
 <span><span class="co">## </span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">measures.test</span><span class="op">$</span><span class="va">auc</span><span class="op">)</span></span>
-<span><span class="co">## [1] 0.7621898</span></span></code></pre></div>
+<span><span class="co">## [1] 0.7622615</span></span></code></pre></div>
 <p>The introduced bias (caused by spatial autocorrelation) in performance in this example is around 0.12 AUROC.</p>
 </div>
 </div>
