@@ -97,10 +97,15 @@ jobs:
         run: |
           brew install open-mpi
 
-      - name: "[Custom block] rJava"
+      - name: "[Custom block] [macOS] Install xquartz"
         if: runner.os == 'macOS'
         run: |
+          brew install --cask xquartz
+
+      - name: "[Custom block] rJava"
+        run: |
           sudo R CMD javareconf
+          Rscript -e "install.packages('rJava', repos = 'cloud.r-project.org', type = 'source')"
 
       - name: "[Stage] Install"
         run: Rscript -e "pak::pkg_install('ropensci/tic@pak2')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
