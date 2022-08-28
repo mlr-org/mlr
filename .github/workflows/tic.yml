@@ -79,8 +79,8 @@ jobs:
         uses: pat-s/always-upload-cache@v3
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}-2
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}-2
 
       # for some strange Windows reason this step and the next one need to be decoupled
       - name: "[Stage] Install pak"
@@ -102,13 +102,8 @@ jobs:
         run: |
           brew install --cask xquartz
 
-      - name: "[Custom block] rJava"
-        run: |
-          sudo R CMD javareconf
-          Rscript -e "install.packages('rJava', repos = 'cloud.r-project.org', type = 'source')"
-
       - name: "[Stage] Install"
-        run: Rscript -e "pak::pkg_install('ropensci/tic@pak2')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
+        run: Rscript -e "if (grepl('Ubuntu', Sys.info()[['version']])) {options(repos = c(CRAN = sprintf('https://packagemanager.rstudio.com/all/__linux__/%s/latest', system('lsb_release -cs', intern = TRUE))))}; pak::pkg_install('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
 
       - name: "[Stage] Script"
         run: Rscript -e 'tic::script()'
