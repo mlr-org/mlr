@@ -26,6 +26,7 @@ test_that("regr_bartMachine", {
     old.predicts.list[[i]] = predict(m, new_data = regr.test[, xind])
   }
 
+  set.seed(getOption("mlr.debug.seed"))
   testSimpleParsets("regr.bartMachine", regr.df, regr.target, regr.train.inds,
     old.predicts.list, parset.list)
 
