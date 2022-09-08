@@ -12,7 +12,7 @@ Task or data.frame to extract functional features from.
 Must contain functional features as matrix columns.}
 
 \item{target}{(\code{character(1)})\cr
-Task target column. Only neccessary for data.frames
+Task target column. Only necessary for data.frames
 Default is \code{character(0)}.}
 
 \item{feat.methods}{(named \link{list})\cr
@@ -30,8 +30,10 @@ Further hyperparameters passed on to the \code{feat.methods} specified above.}
 }
 \value{
 (\link{list})
-\item{data|task (\link{data.frame} | \link{Task})}{Extracted features, same type as obj.}
-\item{desc (\code{extracFDAFeatDesc})}{Description object. See description for details.}
+\itemize{
+\item data | task (\link{data.frame} | \link{Task}): Extracted features, same type as obj.
+\item desc (\code{extracFDAFeatDesc}): Description object. See description for details.
+}
 }
 \description{
 Extract non-functional features from functional features using various methods.
@@ -47,10 +49,10 @@ re-extraction during the predict-phase is returned. This can be used with
 \details{
 The description object contains these slots:
 \itemize{
-\item target \code{\link{character}}: See argument.
-\item coln \code{\link{character}}: Colum names of data.
-\item fd.cols \code{\link{character}}: Functional feature names.
-\item extractFDAFeat \code{\link{list}}: Contains \code{feature.methods} and relevant
+\item target (\code{character}): See argument.
+\item coln (\code{character}): Colum names of data.
+\item fd.cols (\code{character}): Functional feature names.
+\item extractFDAFeat (\code{list}): Contains \code{feature.methods} and relevant
 parameters for reextraction.
 }
 }

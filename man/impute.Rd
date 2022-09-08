@@ -67,8 +67,10 @@ Default is \code{TRUE}.}
 }
 \value{
 (\link{list})
-\item{data (\link{data.frame})}{Imputed data.}
-\item{desc (\code{ImputationDesc})}{Description object.}
+\itemize{
+\item data (\link{data.frame}): Imputed data.
+\item desc (\code{ImputationDesc}): Description object.
+}
 }
 \description{
 Allows imputation of missing feature values through various techniques.
@@ -90,16 +92,15 @@ under \link{imputations} or create one yourself using \link{makeImputeMethod}.
 }
 \details{
 The description object contains these slots
-\describe{
-\item{target (\link{character})}{See argument.}
-\item{features (\link{character})}{Feature names (column names of \code{data}).},
-\item{classes (\link{character})}{Feature classes (storage type of \code{data}).}
-\item{lvls (named \link{list})}{Mapping of column names of factor features to their levels,
-including newly created ones during imputation.}
-\item{impute (named \link{list})}{Mapping of column names to imputation functions.}
-\item{dummies (named \link{list})}{Mapping of column names to imputation functions.}
-\item{impute.new.levels (\code{logical(1)})}{See argument.}
-\item{recode.factor.levels (\code{logical(1)})}{See argument.}
+\itemize{
+\item target (\link{character}): See argument
+\item features (\link{character}): Feature names (column names of \code{data})
+\item classes (\link{character}): Feature classes (storage type of \code{data})
+\item lvls (named \link{list}): Mapping of column names of factor features to their levels, including newly created ones during imputation
+\item impute (named \link{list}): Mapping of column names to imputation functions
+\item dummies (named \link{list}): Mapping of column names to imputation functions
+\item impute.new.levels (\code{logical(1)}): See argument
+\item recode.factor.levels (\code{logical(1)}): See argument
 }
 }
 \examples{

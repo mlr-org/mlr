@@ -20,17 +20,14 @@
 #'
 #' @details
 #' The description object contains these slots
-#' \describe{
-#'   \item{target ([character])}{See argument.}
-#'   \item{features ([character])}{Feature names (column names of `data`).},
-#'   \item{classes ([character])}{Feature classes (storage type of `data`).}
-#'   \item{lvls (named [list])}{Mapping of column names of factor features to their levels,
-#'     including newly created ones during imputation.}
-#'   \item{impute (named [list])}{Mapping of column names to imputation functions.}
-#'   \item{dummies (named [list])}{Mapping of column names to imputation functions.}
-#'   \item{impute.new.levels (`logical(1)`)}{See argument.}
-#'   \item{recode.factor.levels (`logical(1)`)}{See argument.}
-#' }
+#'   - target ([character]): See argument
+#'   - features ([character]): Feature names (column names of `data`)
+#'   - classes ([character]): Feature classes (storage type of `data`)
+#'   - lvls (named [list]): Mapping of column names of factor features to their levels, including newly created ones during imputation
+#'   - impute (named [list]): Mapping of column names to imputation functions
+#'   - dummies (named [list]): Mapping of column names to imputation functions
+#'   - impute.new.levels (`logical(1)`): See argument
+#'   - recode.factor.levels (`logical(1)`): See argument
 #'
 #' @template arg_taskdf
 #' @param target ([character])\cr
@@ -69,8 +66,8 @@
 #'   feature factor in the training data after imputation?.
 #'   Default is `TRUE`.
 #' @return ([list])
-#'   \item{data ([data.frame])}{Imputed data.}
-#'   \item{desc (`ImputationDesc`)}{Description object.}
+#'   - data ([data.frame]): Imputed data.
+#'   - desc (`ImputationDesc`): Description object.
 #' @export
 #' @family impute
 #' @examples

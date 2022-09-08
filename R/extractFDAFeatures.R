@@ -13,17 +13,17 @@
 #'
 #' @details
 #' The description object contains these slots:
-#'   * target [`character`]: See argument.
-#'   * coln [`character`]: Colum names of data.
-#'   * fd.cols [`character`]: Functional feature names.
-#'   * extractFDAFeat [`list`]: Contains `feature.methods` and relevant
+#'   * target (`character`): See argument.
+#'   * coln (`character`): Colum names of data.
+#'   * fd.cols (`character`): Functional feature names.
+#'   * extractFDAFeat (`list`): Contains `feature.methods` and relevant
 #'     parameters for reextraction.
 #'
 #' @param obj ([Task] | [data.frame])\cr
 #'   Task or data.frame to extract functional features from.
 #'   Must contain functional features as matrix columns.
 #' @param target (`character(1)`)\cr
-#'   Task target column. Only neccessary for data.frames
+#'   Task target column. Only necessary for data.frames
 #'   Default is `character(0)`.
 #' @param feat.methods (named [list])\cr
 #'   List of functional features along with the desired methods for each functional feature.
@@ -37,8 +37,8 @@
 #' @param ... (any)\cr
 #'   Further hyperparameters passed on to the `feat.methods` specified above.
 #' @return ([list])
-#'   \item{data|task ([data.frame] | [Task])}{Extracted features, same type as obj.}
-#'   \item{desc (`extracFDAFeatDesc`)}{Description object. See description for details.}
+#'   - data | task ([data.frame] | [Task]): Extracted features, same type as obj.
+#'   - desc (`extracFDAFeatDesc`): Description object. See description for details.
 #' @family fda
 #' @export
 #' @examples
