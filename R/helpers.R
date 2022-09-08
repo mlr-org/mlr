@@ -181,3 +181,8 @@ makeResamplingWindow = function(desc, size, task = NULL, coords, window.type) {
   desc$iters = length(test.inds)
   makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds)
 }
+
+# taken from mlr3learners
+swap_levels = function(x) {
+  factor(x, levels = rev(levels(x)))
+}

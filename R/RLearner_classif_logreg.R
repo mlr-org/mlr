@@ -20,6 +20,14 @@ makeRLearner.classif.logreg = function() {
 #' @export
 trainLearner.classif.logreg = function(.learner, .task, .subset, .weights = NULL, ...) {
   f = getTaskFormula(.task)
+
+  # logreg expects the first label to be the negative class, contrary
+  # to the mlr3 convention that the positive class comes first.
+  # see https://github.com/mlr-org/mlr/issues/2817
+  tn = getTaskTargetNames(.task)
+  data = getTaskData(.task, .subset)
+  data[[tn]] = swap_levels(data[[tn]])
+
   stats::glm(f, data = getTaskData(.task, .subset), family = "binomial", weights = .weights, ...)
 }
 
