@@ -1,6 +1,6 @@
 Package: mlr
 Title: Machine Learning in R
-Version: 2.19.0.9001
+Version: 2.19.1
 Authors@R: c(
     person("Bernd", "Bischl", , "bernd_bischl@gmx.net", role = "aut",
            comment = c(ORCID = "0000-0001-6002-6980")),
