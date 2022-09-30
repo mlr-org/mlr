@@ -45,56 +45,30 @@
 
 # mlr 2.19.1
 
-## Continuous integration
+## Bug fixes
 
-- Only build on r-devel
-
-- Add fledge support
-
-## precommit
-
-- Skip styler hook due to timeout
-
-- Remove roxygenize hook
-
-## CPPFLAGS
-
-- Suppress unused arguments warning
-
-## Uncategorized
+- Adjust behavior of `"positive"` arg for `classif.logreg` (#2846)
 
 - Consistent naming for dummy feature encoding of variables with different levels count (#2847)
 
-- Remove nodeHarvest learners (#2841)
+- Remove {nodeHarvest} learners (#2841)
 
-- Remove rknn learner (#2842)
+- Remove {rknn} learner (#2842)
 
 - Remove all {DiscriMiner} learners (#2840)
 
-- Remove extraTrees learner (#2839)
+- Remove {extraTrees} learner (#2839)
 
-- [github.com/lorenzwalthert/precommit: v0.3.0 → v0.3.2](https://github.com/lorenzwalthert/precommit/compare/v0.3.0...v0.3.2) (@66853113+pre-commit-ci[bot], #2838)
+- Remove depcrecated {rrlda} learner
 
-- [github.com/pre-commit/pre-commit-hooks: v4.2.0 → v4.3.0](https://github.com/pre-commit/pre-commit-hooks/compare/v4.2.0...v4.3.0) (@66853113+pre-commit-ci[bot], #2838)
+- Resolve some {ggplot} deprecation warnings
 
-- [github.com/lorenzwalthert/precommit: v0.2.2.9015 → v0.3.0](https://github.com/lorenzwalthert/precommit/compare/v0.2.2.9015...v0.3.0) (@66853113+pre-commit-ci[bot], #2835)
+- Fixed `information.gain` filter calculation.
+  Before, `chi.squared` was calculated even though `information.gain` was requested due to a glitch in the filter naming (#2816, @jokokojote)
 
-- R 4.2 fixes (#2823)
-
-- Remove depcrecated rrlda learner
-
-- Resolve some ggplot deprecation warnings
-
-
-# mlr 2.19.0.9001
-
-- Fixed `information.gain` filter calculation. Before, `chi.squared` was calculated even though `information.gain` was requested due to a glitch in the filter naming (#2816, @jokokojote)
 - Make `helpLearnerParam()`'s HTML parsing more robust (#2843)
 
-# mlr 2.19.0.9000
-
-- Internal changes only.
-
+- Add HTML5 support for help pages
 
 # mlr 2.19.0
 
