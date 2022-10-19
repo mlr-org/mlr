@@ -4,18 +4,12 @@ test_that("learners work: regr ", {
   requirePackagesOrSkip("kknn")
   requirePackagesOrSkip("survival")
 
-  # because of missing rJava for bartMachine
-  skip_on_os("windows")
   # suppressPackageStartupMessages(requirePackagesOrSkip("crs", default.method = "load"))
 
   # settings to make learners faster and deal with small data size
   hyperpars = list(
     regr.km = list(nugget = 0.01),
     regr.cforest = list(mtry = 1L, minsplit = 1, minbucket = 1),
-    regr.bartMachine = list(verbose = FALSE, run_in_sample = FALSE,
-      # see above
-      replace_missing_data_with_x_j_bar = TRUE,
-      num_iterations_after_burn_in = 10L),
     regr.h2o.deeplearning = list(hidden = 2L),
     regr.ranger = list(keep.inbag = TRUE)
   )

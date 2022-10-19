@@ -29,8 +29,6 @@ mytask3 = makeClassifTask(id = "t3", data = mydata3, target = "y")
 mytask4 = makeClassifTask(id = "t4", data = mydata4, target = "y")
 
 hpars = list(
-  classif.bartMachine = list(verbose = FALSE, run_in_sample = FALSE,
-    num_iterations_after_burn_in = 10L),
   classif.bdk = list(ydim = 2L),
   classif.boosting = list(mfinal = 10L),
   classif.cforest = list(mtry = 2L),
@@ -45,9 +43,6 @@ hpars = list(
 
 
 test_that("no labels are switched", {
-
-  # because of missing rJava for bartMachine
-  skip_on_os("windows")
 
   # spurious non-deterministic changes
   skip_on_os("linux")
