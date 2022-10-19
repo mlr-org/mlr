@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">mlr</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.19.0.9001</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.19.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -179,19 +179,18 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Regression learners that can deal with missing values</span></span>
 <span><span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"regr"</span>, properties <span class="op">=</span> <span class="st">"missings"</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="co">##                    class     package</span></span>
-<span><span class="co">## 1       regr.bartMachine bartMachine</span></span>
-<span><span class="co">## 2           regr.cforest       party</span></span>
-<span><span class="co">## 3             regr.ctree       party</span></span>
-<span><span class="co">## 4            regr.cubist      Cubist</span></span>
-<span><span class="co">## 5       regr.featureless         mlr</span></span>
-<span><span class="co">## 6               regr.gbm         gbm</span></span>
-<span><span class="co">## 7  regr.h2o.deeplearning         h2o</span></span>
-<span><span class="co">## 8           regr.h2o.gbm         h2o</span></span>
-<span><span class="co">## 9           regr.h2o.glm         h2o</span></span>
-<span><span class="co">## 10 regr.h2o.randomForest         h2o</span></span>
-<span><span class="co">## 11            regr.rpart       rpart</span></span>
-<span><span class="co">## 12          regr.xgboost     xgboost</span></span></code></pre></div>
+<span><span class="co">##                    class package</span></span>
+<span><span class="co">## 1           regr.cforest   party</span></span>
+<span><span class="co">## 2             regr.ctree   party</span></span>
+<span><span class="co">## 3            regr.cubist  Cubist</span></span>
+<span><span class="co">## 4       regr.featureless     mlr</span></span>
+<span><span class="co">## 5               regr.gbm     gbm</span></span>
+<span><span class="co">## 6  regr.h2o.deeplearning     h2o</span></span>
+<span><span class="co">## 7           regr.h2o.gbm     h2o</span></span>
+<span><span class="co">## 8           regr.h2o.glm     h2o</span></span>
+<span><span class="co">## 9  regr.h2o.randomForest     h2o</span></span>
+<span><span class="co">## 10            regr.rpart   rpart</span></span>
+<span><span class="co">## 11          regr.xgboost xgboost</span></span></code></pre></div>
 <p>See also the list of <a href="integrated_learners.html" target="_blank">integrated learners</a> in the Appendix.</p>
 <div class="section level2">
 <h2 id="imputation-and-reimputation">Imputation and reimputation<a class="anchor" aria-label="anchor" href="#imputation-and-reimputation"></a>

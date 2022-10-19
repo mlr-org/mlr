@@ -34,7 +34,7 @@ under imputations or create one yourself using makeImputeMethod."><meta property
     
     <a class="navbar-brand me-2" href="../index.html">mlr</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.19.0.9001</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.19.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -262,43 +262,20 @@ Default is <code>TRUE</code>.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>(<a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>)</p>
-<dl><dt>data (<a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>)</dt>
-<dd><p>Imputed data.</p></dd>
-
-<dt>desc (<code>ImputationDesc</code>)</dt>
-<dd><p>Description object.</p></dd>
-
-</dl></div>
+<p>(<a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>)</p><ul><li><p>data (<a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>): Imputed data.</p></li>
+<li><p>desc (<code>ImputationDesc</code>): Description object.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The description object contains these slots</p><dl><dt>target (<a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>)</dt>
-<dd><p>See argument.</p></dd>
-
-<dt>features (<a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>)</dt>
-<dd><p>Feature names (column names of <code>data</code>).</p></dd>
-,
-<dt>classes (<a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>)</dt>
-<dd><p>Feature classes (storage type of <code>data</code>).</p></dd>
-
-<dt>lvls (named <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>)</dt>
-<dd><p>Mapping of column names of factor features to their levels,
-including newly created ones during imputation.</p></dd>
-
-<dt>impute (named <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>)</dt>
-<dd><p>Mapping of column names to imputation functions.</p></dd>
-
-<dt>dummies (named <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>)</dt>
-<dd><p>Mapping of column names to imputation functions.</p></dd>
-
-<dt>impute.new.levels (<code>logical(1)</code>)</dt>
-<dd><p>See argument.</p></dd>
-
-<dt>recode.factor.levels (<code>logical(1)</code>)</dt>
-<dd><p>See argument.</p></dd>
-
-
-</dl></div>
+    <p>The description object contains these slots</p><ul><li><p>target (<a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>): See argument</p></li>
+<li><p>features (<a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>): Feature names (column names of <code>data</code>)</p></li>
+<li><p>classes (<a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>): Feature classes (storage type of <code>data</code>)</p></li>
+<li><p>lvls (named <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>): Mapping of column names of factor features to their levels, including newly created ones during imputation</p></li>
+<li><p>impute (named <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>): Mapping of column names to imputation functions</p></li>
+<li><p>dummies (named <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>): Mapping of column names to imputation functions</p></li>
+<li><p>impute.new.levels (<code>logical(1)</code>): See argument</p></li>
+<li><p>recode.factor.levels (<code>logical(1)</code>): See argument</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other impute: 

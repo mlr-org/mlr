@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mlr</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.19.0.9001</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.19.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -161,13 +161,35 @@
 <li>remove <code>regr_slim</code> learner due to pkg (flare) being orphaned on CRAN</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.19.0.9000" id="mlr-21909000">mlr 2.19.0.9000<a class="anchor" aria-label="anchor" href="#mlr-21909000"></a></h2>
-<ul><li>Internal changes only.</li></ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.19.0.9001" id="mlr-21909001">mlr 2.19.0.9001<a class="anchor" aria-label="anchor" href="#mlr-21909001"></a></h2>
-<ul><li>Fixed <code>information.gain</code> filter calculation. Before, <code>chi.squared</code> was calculated even though <code>information.gain</code> was requested due to a glitch in the filter naming (<a href="https://github.com/mlr-org/mlr/issues/2816" class="external-link">#2816</a>, <a href="https://github.com/jokokojote" class="external-link">@jokokojote</a>)</li>
-<li>Make <code><a href="../reference/helpLearnerParam.html">helpLearnerParam()</a></code>’s HTML parsing more robust (<a href="https://github.com/mlr-org/mlr/issues/2843" class="external-link">#2843</a>)</li>
+<h2 class="pkg-version" data-toc-text="2.19.1.9000" id="mlr-21919000">mlr 2.19.1.9000<a class="anchor" aria-label="anchor" href="#mlr-21919000"></a></h2>
+<div class="section level3">
+<h3 id="continuous-integration-2-19-1-9000">Continuous integration<a class="anchor" aria-label="anchor" href="#continuous-integration-2-19-1-9000"></a></h3>
+<ul><li><p>Only build on r-devel</p></li>
+<li><p>Add fledge support</p></li>
 </ul></div>
+<div class="section level3">
+<h3 id="precommit-2-19-1-9000">precommit<a class="anchor" aria-label="anchor" href="#precommit-2-19-1-9000"></a></h3>
+<ul><li><p>Skip styler hook due to timeout</p></li>
+<li><p>Remove roxygenize hook</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="cppflags-2-19-1-9000">CPPFLAGS<a class="anchor" aria-label="anchor" href="#cppflags-2-19-1-9000"></a></h3>
+<ul><li>Suppress unused arguments warning</li></ul></div>
+<div class="section level3">
+<h3 id="uncategorized-2-19-1-9000">Uncategorized<a class="anchor" aria-label="anchor" href="#uncategorized-2-19-1-9000"></a></h3>
+<ul><li><p>Consistent naming for dummy feature encoding of variables with different levels count (<a href="https://github.com/mlr-org/mlr/issues/2847" class="external-link">#2847</a>)</p></li>
+<li><p>Remove nodeHarvest learners (<a href="https://github.com/mlr-org/mlr/issues/2841" class="external-link">#2841</a>)</p></li>
+<li><p>Remove rknn learner (<a href="https://github.com/mlr-org/mlr/issues/2842" class="external-link">#2842</a>)</p></li>
+<li><p>Remove all {DiscriMiner} learners (<a href="https://github.com/mlr-org/mlr/issues/2840" class="external-link">#2840</a>)</p></li>
+<li><p>Remove extraTrees learner (<a href="https://github.com/mlr-org/mlr/issues/2839" class="external-link">#2839</a>)</p></li>
+<li><p><a href="https://github.com/lorenzwalthert/precommit/compare/v0.3.0...v0.3.2" class="external-link">github.com/lorenzwalthert/precommit: v0.3.0 → v0.3.2</a> (<a href="https://github.com/66853113" class="external-link">@66853113</a>+pre-commit-ci[bot], <a href="https://github.com/mlr-org/mlr/issues/2838" class="external-link">#2838</a>)</p></li>
+<li><p><a href="https://github.com/pre-commit/pre-commit-hooks/compare/v4.2.0...v4.3.0" class="external-link">github.com/pre-commit/pre-commit-hooks: v4.2.0 → v4.3.0</a> (<a href="https://github.com/66853113" class="external-link">@66853113</a>+pre-commit-ci[bot], <a href="https://github.com/mlr-org/mlr/issues/2838" class="external-link">#2838</a>)</p></li>
+<li><p><a href="https://github.com/lorenzwalthert/precommit/compare/v0.2.2.9015...v0.3.0" class="external-link">github.com/lorenzwalthert/precommit: v0.2.2.9015 → v0.3.0</a> (<a href="https://github.com/66853113" class="external-link">@66853113</a>+pre-commit-ci[bot], <a href="https://github.com/mlr-org/mlr/issues/2835" class="external-link">#2835</a>)</p></li>
+<li><p>R 4.2 fixes (<a href="https://github.com/mlr-org/mlr/issues/2823" class="external-link">#2823</a>)</p></li>
+<li><p>Remove depcrecated rrlda learner</p></li>
+<li><p>Resolve some ggplot deprecation warnings</p></li>
+</ul></div>
+</div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

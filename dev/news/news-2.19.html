@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mlr</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.19.0.9001</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.19.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,7 +144,25 @@
 <li>Warning if <code>fix.factors.prediction = TRUE</code> causes the generation of NAs for new factor levels in prediction (<a href="https://github.com/jakob-r" class="external-link">@jakob-r</a>, <a href="https://github.com/mlr-org/mlr/issues/2794" class="external-link">#2794</a>)</li>
 <li>Clear error message if prediction of wrapped learner has not the same length as <code>newdata</code> (<a href="https://github.com/jakob-r" class="external-link">@jakob-r</a>, <a href="https://github.com/mlr-org/mlr/issues/2794" class="external-link">#2794</a>)</li>
 </ul></div>
-  </main></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.19.1" id="mlr-2191">mlr 2.19.1<a class="anchor" aria-label="anchor" href="#mlr-2191"></a></h2><p class="text-muted">CRAN release: 2022-09-29</p>
+<div class="section level3">
+<h3 id="bug-fixes-2-19-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-19-1"></a></h3>
+<ul><li><p>Adjust behavior of <code>"positive"</code> arg for <code>classif.logreg</code> (<a href="https://github.com/mlr-org/mlr/issues/2846" class="external-link">#2846</a>)</p></li>
+<li><p>Consistent naming for dummy feature encoding of variables with different levels count (<a href="https://github.com/mlr-org/mlr/issues/2847" class="external-link">#2847</a>)</p></li>
+<li><p>Remove {nodeHarvest} learners (<a href="https://github.com/mlr-org/mlr/issues/2841" class="external-link">#2841</a>)</p></li>
+<li><p>Remove {rknn} learner (<a href="https://github.com/mlr-org/mlr/issues/2842" class="external-link">#2842</a>)</p></li>
+<li><p>Remove all {DiscriMiner} learners (<a href="https://github.com/mlr-org/mlr/issues/2840" class="external-link">#2840</a>)</p></li>
+<li><p>Remove {extraTrees} learner (<a href="https://github.com/mlr-org/mlr/issues/2839" class="external-link">#2839</a>)</p></li>
+<li><p>Remove depcrecated {rrlda} learner</p></li>
+<li><p>Resolve some {ggplot} deprecation warnings</p></li>
+<li><p>Fixed <code>information.gain</code> filter calculation. Before, <code>chi.squared</code> was calculated even though <code>information.gain</code> was requested due to a glitch in the filter naming (<a href="https://github.com/mlr-org/mlr/issues/2816" class="external-link">#2816</a>, <a href="https://github.com/jokokojote" class="external-link">@jokokojote</a>)</p></li>
+<li><p>Make <code><a href="../reference/helpLearnerParam.html">helpLearnerParam()</a></code>’s HTML parsing more robust (<a href="https://github.com/mlr-org/mlr/issues/2843" class="external-link">#2843</a>)</p></li>
+<li><p>Add HTML5 support for help pages</p></li>
+</ul></div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

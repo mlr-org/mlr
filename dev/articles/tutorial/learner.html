@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">mlr</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.19.0.9001</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.19.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -359,24 +359,24 @@
 <code class="sourceCode R"><span><span class="co"># List everything in mlr</span></span>
 <span><span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">##                 class      package</span></span>
-<span><span class="co">## 1         classif.ada    ada,rpart</span></span>
-<span><span class="co">## 2  classif.adaboostm1        RWeka</span></span>
-<span><span class="co">## 3 classif.bartMachine  bartMachine</span></span>
-<span><span class="co">## 4    classif.binomial        stats</span></span>
-<span><span class="co">## 5    classif.boosting adabag,rpart</span></span>
-<span><span class="co">## 6         classif.bst    bst,rpart</span></span>
+<span><span class="co">##                class      package</span></span>
+<span><span class="co">## 1        classif.ada    ada,rpart</span></span>
+<span><span class="co">## 2 classif.adaboostm1        RWeka</span></span>
+<span><span class="co">## 3   classif.binomial        stats</span></span>
+<span><span class="co">## 4   classif.boosting adabag,rpart</span></span>
+<span><span class="co">## 5        classif.bst    bst,rpart</span></span>
+<span><span class="co">## 6        classif.C50          C50</span></span>
 <span></span>
 <span><span class="co"># List classifiers that can output probabilities</span></span>
 <span><span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="st">"classif"</span>, properties <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lrns</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"class"</span>, <span class="st">"package"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">##                 class      package</span></span>
-<span><span class="co">## 1         classif.ada    ada,rpart</span></span>
-<span><span class="co">## 2  classif.adaboostm1        RWeka</span></span>
-<span><span class="co">## 3 classif.bartMachine  bartMachine</span></span>
-<span><span class="co">## 4    classif.binomial        stats</span></span>
-<span><span class="co">## 5    classif.boosting adabag,rpart</span></span>
-<span><span class="co">## 6         classif.C50          C50</span></span>
+<span><span class="co">##                class      package</span></span>
+<span><span class="co">## 1        classif.ada    ada,rpart</span></span>
+<span><span class="co">## 2 classif.adaboostm1        RWeka</span></span>
+<span><span class="co">## 3   classif.binomial        stats</span></span>
+<span><span class="co">## 4   classif.boosting adabag,rpart</span></span>
+<span><span class="co">## 5        classif.C50          C50</span></span>
+<span><span class="co">## 6    classif.cforest        party</span></span>
 <span></span>
 <span><span class="co"># List classifiers that can be applied to iris (i.e., multiclass) and output probabilities</span></span>
 <span><span class="va">lrns</span> <span class="op">=</span> <span class="fu"><a href="../../reference/listLearners.html">listLearners</a></span><span class="op">(</span><span class="va">iris.task</span>, properties <span class="op">=</span> <span class="st">"prob"</span><span class="op">)</span></span>

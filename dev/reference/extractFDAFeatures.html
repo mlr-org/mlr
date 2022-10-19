@@ -24,7 +24,7 @@ reextractFDAFeatures in order to extract features during the prediction phase.">
     
     <a class="navbar-brand me-2" href="../index.html">mlr</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.19.0.9001</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.19.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -173,7 +173,7 @@ Must contain functional features as matrix columns.</p></dd>
 
 <dt>target</dt>
 <dd><p>(<code>character(1)</code>)<br>
-Task target column. Only neccessary for data.frames
+Task target column. Only necessary for data.frames
 Default is <code>character(0)</code>.</p></dd>
 
 
@@ -198,20 +198,15 @@ Further hyperparameters passed on to the <code>feat.methods</code> specified abo
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>(<a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>)</p>
-<dl><dt>data|task (<a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> | <a href="Task.html">Task</a>)</dt>
-<dd><p>Extracted features, same type as obj.</p></dd>
-
-<dt>desc (<code>extracFDAFeatDesc</code>)</dt>
-<dd><p>Description object. See description for details.</p></dd>
-
-</dl></div>
+<p>(<a href="https://rdrr.io/r/base/list.html" class="external-link">list</a>)</p><ul><li><p>data | task (<a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> | <a href="Task.html">Task</a>): Extracted features, same type as obj.</p></li>
+<li><p>desc (<code>extracFDAFeatDesc</code>): Description object. See description for details.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The description object contains these slots:</p><ul><li><p>target <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></code>: See argument.</p></li>
-<li><p>coln <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></code>: Colum names of data.</p></li>
-<li><p>fd.cols <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></code>: Functional feature names.</p></li>
-<li><p>extractFDAFeat <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></code>: Contains <code>feature.methods</code> and relevant
+    <p>The description object contains these slots:</p><ul><li><p>target (<code>character</code>): See argument.</p></li>
+<li><p>coln (<code>character</code>): Colum names of data.</p></li>
+<li><p>fd.cols (<code>character</code>): Functional feature names.</p></li>
+<li><p>extractFDAFeat (<code>list</code>): Contains <code>feature.methods</code> and relevant
 parameters for reextraction.</p></li>
 </ul></div>
     <div class="section level2">

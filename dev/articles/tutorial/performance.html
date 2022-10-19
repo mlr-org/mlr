@@ -37,7 +37,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">mlr</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.19.0.9001</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.19.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -189,18 +189,18 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Performance measures for classification with multiple classes</span></span>
 <span><span class="fu"><a href="../../reference/listMeasures.html">listMeasures</a></span><span class="op">(</span><span class="st">"classif"</span>, properties <span class="op">=</span> <span class="st">"classif.multi"</span><span class="op">)</span></span>
-<span><span class="co">##  [1] "bac"              "wkappa"           "lsr"              "logloss"         </span></span>
-<span><span class="co">##  [5] "ber"              "featperc"         "qsr"              "multiclass.au1p" </span></span>
-<span><span class="co">##  [9] "multiclass.au1u"  "mmce"             "acc"              "timetrain"       </span></span>
-<span><span class="co">## [13] "ssr"              "multiclass.brier" "timepredict"      "multiclass.aunp" </span></span>
-<span><span class="co">## [17] "kappa"            "timeboth"         "multiclass.aunu"</span></span>
+<span><span class="co">##  [1] "featperc"         "mmce"             "lsr"              "bac"             </span></span>
+<span><span class="co">##  [5] "qsr"              "timeboth"         "multiclass.aunp"  "timetrain"       </span></span>
+<span><span class="co">##  [9] "multiclass.aunu"  "ber"              "timepredict"      "multiclass.brier"</span></span>
+<span><span class="co">## [13] "ssr"              "acc"              "logloss"          "wkappa"          </span></span>
+<span><span class="co">## [17] "multiclass.au1p"  "multiclass.au1u"  "kappa"</span></span>
 <span><span class="co"># Performance measure suitable for the iris classification task</span></span>
 <span><span class="fu"><a href="../../reference/listMeasures.html">listMeasures</a></span><span class="op">(</span><span class="va">iris.task</span><span class="op">)</span></span>
-<span><span class="co">##  [1] "bac"              "wkappa"           "lsr"              "logloss"         </span></span>
-<span><span class="co">##  [5] "ber"              "featperc"         "qsr"              "multiclass.au1p" </span></span>
-<span><span class="co">##  [9] "multiclass.au1u"  "mmce"             "acc"              "timetrain"       </span></span>
-<span><span class="co">## [13] "ssr"              "multiclass.brier" "timepredict"      "multiclass.aunp" </span></span>
-<span><span class="co">## [17] "kappa"            "timeboth"         "multiclass.aunu"</span></span></code></pre></div>
+<span><span class="co">##  [1] "featperc"         "mmce"             "lsr"              "bac"             </span></span>
+<span><span class="co">##  [5] "qsr"              "timeboth"         "multiclass.aunp"  "timetrain"       </span></span>
+<span><span class="co">##  [9] "multiclass.aunu"  "ber"              "timepredict"      "multiclass.brier"</span></span>
+<span><span class="co">## [13] "ssr"              "acc"              "logloss"          "wkappa"          </span></span>
+<span><span class="co">## [17] "multiclass.au1p"  "multiclass.au1u"  "kappa"</span></span></code></pre></div>
 <p>For convenience there exists a default measure for each type of learning problem, which is calculated if nothing else is specified. As defaults we chose the most commonly used measures for the respective types, e.g., the mean squared error (<a href="measures.html" target="_blank">mse</a>) for regression and the misclassification rate (<a href="measures.html" target="_blank">mmce</a>) for classification. The help page of function <code><a href="../../reference/getDefaultMeasure.html">getDefaultMeasure()</a></code> lists all defaults for all types of learning problems. The function itself returns the default measure for a given task type, <code><a href="../../reference/Task.html">Task()</a></code> or <code><a href="../../reference/makeLearner.html">Learner()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get default measure for iris.task</span></span>
