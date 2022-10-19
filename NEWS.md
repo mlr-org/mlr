@@ -1,5 +1,13 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# mlr 2.19.1.9001
+
+- Remove bartMachine learner (#2851)
+
+- Merged cran-2.19.1 into main
+
+
+
 # mlr 2.19.1.9000
 
 ## Continuous integration
