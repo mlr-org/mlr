@@ -154,15 +154,15 @@ on this and how to change the file path.'><meta property="og:image" content="htt
     </div>
 
     <div class="ref-description section level2">
-    <p>Tuning with iterated F-Racing with method <a href="https://rdrr.io/pkg/irace/man/irace.html" class="external-link">irace::irace</a>. All
+    <p>Tuning with iterated F-Racing with method <a href="https://mlopez-ibanez.github.io/irace/reference/irace.html" class="external-link">irace::irace</a>. All
 kinds of parameter types can be handled. We return the best of the final
 elite candidates found by irace in the last race. Its estimated performance
 is the mean of all evaluations ever done for that candidate. More information
-on irace can be found in package vignette: <code><a href="https://cran.rstudio.com/web/packages/irace/vignettes/irace-package.pdf" class="external-link">vignette("irace-package", package = "irace")</a></code></p>
+on irace can be found in package vignette: <code><a href="https://mlopez-ibanez.github.io/irace/articles/irace-package.pdf" class="external-link">vignette("irace-package", package = "irace")</a></code></p>
 <p>For resampling you have to pass a <a href="makeResampleDesc.html">ResampleDesc</a>, not a <a href="makeResampleInstance.html">ResampleInstance</a>.
 The resampling strategy is randomly instantiated <code>n.instances</code> times and
 these are the instances in the sense of irace (<code>instances</code> element of
-<code>tunerConfig</code> in <a href="https://rdrr.io/pkg/irace/man/irace.html" class="external-link">irace::irace</a>). Also note that irace will always store its
+<code>tunerConfig</code> in <a href="https://mlopez-ibanez.github.io/irace/reference/irace.html" class="external-link">irace::irace</a>). Also note that irace will always store its
 tuning results in a file on disk, see the package documentation for details
 on this and how to change the file path.</p>
     </div>
@@ -256,7 +256,7 @@ evaluations. It is passed to <code>maxExperiments</code>.</p></dd>
 <dd><p>(any)<br>
 Further control parameters passed to the <code>control</code> arguments of
 <a href="https://rdrr.io/pkg/cmaes/man/cma_es.html" class="external-link">cmaes::cma_es</a> or <a href="https://rdrr.io/pkg/GenSA/man/GenSA.html" class="external-link">GenSA::GenSA</a>, as well as
-towards the <code>tunerConfig</code> argument of <a href="https://rdrr.io/pkg/irace/man/irace.html" class="external-link">irace::irace</a>.</p></dd>
+towards the <code>tunerConfig</code> argument of <a href="https://mlopez-ibanez.github.io/irace/reference/irace.html" class="external-link">irace::irace</a>.</p></dd>
 
 </dl></div>
     <div class="section level2">
