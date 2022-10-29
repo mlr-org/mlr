@@ -4,51 +4,9 @@
 
 - Remove bartMachine learner (#2851)
 
-- Merged cran-2.19.1 into main
-
-
-
 # mlr 2.19.1.9000
 
-## Continuous integration
-
-- Only build on r-devel
-
-- Add fledge support
-
-## precommit
-
-- Skip styler hook due to timeout
-
-- Remove roxygenize hook
-
-## CPPFLAGS
-
-- Suppress unused arguments warning
-
-## Uncategorized
-
-- Consistent naming for dummy feature encoding of variables with different levels count (#2847)
-
-- Remove nodeHarvest learners (#2841)
-
-- Remove rknn learner (#2842)
-
-- Remove all {DiscriMiner} learners (#2840)
-
-- Remove extraTrees learner (#2839)
-
-- [github.com/lorenzwalthert/precommit: v0.3.0 → v0.3.2](https://github.com/lorenzwalthert/precommit/compare/v0.3.0...v0.3.2) (@66853113+pre-commit-ci[bot], #2838)
-
-- [github.com/pre-commit/pre-commit-hooks: v4.2.0 → v4.3.0](https://github.com/pre-commit/pre-commit-hooks/compare/v4.2.0...v4.3.0) (@66853113+pre-commit-ci[bot], #2838)
-
-- [github.com/lorenzwalthert/precommit: v0.2.2.9015 → v0.3.0](https://github.com/lorenzwalthert/precommit/compare/v0.2.2.9015...v0.3.0) (@66853113+pre-commit-ci[bot], #2835)
-
-- R 4.2 fixes (#2823)
-
-- Remove depcrecated rrlda learner
-
-- Resolve some ggplot deprecation warnings
+- no changes
 
 
 # mlr 2.19.1
