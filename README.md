@@ -8,7 +8,7 @@ Machine learning in R.
 
 [![tic](https://github.com/mlr-org/mlr/workflows/tic/badge.svg?branch=main)](https://github.com/mlr-org/mlr/actions)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version-ago/mlr)](https://cran.r-project.org/package=mlr)
-[![cran checks](https://cranchecks.info/badges/worst/mlr)](https://cran.r-project.org/web/checks/check_results_mlr.html)
+[![cran checks](https://badges.cranchecks.info/worst/mlr.svg)](https://cran.r-project.org/web/checks/check_results_mlr.html)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/mlr)](https://cran.r-project.org/package=mlr)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
 [![lifecycle](https://img.shields.io/badge/lifecycle-retired-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
