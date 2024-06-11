@@ -1,7 +1,7 @@
 #' @title Aggregation methods.
 #'
 #' @description
-#' \itemize{
+#' \describe{
 #'   \item{**test.mean**}{\cr Mean of performance values on test sets.}
 #'   \item{**test.sd**}{\cr Standard deviation of performance values on test sets.}
 #'   \item{**test.median**}{\cr Median of performance values on test sets.}

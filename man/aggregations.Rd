@@ -26,7 +26,7 @@
 \alias{test.join}
 \title{Aggregation methods.}
 \description{
-\itemize{
+\describe{
 \item{\strong{test.mean}}{\cr Mean of performance values on test sets.}
 \item{\strong{test.sd}}{\cr Standard deviation of performance values on test sets.}
 \item{\strong{test.median}}{\cr Median of performance values on test sets.}
