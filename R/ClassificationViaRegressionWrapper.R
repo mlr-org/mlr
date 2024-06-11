@@ -14,10 +14,12 @@
 #' @export
 #' @family wrapper
 #' @examples
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
 #' lrn = makeLearner("regr.rpart")
 #' lrn = makeClassificationViaRegressionWrapper(lrn)
 #' mod = train(lrn, sonar.task, subset = 1:140)
 #' predictions = predict(mod, newdata = getTaskData(sonar.task)[141:208, 1:60])
+#' \dontshow{ \} }
 makeClassificationViaRegressionWrapper = function(learner, predict.type = "response") {
   learner = checkLearner(learner, "regr")
   lrn = makeBaseWrapper(

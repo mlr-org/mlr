@@ -45,12 +45,14 @@ In the no-information case the features carry no information with respect to the
 Currently only support for classification and regression tasks is implemented.
 }
 \examples{
+\dontshow{ if (requireNamespace("class")) \{ }
 task = makeClassifTask(data = iris, target = "Species")
 rdesc = makeResampleDesc("CV", iters = 2)
 estimateRelativeOverfitting(rdesc, acc, task, makeLearner("classif.knn"))
 estimateRelativeOverfitting(rdesc, acc, task, makeLearner("classif.lda"))
 rpred = resample("classif.knn", task, rdesc)$pred
 estimateRelativeOverfitting(rpred, acc, task)
+\dontshow{ \} }
 }
 \references{
 Bradley Efron and Robert Tibshirani; Improvements on Cross-Validation: The .632+ Bootstrap Method, Journal of the American Statistical Association, Vol. 92, No. 438. (Jun., 1997), pp. 548-560.

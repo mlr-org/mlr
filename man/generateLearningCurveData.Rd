@@ -61,6 +61,7 @@ Performance measures
 Observe how the performance changes with an increasing number of observations.
 }
 \examples{
+\dontshow{ if (requireNamespace("class")) \{ }
 \dontshow{ if (requireNamespace("rpart")) \{ }
 r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
   task = sonar.task, percs = seq(0.2, 1, by = 0.2),
@@ -68,6 +69,7 @@ r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
   resampling = makeResampleDesc(method = "Subsample", iters = 5),
   show.info = FALSE)
 plotLearningCurve(r)
+\dontshow{ \} }
 \dontshow{ \} }
 }
 \seealso{
