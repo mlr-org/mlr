@@ -12,6 +12,7 @@
 #' @return ([list]). One list for each outer resampling fold.
 #' @family tune
 #' @examples
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.rpart")
 #' # stupid mini grid
@@ -28,6 +29,7 @@
 #' r = resample(lrn, task, outer, extract = getTuneResult)
 #' # get tuning indices
 #' getResamplingIndices(r, inner = TRUE)
+#' \dontshow{ \} }
 #' @export
 getResamplingIndices = function(object, inner = FALSE) {
   assertClass(object, "ResampleResult")

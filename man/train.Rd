@@ -32,6 +32,7 @@ Given a \link{Task}, creates a model for the learning machine
 which can be used for predictions on new data.
 }
 \examples{
+\dontshow{ if (requireNamespace("rpart")) \{ }
 \dontshow{ if (requireNamespace("MASS")) \{ }
 \dontshow{ if (requireNamespace("rpart")) \{ }
 training.set = sample(seq_len(nrow(iris)), nrow(iris) / 2)
@@ -47,6 +48,7 @@ task = makeClassifTask(data = iris, target = "Species")
 learner = makeLearner("classif.rpart", minsplit = 7, predict.type = "prob")
 mod = train(learner, task, subset = training.set)
 print(mod)
+\dontshow{ \} }
 \dontshow{ \} }
 \dontshow{ \} }
 }

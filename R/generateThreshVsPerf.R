@@ -133,11 +133,13 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
 #' @template ret_gg2
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' mod = train(lrn, sonar.task)
 #' pred = predict(mod, sonar.task)
 #' pvs = generateThreshVsPerfData(pred, list(acc, setAggregation(acc, train.mean)))
 #' plotThreshVsPerf(pvs)
+#' \dontshow{ \} }
 plotThreshVsPerf = function(obj, measures = obj$measures,
   facet = "measure", mark.th = NA_real_,
   pretty.names = TRUE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
@@ -232,6 +234,7 @@ plotThreshVsPerf = function(obj, measures = obj$measures,
 #' @template ret_gg2
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
 #' \donttest{
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' fit = train(lrn, sonar.task)
@@ -247,6 +250,7 @@ plotThreshVsPerf = function(obj, measures = obj$measures,
 #' roc_l = generateThreshVsPerfData(list(boot = r, cv = r2), list(fpr, tpr), aggregate = FALSE)
 #' plotROCCurves(roc_l)
 #' }
+#' \dontshow{ \} }
 plotROCCurves = function(obj, measures, diagonal = TRUE, pretty.names = TRUE, facet.learner = FALSE) {
 
   assertClass(obj, "ThreshVsPerfData")

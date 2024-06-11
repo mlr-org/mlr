@@ -96,6 +96,7 @@
 #'
 #' Friedman, Jerome. \dQuote{Greedy Function Approximation: A Gradient Boosting Machine.} The Annals of Statistics. Vol. 29. No. 5 (2001): 1189-1232.
 #' @examples
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
 #' \dontshow{ pname <- "mmpf" ; if (requireNamespace(pname)) \{ }
 #' lrn = makeLearner("regr.svm")
 #' fit = train(lrn, bh.task)
@@ -106,6 +107,7 @@
 #' fit = train(lrn, iris.task)
 #' pd = generatePartialDependenceData(fit, iris.task, "Petal.Width")
 #' plotPartialDependence(pd, data = getTaskData(iris.task))
+#' \dontshow{ \} }
 #' \dontshow{ \} }
 #' @export
 generatePartialDependenceData = function(obj, input, features = NULL,

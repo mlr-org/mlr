@@ -31,10 +31,12 @@
 #' @family roc
 #' @family performance
 #' @examples
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' fit = train(lrn, sonar.task)
 #' pred = predict(fit, task = sonar.task)
 #' calculateROCMeasures(pred)
+#' \dontshow{ \} }
 calculateROCMeasures = function(pred) {
 
   checkPrediction(pred, task.type = "classif", check.truth = TRUE, no.na = TRUE, binary = TRUE)

@@ -41,6 +41,7 @@ ggplot2 plot object.
 Plots calibration data from \link{generateCalibrationData}.
 }
 \examples{
+\dontshow{ if (requireNamespace("rpart")) \{ }
 \dontrun{
 lrns = list(makeLearner("classif.rpart", predict.type = "prob"),
   makeLearner("classif.nnet", predict.type = "prob"))
@@ -56,6 +57,7 @@ names(pred) = c("rpart", "lda")
 out = generateCalibrationData(pred)
 plotCalibration(out)
 }
+\dontshow{ \} }
 }
 \seealso{
 Other plot: 

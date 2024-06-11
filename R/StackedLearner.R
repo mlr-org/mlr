@@ -69,6 +69,7 @@
 #'    - prob\cr the probability to exchange values
 #'    - s\cr the standard deviation of each numerical feature
 #' @examples
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
 #' \dontshow{ if (requireNamespace("MASS")) \{ }
 #' \dontshow{ if (requireNamespace("rpart")) \{ }
 #' \dontshow{ if (requireNamespace("e1071")) \{ }
@@ -92,6 +93,7 @@
 #'   predict.type = "response", method = "compress")
 #' tmp = train(m, tsk)
 #' res = predict(tmp, tsk)
+#' \dontshow{ \} }
 #' \dontshow{ \} }
 #' \dontshow{ \} }
 #' \dontshow{ \} }

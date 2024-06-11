@@ -14,8 +14,10 @@
 #'   Passed on to data simul functions.
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("mlbench")) \{ }
 #' print(convertMLBenchObjToTask("Ionosphere"))
 #' print(convertMLBenchObjToTask("mlbench.spirals", n = 100, sd = 0.1))
+#' \dontshow{ \} }
 convertMLBenchObjToTask = function(x, n = 100L, ...) {
 
   assertString(x)

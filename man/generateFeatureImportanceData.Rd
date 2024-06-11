@@ -110,11 +110,13 @@ Whether observation-specific importance is computed for the \code{features}.
 Estimate how important individual features or groups of features are by contrasting prediction performances. For method \dQuote{permutation.importance} compute the change in performance from permuting the values of a feature (or a group of features) and compare that to the predictions made on the unmcuted data.
 }
 \examples{
+\dontshow{ if (requireNamespace("rpart")) \{ }
 
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, iris.task)
 imp = generateFeatureImportanceData(iris.task, "permutation.importance",
   lrn, "Petal.Width", nmc = 10L, local = TRUE)
+\dontshow{ \} }
 }
 \references{
 Jerome Friedman; Greedy Function Approximation: A Gradient Boosting Machine, Annals of Statistics, Vol. 29, No. 5 (Oct., 2001), pp. 1189-1232.

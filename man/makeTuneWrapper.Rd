@@ -58,6 +58,7 @@ After training, the optimal hyperparameters (and other related information) can 
 \link{getTuneResult}.
 }
 \examples{
+\dontshow{ if (requireNamespace("rpart")) \{ }
 \donttest{
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.rpart")
@@ -79,6 +80,7 @@ print(r$extract)
 getNestedTuneResultsOptPathDf(r)
 getNestedTuneResultsX(r)
 }
+\dontshow{ \} }
 }
 \seealso{
 Other tune: 

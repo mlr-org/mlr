@@ -65,8 +65,10 @@ Furthermore, you can of course pass \dQuote{enhanced} learners via wrappers, e.g
 learner can be automatically tuned using \link{makeTuneWrapper}.
 }
 \examples{
+\dontshow{ if (requireNamespace("rpart")) \{ }
 \dontshow{ if (requireNamespace("MASS")) \{ }
 \dontshow{ if (requireNamespace("rpart")) \{ }
+\dontshow{ if (requireNamespace("PMCMRplus")) \{ }
 lrns = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
 tasks = list(iris.task, sonar.task)
 rdesc = makeResampleDesc("CV", iters = 2L)
@@ -79,6 +81,8 @@ plotBMRBoxplots(bmr, ber, style = "violin")
 plotBMRRanksAsBarChart(bmr, pos = "stack")
 friedmanTestBMR(bmr)
 friedmanPostHocTestBMR(bmr, p.value = 0.05)
+\dontshow{ \} }
+\dontshow{ \} }
 \dontshow{ \} }
 \dontshow{ \} }
 }

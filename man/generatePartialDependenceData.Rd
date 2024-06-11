@@ -120,6 +120,7 @@ This function requires the \code{mmpf} package to be installed. It is currently 
 be installed through GitHub using \code{devtools::install_github('zmjones/mmpf/pkg')}.
 }
 \examples{
+\dontshow{ if (requireNamespace("rpart")) \{ }
 \dontshow{ pname <- "mmpf" ; if (requireNamespace(pname)) \{ }
 lrn = makeLearner("regr.svm")
 fit = train(lrn, bh.task)
@@ -130,6 +131,7 @@ lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, iris.task)
 pd = generatePartialDependenceData(fit, iris.task, "Petal.Width")
 plotPartialDependence(pd, data = getTaskData(iris.task))
+\dontshow{ \} }
 \dontshow{ \} }
 }
 \references{
