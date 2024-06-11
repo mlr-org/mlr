@@ -17,7 +17,11 @@
 #' @family learner
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("MASS")) \{ }
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
 #' makeLearners(c("rpart", "lda"), type = "classif", predict.type = "prob")
+#' \dontshow{ \} }
+#' \dontshow{ \} }
 makeLearners = function(cls, ids = NULL, type = NULL, ...) {
   if (!is.null(type)) {
     assertChoice(type, listTaskTypes())
