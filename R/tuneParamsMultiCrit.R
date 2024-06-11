@@ -30,6 +30,7 @@
 #' @family tune_multicrit
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("kernlab")) \{ }
 #' \donttest{
 #' \dontshow{ if (requireNamespace("mco")) \{ }
 #' \dontshow{ if (requireNamespace("kernlab")) \{ }
@@ -47,6 +48,7 @@
 #' \dontshow{ \} }
 #' \dontshow{ \} }
 #' }
+#' \dontshow{ \} }
 tuneParamsMultiCrit = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info"), resample.fun = resample) {
 
   learner = checkLearner(learner)

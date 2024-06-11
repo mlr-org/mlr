@@ -16,11 +16,13 @@
 #' @family learner
 #' @importFrom utils adist
 #' @examples
+#' \dontshow{ if (requireNamespace("kernlab")) \{ }
 #' cl1 = makeLearner("classif.ksvm", sigma = 1)
 #' cl2 = setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))
 #' print(cl1)
 #' # note the now set and altered hyperparameters:
 #' print(cl2)
+#' \dontshow{ \} }
 setHyperPars = function(learner, ..., par.vals = list()) {
   args = list(...)
   assertList(args, names = "unique", .var.name = "parameter settings")

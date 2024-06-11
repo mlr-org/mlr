@@ -17,10 +17,12 @@
 #' @family learner
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("ranger")) \{ }
 #' getHyperPars(makeLearner("classif.ranger"))
 #'
 #' ## set learner hyperparameter `mtry` manually
 #' getHyperPars(makeLearner("classif.ranger", mtry = 100))
+#' \dontshow{ \} }
 getHyperPars = function(learner, for.fun = c("train", "predict", "both")) {
   assertSubset(for.fun, choices = c("train", "predict", "both"))
   UseMethod("getHyperPars")

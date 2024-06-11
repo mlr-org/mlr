@@ -64,6 +64,7 @@
 #' passed down to the next learner.
 #'
 #' @examples
+#' \dontshow{ if (requireNamespace("FSelectorRcpp")) \{ }
 #' \donttest{
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.lda")
@@ -111,6 +112,7 @@
 #' })
 #' print(r$extract)
 #' }
+#' \dontshow{ \} }
 makeFilterWrapper = function(learner, fw.method = "FSelectorRcpp_information.gain",
   fw.base.methods = NULL, fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
   fw.fun = NULL, fw.fun.args = NULL, fw.mandatory.feat = NULL, cache = FALSE, ...) {

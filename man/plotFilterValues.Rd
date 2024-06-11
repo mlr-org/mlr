@@ -45,8 +45,10 @@ ggplot2 plot object.
 Plot filter values using ggplot2.
 }
 \examples{
+\dontshow{ if (requireNamespace("FSelectorRcpp")) \{ }
 fv = generateFilterValuesData(iris.task, method = "variance")
 plotFilterValues(fv)
+\dontshow{ \} }
 }
 \seealso{
 Other filter: 

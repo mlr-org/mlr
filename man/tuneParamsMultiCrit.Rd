@@ -59,6 +59,7 @@ by passing a corresponding control object. For a complete list of implemented al
 \link{TuneMultiCritControl}.
 }
 \examples{
+\dontshow{ if (requireNamespace("kernlab")) \{ }
 \donttest{
 \dontshow{ if (requireNamespace("mco")) \{ }
 \dontshow{ if (requireNamespace("kernlab")) \{ }
@@ -76,6 +77,7 @@ plotTuneMultiCritResult(res, path = TRUE)
 \dontshow{ \} }
 \dontshow{ \} }
 }
+\dontshow{ \} }
 }
 \seealso{
 Other tune_multicrit: 

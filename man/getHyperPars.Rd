@@ -27,10 +27,12 @@ hyperparameters manually during learner creation. If you want to have an
 overview of all available hyperparameters use \code{\link[=getParamSet]{getParamSet()}}.
 }
 \examples{
+\dontshow{ if (requireNamespace("ranger")) \{ }
 getHyperPars(makeLearner("classif.ranger"))
 
 ## set learner hyperparameter `mtry` manually
 getHyperPars(makeLearner("classif.ranger", mtry = 100))
+\dontshow{ \} }
 }
 \seealso{
 Other learner: 
