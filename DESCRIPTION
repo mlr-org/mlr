@@ -147,7 +147,6 @@ Suggests:
     rappdirs,
     refund,
     rex,
-    mmpf,
     rFerns,
     rgenoud,
     rmarkdown,
@@ -175,9 +174,6 @@ Suggests:
     vdiffr,
     wavelets,
     xgboost (>= 0.7)
-Remote:
-    zmjones/mmpf/pkg,
-    mb706/SwarmSVM@patch-1
 VignetteBuilder:
     knitr
 ByteCompile: yes
