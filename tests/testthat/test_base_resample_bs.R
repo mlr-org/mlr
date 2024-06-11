@@ -19,6 +19,8 @@ test_that("bs instance works", {
 })
 
 test_that("bs resampling works", {
+  requirePackagesOrSkip("rpart")
+  requirePackagesOrSkip("e1071")
   data = multiclass.df
   formula = multiclass.formula
   parset = list(minsplit = 12, cp = 0.09)

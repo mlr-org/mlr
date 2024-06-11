@@ -99,12 +99,14 @@ available ensemble methods.
 }
 
 \examples{
+\dontshow{ if (requireNamespace("FSelectorRcpp")) \{ }
 # simple filter
 filterFeatures(iris.task, method = "FSelectorRcpp_gain.ratio", abs = 2)
 # ensemble filter
 filterFeatures(iris.task, method = "E-min",
   base.methods = c("FSelectorRcpp_gain.ratio",
     "FSelectorRcpp_information.gain"), abs = 2)
+\dontshow{ \} }
 }
 \seealso{
 Other filter: 
@@ -112,9 +114,9 @@ Other filter:
 \code{\link{getFilteredFeatures}()},
 \code{\link{listFilterEnsembleMethods}()},
 \code{\link{listFilterMethods}()},
+\code{\link{makeFilter}()},
 \code{\link{makeFilterEnsemble}()},
 \code{\link{makeFilterWrapper}()},
-\code{\link{makeFilter}()},
 \code{\link{plotFilterValues}()}
 }
 \concept{filter}

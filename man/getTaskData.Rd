@@ -61,6 +61,7 @@ Either a data.frame or a list with data.frame \code{data} and vector \code{targe
 Useful in \link{trainLearner} when you add a learning machine to the package.
 }
 \examples{
+\dontshow{ if (requireNamespace("mlbench")) \{ }
 library("mlbench")
 data(BreastCancer)
 
@@ -70,6 +71,7 @@ task = makeClassifTask(id = "BreastCancer", data = df, target = "Class", positiv
 head(getTaskData)
 head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 head(getTaskData(task, subset = 1:100, recode.target = "01"))
+\dontshow{ \} }
 }
 \seealso{
 Other task: 

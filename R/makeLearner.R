@@ -129,10 +129,14 @@
 #' @export
 #' @aliases Learner
 #' @examples
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
+#' \dontshow{ if (requireNamespace("MASS")) \{ }
 #' makeLearner("classif.rpart")
 #' makeLearner("classif.lda", predict.type = "prob")
 #' lrn = makeLearner("classif.lda", method = "t", nu = 10)
 #' getHyperPars(lrn)
+#' \dontshow{ \} }
+#' \dontshow{ \} }
 makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold = NULL,
   fix.factors.prediction = FALSE, ..., par.vals = list(), config = list()) {
 

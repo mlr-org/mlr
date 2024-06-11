@@ -31,6 +31,8 @@
 #' @export
 #' @examples
 #' \donttest{
+#' \dontshow{ if (requireNamespace("mco")) \{ }
+#' \dontshow{ if (requireNamespace("kernlab")) \{ }
 #' # multi-criteria optimization of (tpr, fpr) with NGSA-II
 #' lrn = makeLearner("classif.ksvm")
 #' rdesc = makeResampleDesc("Holdout")
@@ -42,6 +44,8 @@
 #' res = tuneParamsMultiCrit(lrn, sonar.task, rdesc, par.set = ps,
 #'   measures = list(tpr, fpr), control = ctrl)
 #' plotTuneMultiCritResult(res, path = TRUE)
+#' \dontshow{ \} }
+#' \dontshow{ \} }
 #' }
 tuneParamsMultiCrit = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info"), resample.fun = resample) {
 

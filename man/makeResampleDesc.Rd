@@ -152,8 +152,8 @@ Other resample:
 \code{\link{addRRMeasure}()},
 \code{\link{getRRPredictionList}()},
 \code{\link{getRRPredictions}()},
-\code{\link{getRRTaskDescription}()},
 \code{\link{getRRTaskDesc}()},
+\code{\link{getRRTaskDescription}()},
 \code{\link{makeResampleInstance}()},
 \code{\link{resample}()}
 }

@@ -96,6 +96,9 @@ If other projections are desired for the resulting map, please set argument
 
 \examples{
 \donttest{
+\dontshow{ if (requireNamespace("cowplot")) \{ }
+\dontshow{ if (requireNamespace("MASS")) \{ }
+\dontshow{ if (requireNamespace("sf")) \{ }
 rdesc = makeResampleDesc("SpRepCV", folds = 5, reps = 4)
 r = resample(makeLearner("classif.qda"), spatial.task, rdesc)
 
@@ -150,6 +153,9 @@ p22 = cowplot::plot_grid(plots[["Plots"]][[9]], plots[["Plots"]][[10]],
   ncol = 2, nrow = 1, labels = plots[["Labels"]][9:10], label_size = 18)
 
 cowplot::plot_grid(p1, p12, p2, p22, ncol = 1)
+\dontshow{ \} }
+\dontshow{ \} }
+\dontshow{ \} }
 }
 }
 \seealso{

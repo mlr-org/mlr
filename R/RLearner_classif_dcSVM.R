@@ -68,13 +68,17 @@ trainLearner.classif.dcSVM = function(.learner, .task, .subset, .weights = NULL,
 
 
   if (m.flag && max.levels.flag) {
-    SwarmSVM::dcSVM(x = d$data, y = d$target, m = m, max.levels = max.levels, ...)
+    pname = "SwarmSVM"
+    asNamespace(pname)$dcSVM(x = d$data, y = d$target, m = m, max.levels = max.levels, ...)
   } else if (!m.flag && max.levels.flag) {
-    SwarmSVM::dcSVM(x = d$data, y = d$target, max.levels = max.levels, ...)
+    pname = "SwarmSVM"
+    asNamespace(pname)$dcSVM(x = d$data, y = d$target, max.levels = max.levels, ...)
   } else if (m.flag && !max.levels.flag) {
-    SwarmSVM::dcSVM(x = d$data, y = d$target, m = m, ...)
+    pname = "SwarmSVM"
+    asNamespace(pname)$dcSVM(x = d$data, y = d$target, m = m, ...)
   } else {
-    SwarmSVM::dcSVM(x = d$data, y = d$target, ...)
+    pname = "SwarmSVM"
+    asNamespace(pname)$dcSVM(x = d$data, y = d$target, ...)
   }
 }
 

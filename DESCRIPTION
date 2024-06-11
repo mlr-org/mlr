@@ -1,13 +1,13 @@
 Package: mlr
 Title: Machine Learning in R
-Version: 2.19.1.9001
+Version: 2.19.2
 Authors@R: c(
     person("Bernd", "Bischl", , "bernd_bischl@gmx.net", role = "aut",
            comment = c(ORCID = "0000-0001-6002-6980")),
     person("Michel", "Lang", , "michellang@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0001-9754-0393")),
     person("Lars", "Kotthoff", , "larsko@uwyo.edu", role = "aut"),
-    person("Patrick", "Schratz", , "patrick.schratz@gmail.com", role = c("aut", "cre"),
+    person("Patrick", "Schratz", , "patrick.schratz@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0003-0748-6624")),
     person("Julia", "Schiffner", , "schiffner@math.uni-duesseldorf.de", role = "aut"),
     person("Jakob", "Richter", , "code@jakob-r.de", role = "aut"),
@@ -35,7 +35,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-8872-8535")),
     person("Quay", "Au", , "quay.au@stat.uni-muenchen.de", role = "ctb",
            comment = c(ORCID = "0000-0002-5252-8902")),
-    person("Martin", "Binder", , "ma.binder@campus.lmu.de", role = "ctb"),
+    person("Martin", "Binder", , "mlr.developer@mb706.com", role = c("aut", "cre")),
     person("Florian", "Pfisterer", , "pfistererf@googlemail.com", role = "ctb"),
     person("Stefan", "Coors", , "stefan.coors@gmx.net", role = "ctb"),
     person("Steve", "Bronder", , "sab2287@columbia.edu", role = "ctb"),
@@ -185,7 +185,7 @@ Config/testthat/start-first: featsel_plotFilterValues,base_plotResiduals,base_ge
 Encoding: UTF-8
 LazyData: yes
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.1
 SystemRequirements: gdal (optional), geos (optional), proj (optional),
     udunits (optional), gsl (optional), gmp (optional), glu (optional),
     jags (optional), mpfr (optional), openmpi (optional)

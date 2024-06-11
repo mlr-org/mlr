@@ -40,9 +40,9 @@ Other filter:
 \code{\link{generateFilterValuesData}()},
 \code{\link{getFilteredFeatures}()},
 \code{\link{listFilterEnsembleMethods}()},
+\code{\link{makeFilter}()},
 \code{\link{makeFilterEnsemble}()},
 \code{\link{makeFilterWrapper}()},
-\code{\link{makeFilter}()},
 \code{\link{plotFilterValues}()}
 }
 \concept{filter}

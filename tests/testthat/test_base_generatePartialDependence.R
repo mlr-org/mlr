@@ -1,5 +1,6 @@
 
 test_that("generatePartialDependenceData", {
+  requirePackagesOrSkip("mmpf")
   m = c(4, 10)
 
   # test regression with interactions, centering, and mixed factor features

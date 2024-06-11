@@ -24,6 +24,7 @@
 #' @family predict
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("MASS")) \{ }
 #' # train and predict
 #' train.set = seq(1, 150, 2)
 #' test.set = seq(2, 150, 2)
@@ -38,6 +39,7 @@
 #' p = predict(model, task = iris.task, subset = test.set)
 #' print(p)
 #' getPredictionProbabilities(p)
+#' \dontshow{ \} }
 predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
 
   if (!xor(missing(task), missing(newdata))) {
