@@ -23,7 +23,7 @@ news:
 navbar:
   structure:
     left:  [intro, articles, advanced, extending, appendix, reference]
-    right: [github, mattermost, stackoverflow, rss]
+    right: [search, github, mattermost, stackoverflow, rss]
 
   components:
     home: ~
