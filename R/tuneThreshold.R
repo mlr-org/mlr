@@ -53,7 +53,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
     if (ttype == "multilabel" || k > 2) {
       names(x) = cls
     }
-    ifelse(measure$minimize, 1, -1) * performance(setThreshold(pred, x), measure, task, model, simpleaggr = TRUE)
+    ifelse(measure$minimize, 1, -1) * performance(setThreshold(pred, x), measure, task, model, simpleaggr = TRUE) # always a minimization
   }
 
   if (ttype == "multilabel" || k > 2L) {
@@ -68,9 +68,9 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
     names(th) = cls
     perf = or$value
   } else { # classif with k = 2
-    or = optimizeSubInts(f = fitn, lower = 0, upper = 1, maximum = !measure$minimize, nsub = nsub)
+    or = optimizeSubInts(f = fitn, lower = 0, upper = 1, maximum = FALSE, nsub = nsub) # maximum = false, because callback makes it a minimization
     th = or[[1]]
-    perf = or$objective
+    perf = ifelse(measure$minimize, 1, -1) * or$objective # flip sign if minimization for negative performance measure was done
   }
   return(list(th = th, perf = perf))
 }
