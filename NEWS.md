@@ -1,3 +1,7 @@
+# mlr 2.19.3
+
+- Fix minor documentation issues.
+
 # mlr 2.19.2
 
 - Make tests run with suggested packages absent.
