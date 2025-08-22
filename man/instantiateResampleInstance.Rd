@@ -4,7 +4,7 @@
 \alias{instantiateResampleInstance}
 \title{instantiateResampleInstance}
 \usage{
-instantiateResampleInstance(desc, size, task)
+instantiateResampleInstance(desc, size, task = NULL, coords)
 }
 \arguments{
 \item{desc}{(\link{ResampleDesc})\cr
@@ -15,6 +15,10 @@ The size of the resample.}
 
 \item{task}{(\link{Task} | \code{NULL})\cr
 A task, necessary only for some resampling methods.}
+
+\item{coords}{(\code{character(2)})\cr
+Names of task coordinates.
+Not currently used.}
 }
 \value{
 (\link{ResampleInstance})\cr

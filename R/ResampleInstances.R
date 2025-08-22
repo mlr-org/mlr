@@ -115,6 +115,7 @@ instantiateResampleInstance.SubsampleDesc = function(desc, size, task = NULL, co
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 
+#' @export
 instantiateResampleInstance.BootstrapDesc = function(desc, size, task = NULL, coords) {
   inds = lapply(seq_len(desc$iters), function(x) sample(size, size, replace = TRUE))
   makeResampleInstanceInternal(desc, size, train.inds = inds)
