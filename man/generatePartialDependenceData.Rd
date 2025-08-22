@@ -83,7 +83,7 @@ The second element of \code{n} gives the size of the sample to be drawn without 
 Setting \code{n[2]} less than the number of rows in the \code{input} will decrease computation time.
 The default for \code{n[1]} is 10, and the default for \code{n[2]} is the number of rows in the \code{input}.}
 
-\item{...}{additional arguments to be passed to \link[mmpf:marginalPrediction]{mmpf::marginalPrediction}.}
+\item{...}{additional arguments to be passed to \code{mmpf}'s \code{marginalPrediction}.}
 }
 \value{
 \link{PartialDependenceData}. A named list, which contains the partial dependence,
@@ -115,6 +115,9 @@ For a learned function f(x) where x is partitioned into x_s and x_c, the partial
 f on x_s can be summarized by averaging over x_c and setting x_s to a range of values of interest,
 estimating E_(x_c)(f(x_s, x_c)). The conditional expectation of f at observation i is estimated similarly.
 Additionally, partial derivatives of the marginalized function w.r.t. the features can be computed.
+
+This function requires the \code{mmpf} package to be installed. It is currently not on CRAN, but can
+be installed through GitHub using \code{devtools::install_github('zmjones/mmpf/pkg')}.
 }
 \examples{
 lrn = makeLearner("regr.svm")
