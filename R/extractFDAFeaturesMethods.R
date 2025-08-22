@@ -23,7 +23,7 @@
 #'   Can be equal to `learn`.
 #' @param args ([list])\cr
 #'   Named list of arguments to pass to `learn` via `...`.
-#' @param par.set ([ParamSet])\cr
+#' @param par.set ([ParamSet][ParamHelpers::ParamSet])\cr
 #'   Paramset added to the learner if used in conjunction with a [makeExtractFDAFeatsWrapper].
 #'   Can be `NULL`.`
 #' @export

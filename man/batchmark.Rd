@@ -55,7 +55,7 @@ Registry, created by \link[batchtools:makeExperimentRegistry]{batchtools::makeEx
 explicitly passed, uses the last created registry.}
 }
 \value{
-(\link{data.table}). Generated job ids are stored in the column
+(\link[data.table:data.table]{data.table}). Generated job ids are stored in the column
 \dQuote{job.id}.
 }
 \description{

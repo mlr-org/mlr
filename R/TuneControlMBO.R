@@ -16,7 +16,7 @@
 #'   Requires \dQuote{save.file.path} to be set.
 #'   Note that the [ParamHelpers::OptPath] in the [mlrMBO::OptResult]
 #'   will only include the evaluations after the continuation.
-#'   The complete [OptPath] will be found in the slot `$mbo.result$opt.path`.
+#'   The complete [ParamHelpers::OptPath] will be found in the slot `$mbo.result$opt.path`.
 #' @param mbo.control ([mlrMBO::MBOControl] | `NULL`)\cr
 #'   Control object for model-based optimization tuning.
 #'   For the default, `NULL`, the control object will be created with all the defaults as described in [mlrMBO::makeMBOControl].

@@ -7,7 +7,7 @@
 #'   Learner to wrap.
 #' @param package ([character])\cr
 #'   Packages to load when loading learner.
-#' @param par.set ([ParamSet])\cr
+#' @param par.set ([ParamSet][ParamHelpers::ParamSet])\cr
 #'   Parameter set.
 #' @param par.vals ([list])\cr
 #'   Optional list of named (hyper)parameter values.

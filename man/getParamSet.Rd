@@ -4,7 +4,7 @@
 \alias{getParamSet}
 \title{Get a description of all possible parameter settings for a learner.}
 \value{
-\link{ParamSet}.
+\link[ParamHelpers:makeParamSet]{ParamSet}.
 }
 \description{
 Returns the \link[ParamHelpers:makeParamSet]{ParamHelpers::ParamSet} from a \link{Learner}.

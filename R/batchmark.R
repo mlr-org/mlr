@@ -31,7 +31,7 @@
 #' @param reg ([batchtools::Registry])\cr
 #'   Registry, created by [batchtools::makeExperimentRegistry]. If not
 #'   explicitly passed, uses the last created registry.
-#' @return ([data.table]). Generated job ids are stored in the column
+#' @return ([data.table][data.table::data.table]). Generated job ids are stored in the column
 #'   \dQuote{job.id}.
 #' @export
 #' @family benchmark

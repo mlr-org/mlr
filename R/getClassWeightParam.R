@@ -8,7 +8,7 @@
 #'   Only used for `BaseEnsembles`. It is possible that multiple learners in a base
 #'   ensemble have a class weight param. Specify the learner from which the class weight should
 #'   be extracted.
-#' @return [numeric] [LearnerParam]:
+#' @return [numeric] [LearnerParam][ParamHelpers::LearnerParam]:
 #'   A numeric parameter object, containing the class weight parameter of the given learner.
 #' @family learner
 #' @export

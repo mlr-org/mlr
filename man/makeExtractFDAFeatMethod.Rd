@@ -30,7 +30,7 @@ Can be equal to \code{learn}.}
 \item{args}{(\link{list})\cr
 Named list of arguments to pass to \code{learn} via \code{...}.}
 
-\item{par.set}{(\link{ParamSet})\cr
+\item{par.set}{(\link[ParamHelpers:makeParamSet]{ParamSet})\cr
 Paramset added to the learner if used in conjunction with a \link{makeExtractFDAFeatsWrapper}.
 Can be \code{NULL}.`}
 }

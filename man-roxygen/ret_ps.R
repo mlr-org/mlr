@@ -1,2 +1,2 @@
-#' @return [ParamSet].
+#' @return [ParamSet][ParamHelpers::ParamSet].
 #' @md

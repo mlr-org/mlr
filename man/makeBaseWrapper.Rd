@@ -29,7 +29,7 @@ Learner to wrap.}
 \item{package}{(\link{character})\cr
 Packages to load when loading learner.}
 
-\item{par.set}{(\link{ParamSet})\cr
+\item{par.set}{(\link[ParamHelpers:makeParamSet]{ParamSet})\cr
 Parameter set.}
 
 \item{par.vals}{(\link{list})\cr
