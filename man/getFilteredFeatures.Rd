@@ -22,9 +22,9 @@ Other filter:
 \code{\link{generateFilterValuesData}()},
 \code{\link{listFilterEnsembleMethods}()},
 \code{\link{listFilterMethods}()},
+\code{\link{makeFilter}()},
 \code{\link{makeFilterEnsemble}()},
 \code{\link{makeFilterWrapper}()},
-\code{\link{makeFilter}()},
 \code{\link{plotFilterValues}()}
 }
 \concept{filter}

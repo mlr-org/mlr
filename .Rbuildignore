@@ -1,5 +1,6 @@
 todo-files
 ^test*.R$
+^attic$
 .gitignore
 .ignore
 .travis.yml

@@ -187,7 +187,7 @@ Config/testthat/start-first: featsel_plotFilterValues,base_plotResiduals,base_ge
 Encoding: UTF-8
 LazyData: yes
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.2
 SystemRequirements: gdal (optional), geos (optional), proj (optional),
     udunits (optional), gsl (optional), gmp (optional), glu (optional),
     jags (optional), mpfr (optional), openmpi (optional)

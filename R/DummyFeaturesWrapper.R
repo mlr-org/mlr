@@ -31,6 +31,7 @@ makeDummyFeaturesWrapper = function(learner, method = "1-of-n", cols = NULL) {
   addClasses(lrn, "DummyFeaturesWrapper")
 }
 
+#' @export
 getLearnerProperties.DummyFeaturesWrapper = function(learner) {
   union(getLearnerProperties(learner$next.learner), c("factors", "ordered"))
 }

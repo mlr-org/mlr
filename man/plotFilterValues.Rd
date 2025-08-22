@@ -55,9 +55,9 @@ Other filter:
 \code{\link{getFilteredFeatures}()},
 \code{\link{listFilterEnsembleMethods}()},
 \code{\link{listFilterMethods}()},
+\code{\link{makeFilter}()},
 \code{\link{makeFilterEnsemble}()},
-\code{\link{makeFilterWrapper}()},
-\code{\link{makeFilter}()}
+\code{\link{makeFilterWrapper}()}
 
 Other generate_plot_data: 
 \code{\link{generateCalibrationData}()},

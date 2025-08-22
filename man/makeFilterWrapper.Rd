@@ -150,8 +150,8 @@ Other filter:
 \code{\link{getFilteredFeatures}()},
 \code{\link{listFilterEnsembleMethods}()},
 \code{\link{listFilterMethods}()},
-\code{\link{makeFilterEnsemble}()},
 \code{\link{makeFilter}()},
+\code{\link{makeFilterEnsemble}()},
 \code{\link{plotFilterValues}()}
 
 Other wrapper: 
@@ -172,8 +172,8 @@ Other wrapper:
 \code{\link{makeMultilabelNestedStackingWrapper}()},
 \code{\link{makeMultilabelStackingWrapper}()},
 \code{\link{makeOverBaggingWrapper}()},
-\code{\link{makePreprocWrapperCaret}()},
 \code{\link{makePreprocWrapper}()},
+\code{\link{makePreprocWrapperCaret}()},
 \code{\link{makeRemoveConstantFeaturesWrapper}()},
 \code{\link{makeSMOTEWrapper}()},
 \code{\link{makeTuneWrapper}()},

@@ -1,12 +1,31 @@
+#' @title instantiateResampleInstance
+#'
+#' @description Instantiate a resample instance, i.e. prepare a
+#' [ResampleInstance] that specifically refers to a given [Task].
+#'
+#' Used internally.
+#'
+#' @param desc ([ResampleDesc])\cr
+#'   A resample description.
+#' @param size (`integer(1)`)\cr
+#'   The size of the resample.
+#' @param task ([Task] | `NULL`)\cr
+#'   A task, necessary only for some resampling methods.
+#' @return ([ResampleInstance])\cr
+#'   An instantiated resample instance.
+#' @keywords internal
+#' @export
 instantiateResampleInstance = function(desc, size, task) {
   UseMethod("instantiateResampleInstance")
 }
 
+#' @export
 instantiateResampleInstance.HoldoutDesc = function(desc, size, task = NULL) {
   inds = sample(size, size * desc$split)
   makeResampleInstanceInternal(desc, size, train.inds = list(inds))
 }
 
+#' @export
 instantiateResampleInstance.CVDesc = function(desc, size, task = NULL) {
   # Random sampling CV
   if (!desc$fixed) {
@@ -58,6 +77,7 @@ instantiateResampleInstance.CVDesc = function(desc, size, task = NULL) {
   }
 }
 
+#' @export
 instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
 
   if (is.null(task)) {
@@ -80,21 +100,25 @@ instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
   makeResampleInstanceInternal(desc, size, test.inds = test.inds)
 }
 
+#' @export
 instantiateResampleInstance.LOODesc = function(desc, size, task = NULL) {
   desc$iters = size
   makeResampleInstanceInternal(desc, size, test.inds = as.list(seq_len(size)))
 }
 
+#' @export
 instantiateResampleInstance.SubsampleDesc = function(desc, size, task = NULL) {
   inds = lapply(seq_len(desc$iters), function(x) sample(size, size * desc$split))
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 
+#' @export
 instantiateResampleInstance.BootstrapDesc = function(desc, size, task = NULL) {
   inds = lapply(seq_len(desc$iters), function(x) sample(size, size, replace = TRUE))
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 
+#' @export
 instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL) {
   folds = desc$iters / desc$reps
   d = makeResampleDesc("CV", iters = folds, blocking.cv = desc$blocking.cv, fixed = desc$fixed)
@@ -105,6 +129,7 @@ instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL) {
   makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds, group = g)
 }
 
+#' @export
 instantiateResampleInstance.SpRepCVDesc = function(desc, size, task = NULL) {
   folds = desc$iters / desc$reps
   d = makeResampleDesc("SpCV", iters = folds)
@@ -115,14 +140,17 @@ instantiateResampleInstance.SpRepCVDesc = function(desc, size, task = NULL) {
   makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds, group = g)
 }
 
+#' @export
 instantiateResampleInstance.FixedWindowCVDesc = function(desc, size, task = NULL, coords) {
   makeResamplingWindow(desc, size, task, coords, "FixedWindowCV")
 }
 
+#' @export
 instantiateResampleInstance.GrowingWindowCVDesc = function(desc, size, task = NULL, coords) {
   makeResamplingWindow(desc, size, task, coords, "GrowingWindowCV")
 }
 
+#' @export
 instantiateResampleInstance.CVHelperDesc = function(desc, size, task = NULL) {
   if (desc$iters > size) {
     stopf("Cannot use more folds (%i) than size (%i)!", desc$iters, size)
