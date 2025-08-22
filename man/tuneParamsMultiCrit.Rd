@@ -59,7 +59,10 @@ by passing a corresponding control object. For a complete list of implemented al
 \link{TuneMultiCritControl}.
 }
 \examples{
+\dontshow{ if (requireNamespace("kernlab")) \{ }
 \donttest{
+\dontshow{ if (requireNamespace("mco")) \{ }
+\dontshow{ if (requireNamespace("kernlab")) \{ }
 # multi-criteria optimization of (tpr, fpr) with NGSA-II
 lrn = makeLearner("classif.ksvm")
 rdesc = makeResampleDesc("Holdout")
@@ -71,7 +74,10 @@ ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 1L)
 res = tuneParamsMultiCrit(lrn, sonar.task, rdesc, par.set = ps,
   measures = list(tpr, fpr), control = ctrl)
 plotTuneMultiCritResult(res, path = TRUE)
+\dontshow{ \} }
+\dontshow{ \} }
 }
+\dontshow{ \} }
 }
 \seealso{
 Other tune_multicrit: 

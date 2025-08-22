@@ -49,11 +49,13 @@ ggplot2 plot object.
 Plots threshold vs. performance(s) data that has been generated with \link{generateThreshVsPerfData}.
 }
 \examples{
+\dontshow{ if (requireNamespace("rpart")) \{ }
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 mod = train(lrn, sonar.task)
 pred = predict(mod, sonar.task)
 pvs = generateThreshVsPerfData(pred, list(acc, setAggregation(acc, train.mean)))
 plotThreshVsPerf(pvs)
+\dontshow{ \} }
 }
 \seealso{
 Other plot: 

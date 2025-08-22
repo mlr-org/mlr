@@ -155,6 +155,8 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' @template ret_gg2
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
+#' \dontshow{ if (requireNamespace("Hmisc")) \{ }
 #' \dontrun{
 #' lrns = list(makeLearner("classif.rpart", predict.type = "prob"),
 #'   makeLearner("classif.nnet", predict.type = "prob"))
@@ -170,6 +172,8 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' out = generateCalibrationData(pred)
 #' plotCalibration(out)
 #' }
+#' \dontshow{ \} }
+#' \dontshow{ \} }
 plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
 
   assertClass(obj, "CalibrationData")

@@ -59,10 +59,12 @@ The element for the false omission rate in the resulting object is not called \c
 
 }}
 \examples{
+\dontshow{ if (requireNamespace("rpart")) \{ }
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, sonar.task)
 pred = predict(fit, task = sonar.task)
 calculateROCMeasures(pred)
+\dontshow{ \} }
 }
 \seealso{
 Other roc: 

@@ -7,7 +7,7 @@ Authors@R: c(
     person("Michel", "Lang", , "michellang@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0001-9754-0393")),
     person("Lars", "Kotthoff", , "larsko@uwyo.edu", role = "aut"),
-    person("Patrick", "Schratz", , "patrick.schratz@gmail.com", role = c("aut", "cre"),
+    person("Patrick", "Schratz", , "patrick.schratz@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0003-0748-6624")),
     person("Julia", "Schiffner", , "schiffner@math.uni-duesseldorf.de", role = "aut"),
     person("Jakob", "Richter", , "code@jakob-r.de", role = "aut"),
@@ -35,7 +35,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-8872-8535")),
     person("Quay", "Au", , "quay.au@stat.uni-muenchen.de", role = "ctb",
            comment = c(ORCID = "0000-0002-5252-8902")),
-    person("Martin", "Binder", , "ma.binder@campus.lmu.de", role = "ctb"),
+    person("Martin", "Binder", , "mlr.developer@mb706.com", role = c("aut", "cre")),
     person("Florian", "Pfisterer", , "pfistererf@googlemail.com", role = "ctb"),
     person("Stefan", "Coors", , "stefan.coors@gmx.net", role = "ctb"),
     person("Steve", "Bronder", , "sab2287@columbia.edu", role = "ctb"),
@@ -147,7 +147,6 @@ Suggests:
     rappdirs,
     refund,
     rex,
-    mmpf,
     rFerns,
     rgenoud,
     rmarkdown,
@@ -175,9 +174,6 @@ Suggests:
     vdiffr,
     wavelets,
     xgboost (>= 0.7)
-Remote:
-    zmjones/mmpf/pkg,
-    mb706/SwarmSVM@patch-1
 VignetteBuilder:
     knitr
 ByteCompile: yes

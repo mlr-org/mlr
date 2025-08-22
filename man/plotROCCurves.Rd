@@ -38,6 +38,7 @@ ggplot2 plot object.
 Plots a ROC curve from predictions.
 }
 \examples{
+\dontshow{ if (requireNamespace("rpart")) \{ }
 \donttest{
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, sonar.task)
@@ -53,6 +54,7 @@ r2 = crossval(lrn, sonar.task, iters = 3)
 roc_l = generateThreshVsPerfData(list(boot = r, cv = r2), list(fpr, tpr), aggregate = FALSE)
 plotROCCurves(roc_l)
 }
+\dontshow{ \} }
 }
 \seealso{
 Other plot: 

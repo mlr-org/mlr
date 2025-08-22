@@ -54,6 +54,7 @@ We set this weight depending on the class internally in the wrapper. Basically w
 something like a new \dQuote{class.weights} parameter for the learner via observation weights.
 }
 \examples{
+\dontshow{ if (requireNamespace("kernlab")) \{ }
 \donttest{
 set.seed(123)
 # using the direct parameter of the SVM (which is already defined in the learner)
@@ -79,6 +80,7 @@ res = tuneParams(lrn, sonar.task, rdesc, par.set = ps, control = ctrl)
 print(res)
 # print(res$opt.path)
 }
+\dontshow{ \} }
 }
 \seealso{
 Other wrapper: 

@@ -19,12 +19,14 @@
 #' @family performance
 #' @references Bradley Efron and Robert Tibshirani; Improvements on Cross-Validation: The .632+ Bootstrap Method, Journal of the American Statistical Association, Vol. 92, No. 438. (Jun., 1997), pp. 548-560.
 #' @examples
+#' \dontshow{ if (requireNamespace("class")) \{ }
 #' task = makeClassifTask(data = iris, target = "Species")
 #' rdesc = makeResampleDesc("CV", iters = 2)
 #' estimateRelativeOverfitting(rdesc, acc, task, makeLearner("classif.knn"))
 #' estimateRelativeOverfitting(rdesc, acc, task, makeLearner("classif.lda"))
 #' rpred = resample("classif.knn", task, rdesc)$pred
 #' estimateRelativeOverfitting(rpred, acc, task)
+#' \dontshow{ \} }
 #' @name estimateRelativeOverfitting
 #' @rdname estimateRelativeOverfitting
 estimateRelativeOverfitting = function(predish, measures, task, learner = NULL, pred.train = NULL, iter = 1) {

@@ -38,6 +38,7 @@
 #'  partial dependence should be generated, and the optimization algorithm used.
 #'
 #' @examples
+#' \dontshow{ if (requireNamespace("kernlab")) \{ }
 #' \dontrun{
 #' # 3-fold cross validation
 #' ps = makeParamSet(makeDiscreteParam("C", values = 2^(-4:4)))
@@ -60,6 +61,7 @@
 #' data = generateHyperParsEffectData(res)
 #' plotHyperParsEffect(data, x = "C", y = "mmce.test.mean", plot.type = "line")
 #' }
+#' \dontshow{ \} }
 #' @export
 #' @importFrom utils type.convert
 generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
@@ -239,7 +241,9 @@ print.HyperParsEffectData = function(x, ...) {
 #' @export
 #'
 #' @examples
+#' \dontshow{ if (requireNamespace("kernlab")) \{ }
 #' # see generateHyperParsEffectData
+#' \dontshow{ \} }
 plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   z = NULL, plot.type = "scatter", loess.smooth = FALSE, facet = NULL,
   global.only = TRUE, interpolate = NULL, show.experiments = FALSE,

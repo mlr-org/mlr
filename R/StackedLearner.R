@@ -69,6 +69,11 @@
 #'    - prob\cr the probability to exchange values
 #'    - s\cr the standard deviation of each numerical feature
 #' @examples
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
+#' \dontshow{ if (requireNamespace("MASS")) \{ }
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
+#' \dontshow{ if (requireNamespace("e1071")) \{ }
 #' # Classification
 #' data(iris)
 #' tsk = makeClassifTask(data = iris, target = "Species")
@@ -89,6 +94,11 @@
 #'   predict.type = "response", method = "compress")
 #' tmp = train(m, tsk)
 #' res = predict(tmp, tsk)
+#' \dontshow{ \} }
+#' \dontshow{ \} }
+#' \dontshow{ \} }
+#' \dontshow{ \} }
+#' \dontshow{ \} }
 #' @export
 makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL,
   method = "stack.nocv", use.feat = FALSE, resampling = NULL, parset = list()) {

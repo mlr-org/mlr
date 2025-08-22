@@ -42,6 +42,9 @@
 #' the measure. See example code below.
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("kernlab")) \{ }
+#' \dontshow{ if (requireNamespace("kernlab")) \{ }
+#' \dontshow{ if (requireNamespace("irace")) \{ }
 #' set.seed(123)
 #' # a grid search for an SVM (with a tiny number of points...)
 #' # note how easily we can optimize on a log-scale
@@ -90,6 +93,9 @@
 #' df2 = as.data.frame(res$opt.path)
 #' print(head(df2[, -ncol(df2)]))
 #' }
+#' \dontshow{ \} }
+#' \dontshow{ \} }
+#' \dontshow{ \} }
 #' @seealso [generateHyperParsEffectData]
 tuneParams = function(learner, task, resampling, measures, par.set, control,
   show.info = getMlrOption("show.info"), resample.fun = resample) {

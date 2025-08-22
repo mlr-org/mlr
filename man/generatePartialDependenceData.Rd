@@ -120,6 +120,8 @@ This function requires the \code{mmpf} package to be installed. It is currently 
 be installed through GitHub using \code{devtools::install_github('zmjones/mmpf/pkg')}.
 }
 \examples{
+\dontshow{ if (requireNamespace("rpart")) \{ }
+\dontshow{ pname <- "mmpf" ; if (requireNamespace(pname)) \{ }
 lrn = makeLearner("regr.svm")
 fit = train(lrn, bh.task)
 pd = generatePartialDependenceData(fit, bh.task, "lstat")
@@ -129,6 +131,8 @@ lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, iris.task)
 pd = generatePartialDependenceData(fit, iris.task, "Petal.Width")
 plotPartialDependence(pd, data = getTaskData(iris.task))
+\dontshow{ \} }
+\dontshow{ \} }
 }
 \references{
 Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. \dQuote{Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation.} Journal of Computational and Graphical Statistics. Vol. 24, No. 1 (2015): 44-65.

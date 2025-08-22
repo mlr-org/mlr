@@ -172,10 +172,16 @@ correspond to the prior probabilities observed in the training data.
 }
 
 \examples{
+\dontshow{ if (requireNamespace("rpart")) \{ }
+\dontshow{ if (requireNamespace("rpart")) \{ }
+\dontshow{ if (requireNamespace("MASS")) \{ }
 makeLearner("classif.rpart")
 makeLearner("classif.lda", predict.type = "prob")
 lrn = makeLearner("classif.lda", method = "t", nu = 10)
 getHyperPars(lrn)
+\dontshow{ \} }
+\dontshow{ \} }
+\dontshow{ \} }
 }
 \seealso{
 Other learner: 

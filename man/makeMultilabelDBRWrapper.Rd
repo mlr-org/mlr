@@ -25,6 +25,7 @@ During prediction these labels need are obtained by the binary relevance method 
 Models can easily be accessed via \link{getLearnerModel}.
 }
 \examples{
+if (requireNamespace("rpart")) {
 d = getTaskData(yeast.task)
 # drop some labels so example runs faster
 d = d[seq(1, nrow(d), by = 20), c(1:2, 15:17)]
@@ -39,6 +40,7 @@ performance(pred, measure = list(multilabel.hamloss, multilabel.subset01, multil
 # the next call basically has the same structure for any multilabel meta wrapper
 getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 # above works also with predictions from resample!
+}
 }
 \references{
 Montanes, E. et al. (2013)

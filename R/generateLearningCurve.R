@@ -33,12 +33,16 @@
 #'       - `percentage` Percentages drawn from the training split.
 #'       - One column for each [Measure] passed to [generateLearningCurveData].
 #' @examples
+#' \dontshow{ if (requireNamespace("class")) \{ }
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
 #' r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
 #'   task = sonar.task, percs = seq(0.2, 1, by = 0.2),
 #'   measures = list(tp, fp, tn, fn),
 #'   resampling = makeResampleDesc(method = "Subsample", iters = 5),
 #'   show.info = FALSE)
 #' plotLearningCurve(r)
+#' \dontshow{ \} }
+#' \dontshow{ \} }
 #' @export
 generateLearningCurveData = function(learners, task, resampling = NULL,
   percs = seq(0.1, 1, by = 0.1), measures, stratify = FALSE, show.info = getMlrOption("show.info")) {

@@ -95,6 +95,7 @@ the same cache at the same time.
 }
 
 \examples{
+\dontshow{ if (requireNamespace("FSelectorRcpp")) \{ }
 \donttest{
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.lda")
@@ -142,6 +143,7 @@ r = resample(lrn, task, outer, extract = function(model) {
 })
 print(r$extract)
 }
+\dontshow{ \} }
 }
 \seealso{
 Other filter: 

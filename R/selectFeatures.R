@@ -38,12 +38,14 @@
 #' @family featsel
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
 #' \donttest{
 #' rdesc = makeResampleDesc("Holdout")
 #' ctrl = makeFeatSelControlSequential(method = "sfs", maxit = NA)
 #' res = selectFeatures("classif.rpart", iris.task, rdesc, control = ctrl)
 #' analyzeFeatSelResult(res)
 #' }
+#' \dontshow{ \} }
 selectFeatures = function(learner, task, resampling, measures,
   bit.names, bits.to.features, control, show.info = getMlrOption("show.info")) {
 

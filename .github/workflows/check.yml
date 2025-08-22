@@ -86,10 +86,8 @@ jobs:
         if: ${{ matrix.action == 'githubversions' }}
         shell: Rscript {0}
         run: |
-          system("sudo apt-get install libhiredis-dev")
-          remotes::install_github("mlr-org/paradox")
-          remotes::install_github("mlr-org/bbotk")
-          remotes::install_github("mlr-org/mlr3tuning")
+          remotes::install_github("zmjones/mmpf/pkg")
+          remotes::install_github("mb706/SwarmSVM@patch-1")
       - name: Session Info
         shell: Rscript {0}
         run: |

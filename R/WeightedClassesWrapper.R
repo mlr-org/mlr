@@ -42,6 +42,7 @@
 #' @family wrapper
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("kernlab")) \{ }
 #' \donttest{
 #' set.seed(123)
 #' # using the direct parameter of the SVM (which is already defined in the learner)
@@ -67,6 +68,7 @@
 #' print(res)
 #' # print(res$opt.path)
 #' }
+#' \dontshow{ \} }
 makeWeightedClassesWrapper = function(learner, wcw.param = NULL, wcw.weight = 1) {
 
   learner = checkLearner(learner, "classif")

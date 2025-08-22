@@ -19,6 +19,7 @@
 #' @family wrapper
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("kernlab")) \{ }
 #' # nested resampling with feature selection (with a nonsense algorithm for selection)
 #' outer = makeResampleDesc("CV", iters = 2L)
 #' inner = makeResampleDesc("Holdout")
@@ -26,6 +27,7 @@
 #' lrn = makeFeatSelWrapper("classif.ksvm", resampling = inner, control = ctrl)
 #' # we also extract the selected features for all iteration here
 #' r = resample(lrn, iris.task, outer, extract = getFeatSelResult)
+#' \dontshow{ \} }
 makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.features,
   control, show.info = getMlrOption("show.info")) {
 

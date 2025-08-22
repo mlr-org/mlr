@@ -70,12 +70,14 @@ change this by using the arguments \code{bit.names} and \code{bits.to.features}.
 allowing you to switch on whole groups of features with a single bit.
 }
 \examples{
+\dontshow{ if (requireNamespace("rpart")) \{ }
 \donttest{
 rdesc = makeResampleDesc("Holdout")
 ctrl = makeFeatSelControlSequential(method = "sfs", maxit = NA)
 res = selectFeatures("classif.rpart", iris.task, rdesc, control = ctrl)
 analyzeFeatSelResult(res)
 }
+\dontshow{ \} }
 }
 \seealso{
 Other featsel: 

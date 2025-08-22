@@ -54,6 +54,7 @@ custom visualization or passed downstream to an out of the box mlr method,
 \link{plotHyperParsEffect}.
 }
 \examples{
+\dontshow{ if (requireNamespace("kernlab")) \{ }
 \dontrun{
 # 3-fold cross validation
 ps = makeParamSet(makeDiscreteParam("C", values = 2^(-4:4)))
@@ -76,4 +77,5 @@ res = resample(lrn, task = pid.task, resampling = cv2,
 data = generateHyperParsEffectData(res)
 plotHyperParsEffect(data, x = "C", y = "mmce.test.mean", plot.type = "line")
 }
+\dontshow{ \} }
 }

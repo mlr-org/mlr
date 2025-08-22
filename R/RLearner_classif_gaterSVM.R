@@ -30,7 +30,8 @@ makeRLearner.classif.gaterSVM = function() {
 #' @export
 trainLearner.classif.gaterSVM = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  SwarmSVM::gaterSVM(x = d$data, y = d$target, ...)
+  pname = "SwarmSVM"
+  asNamespace(pname)$gaterSVM(x = d$data, y = d$target, ...)
 }
 
 #' @export

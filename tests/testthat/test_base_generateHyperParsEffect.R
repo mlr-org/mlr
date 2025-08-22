@@ -305,6 +305,7 @@ test_that("2 hyperparams nested", {
 })
 
 test_that("2+ hyperparams", {
+  requirePackagesOrSkip("mmpf")
   # generate data
   ps = makeParamSet(
     makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x),

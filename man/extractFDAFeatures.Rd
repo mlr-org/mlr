@@ -57,6 +57,7 @@ parameters for reextraction.
 }
 }
 \examples{
+\dontshow{ if (requireNamespace("wavelets")) \{ }
 df = data.frame(x = matrix(rnorm(24), ncol = 8), y = factor(c("a", "a", "b")))
 fdf = makeFunctionalData(df, fd.features = list(x1 = 1:4, x2 = 5:8), exclude.cols = "y")
 task = makeClassifTask(data = fdf, target = "y")
@@ -64,6 +65,7 @@ extracted = extractFDAFeatures(task,
   feat.methods = list("x1" = extractFDAFourier(), "x2" = extractFDAWavelets(filter = "haar")))
 print(extracted$task)
 reextractFDAFeatures(task, extracted$desc)
+\dontshow{ \} }
 }
 \seealso{
 Other fda: 

@@ -44,6 +44,7 @@
 #' @family filter
 #' @aliases FilterValues
 #' @examples
+#' \dontshow{ if (requireNamespace("FSelectorRcpp")) \{ }
 #' # two simple filter methods
 #' fval = generateFilterValuesData(iris.task,
 #'   method = c("FSelectorRcpp_gain.ratio", "FSelectorRcpp_information.gain"))
@@ -51,6 +52,7 @@
 #' fval = generateFilterValuesData(iris.task,
 #'   method = list("E-mean", c("FSelectorRcpp_gain.ratio",
 #'     "FSelectorRcpp_information.gain")))
+#' \dontshow{ \} }
 #' @export
 generateFilterValuesData = function(task, method = "FSelectorRcpp_information.gain",
   nselect = getTaskNFeats(task), ..., more.args = list()) {
@@ -190,8 +192,10 @@ print.FilterValues = function(x, ...) {
 #' @template ret_gg2
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("FSelectorRcpp")) \{ }
 #' fv = generateFilterValuesData(iris.task, method = "variance")
 #' plotFilterValues(fv)
+#' \dontshow{ \} }
 plotFilterValues = function(fvalues, sort = "dec", n.show = nrow(fvalues$data),
   filter = NULL, feat.type.cols = FALSE) {
 

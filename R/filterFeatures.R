@@ -62,12 +62,16 @@
 #' available ensemble methods.
 #'
 #' @examples
+#' \dontshow{ if (requireNamespace("FSelectorRcpp")) \{ }
+#' \dontshow{ if (requireNamespace("FSelectorRcpp")) \{ }
 #' # simple filter
 #' filterFeatures(iris.task, method = "FSelectorRcpp_gain.ratio", abs = 2)
 #' # ensemble filter
 #' filterFeatures(iris.task, method = "E-min",
 #'   base.methods = c("FSelectorRcpp_gain.ratio",
 #'     "FSelectorRcpp_information.gain"), abs = 2)
+#' \dontshow{ \} }
+#' \dontshow{ \} }
 #' @export
 filterFeatures = function(task, method = "FSelectorRcpp_information.gain",
   fval = NULL, perc = NULL, abs = NULL, threshold = NULL, fun = NULL,

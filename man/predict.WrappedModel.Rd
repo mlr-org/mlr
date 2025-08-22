@@ -38,6 +38,7 @@ prediction object.
 The row names of the input \code{task} or \code{newdata} are preserved in the output.
 }
 \examples{
+\dontshow{ if (requireNamespace("MASS")) \{ }
 # train and predict
 train.set = seq(1, 150, 2)
 test.set = seq(2, 150, 2)
@@ -52,6 +53,7 @@ model = train(lrn, iris.task, subset = train.set)
 p = predict(model, task = iris.task, subset = test.set)
 print(p)
 getPredictionProbabilities(p)
+\dontshow{ \} }
 }
 \seealso{
 Other predict: 

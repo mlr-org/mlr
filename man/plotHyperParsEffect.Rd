@@ -127,5 +127,7 @@ Since a ggplot2 plot object is returned, the user can change the axis labels
 and other aspects of the plot using the appropriate ggplot2 syntax.
 }
 \examples{
+\dontshow{ if (requireNamespace("kernlab")) \{ }
 # see generateHyperParsEffectData
+\dontshow{ \} }
 }

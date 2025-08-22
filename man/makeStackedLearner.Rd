@@ -94,6 +94,11 @@ collection of base learners.
 }
 }
 \examples{
+\dontshow{ if (requireNamespace("rpart")) \{ }
+\dontshow{ if (requireNamespace("rpart")) \{ }
+\dontshow{ if (requireNamespace("MASS")) \{ }
+\dontshow{ if (requireNamespace("rpart")) \{ }
+\dontshow{ if (requireNamespace("e1071")) \{ }
 # Classification
 data(iris)
 tsk = makeClassifTask(data = iris, target = "Species")
@@ -114,4 +119,9 @@ m = makeStackedLearner(base.learners = lrns,
   predict.type = "response", method = "compress")
 tmp = train(m, tsk)
 res = predict(tmp, tsk)
+\dontshow{ \} }
+\dontshow{ \} }
+\dontshow{ \} }
+\dontshow{ \} }
+\dontshow{ \} }
 }

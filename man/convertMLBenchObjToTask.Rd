@@ -23,6 +23,8 @@ We auto-set the target column, drop any column which is called \dQuote{Id} and
 convert logicals to factors.
 }
 \examples{
+\dontshow{ if (requireNamespace("mlbench")) \{ }
 print(convertMLBenchObjToTask("Ionosphere"))
 print(convertMLBenchObjToTask("mlbench.spirals", n = 100, sd = 0.1))
+\dontshow{ \} }
 }

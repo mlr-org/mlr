@@ -38,6 +38,7 @@ more readable. I.e., the artificial prefix before parameter names is
 suppressed.
 }
 \examples{
+\dontshow{ if (requireNamespace("kernlab")) \{ }
 set.seed(123)
 \donttest{
 library(BBmisc)
@@ -85,6 +86,7 @@ ps = makeParamSet(
 
 # all three ps-objects are exactly the same internally.
 }
+\dontshow{ \} }
 }
 \seealso{
 Other multiplexer: 

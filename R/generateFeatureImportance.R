@@ -75,11 +75,13 @@
 #' }
 #'
 #' @examples
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
 #'
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' fit = train(lrn, iris.task)
 #' imp = generateFeatureImportanceData(iris.task, "permutation.importance",
 #'   lrn, "Petal.Width", nmc = 10L, local = TRUE)
+#' \dontshow{ \} }
 #' @references Jerome Friedman; Greedy Function Approximation: A Gradient Boosting Machine, Annals of Statistics, Vol. 29, No. 5 (Oct., 2001), pp. 1189-1232.
 #' @export
 generateFeatureImportanceData = function(task, method = "permutation.importance",

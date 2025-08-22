@@ -20,13 +20,14 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Patrick Schratz \email{patrick.schratz@gmail.com} (\href{https://orcid.org/0000-0003-0748-6624}{ORCID})
+\strong{Maintainer}: Martin Binder \email{mlr.developer@mb706.com}
 
 Authors:
 \itemize{
   \item Bernd Bischl \email{bernd_bischl@gmx.net} (\href{https://orcid.org/0000-0001-6002-6980}{ORCID})
   \item Michel Lang \email{michellang@gmail.com} (\href{https://orcid.org/0000-0001-9754-0393}{ORCID})
   \item Lars Kotthoff \email{larsko@uwyo.edu}
+  \item Patrick Schratz \email{patrick.schratz@gmail.com} (\href{https://orcid.org/0000-0003-0748-6624}{ORCID})
   \item Julia Schiffner \email{schiffner@math.uni-duesseldorf.de}
   \item Jakob Richter \email{code@jakob-r.de}
   \item Zachary Jones \email{zmj@zmjones.com}
@@ -48,7 +49,6 @@ Other contributors:
   \item Bruno Vieira \email{bruno.hebling.vieira@usp.br} [contributor]
   \item Laura Beggel \email{laura.beggel@web.de} (\href{https://orcid.org/0000-0002-8872-8535}{ORCID}) [contributor]
   \item Quay Au \email{quay.au@stat.uni-muenchen.de} (\href{https://orcid.org/0000-0002-5252-8902}{ORCID}) [contributor]
-  \item Martin Binder \email{ma.binder@campus.lmu.de} [contributor]
   \item Florian Pfisterer \email{pfistererf@googlemail.com} [contributor]
   \item Stefan Coors \email{stefan.coors@gmx.net} [contributor]
   \item Steve Bronder \email{sab2287@columbia.edu} [contributor]

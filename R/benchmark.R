@@ -27,6 +27,10 @@
 #' @family benchmark
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
+#' \dontshow{ if (requireNamespace("MASS")) \{ }
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
+#' \dontshow{ if (requireNamespace("PMCMRplus")) \{ }
 #' lrns = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
 #' tasks = list(iris.task, sonar.task)
 #' rdesc = makeResampleDesc("CV", iters = 2L)
@@ -39,6 +43,10 @@
 #' plotBMRRanksAsBarChart(bmr, pos = "stack")
 #' friedmanTestBMR(bmr)
 #' friedmanPostHocTestBMR(bmr, p.value = 0.05)
+#' \dontshow{ \} }
+#' \dontshow{ \} }
+#' \dontshow{ \} }
+#' \dontshow{ \} }
 benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE,
   keep.extract = FALSE, models = FALSE, show.info = getMlrOption("show.info")) {
 

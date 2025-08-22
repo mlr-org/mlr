@@ -21,11 +21,6 @@
   configureMlr()
   parallelRegisterLevels(package = "mlr", levels = c("benchmark", "resample", "selectFeatures", "tuneParams", "ensemble"))
 
-  packageStartupMessage(paste0(strwrap("Warning message: 'mlr' is in 'maintenance-only' mode since
-      July 2019. Future development will only happen in 'mlr3'
-      (<https://mlr3.mlr-org.com>). Due to the focus on 'mlr3' there might be uncaught
-      bugs meanwhile in {mlr} - please consider switching."),
-    collapse = "\n"))
 }
 
 mlr = new.env(parent = emptyenv())

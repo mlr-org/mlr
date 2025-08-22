@@ -20,6 +20,7 @@
 #' @family tune
 #' @family wrapper
 #' @examples
+#' \dontshow{ if (requireNamespace("rpart")) \{ }
 #' \donttest{
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.rpart")
@@ -41,6 +42,7 @@
 #' getNestedTuneResultsOptPathDf(r)
 #' getNestedTuneResultsX(r)
 #' }
+#' \dontshow{ \} }
 makeTuneWrapper = function(learner, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner)

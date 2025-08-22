@@ -271,6 +271,7 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' @family task
 #' @export
 #' @examples
+#' \dontshow{ if (requireNamespace("mlbench")) \{ }
 #' library("mlbench")
 #' data(BreastCancer)
 #'
@@ -280,6 +281,7 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' head(getTaskData)
 #' head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
+#' \dontshow{ \} }
 getTaskData = function(task, subset = NULL, features, target.extra = FALSE, recode.target = "no",
   functionals.as = "dfcols") {
 
