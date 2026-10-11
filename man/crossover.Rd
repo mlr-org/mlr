@@ -3,6 +3,9 @@
 \name{crossover}
 \alias{crossover}
 \title{Crossover.}
+\usage{
+crossover(x, y, rate = 0.5)
+}
 \arguments{
 \item{x}{(\link{logical})\cr
 First parent string.}
@@ -21,3 +24,4 @@ Default is \code{0.5}.}
 Takes two bit strings and creates a new one of the same size by selecting the items from the first string or
 the second, based on a given rate (the probability of choosing an element from the first string).
 }
+\keyword{internal}

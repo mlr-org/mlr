@@ -14,7 +14,7 @@
 #'     parameter types can be handled.}
 #' }
 #'
-#' @inheritParams TuneControl
+#' @inheritParams makeTuneControlCMAES
 #' @param budget (`integer(1)`)\cr
 #'   Maximum budget for tuning. This value restricts the number of function
 #'   evaluations. In case of `makeTuneMultiCritControlGrid` this number

@@ -38,3 +38,21 @@ test_that("regr_km", {
   m = train(lrn, tsk)
   expect_class(m$learner.model, "km")
 })
+
+test_that("regr_km with a constant nugget fits silently", {
+  requirePackagesOrSkip("DiceKriging", default.method = "load")
+
+  d = data.frame(x = seq(-1, 1, length.out = 11L))
+  d$y = d$x^2
+  task = makeRegrTask(data = d, target = "y")
+  for (pars in list(list(nugget = 1e-8), list(nugget.stability = 1e-8))) {
+    learner = makeLearner("regr.km", predict.type = "se", par.vals = pars)
+    expect_silent({
+      model = train(learner, task)
+    })
+    expect_class(model$learner.model, "km")
+    prediction = predict(model, newdata = d)
+    expect_equal(prediction$data$response, d$y, tolerance = 1e-4)
+    expect_true(all(is.finite(prediction$data$se)))
+  }
+})

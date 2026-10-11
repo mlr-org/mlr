@@ -5,7 +5,8 @@
 #' [mlrMBO::mbo] from the \pkg{mlrMBO} package.
 #' Please refer to <https://github.com/mlr-org/mlrMBO> for further info.
 #'
-#' @inherit TuneControl
+#' @inherit TuneControl description
+#' @inheritParams makeTuneControlCMAES
 #' @param budget (`integer(1)`)\cr
 #'   Maximum budget for tuning. This value restricts the number of function evaluations.
 #' @param learner ([Learner] | `NULL`)\cr

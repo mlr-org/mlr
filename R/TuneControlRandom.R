@@ -3,7 +3,8 @@
 #' @description
 #' Random search. All kinds of parameter types can be handled.
 #'
-#' @inherit TuneControl
+#' @inherit TuneControl description
+#' @inheritParams makeTuneControlCMAES
 #' @param budget (`integer(1)`)\cr
 #'   Maximum budget for tuning. This value restricts the number of function
 #'   evaluations. The `budget` equals the number of iterations (`maxit`) performed by

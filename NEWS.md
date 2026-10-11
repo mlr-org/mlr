@@ -1,3 +1,14 @@
+# mlr 2.19.4
+
+- Remove the broken Pima Indians Diabetes documentation link after the dataset
+  was removed from mlbench 2.1-10, and document its original source.
+- Update shared task and tuning documentation, internal crossover documentation,
+  and the documentation family index for the stricter R-devel checks.
+- Avoid a harmless R-devel recycling warning from DiceKriging when fitting
+  `regr.km` with a fixed scalar nugget, including `nugget.stability`. This also
+  resolves the downstream mlrMBO Kriging test failure. Other fitting warnings
+  and warnings for varying noise variances remain visible.
+
 # mlr 2.19.3
 
 - Fix minor documentation issues.

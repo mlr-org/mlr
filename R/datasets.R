@@ -34,8 +34,8 @@ NULL
 #' Contains the task (`pid.task`).
 #'
 #' @name pid.task
-#' @references See [mlbench::PimaIndiansDiabetes].
-#'   Note that this is the uncorrected version from mlbench.
+#' @references The uncorrected `PimaIndiansDiabetes` data from mlbench versions
+#'   before 2.1-10. The dataset is no longer distributed by mlbench.
 #' @keywords data
 #' @docType data
 NULL

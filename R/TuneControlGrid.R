@@ -6,7 +6,8 @@
 #' or discretize them yourself by always using [ParamHelpers::makeDiscreteParam]
 #' in the `par.set` passed to [tuneParams].
 #'
-#' @inherit TuneControl
+#' @inherit TuneControl description
+#' @inheritParams makeTuneControlCMAES
 #' @param resolution ([integer])\cr
 #'   Resolution of the grid for each numeric/integer parameter in `par.set`.
 #'   For vector parameters, it is the resolution per dimension.

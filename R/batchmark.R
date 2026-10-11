@@ -11,7 +11,7 @@
 #' step with \pkg{ParallelMap}.
 #'
 #' For details on the usage and support backends have a look at the batchtools
-#' tutorial page: <https://github.com/mllg/batchtools>.
+#' tutorial page: <https://github.com/mlr-org/batchtools>.
 #'
 #' The general workflow with `batchmark` looks like this:
 #' 1. Create an ExperimentRegistry using [batchtools::makeExperimentRegistry].
@@ -28,7 +28,7 @@
 #'   Resampling strategy for each tasks.
 #'   If only one is provided, it will be replicated to match the number of tasks.
 #'   If missing, a 10-fold cross validation is used.
-#' @param reg ([batchtools::Registry])\cr
+#' @param reg (\link[batchtools:makeRegistry]{batchtools::Registry})\cr
 #'   Registry, created by [batchtools::makeExperimentRegistry]. If not
 #'   explicitly passed, uses the last created registry.
 #' @return ([data.table][data.table::data.table]). Generated job ids are stored in the column
@@ -89,18 +89,18 @@ getAlgoFun = function(lrn, measures, models, keep.extract) {
 #' @title Reduce results of a batch-distributed benchmark.
 #'
 #' @description
-#' This creates a [BenchmarkResult] from a [batchtools::ExperimentRegistry].
+#' This creates a [BenchmarkResult] from a \link[batchtools:makeExperimentRegistry]{batchtools::ExperimentRegistry}.
 #' To setup the benchmark have a look at [batchmark].
 #'
 #' @param ids ([data.frame] or [integer])\cr
 #'   A [base::data.frame] (or [data.table::data.table])
 #'   with a column named \dQuote{job.id}.
 #'   Alternatively, you may also pass a vector of integerish job ids.
-#'   If not set, defaults to all successfully terminated jobs (return value of [batchtools::findDone].
+#'   If not set, defaults to all successfully terminated jobs (return value of \link[batchtools:findJobs]{batchtools::findDone}.
 #' @template arg_keep_pred
 #' @template arg_keep_extract
 #' @template arg_showinfo
-#' @param reg ([batchtools::ExperimentRegistry])\cr
+#' @param reg (\link[batchtools:makeExperimentRegistry]{batchtools::ExperimentRegistry})\cr
 #'   Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly passed,
 #'   uses the last created registry.
 #' @return ([BenchmarkResult]).

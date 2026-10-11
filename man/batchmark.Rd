@@ -69,7 +69,7 @@ job is a full run of inner resampling, which can be parallelized in a second
 step with \pkg{ParallelMap}.
 
 For details on the usage and support backends have a look at the batchtools
-tutorial page: \url{https://github.com/mllg/batchtools}.
+tutorial page: \url{https://github.com/mlr-org/batchtools}.
 
 The general workflow with \code{batchmark} looks like this:
 \enumerate{

@@ -1,5 +1,5 @@
 #' @title Create a cluster task.
-#' @inheritParams Task
+#' @inheritParams makeClassifTask
 #' @seealso [Task] [ClassifTask] [CostSensTask] [MultilabelTask] [RegrTask] [SurvTask]
 #' @rdname ClusterTask
 #' @aliases ClusterTask

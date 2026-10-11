@@ -1,5 +1,5 @@
 #' @title Create a regression task.
-#' @inheritParams Task
+#' @inheritParams makeClassifTask
 #' @seealso [Task] [ClassifTask] [CostSensTask] [ClusterTask] [MultilabelTask] [SurvTask]
 #' @rdname RegrTask
 #' @aliases RegrTask

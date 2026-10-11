@@ -53,7 +53,19 @@ trainLearner.regr.km = function(.learner, .task, .subset, .weights = NULL, ...) 
     }
     args$nugget.stability = NULL
   }
-  do.call(DiceKriging::km, c(list(design = d$data, response = d$target), args))
+  withCallingHandlers(
+    do.call(DiceKriging::km, c(list(design = d$data, response = d$target), args)),
+    warning = function(w) {
+      # kmNuggets.init indexes a full nugget matrix with a dist-sized logical
+      # vector. R-devel warns about recycling, but for a constant nugget every
+      # selected entry is the same, so the variance estimate is unaffected.
+      if (length(args$nugget) == 1L && is.null(args$noise.var) && !isTRUE(args$nugget.estim) &&
+        identical(conditionCall(w), quote(matrix.sym.nugget.aux[I])) &&
+        identical(conditionMessage(w), "object length is not a multiple of subscript length")) {
+        invokeRestart("muffleWarning")
+      }
+    }
+  )
 }
 
 #' @export

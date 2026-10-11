@@ -4,7 +4,8 @@
 #' Completely pre-specifiy a `data.frame` of design points to be evaluated
 #' during tuning. All kinds of parameter types can be handled.
 #'
-#' @inherit TuneControl
+#' @inherit TuneControl description
+#' @inheritParams makeTuneControlCMAES
 #' @param design ([data.frame])\cr
 #'   `data.frame` containing the different parameter settings to be evaluated.
 #'   The columns have to be named according to the `ParamSet` which will be used in `tune()`.

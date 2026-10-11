@@ -5,7 +5,8 @@
 #' Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
 #' For integers the internally proposed numeric values are automatically rounded.
 #'
-#' @inherit TuneControl
+#' @inherit TuneControl description
+#' @inheritParams makeTuneControlCMAES
 #' @param budget (`integer(1)`)\cr
 #'   Maximum budget for tuning. This value restricts the number of function
 #'   evaluations. [GenSA::GenSA] defines the `budget` via

@@ -2,7 +2,8 @@
 \alias{mlrFamilies}
 \title{mlr documentation families}
 \description{List of all mlr documentation families with members.}
-\arguments{
+\section{Families}{
+\describe{
 \item{benchmark}{batchmark, reduceBatchmarkResults, benchmark, benchmarkParallel, getBMRTaskIds, getBMRLearners, getBMRLearnerIds, getBMRLearnerShortNames, getBMRMeasures, getBMRMeasureIds, getBMRPredictions, getBMRPerformances, getBMRAggrPerformances, getBMRTuneResults, getBMRFeatSelResults, getBMRFilteredFeatures, getBMRModels, getBMRTaskDescs, convertBMRToRankMatrix, friedmanPostHocTestBMR, friedmanTestBMR, plotBMRBoxplots, plotBMRRanksAsBarChart, generateCritDifferencesData, plotCritDifferences}
 \item{calibration}{generateCalibrationData, plotCalibration}
 \item{configure}{configureMlr, getMlrOptions}
@@ -31,4 +32,5 @@
 \item{tune}{getNestedTuneResultsX, getNestedTuneResultsOptPathDf, getResamplingIndices, getTuneResult, makeModelMultiplexerParamSet, makeModelMultiplexer, makeTuneControlCMAES, makeTuneControlDesign, makeTuneControlGenSA, makeTuneControlGrid, makeTuneControlIrace, makeTuneControlMBO, makeTuneControl, makeTuneControlRandom, tuneParams, tuneThreshold}
 \item{tune_multicrit}{plotTuneMultiCritResult, makeTuneMultiCritControl, tuneParamsMultiCrit}
 \item{wrapper}{makeBaggingWrapper, makeClassificationViaRegressionWrapper, makeConstantClassWrapper, makeCostSensClassifWrapper, makeCostSensRegrWrapper, makeDownsampleWrapper, makeDummyFeaturesWrapper, makeExtractFDAFeatsWrapper, makeFeatSelWrapper, makeFilterWrapper, makeImputeWrapper, makeMulticlassWrapper, makeOverBaggingWrapper, makeUndersampleWrapper, makePreprocWrapperCaret, makePreprocWrapper, makeRemoveConstantFeaturesWrapper, makeSMOTEWrapper, makeTuneWrapper, makeWeightedClassesWrapper}
+}
 }

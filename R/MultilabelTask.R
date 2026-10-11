@@ -1,5 +1,5 @@
 #' @title Create a multilabel task.
-#' @inheritParams Task
+#' @inheritParams makeClassifTask
 #' @section Note:
 #' For multilabel classification we assume that the presence of labels is encoded via logical
 #' columns in `data`. The name of the column specifies the name of the label. `target`

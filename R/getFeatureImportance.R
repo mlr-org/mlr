@@ -36,7 +36,7 @@
 #'    Supports both measures mentioned above for the randomForest
 #'    learner. Note, that you need to specifically set the learners parameter
 #'    `importance`, to be able to compute feature importance measures.
-#'    See [ranger::importance()] and
+#'    See \code{\link[ranger:importance.ranger]{ranger::importance()}} and
 #'    [ranger::ranger()] for details.
 #' * rpart \cr
 #'    Sum of decrease in impurity for each of the surrogate variables at each

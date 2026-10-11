@@ -1,5 +1,5 @@
 #' @title Create a survival task.
-#' @inheritParams Task
+#' @inheritParams makeClassifTask
 #' @seealso [Task] [ClassifTask] [ClusterTask] [CostSensTask] [MultilabelTask] [RegrTask]
 #' @rdname SurvTask
 #' @aliases SurvTask

@@ -14,6 +14,8 @@
 #' @name crossover
 #' @rdname crossover
 #' @aliases crossover
+#' @usage crossover(x, y, rate = 0.5)
+#' @keywords internal
 NULL
 
 crossover = function(x, y, rate = 0.5) {

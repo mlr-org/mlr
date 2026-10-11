@@ -1,5 +1,5 @@
 #' @title Create a classification task.
-#' @inheritParams Task
+#' @template args_task
 #' @seealso [Task] [CostSensTask] [ClusterTask] [MultilabelTask] [RegrTask] [SurvTask]
 #' @rdname ClassifTask
 #' @aliases ClassifTask

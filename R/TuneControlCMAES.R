@@ -7,7 +7,10 @@
 #' The sigma variance parameter is initialized to 1/4 of the span of box-constraints per
 #' parameter dimension.
 #'
-#' @inherit TuneControl
+#' @inherit TuneControl description
+#' @template args_tunecontrol
+#' @template arg_imputey
+#' @template arg_log_fun
 #' @param budget (`integer(1)`)\cr
 #'   Maximum budget for tuning. This value restricts the number of function
 #'   evaluations. The `budget` corresponds to the product of the number of generations

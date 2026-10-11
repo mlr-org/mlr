@@ -14,7 +14,8 @@
 #' tuning results in a file on disk, see the package documentation for details
 #' on this and how to change the file path.
 #'
-#' @inherit TuneControl
+#' @inherit TuneControl description
+#' @inheritParams makeTuneControlCMAES
 #' @param budget (`integer(1)`)\cr
 #'   Maximum budget for tuning. This value restricts the number of function
 #'   evaluations. It is passed to `maxExperiments`.
